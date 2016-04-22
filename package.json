@@ -1,6 +1,15 @@
 ﻿{
   "name": "goeasy",
+  "version": "0.0.1",
+  "description": "The Easy Meeting Website",
   "version": "1.0.0",
+  "engines": {
+    "node": ">=0.12.4"
+   },
+   "author": {
+    "name": "dileepa",
+    "email": "djy@gmail.com"
+  },
   "scripts": {
     "start": "concurrently \"npm run tsc:w\" \"npm run lite\" ",
     "tsc": "tsc",
