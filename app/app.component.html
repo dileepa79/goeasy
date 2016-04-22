@@ -1,0 +1,15 @@
+﻿<div>
+<header>
+    <div *ngIf="isAuthorized">
+        <a [routerLink]="['AddNote']" >Add Note</a>
+        <a [routerLink]="['TimeLine']" >TimeLine</a>
+    </div>
+</header>
+<main>
+    <section>
+        <div>
+            <router-outlet></router-outlet>
+        </div>
+    </section>
+</main>
+</div>

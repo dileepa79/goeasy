@@ -1,0 +1,25 @@
+﻿<h1>{{title}}</h1>
+<ul class="media-list">
+    <li *ngFor="#timeline of timelines" class="media">
+        <div>{{timeline.DateFormat}}</div>
+        <ul class="media-list">
+            <li *ngFor="#Item of timeline.Items" class="media">
+                <div class="media-body">
+                    <div class="row">
+                        <div class="col-md-1">
+                            <div class="well well-sm">
+                                <div>{{Item.Date }}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-11">
+                            <div class="well well-sm">
+                                <div>{{Item.Title}}</div>
+                                <div>{{Item.Description}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </li>
+</ul>
