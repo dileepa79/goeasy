@@ -5,7 +5,7 @@ import {AddNoteComponent} from './notes/add-note.component';
 import {TimeLineComponent} from './timeline/timeline.component';
 import {LoginComponent} from './authentication/login.component';
 import {NgIf} from 'angular2/common';
-
+import {Configuration} from './app.constants';
 
 @Component({
     selector: 'my-app',
@@ -16,7 +16,8 @@ import {NgIf} from 'angular2/common';
         ROUTER_PROVIDERS,
         AuthService,
         LoginComponent,
-        AddNoteComponent        
+        AddNoteComponent,
+        Configuration        
     ]
 })
 

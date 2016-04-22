@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './services/auth.service', './notes/add-note.component', './timeline/timeline.component', './authentication/login.component'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', './services/auth.service', './notes/add-note.component', './timeline/timeline.component', './authentication/login.component', './app.constants'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', './services/auth.service', 
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, auth_service_1, add_note_component_1, timeline_component_1, login_component_1;
+    var core_1, router_1, auth_service_1, add_note_component_1, timeline_component_1, login_component_1, app_constants_1;
     var AppComponent;
     return {
         setters:[
@@ -31,6 +31,9 @@ System.register(['angular2/core', 'angular2/router', './services/auth.service', 
             },
             function (login_component_1_1) {
                 login_component_1 = login_component_1_1;
+            },
+            function (app_constants_1_1) {
+                app_constants_1 = app_constants_1_1;
             }],
         execute: function() {
             AppComponent = (function () {
@@ -54,7 +57,8 @@ System.register(['angular2/core', 'angular2/router', './services/auth.service', 
                             router_1.ROUTER_PROVIDERS,
                             auth_service_1.AuthService,
                             login_component_1.LoginComponent,
-                            add_note_component_1.AddNoteComponent
+                            add_note_component_1.AddNoteComponent,
+                            app_constants_1.Configuration
                         ]
                     }),
                     router_1.RouteConfig([
