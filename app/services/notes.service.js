@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', 'angular2/router'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/http', 'angular2/router', '../app.constants'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router'], function(
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, router_1;
+    var core_1, http_1, router_1, app_constants_1;
     var NotesService;
     return {
         setters:[
@@ -22,20 +22,35 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router'], function(
             },
             function (router_1_1) {
                 router_1 = router_1_1;
+            },
+            function (app_constants_1_1) {
+                app_constants_1 = app_constants_1_1;
             }],
         execute: function() {
             NotesService = (function () {
-                function NotesService(_router, http) {
+                function NotesService(_router, http, _configuration) {
                     this._router = _router;
                     this.http = http;
+                    this._configuration = _configuration;
+                    this.webApiUrl = _configuration.ServerWithApiUrl + 'Note';
                 }
+                //public addNote(noteRequest) {
+                //    console.log("Title: " + noteRequest.title + ", description: " + noteRequest.description);
+                //    var headers = new Headers();
+                //    headers.append('Content-Type', 'application/json');
+                //    this.http.post('http://localhost:54736/api/Note',
+                //        JSON.stringify(noteRequest),
+                //        { headers: headers })
+                //        .map((res: Response) => res.json())
+                //        .subscribe((res: noteRequest) => this.postResponse = res);
+                //}
                 NotesService.prototype.addNote = function (noteRequest) {
                     var _this = this;
                     console.log("Title: " + noteRequest.title + ", description: " + noteRequest.description);
-                    var body = "Title=" + noteRequest.title + "&Description=" + noteRequest.description + "&Tags=" + noteRequest.tags;
-                    var headers = new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+                    var body = JSON.stringify(noteRequest);
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json; charset=utf-8' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    this.http.post('http://localhost:54736/api/Note', body, options)
+                    this.http.post(this.webApiUrl, body, options)
                         .map(function (res) { return res.json(); })
                         .subscribe(function (data) {
                         console.log("added note: " + data);
@@ -45,7 +60,7 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router'], function(
                 };
                 NotesService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [router_1.Router, http_1.Http])
+                    __metadata('design:paramtypes', [router_1.Router, http_1.Http, app_constants_1.Configuration])
                 ], NotesService);
                 return NotesService;
             }());

@@ -2,6 +2,7 @@
 import {NoteRequest} from './note-request';
 import {NotesService} from '../services/notes.service';
 import {TimeLineComponent} from '../timeline/timeline.component';
+import { TagsSelectorComponent } from '../tags/tags-selector.component';
 
 @Component({
     selector: 'add-note',
@@ -9,7 +10,7 @@ import {TimeLineComponent} from '../timeline/timeline.component';
     providers: [
         NotesService
     ],
-    directives: [TimeLineComponent],
+    directives: [TimeLineComponent, TagsSelectorComponent]
 })
 
 export class AddNoteComponent {
@@ -21,8 +22,13 @@ export class AddNoteComponent {
         tags: []
     };
     title = "ADD NOTES";
+    tags: any[] = [];
 
     Save() {
         this._notesService.addNote(this.noteRequest);
+    }
+
+    onSelectedTagsChanged(tags: any[]): void {
+        this.noteRequest.tags = tags.map(function (d) { return d['name']; });
     }
 }

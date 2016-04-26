@@ -1,20 +1,27 @@
 ﻿<h1>{{title}}</h1>
+<div>
+    <prime-app (tagsAdded)='onSelectedTagsAdded($event)' (tagsRemoved)="onSelectedTagsRemoved($event)">Loading...</prime-app>
+</div>
+
+<!--<ul class="media-list">
+    <li *ngFor="#c of selectedTags" class="media">{{c.name}}</li>
+</ul>-->
 <ul class="media-list">
-    <li *ngFor="#timeline of timelines" class="media">
-        <div>{{timeline.DateFormat}}</div>
+    <li *ngFor="#timeline of filteredTimelines" class="media">
+        <div>{{timeline.dateFormat}}</div>
         <ul class="media-list">
-            <li *ngFor="#Item of timeline.Items" class="media">
+            <li *ngFor="#Item of timeline.items" class="media">
                 <div class="media-body">
                     <div class="row">
                         <div class="col-md-1">
                             <div class="well well-sm">
-                                <div>{{Item.Date }}</div>
+                                <div>{{Item.date }}</div>
                             </div>
                         </div>
                         <div class="col-md-11">
                             <div class="well well-sm">
-                                <div>{{Item.Title}}</div>
-                                <div>{{Item.Description}}</div>
+                                <div>{{Item.title}}</div>
+                                <div>{{Item.description}}</div>
                             </div>
                         </div>
                     </div>

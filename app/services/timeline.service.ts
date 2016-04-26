@@ -1,19 +1,25 @@
 ﻿import {Injectable, Inject} from 'angular2/core';
-import {Http, Response} from 'angular2/http';
+import {Http, Response, Headers} from 'angular2/http';
 import {TimeLineResponse} from '../timeline/timeline-response';
 import {Observable} from 'rxjs/Observable';
 import {AuthService} from './auth.service';
-import {TokenService} from './token.service'
+import {TokenService} from './token.service';
+import {Configuration} from '../app.constants';
 
 @Injectable()
 export class TimeLineService {
-    constructor(private http: Http, private _authService: AuthService) {
+    private webApiUrl: string;
+
+    constructor(private http: Http, private _authService: AuthService, private _configuration: Configuration) {
+        this.webApiUrl = _configuration.ServerWithApiUrl + 'TimeLine';
     }
 
     public getTimeLines() {
-        var header = this._authService.getHeader();
-        return this.http.get('http://localhost:54736/api/TimeLine')
-            .map(res => <TimeLineResponse[]>res.json())
+        var headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
+        return this.http.get(this.webApiUrl ,{
+            headers: headers
+        })
+            .map(res => <any>res.json())
             .do(data => console.log(data))
             .catch(this.handleError);
     }

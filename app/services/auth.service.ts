@@ -5,12 +5,15 @@ import { Router} from 'angular2/router';
 import {TokenService} from './token.service';
 import {LoginComponent} from '../authentication/login.component';
 import {AppComponent} from '../app.component';
+import {Configuration} from '../app.constants';
 
 @Injectable()
 export class AuthService {
     private _token: string;
-    constructor(public _router: Router, private http: Http, private tokenService: TokenService, @Inject(forwardRef(() => AppComponent)) private _parent: AppComponent) {
+    private webApiUrl: string;
+    constructor(public _router: Router, private http: Http, private tokenService: TokenService, private _configuration: Configuration, @Inject(forwardRef(() => AppComponent)) private _parent: AppComponent) {
         this._token = '';
+        this.webApiUrl = _configuration.Server + 'Token';
     }
     public login(username, password) {
         console.log("username: " + username + ", password: " + password);
@@ -24,7 +27,7 @@ export class AuthService {
         var headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
-        this.http.post('http://localhost:54736/Token', creds, {
+        this.http.post(this.webApiUrl, creds, {
             headers: headers
         })
             .map(res => res.json())

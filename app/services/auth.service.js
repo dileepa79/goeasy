@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', 'angular2/router', './token.service', '../app.component'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/http', 'angular2/router', './token.service', '../app.component', '../app.constants'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -13,7 +13,7 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', './token.s
     var __param = (this && this.__param) || function (paramIndex, decorator) {
         return function (target, key) { decorator(target, key, paramIndex); }
     };
-    var core_1, http_1, router_1, token_service_1, app_component_1;
+    var core_1, http_1, router_1, token_service_1, app_component_1, app_constants_1;
     var AuthService;
     return {
         setters:[
@@ -31,15 +31,20 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', './token.s
             },
             function (app_component_1_1) {
                 app_component_1 = app_component_1_1;
+            },
+            function (app_constants_1_1) {
+                app_constants_1 = app_constants_1_1;
             }],
         execute: function() {
             AuthService = (function () {
-                function AuthService(_router, http, tokenService, _parent) {
+                function AuthService(_router, http, tokenService, _configuration, _parent) {
                     this._router = _router;
                     this.http = http;
                     this.tokenService = tokenService;
+                    this._configuration = _configuration;
                     this._parent = _parent;
                     this._token = '';
+                    this.webApiUrl = _configuration.Server + 'Token';
                 }
                 AuthService.prototype.login = function (username, password) {
                     var _this = this;
@@ -50,7 +55,7 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', './token.s
                     var creds = "grant_type=" + grant_type + "&userName=" + username + "&password=" + password;
                     var headers = new http_1.Headers();
                     headers.append('Content-Type', 'application/x-www-form-urlencoded');
-                    this.http.post('http://localhost:54736/Token', creds, {
+                    this.http.post(this.webApiUrl, creds, {
                         headers: headers
                     })
                         .map(function (res) { return res.json(); })
@@ -86,8 +91,8 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', './token.s
                 };
                 AuthService = __decorate([
                     core_1.Injectable(),
-                    __param(3, core_1.Inject(core_1.forwardRef(function () { return app_component_1.AppComponent; }))), 
-                    __metadata('design:paramtypes', [router_1.Router, http_1.Http, token_service_1.TokenService, app_component_1.AppComponent])
+                    __param(4, core_1.Inject(core_1.forwardRef(function () { return app_component_1.AppComponent; }))), 
+                    __metadata('design:paramtypes', [router_1.Router, http_1.Http, token_service_1.TokenService, app_constants_1.Configuration, app_component_1.AppComponent])
                 ], AuthService);
                 return AuthService;
             }());

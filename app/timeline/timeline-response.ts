@@ -4,10 +4,11 @@
 }
 
 export class TimeLineSingleResponse {
+    Id: number;
     CreateDate:Date;
     Title:string;
     Description: string;
     ActivityType: string;
     ImageUrl: string;
-    Date: string
+    Date: string;
 }

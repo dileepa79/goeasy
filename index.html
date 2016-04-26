@@ -13,7 +13,9 @@
     <link href="vendors/bower_components/animate.css/animate.min.css" rel="stylesheet">
     <link href="vendors/bower_components/bootstrap-sweetalert/lib/sweet-alert.css" rel="stylesheet">
     <link href="vendors/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" type="text/css" href="node_modules/primeui/themes/delta/theme.css" />
+    <link rel="stylesheet" type="text/css" href="app/resources/icons/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="node_modules/primeui/primeui-ng-all.min.css" />
 
     <!-- UI > CSS -->
     <link href="css/app.min.1.css" rel="stylesheet">
@@ -28,6 +30,7 @@
     <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
     <script src="node_modules/systemjs/dist/system.src.js"></script>
     <script src="node_modules/rxjs/bundles/Rx.js"></script>
+    <script src="node_modules/primeui/primeui-ng-all.min.js"></script>
     <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
     <script src="https://code.angularjs.org/2.0.0-beta.0/http.dev.js"></script>
     <script src="node_modules/angular2/bundles/router.dev.js"></script>
@@ -37,10 +40,15 @@
     <!-- 2. Configure SystemJS -->
     <script>
         System.config({
-            map: { 'rxjs': 'node_modules/rxjs', moment: 'node_modules/moment/moment.js' },
+            defaultJSExtensions: true,
             packages: {
-                app: { format: 'register', defaultExtension: 'js' },
+                'app': { format: 'register', "defaultExtension": 'js' },
                 'rxjs': { defaultExtension: 'js' }
+            },
+            map: {
+                'rxjs': 'node_modules/rxjs', moment: 'node_modules/moment/moment.js',
+                'angular2': 'node_modules/angular2',
+                'primeng': 'node_modules/primeng'
             }
         });
         System.import('app/main').then(null, console.error.bind(console));
