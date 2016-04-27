@@ -1,6 +1,6 @@
 ﻿<h1>{{title}}</h1>
 <div>
-    <prime-app (tagsAdded)='onSelectedTagsAdded($event)' (tagsRemoved)="onSelectedTagsRemoved($event)">Loading...</prime-app>
+    <prime-app [isAllowedNewInput]="false" (tagsAdded)='onSelectedTagsAdded($event)' (tagsRemoved)="onSelectedTagsRemoved($event)">Loading...</prime-app>
 </div>
 
 <!--<ul class="media-list">
@@ -8,7 +8,7 @@
 </ul>-->
 <ul class="media-list">
     <li *ngFor="#timeline of filteredTimelines" class="media">
-        <div>{{timeline.dateFormat}}</div>
+        <div *ngIf="timeline.items.length > 0">{{timeline.dateFormat}}</div>
         <ul class="media-list">
             <li *ngFor="#Item of timeline.items" class="media">
                 <div class="media-body">
@@ -16,12 +16,16 @@
                         <div class="col-md-1">
                             <div class="well well-sm">
                                 <div>{{Item.date }}</div>
+                                <div>{{Item.time}}</div>
                             </div>
                         </div>
                         <div class="col-md-11">
                             <div class="well well-sm">
-                                <div>{{Item.title}}</div>
-                                <div>{{Item.description}}</div>
+                                <accordion>
+                                    <accordion-group [heading]="Item.title">
+                                        {{Item.description}}
+                                    </accordion-group>
+                                </accordion>
                             </div>
                         </div>
                     </div>
@@ -30,3 +34,6 @@
         </ul>
     </li>
 </ul>
+
+
+

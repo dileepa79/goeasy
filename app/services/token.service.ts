@@ -9,4 +9,7 @@ export class TokenService {
     public setToken(token: string) {
         this._token = token;
     }
+    public removeToken() {
+        this._token = "";
+    }
 }

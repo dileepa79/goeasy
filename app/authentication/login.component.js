@@ -32,11 +32,16 @@ System.register(['angular2/core', '../services/auth.service'], function(exports_
                     this._authService = _authService;
                     this.userDetails = {
                         username: 'test@test.com',
-                        password: 'teST@123'
+                        password: 'teST@123',
+                        rememberMe: true
                     };
                 }
+                LoginComponent.prototype.ngOnInit = function () {
+                    if (!this._authService.loginUsingCookies())
+                        return;
+                };
                 LoginComponent.prototype.login = function () {
-                    this._authService.login(this.userDetails.username, this.userDetails.password);
+                    this._authService.login(this.userDetails.username, this.userDetails.password, this.userDetails.rememberMe);
                 };
                 LoginComponent.prototype.getValues = function () {
                     this._authService.get('http://localhost:18077/api/values', function (data) {

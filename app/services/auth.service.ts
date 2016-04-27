@@ -15,8 +15,8 @@ export class AuthService {
         this._token = '';
         this.webApiUrl = _configuration.Server + 'Token';
     }
-    public login(username, password) {
-        console.log("username: " + username + ", password: " + password);
+    public login(username, password, rememberMe) {
+        console.log("username: " + username + ", password: " + password + ", remember me: "+rememberMe);
 
         var _username = 'test@test.com';
         var _password = 'teST@123';
@@ -44,6 +44,13 @@ export class AuthService {
             () => {
                 this.tokenService.setToken(this._token);
                 this._parent.isAuthorized = true;
+                if (rememberMe) {
+                    console.log("saving credentials in cookie");
+                    //document.cookie = "username=" + username;
+                    //document.cookie = "password=" + password;
+                    this.setCookie("username", username, 15);
+                    this.setCookie("password", password, 15);
+                }
                 this._router.navigate(['TimeLine']);
             }
             );
@@ -68,5 +75,42 @@ export class AuthService {
         var authHeader = new Headers();
         authHeader.append('Authorization', 'bearer ' + this.tokenService.getToken());
         return authHeader;
+    }
+    setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+    }
+    loginUsingCookies() {
+        var userName = this.getCookie("username");
+        var password = this.getCookie("password");
+        if (userName == null || userName == '' || password == null || password == '') return false;
+        this.login(userName, password, true);
+    }
+    getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+    }
+    logout() {
+        console.log("logout");
+        this.tokenService.removeToken();
+        this.delete_cookie("username");
+        this.delete_cookie("password");
+        this._parent.isAuthorized = false;
+        this._router.navigate(['Login']);
+    }
+    delete_cookie(name) {
+        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
 }

@@ -1,4 +1,4 @@
-﻿import { Component, Output, OnInit, EventEmitter } from 'angular2/core';
+﻿import { Component, Output, Input, OnInit, EventEmitter } from 'angular2/core';
 import {AutoComplete} from 'primeng/primeng';
 import { TagsService } from '../services/tags.service';
 import { TagsResponse } from './tags-response';
@@ -8,7 +8,7 @@ import { TagsResponse } from './tags-response';
 
     template: `
         <p-autoComplete [(ngModel)]="tags" [suggestions]="filteredtagsMultiple" (completeMethod)="filtertagMultiple($event)" style="width:100%"
-            [minLength]="1" placeholder="Select Tags" field="name" [multiple]="true" (onSelect)="handleSelectTag($event)" (onUnselect)="handleUnSelectTag($event)">
+            [minLength]="1" placeholder="Select Tags" field="name" [multiple]="true" [allowNewInput] = "isAllowedNewInput" (onSelect)="handleSelectTag($event)" (onUnselect)="handleUnSelectTag($event)">
         </p-autoComplete>
     `,
     directives: [AutoComplete],
@@ -21,7 +21,7 @@ export class TagsSelectorComponent{
     @Output() tagsRemoved: EventEmitter<TagsResponse[]> = new EventEmitter<TagsResponse[]>();
 
     filteredtagsMultiple: any[];
-
+    @Input() isAllowedNewInput: boolean;
     errorMessage: string;
     tags: TagsResponse[] = []
     constructor(private tagService: TagsService) { }

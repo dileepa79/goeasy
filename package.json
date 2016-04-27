@@ -20,8 +20,9 @@
     "zone.js": "0.6.6",
     "ng2-bootstrap": "1.0.9",
     "moment": "2.12.0",
-    "primeng": "1.0.0-beta.1",    
-    "primeui": "4.1.7"
+    "primeng": "1.0.0-beta.1",
+    "primeui": "4.1.7",
+    "ng2-bs3-modal": "0.5.2" 
   },
   "devDependencies": {
     "typescript": "^1.8.9",

@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './services/auth.service', './notes/add-note.component', './timeline/timeline.component', './authentication/login.component', './app.constants'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', './services/auth.service', './notes/add-note.component', './timeline/timeline.component', './authentication/login.component', './app.constants', './tags/tags.component', './userprofile/userprofile.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', './services/auth.service', 
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, auth_service_1, add_note_component_1, timeline_component_1, login_component_1, app_constants_1;
+    var core_1, router_1, auth_service_1, add_note_component_1, timeline_component_1, login_component_1, app_constants_1, tags_component_1, userprofile_component_1;
     var AppComponent;
     return {
         setters:[
@@ -34,6 +34,12 @@ System.register(['angular2/core', 'angular2/router', './services/auth.service', 
             },
             function (app_constants_1_1) {
                 app_constants_1 = app_constants_1_1;
+            },
+            function (tags_component_1_1) {
+                tags_component_1 = tags_component_1_1;
+            },
+            function (userprofile_component_1_1) {
+                userprofile_component_1 = userprofile_component_1_1;
             }],
         execute: function() {
             AppComponent = (function () {
@@ -52,7 +58,7 @@ System.register(['angular2/core', 'angular2/router', './services/auth.service', 
                         selector: 'my-app',
                         styleUrls: ['app/app.component.css'],
                         templateUrl: 'app/app.component.html',
-                        directives: [router_1.ROUTER_DIRECTIVES],
+                        directives: [router_1.ROUTER_DIRECTIVES, userprofile_component_1.UserProfileComponent],
                         providers: [
                             router_1.ROUTER_PROVIDERS,
                             auth_service_1.AuthService,
@@ -82,6 +88,11 @@ System.register(['angular2/core', 'angular2/router', './services/auth.service', 
                             path: '/timeline',
                             name: 'TimeLine',
                             component: timeline_component_1.TimeLineComponent
+                        },
+                        {
+                            path: '/tags',
+                            name: 'Tags',
+                            component: tags_component_1.TagsComponent
                         }
                     ]), 
                     __metadata('design:paramtypes', [router_1.Router])

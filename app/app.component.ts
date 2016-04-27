@@ -6,12 +6,14 @@ import {TimeLineComponent} from './timeline/timeline.component';
 import {LoginComponent} from './authentication/login.component';
 import {NgIf} from 'angular2/common';
 import {Configuration} from './app.constants';
+import {TagsComponent} from './tags/tags.component';
+import {UserProfileComponent} from './userprofile/userprofile.component';
 
 @Component({
     selector: 'my-app',
     styleUrls: ['app/app.component.css'],
     templateUrl: 'app/app.component.html',
-    directives: [ROUTER_DIRECTIVES],
+    directives: [ROUTER_DIRECTIVES,UserProfileComponent],
     providers: [
         ROUTER_PROVIDERS,
         AuthService,
@@ -43,7 +45,13 @@ import {Configuration} from './app.constants';
             path: '/timeline',
             name: 'TimeLine',
             component: TimeLineComponent
+        },
+        {
+            path: '/tags',
+            name: 'Tags',
+            component: TagsComponent
         }
+
     ]
 )
 

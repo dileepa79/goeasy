@@ -27,6 +27,9 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 TokenService.prototype.setToken = function (token) {
                     this._token = token;
                 };
+                TokenService.prototype.removeToken = function () {
+                    this._token = "";
+                };
                 TokenService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [])

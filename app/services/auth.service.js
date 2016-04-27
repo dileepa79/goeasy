@@ -46,9 +46,9 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', './token.s
                     this._token = '';
                     this.webApiUrl = _configuration.Server + 'Token';
                 }
-                AuthService.prototype.login = function (username, password) {
+                AuthService.prototype.login = function (username, password, rememberMe) {
                     var _this = this;
-                    console.log("username: " + username + ", password: " + password);
+                    console.log("username: " + username + ", password: " + password + ", remember me: " + rememberMe);
                     var _username = 'test@test.com';
                     var _password = 'teST@123';
                     var grant_type = 'password';
@@ -69,6 +69,13 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', './token.s
                     }, function () {
                         _this.tokenService.setToken(_this._token);
                         _this._parent.isAuthorized = true;
+                        if (rememberMe) {
+                            console.log("saving credentials in cookie");
+                            //document.cookie = "username=" + username;
+                            //document.cookie = "password=" + password;
+                            _this.setCookie("username", username, 15);
+                            _this.setCookie("password", password, 15);
+                        }
                         _this._router.navigate(['TimeLine']);
                     });
                 };
@@ -88,6 +95,44 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', './token.s
                     var authHeader = new http_1.Headers();
                     authHeader.append('Authorization', 'bearer ' + this.tokenService.getToken());
                     return authHeader;
+                };
+                AuthService.prototype.setCookie = function (cname, cvalue, exdays) {
+                    var d = new Date();
+                    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                    var expires = "expires=" + d.toUTCString();
+                    document.cookie = cname + "=" + cvalue + "; " + expires;
+                };
+                AuthService.prototype.loginUsingCookies = function () {
+                    var userName = this.getCookie("username");
+                    var password = this.getCookie("password");
+                    if (userName == null || userName == '' || password == null || password == '')
+                        return false;
+                    this.login(userName, password, true);
+                };
+                AuthService.prototype.getCookie = function (cname) {
+                    var name = cname + "=";
+                    var ca = document.cookie.split(';');
+                    for (var i = 0; i < ca.length; i++) {
+                        var c = ca[i];
+                        while (c.charAt(0) == ' ') {
+                            c = c.substring(1);
+                        }
+                        if (c.indexOf(name) == 0) {
+                            return c.substring(name.length, c.length);
+                        }
+                    }
+                    return "";
+                };
+                AuthService.prototype.logout = function () {
+                    console.log("logout");
+                    this.tokenService.removeToken();
+                    this.delete_cookie("username");
+                    this.delete_cookie("password");
+                    this._parent.isAuthorized = false;
+                    this._router.navigate(['Login']);
+                };
+                AuthService.prototype.delete_cookie = function (name) {
+                    document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
                 };
                 AuthService = __decorate([
                     core_1.Injectable(),

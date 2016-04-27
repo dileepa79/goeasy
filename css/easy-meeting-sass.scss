@@ -1,0 +1,82 @@
+﻿
+// Mixins
+// @import "components/prefixer";
+@import "components/mixins";
+@import "components/color";
+
+// Variables;
+@import "components/variables";
+
+// Reset
+@import "components/normalize";
+
+// components
+@import "components/global";
+@import "components/icons-material-design";
+/*@import "components/grid";
+@import "components/navbar";*/
+/*@import "components/roboto";*/
+@import "components/typography";
+/*@import "components/cards";
+@import "components/toast";
+@import "components/tabs";
+@import "components/tooltip";*/
+@import "components/buttons";
+@import "components/dropdown";
+@import "components/waves";
+@import "components/modal";
+@import "components/collapsible";
+@import "components/chips";
+@import "components/materialbox";
+@import "components/forms/forms";
+@import "components/table_of_contents";
+@import "components/sideNav";
+@import "components/preloader";
+@import "components/slider";
+@import "components/carousel";
+@import "components/date_picker/default";
+@import "components/date_picker/default.date";
+@import "components/date_picker/default.time";
+body {
+    background-color: #fbfbfb;
+    font-family: 'Roboto', sans-serif !important;
+}
+.header-inner .logo a {
+    color: #fff;
+    text-transform: none;
+    padding: 0;
+    display: block;
+    font-size: 30px;
+    line-height: 36px;
+    font-family: 'Sacramento', cursive;
+    font-weight: bold;
+}
+
+.top-serch{
+    padding:15px 0;
+
+    .glyphicon-search{
+        padding: 0 10px 5px 0;
+        color: #fff;
+        font-size: 24px;
+    }
+    .main-search-input{
+        background: none;
+        border: none;
+        color: #fff;
+        font-weight: 200;
+        font-size: 16px;
+    }
+    input[type="text"].main-search-input::-moz-placeholder{
+        color:#fff;
+    }
+    
+     input[type="text"].main-search-input::-webkit-input-placeholder{
+        color:#fff;
+        
+    }
+}
+.main-action-bar{
+    background:#BDC3C7; 
+    padding:0 20px 20px;
+}

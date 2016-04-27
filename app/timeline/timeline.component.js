@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../services/timeline.service', '../tags/tags-selector.component'], function(exports_1, context_1) {
+System.register(['angular2/core', '../services/timeline.service', '../tags/tags-selector.component', '../directive/accordion/accordion.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', '../services/timeline.service', '../tags/tags-
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, timeline_service_1, tags_selector_component_1;
+    var core_1, timeline_service_1, tags_selector_component_1, accordion_component_1;
     var TimeLineComponent;
     return {
         setters:[
@@ -22,6 +22,9 @@ System.register(['angular2/core', '../services/timeline.service', '../tags/tags-
             },
             function (tags_selector_component_1_1) {
                 tags_selector_component_1 = tags_selector_component_1_1;
+            },
+            function (accordion_component_1_1) {
+                accordion_component_1 = accordion_component_1_1;
             }],
         execute: function() {
             TimeLineComponent = (function () {
@@ -130,7 +133,7 @@ System.register(['angular2/core', '../services/timeline.service', '../tags/tags-
                         providers: [
                             timeline_service_1.TimeLineService
                         ],
-                        directives: [tags_selector_component_1.TagsSelectorComponent]
+                        directives: [tags_selector_component_1.TagsSelectorComponent, accordion_component_1.Accordion, accordion_component_1.AccordionGroup]
                     }), 
                     __metadata('design:paramtypes', [timeline_service_1.TimeLineService])
                 ], TimeLineComponent);

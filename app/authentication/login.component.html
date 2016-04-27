@@ -1,33 +1,35 @@
-﻿
-            <div class="block-header">
-                <h2></h2>
+﻿<div class="block-header">
+    <h2></h2>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Login</h2>
+    </div>
+
+    <div class="card-body card-padding">
+
+        <p class="c-black f-500 m-b-20">Username</p>
+        <div class="form-group">
+            <div class="fg-line">
+                <input type="text" [(ngModel)]="userDetails.username" class="form-control" placeholder="Username">
             </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h2>Login</h2>
-                </div>
-
-                <div class="card-body card-padding">
-                    
-                        <p class="c-black f-500 m-b-20">Username</p>
-                            <div class="form-group">
-                                <div class="fg-line">
-                                    <input type="text" [(ngModel)]="userDetails.username" class="form-control" placeholder="Username">
-                                </div>
-                            </div>
-                        <p class="c-black f-500 m-b-20">Password</p>
-                            <div class="form-group">
-                                <div class="fg-line">
-                                    <input type="password" [(ngModel)]="userDetails.password" class="form-control" placeholder="Password">
-                                </div>
-                            </div>
-                            <input type="button" value='Login' (click)="login()" class="btn btn-primary" />
-                </div>
+        </div>
+        <p class="c-black f-500 m-b-20">Password</p>
+        <div class="form-group">
+            <div class="fg-line">
+                <input type="password" [(ngModel)]="userDetails.password" class="form-control" placeholder="Password">
             </div>
+        </div>
+        <div class="checkbox">
+            <label><input type="checkbox" [(ngModel)]="userDetails.rememberMe" value="">Remember me</label>
+        </div>
+        <input type="button" value='Login' (click)="login()" class="btn btn-primary" />
+    </div>
+</div>
 
 
-    <!--<br />
+<!--<br />
     <br />
     <br />
     <br />

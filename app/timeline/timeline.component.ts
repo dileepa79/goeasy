@@ -3,6 +3,7 @@ import {TimeLineService} from '../services/timeline.service';
 import {TimeLineResponse} from './timeline-response';
 import { TagsResponse } from '../tags/tags-response';
 import { TagsSelectorComponent } from '../tags/tags-selector.component';
+import {Accordion, AccordionGroup} from '../directive/accordion/accordion.component';
 
 @Component({
     selector: 'timeline',
@@ -10,7 +11,7 @@ import { TagsSelectorComponent } from '../tags/tags-selector.component';
     providers: [
         TimeLineService
     ],
-    directives: [TagsSelectorComponent]
+    directives: [TagsSelectorComponent, Accordion, AccordionGroup]
 })
 
 export class TimeLineComponent implements OnInit {
