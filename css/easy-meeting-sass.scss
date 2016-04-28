@@ -80,3 +80,73 @@ body {
     background:#BDC3C7; 
     padding:0 20px 20px;
 }
+
+/*-------user login and registration--------*/
+.login-content{
+    .input-field label{
+        font-weight:300 !important;
+        margin-left:-10px;
+    }
+}
+
+/*-----timeline------*/
+
+.timeline-icon{
+    background: #6C7A89;
+    width: 40px;
+    height: 40px;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 16px;
+    border-radius:50px;
+    margin-top:10px;
+}
+
+.timeline-wrapper{
+    background:none;
+}
+
+.timeline-group-heading{
+    max-width: 110px;
+    background: #6C7A89;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+
+
+    a{
+        color:#fff;
+    }
+}
+
+.timeline-heading{
+    background: #fff;
+    padding: 10px;
+    font-weight: 300;
+    margin-top: 10px;
+    box-shadow: #f1f1f1 1px 2px 5px;
+    font-size:16px;
+}
+.timeline-description{
+    background: #fff;
+    padding: 10px;
+}
+
+/*----------- timeline accordian componant------------*/
+accordion-group .panel-open a .show-content {
+    display: inline-block;
+}
+
+accordion-group .panel-open a .hide-content {
+    display: none !important;
+}
+
+ a .hide-content {
+    display: inline-block;
+}
+
+ a .show-content {
+    display: none;
+}
+
