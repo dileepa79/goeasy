@@ -42,11 +42,13 @@ System.register(['angular2/core', '../services/timeline.service', '../tags/tags-
                         data: [],
                         isPersistedSearch: false
                     };
-                    this.tags = params.get('tags');
+                    this.tagsStr = params.get('tags');
                 }
                 TimeLineComponent.prototype.ngOnInit = function () {
-                    if (this.tags != null) {
-                        this.timeLineRequest.data = this.tags.split(",");
+                    if (this.tagsStr != null) {
+                        var tagsArr = this.tagsStr.split(",");
+                        this.tagsResponce.data = tagsArr.map(function (d) { return d['name']; });
+                        this.timeLineRequest.data = this.tagsResponce.data;
                     }
                     this.getTimelines();
                 };
