@@ -28,7 +28,6 @@ export class RecentTimeLineComponent implements OnInit {
         this._timeLineService.getRecentTimeLines()
             .subscribe(timelines => {
                 this.recenttimelines = timelines;
-                //this.filteredTimelines = JSON.parse(JSON.stringify(timelines));
                 console.log(this.recenttimelines);
             },
             error => {

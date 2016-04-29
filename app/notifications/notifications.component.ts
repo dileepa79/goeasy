@@ -1,5 +1,6 @@
 ﻿import {Component, OnInit, Input} from 'angular2/core';
 import {NotificationService} from '../services/notifications.service';
+import {NgIf} from 'angular2/common';
 @Component({
     selector: 'notifications',
     templateUrl: './app/notifications/notifications.component.html',

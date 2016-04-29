@@ -2,11 +2,12 @@
 import {TimeLineService} from '../services/timeline.service';
 import {TimeLineResponse} from './timeline-response';
 import {TimeLineRequest} from './timeline-request';
-import { TagsResponse } from '../tags/tags-response';
+import { TagsResponse, Tag } from '../tags/tags-response';
 import { TagsSelectorComponent } from '../tags/tags-selector.component';
 import {Accordion, AccordionGroup} from '../directive/accordion/accordion.component';
 import {AccordionLevel, AccordionGroupLevel} from '../directive/accordion/accordionlevel.component';
 import {RouteParams} from 'angular2/router'
+
 
 @Component({
     selector: 'timeline',
@@ -30,6 +31,7 @@ export class TimeLineComponent implements OnInit, OnDestroy {
     errorMessage: string;
     timelines: any[];
     filteredTimelines: any[];
+    passedTags: Tag[] = [];
       
     public timeLineRequest: TimeLineRequest = {
         data: [],
@@ -40,8 +42,11 @@ export class TimeLineComponent implements OnInit, OnDestroy {
     ngOnInit() {
         if (this.tagsStr != null) {
             var tagsArr = this.tagsStr.split(",");
-            this.tagsResponce.data = tagsArr.map(function (d) { return d['name']; });
-            this.timeLineRequest.data = this.tagsResponce.data;
+            for (var i = 0; i < tagsArr.length; i++) {
+                var tag: any = tagsArr[i] ;
+                this.passedTags.push(tag);
+            }  
+            this.timeLineRequest.data = this.passedTags;
         }  
         
         this.getTimelines();

@@ -22,6 +22,7 @@ System.register(['angular2/platform/browser', './app.component', 'rxjs/add/opera
                 core_1 = core_1_1;
             }],
         execute: function() {
+            // enable production mode and thus disable debugging information
             core_1.enableProdMode();
             browser_1.bootstrap(app_component_1.AppComponent, [
                 http_1.HTTP_PROVIDERS,

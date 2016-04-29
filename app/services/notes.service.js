@@ -56,7 +56,7 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', '../app.co
                     var headers = this._authService.getHeader();
                     headers.append('Content-Type', 'application/json; charset=utf-8');
                     var options = new http_1.RequestOptions({ headers: headers });
-                    this.http.post(this.webApiUrl + '/AddNote', body, options)
+                    this.http.post(this.webApiUrl, body, options)
                         .map(function (res) { return res.json(); })
                         .subscribe(function (data) {
                         console.log("added note: " + data);

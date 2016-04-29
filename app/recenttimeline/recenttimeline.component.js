@@ -42,7 +42,6 @@ System.register(['angular2/core', '../services/recenttimeline.service', '../time
                     this._timeLineService.getRecentTimeLines()
                         .subscribe(function (timelines) {
                         _this.recenttimelines = timelines;
-                        //this.filteredTimelines = JSON.parse(JSON.stringify(timelines));
                         console.log(_this.recenttimelines);
                     }, function (error) {
                         _this.errorMessage = error,

@@ -32,8 +32,8 @@ export class NotesService {
         var headers = this._authService.getHeader();
         headers.append('Content-Type', 'application/json; charset=utf-8');
         var options = new RequestOptions({ headers: headers });
-
-        this.http.post(this.webApiUrl + '/AddNote', body, options)
+        
+        this.http.post(this.webApiUrl, body, options)
             .map(res => res.json())
             .subscribe(
                 data => {

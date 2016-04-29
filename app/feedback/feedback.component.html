@@ -1,2 +1,17 @@
-﻿    <input type="button" class="btn btn-default" value="Like" (click)="sendFeedback(true)"/>
-    <input type="button" class="btn btn-danger" value="Unike" (click)="sendFeedback(false)"/>
+﻿    <!--<input type="button" class="btn btn-default" value="Like" (click)="sendFeedback(true)"/>
+    <input type="button" class="btn btn-danger" value="Unike" (click)="sendFeedback(false)"/>-->
+
+
+
+
+<modal #modal>
+    <modal-header [show-close]="true">
+        <h4 class="modal-title">Please give your Feedback</h4>
+    </modal-header>
+    <modal-body>
+        <input type="button" class="btn btn-default" value="Like" (click)="sendFeedback(true)" />
+        <input type="button" class="btn btn-danger" value="Unike" (click)="sendFeedback(false)" />
+    </modal-body>
+    <!--<modal-footer [show-default-buttons]="true"></modal-footer>-->
+</modal>
+<a href="#" (click)="modal.open()">Give your Feedback</a>

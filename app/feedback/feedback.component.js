@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../services/feedback.service'], function(exports_1, context_1) {
+System.register(['angular2/core', '../services/feedback.service', 'ng2-bs3-modal/ng2-bs3-modal'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', '../services/feedback.service'], function(expo
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, feedback_service_1;
+    var core_1, feedback_service_1, ng2_bs3_modal_1;
     var FeedbackComponent;
     return {
         setters:[
@@ -19,6 +19,9 @@ System.register(['angular2/core', '../services/feedback.service'], function(expo
             },
             function (feedback_service_1_1) {
                 feedback_service_1 = feedback_service_1_1;
+            },
+            function (ng2_bs3_modal_1_1) {
+                ng2_bs3_modal_1 = ng2_bs3_modal_1_1;
             }],
         execute: function() {
             FeedbackComponent = (function () {
@@ -33,6 +36,7 @@ System.register(['angular2/core', '../services/feedback.service'], function(expo
                     core_1.Component({
                         selector: 'user-feedback',
                         templateUrl: 'app/feedback/feedback.component.html',
+                        directives: [ng2_bs3_modal_1.MODAL_DIRECTIVES]
                     }), 
                     __metadata('design:paramtypes', [feedback_service_1.FeedbackService])
                 ], FeedbackComponent);

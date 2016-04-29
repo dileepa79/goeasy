@@ -38,6 +38,7 @@ System.register(['angular2/core', '../services/timeline.service', '../tags/tags-
                     this._timeLineService = _timeLineService;
                     this.oneAtATime = true;
                     this.title = "TIMELINE";
+                    this.passedTags = [];
                     this.timeLineRequest = {
                         data: [],
                         isPersistedSearch: false
@@ -47,8 +48,11 @@ System.register(['angular2/core', '../services/timeline.service', '../tags/tags-
                 TimeLineComponent.prototype.ngOnInit = function () {
                     if (this.tagsStr != null) {
                         var tagsArr = this.tagsStr.split(",");
-                        this.tagsResponce.data = tagsArr.map(function (d) { return d['name']; });
-                        this.timeLineRequest.data = this.tagsResponce.data;
+                        for (var i = 0; i < tagsArr.length; i++) {
+                            var tag = tagsArr[i];
+                            this.passedTags.push(tag);
+                        }
+                        this.timeLineRequest.data = this.passedTags;
                     }
                     this.getTimelines();
                 };
