@@ -1,4 +1,4 @@
-﻿ <div class="panel panel-default" [ngClass]="{'panel-open': isOpen}">
+﻿ <!--<div class="panel panel-default" [ngClass]="{'panel-open': isOpen}">
     <div class="panel-heading" (click)="toggleOpen($event)">
         <h4 class="panel-title">
             <a href tabindex="0"><span>{{heading}}</span></a>
@@ -8,5 +8,19 @@
         <div class="panel-body">
             <ng-content></ng-content>
         </div>
+    </div>
+</div>-->
+
+
+<div class="timeline-wrapper" [class.panel-open]="isOpen">
+        <div class="timeline-group-heading">
+            <a href="#" tabindex="0">
+                <span [class.text-muted]="isDisabled" (click)="toggleOpen($event)"> {{heading}}</span>
+                <span class="show-content glyphicon glyphicon-eye-open"></span>
+                <span class="hide-content glyphicon glyphicon-eye-close"></span>
+            </a>
+    </div>
+    <div class="panel-collapse" [hidden]="!isOpen">
+            <ng-content></ng-content>
     </div>
 </div>

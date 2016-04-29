@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', '../app.constants'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', '../app.constants', './auth.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', '../app.co
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, Observable_1, app_constants_1;
+    var core_1, http_1, Observable_1, app_constants_1, auth_service_1;
     var TagsService;
     return {
         setters:[
@@ -25,16 +25,24 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', '../app.co
             },
             function (app_constants_1_1) {
                 app_constants_1 = app_constants_1_1;
+            },
+            function (auth_service_1_1) {
+                auth_service_1 = auth_service_1_1;
             }],
         execute: function() {
             TagsService = (function () {
-                function TagsService(http, _configuration) {
+                function TagsService(http, _authService, _configuration) {
                     this.http = http;
+                    this._authService = _authService;
                     this._configuration = _configuration;
                     this.webApiUrl = _configuration.ServerWithApiUrl + 'tag';
+                    this.authService = _authService;
                 }
                 TagsService.prototype.getTags = function () {
-                    return this.http.get(this.webApiUrl)
+                    var headers = this.authService.getHeader();
+                    headers.append('Content-Type', 'application/json; charset=utf-8');
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    return this.http.get(this.webApiUrl, options)
                         .toPromise()
                         .then(function (res) { return res.json().data; })
                         .then(function (data) { return data; });
@@ -42,7 +50,8 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', '../app.co
                 TagsService.prototype.addTag = function (tagRequest) {
                     console.log("Tag: " + tagRequest);
                     var body = JSON.stringify(tagRequest);
-                    var headers = new http_1.Headers({ 'Content-Type': 'application/json; charset=utf-8' });
+                    var headers = this.authService.getHeader();
+                    headers.append('Content-Type', 'application/json; charset=utf-8');
                     var options = new http_1.RequestOptions({ headers: headers });
                     return this.http.post('http://localhost:54736/api/tag', body, options)
                         .map(function (res) {
@@ -63,7 +72,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', '../app.co
                 };
                 TagsService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [http_1.Http, app_constants_1.Configuration])
+                    __metadata('design:paramtypes', [http_1.Http, auth_service_1.AuthService, app_constants_1.Configuration])
                 ], TagsService);
                 return TagsService;
             }());

@@ -36,12 +36,23 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', './auth.se
                     this._authService = _authService;
                     this._configuration = _configuration;
                     this.webApiUrl = _configuration.ServerWithApiUrl + 'TimeLine';
+                    this.authService = _authService;
                 }
-                TimeLineService.prototype.getTimeLines = function () {
-                    var headers = new http_1.Headers({ 'Content-Type': 'application/json; charset=utf-8' });
-                    return this.http.get(this.webApiUrl, {
-                        headers: headers
-                    })
+                //public getTimeLines() {
+                //    var headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
+                //    return this.http.get(this.webApiUrl ,{
+                //        headers: headers
+                //    })
+                //        .map(res => <any>res.json())
+                //        .do(data => console.log(data))
+                //        .catch(this.handleError);
+                //}
+                TimeLineService.prototype.getTimeLines = function (timeLineRequest) {
+                    var body = JSON.stringify(timeLineRequest);
+                    var headers = this.authService.getHeader();
+                    headers.append('Content-Type', 'application/json; charset=utf-8');
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    return this.http.post(this.webApiUrl, body, options)
                         .map(function (res) { return res.json(); })
                         .do(function (data) { return console.log(data); })
                         .catch(this.handleError);

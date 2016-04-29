@@ -3,11 +3,12 @@ import {Http, Headers, RequestOptions, Response} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
 import {Router} from 'angular2/router';
 import {Configuration} from '../app.constants';
+import {AuthService} from './auth.service';
 
 @Injectable()
 export class NotesService {
     private webApiUrl: string;
-    constructor(private _router: Router, private http: Http, private _configuration: Configuration) {
+    constructor(private _router: Router, private http: Http, private _configuration: Configuration, private _authService: AuthService) {
         this.webApiUrl = _configuration.ServerWithApiUrl + 'Note';
     }
 
@@ -27,10 +28,12 @@ export class NotesService {
         console.log("Title: " + noteRequest.title + ", description: " + noteRequest.description);
 
         var body = JSON.stringify(noteRequest);
-        var headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
+        //var headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
+        var headers = this._authService.getHeader();
+        headers.append('Content-Type', 'application/json; charset=utf-8');
         var options = new RequestOptions({ headers: headers });
-        
-        this.http.post(this.webApiUrl, body, options)
+
+        this.http.post(this.webApiUrl + '/AddNote', body, options)
             .map(res => res.json())
             .subscribe(
                 data => {

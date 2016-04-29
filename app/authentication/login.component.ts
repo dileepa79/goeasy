@@ -23,9 +23,9 @@ export class LoginComponent implements OnInit {
         if (!this._authService.loginUsingCookies()) return;
     }
     public userDetails: UserDetails = {
-        username: 'test@test.com',
-        password: 'teST@123',
-        rememberMe: true
+        username: '',
+        password: '',
+        rememberMe: false
     };
 
     login() {

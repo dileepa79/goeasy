@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../services/timeline.service', '../tags/tags-selector.component', '../directive/accordion/accordion.component'], function(exports_1, context_1) {
+System.register(['angular2/core', '../services/timeline.service', '../tags/tags-selector.component', '../directive/accordion/accordion.component', '../directive/accordion/accordionlevel.component', 'angular2/router'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', '../services/timeline.service', '../tags/tags-
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, timeline_service_1, tags_selector_component_1, accordion_component_1;
+    var core_1, timeline_service_1, tags_selector_component_1, accordion_component_1, accordionlevel_component_1, router_1;
     var TimeLineComponent;
     return {
         setters:[
@@ -25,14 +25,33 @@ System.register(['angular2/core', '../services/timeline.service', '../tags/tags-
             },
             function (accordion_component_1_1) {
                 accordion_component_1 = accordion_component_1_1;
+            },
+            function (accordionlevel_component_1_1) {
+                accordionlevel_component_1 = accordionlevel_component_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
             }],
         execute: function() {
             TimeLineComponent = (function () {
-                function TimeLineComponent(_timeLineService) {
+                function TimeLineComponent(_timeLineService, params) {
                     this._timeLineService = _timeLineService;
+                    this.oneAtATime = true;
                     this.title = "TIMELINE";
+                    this.timeLineRequest = {
+                        data: [],
+                        isPersistedSearch: false
+                    };
+                    this.tags = params.get('tags');
                 }
                 TimeLineComponent.prototype.ngOnInit = function () {
+                    if (this.tags != null) {
+                        this.timeLineRequest.data = this.tags.split(",");
+                    }
+                    this.getTimelines();
+                };
+                TimeLineComponent.prototype.ngOnDestroy = function () {
+                    this.timeLineRequest.isPersistedSearch = true;
                     this.getTimelines();
                 };
                 TimeLineComponent.prototype.onSelectedTagsAdded = function (tags) {
@@ -90,33 +109,14 @@ System.register(['angular2/core', '../services/timeline.service', '../tags/tags-
                         this.filteredTimelines = JSON.parse(JSON.stringify(this.timelines));
                     }
                 };
-                //getTimelines() {
-                //    this._timeLineService.getTimeLines()
-                //        .subscribe(tl => {
-                //                //this.timelines = timelines;
-                //                tl.forEach((tt) => {
-                //                    this.timelines.push(
-                //                        //new TimeLineResponse(
-                //                        //    tt.Title,
-                //                        //    tt.Description,
-                //                        //    new Date(tt.CreateDate)
-                //                        //));
-                //                        new TimeLineResponse(
-                //                            tt.Title,
-                //                            tt.Description
-                //                        ));
-                //                });
-                //                console.log(this.timelines);
-                //            },
-                //            error => {
-                //                this.errorMessage = <any>error,
-                //                    console.log(this.errorMessage);
-                //            },
-                //            () => () => console.log("Done"));
-                //}
+                TimeLineComponent.prototype.onSelectedTagsChanged = function (tags) {
+                    this.timeLineRequest.data = tags.map(function (d) { return d['name']; });
+                    this.timeLineRequest.isPersistedSearch = false;
+                    this.getTimelines();
+                };
                 TimeLineComponent.prototype.getTimelines = function () {
                     var _this = this;
-                    this._timeLineService.getTimeLines()
+                    this._timeLineService.getTimeLines(this.timeLineRequest)
                         .subscribe(function (timelines) {
                         _this.timelines = timelines;
                         _this.filteredTimelines = JSON.parse(JSON.stringify(timelines));
@@ -133,9 +133,9 @@ System.register(['angular2/core', '../services/timeline.service', '../tags/tags-
                         providers: [
                             timeline_service_1.TimeLineService
                         ],
-                        directives: [tags_selector_component_1.TagsSelectorComponent, accordion_component_1.Accordion, accordion_component_1.AccordionGroup]
+                        directives: [tags_selector_component_1.TagsSelectorComponent, accordion_component_1.Accordion, accordion_component_1.AccordionGroup, accordionlevel_component_1.AccordionLevel, accordionlevel_component_1.AccordionGroupLevel]
                     }), 
-                    __metadata('design:paramtypes', [timeline_service_1.TimeLineService])
+                    __metadata('design:paramtypes', [timeline_service_1.TimeLineService, router_1.RouteParams])
                 ], TimeLineComponent);
                 return TimeLineComponent;
             }());

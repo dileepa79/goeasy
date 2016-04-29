@@ -5386,6 +5386,12 @@ body {
   background: #BDC3C7;
   padding: 0 20px 20px; }
 
+.font-20 {
+  font-size: 20px !important; }
+
+h1, h3 {
+  font-size: 26px; }
+
 /*-------user login and registration--------*/
 .login-content .input-field label {
   font-weight: 300 !important;
@@ -5402,6 +5408,20 @@ body {
   font-size: 16px;
   border-radius: 50px;
   margin-top: 10px; }
+
+.timeline-img {
+  background: #6C7A89;
+  width: 40px;
+  height: 40px;
+  border-radius: 50px; }
+
+.timeline-timestamp {
+  text-align: center;
+  margin-left: -20px; }
+
+.timeline-time {
+  font-size: 10px;
+  margin-top: -5px; }
 
 .timeline-wrapper {
   background: none; }

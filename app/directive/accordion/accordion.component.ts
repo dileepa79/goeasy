@@ -2,20 +2,19 @@
 
 @Component({
     selector: 'accordion',
-    template: `<ng-content></ng-content>`,
-    host: {
-        'class': 'panel-group'
-    }
+    template: `<ng-content></ng-content>`
 })
-
 export class Accordion {
-    groups: Array<AccordionGroup> = [];
+    @Input('closeOthers') private onlyOneOpen: boolean;
+    private groups: Array<AccordionGroup> = [];
 
-    addGroup(group: AccordionGroup): void {
-        this.groups.push(group);
-    }
+    addGroup(group: AccordionGroup): void { this.groups.push(group); }
 
-    closeOthers(openGroup: AccordionGroup): void {
+    closeOthers(openGroup): void {
+        if (!this.onlyOneOpen) {
+            return;
+        }
+
         this.groups.forEach((group: AccordionGroup) => {
             if (group !== openGroup) {
                 group.isOpen = false;
@@ -33,36 +32,30 @@ export class Accordion {
 
 @Component({
     selector: 'accordion-group',
+    inputs: ['heading', 'isOpen', 'isDisabled'],
     templateUrl: './app/directive/accordion/accordion.component.html'
 })
-
 export class AccordionGroup implements OnDestroy {
+    private isDisabled: boolean;
     private _isOpen: boolean = false;
 
-    @Input() heading: string;
+    constructor(private accordion: Accordion) { this.accordion.addGroup(this); }
 
-    @Input()
-    set isOpen(value: boolean) {
+    toggleOpen(event) {
+        event.preventDefault();
+        if (!this.isDisabled) {
+            this.isOpen = !this.isOpen;
+        }
+    }
+
+    ngOnDestroy(): void { this.accordion.removeGroup(this); }
+
+    public get isOpen(): boolean { return this._isOpen; }
+
+    public set isOpen(value: boolean) {
         this._isOpen = value;
         if (value) {
             this.accordion.closeOthers(this);
         }
-    }
-
-    get isOpen() {
-        return this._isOpen;
-    }
-
-    constructor(private accordion: Accordion) {
-        this.accordion.addGroup(this);
-    }
-
-    ngOnDestroy() {
-        this.accordion.removeGroup(this);
-    }
-
-    toggleOpen(event: MouseEvent): void {
-        event.preventDefault();
-        this.isOpen = !this.isOpen;
     }
 }

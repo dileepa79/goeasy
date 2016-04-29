@@ -1,0 +1,69 @@
+<h3>{{title}}</h3>
+<ul class="media-list">
+    <li *ngFor="#timeline of recenttimelines" class="media" (click)="select(timeline)">
+        <div class="media-body">
+            <div class="row">
+                <div class="col-md-1">
+                    <div class="well well-sm">
+                        <div>{{timeline.date }}</div>
+                    </div>
+                </div>
+                <div class="col-md-11">
+                    <div class="well well-sm">
+                        <span *ngFor="#tag of timeline.tags; #last = last">
+                            <span>{{tag.name}}</span>
+                            <span *ngIf="!last">+</span>
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
+
+
+
+
+<!--div class="col-md-12">
+    <div class="col-md-1">
+        <div alt="" class="timeline-icon">
+            <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+        </div>
+
+    </div>
+    <div class="col-md-11">
+        <div class="timeline-heading" data-toggle="collapse" href="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">
+            heading collapse one
+        </div>
+        <div class="timeline-description" id="collapseExample1">
+            zcasd asdasd asdas dasd asd asd asd asas zcasd asdasd asdas dasd asd asd asd asaszcasd asdasd asdas dasd asd asd asd asaszcasd asdasd asdas dasd asd asd asd asas
+        </div>
+        <div class="timeline-heading" data-toggle="collapse" href="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2">
+            heading collapse two
+        </div>
+
+        <div class="timeline-description" id="collapseExample2">
+            zcasd asdasd asdas dasd asd asd asd asas zcasd asdasd asdas dasd asd asd asd asaszcasd asdasd asdas dasd asd asd asd asaszcasd asdasd asdas dasd asd asd asd asas
+        </div>
+    </div>
+</div>
+
+
+<div class="col-md-12">
+    <div class="col-md-1">
+        <div alt="" class="timeline-icon">
+            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+        </div>
+
+    </div>
+    <div class="col-md-11">
+        <div class="timeline-heading" data-toggle="collapse" href="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">
+            Sample Task heading (at 12.30 PM today ) <div class="pull-right"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span></div>
+        </div>
+        <div class="timeline-description" id="collapseExample1">
+            zcasd asdasd asdas dasd asd asd asd asas zcasd asdasd asdas dasd asd asd asd asaszcasd asdasd asdas dasd asd asd asd asaszcasd asdasd asdas dasd asd asd asd asas
+        </div>
+
+    </div>
+</div-->

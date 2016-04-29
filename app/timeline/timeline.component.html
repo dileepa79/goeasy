@@ -1,12 +1,12 @@
 ﻿<h1>{{title}}</h1>
 <div>
-    <prime-app [isAllowedNewInput]="false" (tagsAdded)='onSelectedTagsAdded($event)' (tagsRemoved)="onSelectedTagsRemoved($event)">Loading...</prime-app>
+    <prime-app [isAllowedNewInput]="false" (tagsAdded)='onSelectedTagsChanged($event)' (tagsRemoved)="onSelectedTagsChanged($event)">Loading...</prime-app>
 </div>
 
 <!--<ul class="media-list">
     <li *ngFor="#c of selectedTags" class="media">{{c.name}}</li>
 </ul>-->
-<ul class="media-list">
+<!--<ul class="media-list">
     <li *ngFor="#timeline of filteredTimelines" class="media">
         <div *ngIf="timeline.items.length > 0">{{timeline.dateFormat}}</div>
         <ul class="media-list">
@@ -33,7 +33,60 @@
             </li>
         </ul>
     </li>
-</ul>
+</ul>-->
+
+<!--<accordion [closeOthers]="oneAtATime">
+    <accordion-group [heading]="timeline.dateFormat" *ngFor="#timeline of filteredTimelines; #i = index" [isOpen]="i === 0">
+        <ul class="media-list">
+            <li *ngFor="#Item of timeline.items" class="media">
+                <div class="media-body">
+                    <div class="row">
+                        <div class="col-md-1">
+                            <div class="well well-sm">
+                                <div *ngIf="timeline.dateFormat != 'NOW'">{{Item.date }}</div>
+                                <div>{{Item.time}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-11">
+                            <div class="well well-sm">
+                                <accordion [closeOthers]="true">
+                                    <accordion-group [heading]="Item.title">
+                                        {{Item.description}}
+                                    </accordion-group>
+                                </accordion>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </accordion-group>
+</accordion>-->
+
+<accordion close-others="true">
+    <accordion-group [heading]="timeline.dateFormat" *ngFor="#timeline of filteredTimelines;  #i = index" [isOpen]="i === 0">
+        <div class="col-md-12" *ngFor="#Item of timeline.items">
+            <div class="col-md-1">
+                <div alt="" class="timeline-icon">
+                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                </div>
+                <div class="timeline-timestamp">
+                    <div> {{Item.date }}<!--<span class="font-20">25 </span>May-->
+                    </div>
+                    <div class="timeline-time">{{Item.time}}</div>
+                </div>
+            </div>
+            <div class="col-md-11">
+                <accordionlevel close-others="true">
+                    <accordion-group-level [heading]="Item.title">
+                        <div>{{Item.description}}</div>
+                    </accordion-group-level>
+                </accordionlevel>
+            </div>
+        </div>
+    </accordion-group>
+</accordion>
+<input type="hidden" value="2" id="application-view-id"/>
 
 
 

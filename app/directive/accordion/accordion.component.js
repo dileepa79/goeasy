@@ -22,10 +22,11 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 function Accordion() {
                     this.groups = [];
                 }
-                Accordion.prototype.addGroup = function (group) {
-                    this.groups.push(group);
-                };
+                Accordion.prototype.addGroup = function (group) { this.groups.push(group); };
                 Accordion.prototype.closeOthers = function (openGroup) {
+                    if (!this.onlyOneOpen) {
+                        return;
+                    }
                     this.groups.forEach(function (group) {
                         if (group !== openGroup) {
                             group.isOpen = false;
@@ -38,13 +39,14 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                         this.groups.splice(index, 1);
                     }
                 };
+                __decorate([
+                    core_1.Input('closeOthers'), 
+                    __metadata('design:type', Boolean)
+                ], Accordion.prototype, "onlyOneOpen", void 0);
                 Accordion = __decorate([
                     core_1.Component({
                         selector: 'accordion',
-                        template: "<ng-content></ng-content>",
-                        host: {
-                            'class': 'panel-group'
-                        }
+                        template: "<ng-content></ng-content>"
                     }), 
                     __metadata('design:paramtypes', [])
                 ], Accordion);
@@ -57,10 +59,15 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                     this._isOpen = false;
                     this.accordion.addGroup(this);
                 }
+                AccordionGroup.prototype.toggleOpen = function (event) {
+                    event.preventDefault();
+                    if (!this.isDisabled) {
+                        this.isOpen = !this.isOpen;
+                    }
+                };
+                AccordionGroup.prototype.ngOnDestroy = function () { this.accordion.removeGroup(this); };
                 Object.defineProperty(AccordionGroup.prototype, "isOpen", {
-                    get: function () {
-                        return this._isOpen;
-                    },
+                    get: function () { return this._isOpen; },
                     set: function (value) {
                         this._isOpen = value;
                         if (value) {
@@ -70,25 +77,10 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                     enumerable: true,
                     configurable: true
                 });
-                AccordionGroup.prototype.ngOnDestroy = function () {
-                    this.accordion.removeGroup(this);
-                };
-                AccordionGroup.prototype.toggleOpen = function (event) {
-                    event.preventDefault();
-                    this.isOpen = !this.isOpen;
-                };
-                __decorate([
-                    core_1.Input(), 
-                    __metadata('design:type', String)
-                ], AccordionGroup.prototype, "heading", void 0);
-                __decorate([
-                    core_1.Input(), 
-                    __metadata('design:type', Boolean), 
-                    __metadata('design:paramtypes', [Boolean])
-                ], AccordionGroup.prototype, "isOpen", null);
                 AccordionGroup = __decorate([
                     core_1.Component({
                         selector: 'accordion-group',
+                        inputs: ['heading', 'isOpen', 'isDisabled'],
                         templateUrl: './app/directive/accordion/accordion.component.html'
                     }), 
                     __metadata('design:paramtypes', [Accordion])

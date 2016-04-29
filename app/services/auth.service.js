@@ -76,7 +76,7 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', './token.s
                             _this.setCookie("username", username, 15);
                             _this.setCookie("password", password, 15);
                         }
-                        _this._router.navigate(['TimeLine']);
+                        _this._router.navigate(['Dashboard']);
                     });
                 };
                 AuthService.prototype.isAuth = function () {

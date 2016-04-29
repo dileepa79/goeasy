@@ -3,7 +3,6 @@ import {Http, Headers} from 'angular2/http';
 import {Observable} from 'rxjs/Rx';
 import { Router} from 'angular2/router';
 import {TokenService} from './token.service';
-import {LoginComponent} from '../authentication/login.component';
 import {AppComponent} from '../app.component';
 import {Configuration} from '../app.constants';
 
@@ -51,7 +50,7 @@ export class AuthService {
                     this.setCookie("username", username, 15);
                     this.setCookie("password", password, 15);
                 }
-                this._router.navigate(['TimeLine']);
+                this._router.navigate(['Dashboard']);
             }
             );
     }
