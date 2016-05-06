@@ -4,8 +4,8 @@ import {TimeLineResponse} from './timeline-response';
 import {TimeLineRequest} from './timeline-request';
 import { TagsResponse, Tag } from '../tags/tags-response';
 import { TagsSelectorComponent } from '../tags/tags-selector.component';
-import {Accordion, AccordionGroup} from '../directive/accordion/accordion.component';
-import {AccordionLevel, AccordionGroupLevel} from '../directive/accordion/accordionlevel.component';
+import {TimelineInfo, TimelineGroup} from './timelinegroup/timelinegroup.component';
+import {TimelineDetail, TimelineDetailGroup} from './timelinegroup/timelinedetail.component';
 import {RouteParams} from 'angular2/router'
 
 
@@ -15,7 +15,7 @@ import {RouteParams} from 'angular2/router'
     providers: [
         TimeLineService
     ],
-    directives: [TagsSelectorComponent, Accordion, AccordionGroup, AccordionLevel, AccordionGroupLevel]
+    directives: [TagsSelectorComponent, TimelineInfo, TimelineGroup, TimelineDetail, TimelineDetailGroup]
 })
 
 export class TimeLineComponent implements OnInit, OnDestroy {

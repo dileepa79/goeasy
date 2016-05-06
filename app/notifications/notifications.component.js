@@ -44,6 +44,7 @@ System.register(['angular2/core', '../services/notifications.service'], function
                     core_1.Component({
                         selector: 'notifications',
                         templateUrl: './app/notifications/notifications.component.html',
+                        styles: ["\n    .zippy {\n      background-color: #ff0000 !important;\n    }\n   .zippy2 {\n      background-color: #a21318 !important;\n    }\n  "],
                         providers: [
                             notifications_service_1.NotificationService
                         ],

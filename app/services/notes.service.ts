@@ -8,8 +8,9 @@ import {AuthService} from './auth.service';
 @Injectable()
 export class NotesService {
     private webApiUrl: string;
+    tags: string = '';
     constructor(private _router: Router, private http: Http, private _configuration: Configuration, private _authService: AuthService) {
-        this.webApiUrl = _configuration.ServerWithApiUrl + 'Note';
+        this.webApiUrl = _configuration.ServerWithApiUrl + 'Note/AddNote';
     }
 
     //public addNote(noteRequest) {
@@ -41,7 +42,10 @@ export class NotesService {
                 },
                 err => console.log("error: " + JSON.stringify(err)),
                 () => {
-                    this._router.navigate(['TimeLine']);
+                    for (var i = 0; i < noteRequest.tags.length; i++) {
+                        this.tags = this.tags + (noteRequest.tags[i] + (noteRequest.tags.length != i + 1 ? ',' : ''));
+                    }
+                    this._router.navigate(['TimeLine', { tags: this.tags }]);
                 }
             );
     }

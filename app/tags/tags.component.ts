@@ -1,27 +1,38 @@
 ﻿import {Component, OnInit} from 'angular2/core';
+import {Router}  from 'angular2/router';
 import { TagsService } from '../services/tags.service';
 import { Tag } from './tags-response';
+import { TagFilterPipe } from './tags-filter.pipe';
 import { Collapse } from 'ng2-bootstrap/ng2-bootstrap';
+import {Button} from 'primeng/primeng';
 
 @Component({
     selector: 'add-tag',
     templateUrl: './app/tags/tags.component.html',
-    directives: [Collapse],
+    pipes: [TagFilterPipe],
+    directives: [Collapse, Button],
     providers: [
         TagsService
     ]
 })
 
 export class TagsComponent implements OnInit{
-    constructor(private tagsService: TagsService) {
+    constructor(private _router: Router, private tagsService: TagsService) {
     }
 
     ngOnInit() {
         this.getTags();
     }
 
+    onClick(tag: Tag) {
+        this._router.navigate(['TagDetail', { id: tag.id }]);
+    }
+
     public tagRequest: Tag = {
-        name: ''
+        id: 0,
+        name: '',
+        createdBy: '',
+        createdDate: ''
     };
 
     public isCollapsed: boolean = false;

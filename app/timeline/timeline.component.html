@@ -1,6 +1,13 @@
-﻿<h1>{{title}}</h1>
-<div>
-    <prime-app [isAllowedNewInput]="false" (tagsAdded)='onSelectedTagsChanged($event)' (tagsRemoved)="onSelectedTagsChanged($event)">Loading...</prime-app>
+﻿
+<!-- Timeline Heading and Add Note -->
+<h1>{{title}} 
+    <button class="waves-effect  btn" id="chat-trigger" data-trigger="#chat">
+        <i class="material-icons">playlist_add</i> <span>add note</span>
+    </button>
+</h1>
+<!-- Tag search -->
+<div style="margin-bottom:20px;">
+    <prime-app [isAllowedNewInput]="false" [inputValues]="timeLineRequest.data" (tagsAdded)='onSelectedTagsChanged($event)' (tagsRemoved)="onSelectedTagsChanged($event)">Loading...</prime-app>
 </div>
 
 <!--<ul class="media-list">
@@ -63,29 +70,43 @@
     </accordion-group>
 </accordion>-->
 
-<accordion close-others="true">
-    <accordion-group [heading]="timeline.dateFormat" *ngFor="#timeline of filteredTimelines;  #i = index" [isOpen]="i === 0">
-        <div class="col-md-12" *ngFor="#Item of timeline.items">
-            <div class="col-md-1">
-                <div alt="" class="timeline-icon">
-                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
-                </div>
-                <div class="timeline-timestamp">
-                    <div class="font-14"> {{Item.date }}<!--<span class="font-20">25 </span>May-->
-                    </div>
-                    <div class="timeline-time">{{Item.time}}</div>
-                </div>
-            </div>
+
+<!-- Timeline -->
+<timelineinfo close-others="true">
+    <timeline-group [heading]="timeline.dateFormat" *ngFor="#timeline of filteredTimelines;  #i = index" [isOpen]="i === 0" [availableCountText]= "timeline.availableThreadsCountText">
+        
+        <div class="col-md-12 " *ngFor="#Item of timeline.items">
+            <div class="col-md-1"></div>
             <div class="col-md-11">
-                <accordionlevel close-others="true">
-                    <accordion-group-level [heading]="Item.title">
-                        <div>{{Item.description}}</div>
-                    </accordion-group-level>
-                </accordionlevel>
+                <div class="col-md-1" style="border-left: 1px solid #eceff1; margin-left:-35px;">
+                    <div alt="" class="timeline-icon">
+                        <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                    </div>
+                    <div class="timeline-timestamp">
+                        <div class="font-14">
+                            {{Item.date }}<!--<span class="font-20">25 </span>May-->
+                        </div>
+                        <div class="timeline-time">{{Item.time}}</div>
+                    </div>
+                    <!--<div alt="" class="timeline-img">
+                <img class="circle responsive-img" src={{Item.userImageUrl}}>
+            </div>-->
+                </div>
+                <div class="col-md-11 no-padding" style="margin-top:20px;">
+                    <timelinedetail close-others="true">
+                        <div alt="" class="timeline-img" style="position:absolute; margin-right:60px;">
+                            <img class="circle responsive-img" src={{Item.userImageUrl}}>
+                        </div>
+                        <timeline-detail-group [heading]="Item.title">
+
+                            <div [innerHTML]="Item.description"></div>
+                        </timeline-detail-group>
+                    </timelinedetail>
+                </div>
             </div>
         </div>
-    </accordion-group>
-</accordion>
+    </timeline-group>
+</timelineinfo>
 <input type="hidden" value="2" id="application-view-id"/>
 
 

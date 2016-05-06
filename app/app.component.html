@@ -1,4 +1,4 @@
-﻿<header id="header">
+﻿<header id="header" *ngIf="isAuthorized">
     <!-- logo and hanbergur menu icon -->
     <ul class="header-inner col-md-3">
         <li id="menu-trigger" data-trigger="#sidebar" *ngIf="isAuthorized">
@@ -17,9 +17,11 @@
     <!-- Top Search Content -->
     <div class="top-serch form-group col-md-8" *ngIf="isAuthorized">
         <div class="input-group">
-            <span class="input-group-addon glyphicon glyphicon-search" id="basic-addon1" aria-hidden="true"></span>
-            <input class="form-control ng-pristine ng-valid ng-touched main-search-input" placeholder="enter your keywords, date, people or anything to search ..." type="text">
-        </div>
+            <!--<span class="input-group-addon glyphicon glyphicon-search" id="basic-addon1" aria-hidden="true"></span>-->
+            <span class="input-group-addon " id="basic-addon1" aria-hidden="true">
+                <i class="material-icons" style="font-size: 30px; color: #fff;">search</i></span>
+                <input class="form-control ng-pristine ng-valid ng-touched main-search-input" placeholder="enter your keywords, date, people or anything to search ..." type="text">
+</div>
     </div>
     <!-- user profile -->
     <div class="col-md-1" *ngIf="isAuthorized">
@@ -220,16 +222,14 @@
                             <a href=""><i class="zmdi zmdi-settings"></i> Other Settings</a>
                         </li>
                     </ul>
-                </li>
-                <li class="hidden-xs" id="chat-trigger" data-trigger="#chat">
-                    <a class="tm-chat" href=""></a>
                 </li>-->
+                
             </ul>
         </li>
     </ul>
 </div>
 <section id="main">
-    <aside id="sidebar" *ngIf="isAuthorized">
+    <aside id="sidebar" *ngIf="isAuthorized" style="z-index: 9">
 
         <user-profile></user-profile>
         <!--<div class="sidebar-inner c-overflow">
@@ -270,7 +270,7 @@
     </aside>
 
     <aside id="chat" *ngIf="isAuthorized">
-        sssssss
+      <add-note></add-note>
     </aside>
 
 
@@ -294,15 +294,17 @@
 
 
                 <!-- floating fixed button -->
-                <div class="fixed-action-btn click-to-toggle" style="bottom: 45px; right: 24px;" *ngIf="isAuthorized">
+                <div class="fixed-action-btn " style="bottom: 45px; right: 24px;" *ngIf="isAuthorized">
                     <a class="btn-floating btn-large red">
-                        <i class="large material-icons">mode_edit</i>
+                        <i class="material-icons">add</i>
+                        <!--<span class="glyphicon glyphicon-option-vertical large" aria-hidden="true"></span>-->
                     </a>
                     <ul>
-                        <li><a class="btn-floating red" [routerLink]="['Tags']"><i class="material-icons">toc</i>Tags</a></li>
-                        <li><a class="btn-floating yellow darken-1" [routerLink]="['TimeLine']"><i class="material-icons">av_timer</i>TimeLine</a></li>
-                        <li><a class="btn-floating green" [routerLink]="['AddNote']"><i class="material-icons">note_add</i>Add Note</a></li>
-                        <li><a class="btn-floating blue" [routerLink]="['Dashboard']"><i class="material-icons">dashboard</i>Dashboard</a></li>
+                        <!--<li><button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Tooltip on left">Tooltip on left</button></li>-->
+                        <li><a class="btn-floating red" [routerLink]="['Tags']" title="Tags" data-toggle="tooltip" data-placement="left" ><i class="material-icons">subtitles</i>Tags</a></li>
+                        <li><a class="btn-floating yellow darken-1" [routerLink]="['TimeLine']" title="TimeLine"><i class="material-icons">access_time</i>TimeLine</a></li>
+                        <li><a class="btn-floating green" [routerLink]="['AddNote']" title="Add Note"><i class="material-icons">playlist_add</i>Add Note</a></li>
+                        <li><a class="btn-floating blue" [routerLink]="['Dashboard']" title="Dashboard"><i class="material-icons">dvr</i>Dashboard</a></li>
                     </ul>
                 </div>
                 <!-- --------------------- -->
@@ -315,7 +317,7 @@
 
 
 <footer id="footer">
-    <div style="float:left; margin-left:20px;"><user-feedback></user-feedback></div>
+    <div style="float:left; margin-left:20px; bottom:20px; position:fixed;"><user-feedback></user-feedback></div>
 
     Copyright &copy; 2016 YAYI Collaboration
 
@@ -328,3 +330,8 @@
     </ul>
 </footer>
 
+<!--<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>-->

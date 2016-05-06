@@ -47,6 +47,15 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', '../app.co
                         .then(function (res) { return res.json().data; })
                         .then(function (data) { return data; });
                 };
+                TagsService.prototype.getAllTags = function () {
+                    var headers = this.authService.getHeader();
+                    headers.append('Content-Type', 'application/json; charset=utf-8');
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    return this.http.get(this.webApiUrl, options)
+                        .map(function (res) { return res.json(); })
+                        .do(function (data) { return console.log(data); })
+                        .catch(this.handleError);
+                };
                 TagsService.prototype.addTag = function (tagRequest) {
                     console.log("Tag: " + tagRequest);
                     var body = JSON.stringify(tagRequest);

@@ -36,7 +36,8 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', '../app.co
                     this.http = http;
                     this._configuration = _configuration;
                     this._authService = _authService;
-                    this.webApiUrl = _configuration.ServerWithApiUrl + 'Note';
+                    this.tags = '';
+                    this.webApiUrl = _configuration.ServerWithApiUrl + 'Note/AddNote';
                 }
                 //public addNote(noteRequest) {
                 //    console.log("Title: " + noteRequest.title + ", description: " + noteRequest.description);
@@ -61,7 +62,10 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', '../app.co
                         .subscribe(function (data) {
                         console.log("added note: " + data);
                     }, function (err) { return console.log("error: " + JSON.stringify(err)); }, function () {
-                        _this._router.navigate(['TimeLine']);
+                        for (var i = 0; i < noteRequest.tags.length; i++) {
+                            _this.tags = _this.tags + (noteRequest.tags[i] + (noteRequest.tags.length != i + 1 ? ',' : ''));
+                        }
+                        _this._router.navigate(['TimeLine', { tags: _this.tags }]);
                     });
                 };
                 NotesService = __decorate([

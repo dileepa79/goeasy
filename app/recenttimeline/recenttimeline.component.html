@@ -1,41 +1,85 @@
-<h3>{{title}}</h3>
-<!--ul class="media-list">
-    <li *ngFor="#timeline of recenttimelines" class="media" (click)="select(timeline)">
-        <div class="media-body">
-            <div class="row">
-                <div class="col-md-1">
-                    <div class="well well-sm">
-                        <div>{{timeline.date }}</div>
-                    </div>
-                </div>
-                <div class="col-md-11">
-                    <div class="well well-sm">
-                        <span *ngFor="#tag of timeline.tags; #last = last">
-                            <span>{{tag.name}}</span>
-                            <span *ngIf="!last">+</span>
-                        </span>
 
+    <h3>{{title}}</h3>
+
+    <modal [animation]="animation" [keyboard]="keyboard" [backdrop]="backdrop" #parentModal>
+        <modal-header [show-close]="true">
+            <h4 class="modal-title">Share With</h4>
+        </modal-header>
+        <modal-body>
+            <sharetimeline></sharetimeline>
+
+        </modal-body>
+        <modal-footer>
+            <button type="button" class="btn btn-default" data-dismiss="modal" (click)="parentModal.dismiss()">Cancel</button>
+            <button type="button" class="btn btn-primary" (click)="parentModal.close()">Share</button>
+        </modal-footer>
+    </modal>
+
+
+
+    <div class="col-md-12" *ngFor="#timeline of recentTimelines" class="media">
+        <div class="col-md-1">
+            <div alt="" class="timeline-icon row">
+                <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+            </div>
+            <div class="timeline-timestamp" calss="row">
+                {{timeline.date }}
+            </div>
+        </div>
+
+        <div class="col-md-11" >
+            <div class="timeline-description row" id="collapseExample1">
+                <div class="col-md-12">
+                <div style="padding:10px 0px 10px 0px">
+                    <div class="row">
+                        <div class="col-md-11">
+                            <a (click)="select(timeline)"><span *ngFor="#tag of timeline.tags; #last = last">{{tag.name}}<span *ngIf="!last"> + </span></span></a> (100+ Entries)
+                        </div>
+                        <div class="col-md-1" (click) ="watch(timeline); $event.stopPropagation()">
+                            <span *ngIf="timeline.isWatched" class="fa-stack fa-lg" title="Watched">
+                                <i class="fa fa-heart fa-stack-2x" style="color:cornflowerblue"></i>
+                                <i class="fa fa-stack-2x" style="color:white"></i>
+                            </span>
+                            <span *ngIf="!timeline.isWatched" class="fa-stack fa-lg" title="">
+                                <i class="fa fa-heart fa-stack-2x" style="color:grey"></i>
+                                <i class="fa fa-stack-2x" style="color:white"></i>
+                            </span>
+                        </div>
                     </div>
+
+                    <div style="padding:10px 0px 10px 0px">
+                        <div class="row">
+                            <div class="col-md-12">
+                                1 NEW Note created by Petter L
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="padding:10px 0px 10px 0px">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <span>SHARED WITH</span>
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x" style="color:mediumslateblue"></i>
+                                    <i class="fa fa-stack-1x" style="color:white">A</i>
+                                </span>
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-square fa-stack-2x" style="color:cornflowerblue"></i>
+                                    <i class="fa fa-stack-1x" style="color:white">H</i>
+                                </span>
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-square fa-stack-2x" style="color:lightcoral"></i>
+                                    <i class="fa fa-stack-1x" style="color:white">Y</i>
+                                </span>
+
+                            </div>
+                            <div class="col-md-3">
+                                <input type="button" value='Share' (click)="parentModal.open()" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
-    </li>
-</ul-->
-
-
-<div class="col-md-12" *ngFor="#timeline of recenttimelines" class="media">
-    <div class="col-md-1">
-        <div alt="" class="timeline-icon row">
-            <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
-        </div>
-        <div class="timeline-timestamp" calss="row">            
-                {{timeline.date }}           
-        </div>
     </div>
-    <div class="col-md-11" (click)="select(timeline)">
-        <div class="timeline-description" id="collapseExample1"  >
-            <span *ngFor="#tag of timeline.tags; #last = last">{{tag.name}}<span *ngIf="!last"> + </span></span>           
-        </div>
-    </div>
-</div>
-

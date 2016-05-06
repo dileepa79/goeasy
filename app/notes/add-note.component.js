@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../services/notes.service', '../timeline/timeline.component', '../tags/tags-selector.component', 'ng2-bs3-modal/ng2-bs3-modal'], function(exports_1, context_1) {
+System.register(['angular2/core', '../services/notes.service', '../timeline/timeline.component', '../tags/tags-selector.component', 'ng2-bs3-modal/ng2-bs3-modal', 'primeng/primeng'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', '../services/notes.service', '../timeline/time
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, notes_service_1, timeline_component_1, tags_selector_component_1, ng2_bs3_modal_1;
+    var core_1, notes_service_1, timeline_component_1, tags_selector_component_1, ng2_bs3_modal_1, primeng_1, primeng_2;
     var AddNoteComponent;
     return {
         setters:[
@@ -28,6 +28,10 @@ System.register(['angular2/core', '../services/notes.service', '../timeline/time
             },
             function (ng2_bs3_modal_1_1) {
                 ng2_bs3_modal_1 = ng2_bs3_modal_1_1;
+            },
+            function (primeng_1_1) {
+                primeng_1 = primeng_1_1;
+                primeng_2 = primeng_1_1;
             }],
         execute: function() {
             AddNoteComponent = (function () {
@@ -41,6 +45,7 @@ System.register(['angular2/core', '../services/notes.service', '../timeline/time
                     this.title = "ADD NOTES";
                     this.tags = [];
                 }
+                // text1: string = '<div>Hello World!</div><div>PrimeNG <b>Editor</b> Rocks</div><div><br></div>';;
                 AddNoteComponent.prototype.Save = function () {
                     this._notesService.addNote(this.noteRequest);
                 };
@@ -57,7 +62,7 @@ System.register(['angular2/core', '../services/notes.service', '../timeline/time
                         providers: [
                             notes_service_1.NotesService
                         ],
-                        directives: [timeline_component_1.TimeLineComponent, tags_selector_component_1.TagsSelectorComponent, ng2_bs3_modal_1.MODAL_DIRECTIVES]
+                        directives: [timeline_component_1.TimeLineComponent, tags_selector_component_1.TagsSelectorComponent, ng2_bs3_modal_1.MODAL_DIRECTIVES, primeng_1.Editor, primeng_2.Header]
                     }), 
                     __metadata('design:paramtypes', [notes_service_1.NotesService])
                 ], AddNoteComponent);

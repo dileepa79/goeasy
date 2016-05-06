@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../services/auth.service'], function(exports_1, context_1) {
+System.register(['angular2/core', '../services/auth.service', '../app.constants'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', '../services/auth.service'], function(exports_
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, auth_service_1;
+    var core_1, auth_service_1, app_constants_1;
     var UserProfileComponent;
     return {
         setters:[
@@ -19,17 +19,32 @@ System.register(['angular2/core', '../services/auth.service'], function(exports_
             },
             function (auth_service_1_1) {
                 auth_service_1 = auth_service_1_1;
+            },
+            function (app_constants_1_1) {
+                app_constants_1 = app_constants_1_1;
             }],
         execute: function() {
             UserProfileComponent = (function () {
-                function UserProfileComponent(_authService) {
+                function UserProfileComponent(_authService, _configuration) {
                     this._authService = _authService;
+                    this._configuration = _configuration;
+                    this.webApiUrl = _configuration.ServerWithApiUrl + 'Account/GetUserProfile';
                 }
                 UserProfileComponent.prototype.ngOnInit = function () {
+                    var _this = this;
+                    setTimeout(function () {
+                        _this.getUserProfile();
+                    }, 10000);
+                    //this.getUserProfile();
                 };
                 UserProfileComponent.prototype.logout = function () {
                     console.log("logout");
                     this._authService.logout();
+                };
+                UserProfileComponent.prototype.getUserProfile = function () {
+                    this._authService.get(this.webApiUrl, function (data) {
+                        console.log(JSON.stringify(data));
+                    });
                 };
                 UserProfileComponent = __decorate([
                     core_1.Component({
@@ -37,7 +52,7 @@ System.register(['angular2/core', '../services/auth.service'], function(exports_
                         styleUrls: ['app/app.component.css'],
                         templateUrl: 'app/userprofile/userprofile.component.html'
                     }), 
-                    __metadata('design:paramtypes', [auth_service_1.AuthService])
+                    __metadata('design:paramtypes', [auth_service_1.AuthService, app_constants_1.Configuration])
                 ], UserProfileComponent);
                 return UserProfileComponent;
             }());

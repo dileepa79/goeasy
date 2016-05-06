@@ -24,6 +24,18 @@ export class TagsService {
             .then(data => { return data; });
     }
 
+    getAllTags() {
+
+        var headers = this.authService.getHeader();
+        headers.append('Content-Type', 'application/json; charset=utf-8');
+        var options = new RequestOptions({ headers: headers });
+
+        return this.http.get(this.webApiUrl, options)
+            .map(res => <any>res.json())
+            .do(data => console.log(data))
+            .catch(this.handleError);
+    }
+
     public addTag(tagRequest): Observable<Tag> {
         console.log("Tag: " + tagRequest);
 

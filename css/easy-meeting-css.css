@@ -5354,6 +5354,12 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 body {
   background-color: #fbfbfb;
   font-family: 'Roboto', sans-serif !important; }
+  body #content {
+    padding: 0 0 30px 0 !important; }
+  body #main {
+    margin-top: 50px; }
+  body #header {
+    background: #0277bd; }
 
 .header-inner .logo a {
   color: #fff;
@@ -5363,10 +5369,22 @@ body {
   font-size: 30px;
   line-height: 36px;
   font-family: 'Sacramento', cursive;
-  font-weight: bold; }
+  font-weight: bold;
+  text-decoration: none; }
+
+.login-logo {
+  color: #fff;
+  text-transform: none;
+  display: block;
+  font-size: 60px;
+  font-family: 'Sacramento', cursive;
+  text-decoration: none;
+  padding: 180px 0 0 0;
+  text-align: center;
+  font-weight: 600; }
 
 .top-serch {
-  padding: 15px 0; }
+  padding: 10px 0 15px 0; }
   .top-serch .glyphicon-search {
     padding: 0 10px 5px 0;
     color: #fff;
@@ -5381,17 +5399,31 @@ body {
     color: #fff; }
   .top-serch input[type="text"].main-search-input::-webkit-input-placeholder {
     color: #fff; }
+  .top-serch .input-group-addon {
+    background: none;
+    border: none; }
 
 .main-action-bar {
-  background: #BDC3C7;
-  padding: 0 20px 20px; }
+  background: #cfd8dc;
+  padding: 0 20px 10px;
+  position: fixed;
+  width: 100%;
+  z-index: 9; }
 
 .font-14 {
   font-size: 14px !important;
-  font-weight: 500; }
+  font-weight: 300; }
 
 h1, h3 {
   font-size: 26px; }
+
+.btn-secondary {
+  background: #90a4ae !important; }
+
+#chat {
+  top: 121px !important;
+  height: calc(100% - 121px) !important;
+  z-index: 8 !important; }
 
 /*-------user login and registration--------*/
 .login-content .input-field label {
@@ -5428,26 +5460,40 @@ h1, h3 {
   box-shadow: none; }
 
 /*-----timeline------*/
+h1 .btn, h1 .btn-large {
+  padding: 0 20px;
+  margin-left: 10px; }
+  h1 .btn span, h1 .btn-large span {
+    display: block;
+    float: right;
+    padding: 1px 0 0 10px; }
+
+prime-app input[type=text] {
+  height: 20px; }
+
 .timeline-icon {
   width: 40px;
   height: 40px;
-  color: #6C7A89;
+  color: #ddd;
   text-align: center;
   padding: 9px 0;
   font-size: 16px;
   border-radius: 50px;
-  margin-top: 10px;
-  border: 2px solid #6C7A89; }
+  /*margin-top: 10px;*/
+  margin: 0 0 0 -35px;
+  border: 1px solid #ddd;
+  background: #fff; }
 
 .timeline-img {
-  background: #6C7A89;
-  width: 40px;
-  height: 40px;
-  border-radius: 50px; }
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  box-shadow: 0 0px 10px 0 rgba(0, 0, 0, 0.1); }
 
 .timeline-timestamp {
   text-align: center;
-  margin-left: -20px; }
+  margin-left: -25px;
+  margin-bottom: 20px; }
 
 .timeline-time {
   font-size: 10px;
@@ -5458,8 +5504,8 @@ h1, h3 {
   margin-bottom: 20px; }
 
 .timeline-group-heading {
-  max-width: 110px;
-  background: #DADFE1;
+  max-width: 170px;
+  background: #ffe57f;
   padding: 10px;
   border-radius: 2px;
   text-align: center;
@@ -5474,10 +5520,11 @@ h1, h3 {
     color: #fff; }
 
 .timeline-heading {
-  background: #DADFE1;
+  background: #eceff1;
   padding: 10px;
-  font-weight: 300;
-  margin-top: 10px;
+  font-weight: 400;
+  margin-top: 5px;
+  margin-left: 64px;
   transition: .2s ease-out;
   /*box-shadow: #f1f1f1 1px 2px 5px;*/
   font-size: 16px;
@@ -5495,13 +5542,15 @@ h1, h3 {
 .timeline-description {
   background: #fff;
   padding: 10px;
-  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.05); }
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+  margin-left: 64px; }
 
 /*----------- timeline accordian componant------------*/
-accordion-group .panel-open a .show-content {
+timeline-group .panel-open a .show-content {
   display: inline-block; }
 
-accordion-group .panel-open a .hide-content {
+timeline-group .panel-open a .hide-content {
   display: none !important; }
 
 a .hide-content {
@@ -5509,5 +5558,12 @@ a .hide-content {
 
 a .show-content {
   display: none; }
+
+/*----------Add note slider ---------*/
+#chat {
+  width: 60% !important;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 0 20px; }
 
 /*# sourceMappingURL=easy-meeting-css.css.map */

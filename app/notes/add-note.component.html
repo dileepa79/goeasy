@@ -1,5 +1,9 @@
 ﻿<div class="container">
-    <h1>{{title}}</h1>
+    <h1>{{title}}
+        <button class="btn-secondary waves-effect  btn" (click)="modal.open()">
+            <i class="material-icons">share</i> <span>share</span>
+        </button>
+    </h1>
     <modal #modal>
         <modal-header [show-close]="true">
             <h4 class="modal-title">Share with</h4>
@@ -32,14 +36,17 @@
             </div>
             <div class="form-group">
                 <label>Description</label>
-                <textarea rows="10" cols="50" [(ngModel)]="noteRequest.description" class="form-control"></textarea>
-            </div>
+                <!--<textarea rows="10" cols="50" [(ngModel)]="noteRequest.description" class="form-control"></textarea>-->
+                <p-editor [(ngModel)]="noteRequest.description" style="height: 320px">
+                </p-editor>
+                </div>
             <div class="form-group">
                 <label>Tags</label>
                 <prime-app [isAllowedNewInput]="true" (tagsAdded)='onSelectedTagsChanged($event)' (tagsRemoved)="onSelectedTagsChanged($event)">Loading...</prime-app>
             </div>
             <input type="button" value='Save' (click)="Save()" class="btn btn-success" />
-            <input type="button" value='Share' (click)="modal.open()" class="btn btn-primary" />
+            <!--<input type="button" value='Share' (click)="modal.open()" class="btn btn-primary" />-->
+            <input type="button" value='Close' class="btn-secondary btn " />
         <div class="col-md-4">
 
         </div>
@@ -47,5 +54,5 @@
     </div>
 </div>
 </div>
-<timeline></timeline>
+<!--<timeline></timeline>-->
 <input type="hidden" value="0" id="application-view-id" />

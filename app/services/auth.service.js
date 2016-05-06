@@ -84,7 +84,7 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', './token.s
                 };
                 AuthService.prototype.get = function (url, callback) {
                     var authHeader = new http_1.Headers();
-                    authHeader.append('Authorization', 'bearer ' + this._token);
+                    authHeader.append('Authorization', 'bearer ' + this.tokenService.getToken());
                     this.http.get(url, {
                         headers: authHeader
                     })

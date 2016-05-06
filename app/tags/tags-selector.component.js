@@ -67,10 +67,14 @@ System.register(['angular2/core', 'primeng/primeng', '../services/tags.service']
                     core_1.Input(), 
                     __metadata('design:type', Boolean)
                 ], TagsSelectorComponent.prototype, "isAllowedNewInput", void 0);
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Array)
+                ], TagsSelectorComponent.prototype, "inputValues", void 0);
                 TagsSelectorComponent = __decorate([
                     core_1.Component({
                         selector: 'prime-app',
-                        template: "\n        <p-autoComplete [(ngModel)]=\"tags\" [suggestions]=\"filteredtagsMultiple\" (completeMethod)=\"filtertagMultiple($event)\" style=\"width:100%\"\n            [minLength]=\"1\" placeholder=\"Select Tags\" field=\"name\" [multiple]=\"true\" [allowNewInput] = \"isAllowedNewInput\" (onSelect)=\"handleSelectTag($event)\" (onUnselect)=\"handleUnSelectTag($event)\">\n        </p-autoComplete>\n    ",
+                        template: "\n        <p-autoComplete [(ngModel)]=\"tags\" [suggestions]=\"filteredtagsMultiple\" (completeMethod)=\"filtertagMultiple($event)\" style=\"width:100%\"\n            [minLength]=\"1\" placeholder=\"Select Tags\" field=\"name\" [multiple]=\"true\" [allowNewInput] = \"isAllowedNewInput\" [inputValues] = \"inputValues\" (onSelect)=\"handleSelectTag($event)\" (onUnselect)=\"handleUnSelectTag($event)\">\n        </p-autoComplete>\n    ",
                         directives: [primeng_1.AutoComplete],
                         providers: [tags_service_1.TagsService]
                     }), 

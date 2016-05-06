@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../services/tags.service', 'ng2-bootstrap/ng2-bootstrap'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', '../services/tags.service', './tags-filter.pipe', 'ng2-bootstrap/ng2-bootstrap', 'primeng/primeng'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,25 +10,38 @@ System.register(['angular2/core', '../services/tags.service', 'ng2-bootstrap/ng2
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, tags_service_1, ng2_bootstrap_1;
+    var core_1, router_1, tags_service_1, tags_filter_pipe_1, ng2_bootstrap_1, primeng_1;
     var TagsComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
+            function (router_1_1) {
+                router_1 = router_1_1;
+            },
             function (tags_service_1_1) {
                 tags_service_1 = tags_service_1_1;
             },
+            function (tags_filter_pipe_1_1) {
+                tags_filter_pipe_1 = tags_filter_pipe_1_1;
+            },
             function (ng2_bootstrap_1_1) {
                 ng2_bootstrap_1 = ng2_bootstrap_1_1;
+            },
+            function (primeng_1_1) {
+                primeng_1 = primeng_1_1;
             }],
         execute: function() {
             TagsComponent = (function () {
-                function TagsComponent(tagsService) {
+                function TagsComponent(_router, tagsService) {
+                    this._router = _router;
                     this.tagsService = tagsService;
                     this.tagRequest = {
-                        name: ''
+                        id: 0,
+                        name: '',
+                        createdBy: '',
+                        createdDate: ''
                     };
                     this.isCollapsed = false;
                     this.title = "Tags";
@@ -37,6 +50,9 @@ System.register(['angular2/core', '../services/tags.service', 'ng2-bootstrap/ng2
                 }
                 TagsComponent.prototype.ngOnInit = function () {
                     this.getTags();
+                };
+                TagsComponent.prototype.onClick = function (tag) {
+                    this._router.navigate(['TagDetail', { id: tag.id }]);
                 };
                 TagsComponent.prototype.filterTag = function (query, tags) {
                     var filtered = [];
@@ -73,12 +89,13 @@ System.register(['angular2/core', '../services/tags.service', 'ng2-bootstrap/ng2
                     core_1.Component({
                         selector: 'add-tag',
                         templateUrl: './app/tags/tags.component.html',
-                        directives: [ng2_bootstrap_1.Collapse],
+                        pipes: [tags_filter_pipe_1.TagFilterPipe],
+                        directives: [ng2_bootstrap_1.Collapse, primeng_1.Button],
                         providers: [
                             tags_service_1.TagsService
                         ]
                     }), 
-                    __metadata('design:paramtypes', [tags_service_1.TagsService])
+                    __metadata('design:paramtypes', [router_1.Router, tags_service_1.TagsService])
                 ], TagsComponent);
                 return TagsComponent;
             }());

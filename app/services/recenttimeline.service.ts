@@ -1,6 +1,6 @@
 ﻿import {Injectable, Inject} from 'angular2/core';
 import {Http, Response, Headers} from 'angular2/http';
-//import {TimeLineResponse} from '../timeline/timeline-response';
+import {RecentTimeLineResponse} from '../recenttimeline/recenttimeline-response';
 import {Observable} from 'rxjs/Observable';
 import {AuthService} from './auth.service';
 import {TokenService} from './token.service';
@@ -22,7 +22,7 @@ export class RecentTimeLineService {
         return this.http.get(this.webApiUrl, {
             headers: headers
         })
-            .map(res => <any>res.json())
+            .map(res => <RecentTimeLineResponse[]>res.json())
             .do(data => console.log(data))
             .catch(this.handleError);
     }

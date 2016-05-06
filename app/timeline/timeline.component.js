@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../services/timeline.service', '../tags/tags-selector.component', '../directive/accordion/accordion.component', '../directive/accordion/accordionlevel.component', 'angular2/router'], function(exports_1, context_1) {
+System.register(['angular2/core', '../services/timeline.service', '../tags/tags-selector.component', './timelinegroup/timelinegroup.component', './timelinegroup/timelinedetail.component', 'angular2/router'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', '../services/timeline.service', '../tags/tags-
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, timeline_service_1, tags_selector_component_1, accordion_component_1, accordionlevel_component_1, router_1;
+    var core_1, timeline_service_1, tags_selector_component_1, timelinegroup_component_1, timelinedetail_component_1, router_1;
     var TimeLineComponent;
     return {
         setters:[
@@ -23,11 +23,11 @@ System.register(['angular2/core', '../services/timeline.service', '../tags/tags-
             function (tags_selector_component_1_1) {
                 tags_selector_component_1 = tags_selector_component_1_1;
             },
-            function (accordion_component_1_1) {
-                accordion_component_1 = accordion_component_1_1;
+            function (timelinegroup_component_1_1) {
+                timelinegroup_component_1 = timelinegroup_component_1_1;
             },
-            function (accordionlevel_component_1_1) {
-                accordionlevel_component_1 = accordionlevel_component_1_1;
+            function (timelinedetail_component_1_1) {
+                timelinedetail_component_1 = timelinedetail_component_1_1;
             },
             function (router_1_1) {
                 router_1 = router_1_1;
@@ -139,7 +139,7 @@ System.register(['angular2/core', '../services/timeline.service', '../tags/tags-
                         providers: [
                             timeline_service_1.TimeLineService
                         ],
-                        directives: [tags_selector_component_1.TagsSelectorComponent, accordion_component_1.Accordion, accordion_component_1.AccordionGroup, accordionlevel_component_1.AccordionLevel, accordionlevel_component_1.AccordionGroupLevel]
+                        directives: [tags_selector_component_1.TagsSelectorComponent, timelinegroup_component_1.TimelineInfo, timelinegroup_component_1.TimelineGroup, timelinedetail_component_1.TimelineDetail, timelinedetail_component_1.TimelineDetailGroup]
                     }), 
                     __metadata('design:paramtypes', [timeline_service_1.TimeLineService, router_1.RouteParams])
                 ], TimeLineComponent);

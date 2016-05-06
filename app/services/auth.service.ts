@@ -59,7 +59,7 @@ export class AuthService {
     }
     get(url, callback) {        
         var authHeader = new Headers();
-        authHeader.append('Authorization', 'bearer ' + this._token);
+        authHeader.append('Authorization', 'bearer ' + this.tokenService.getToken());
         this.http.get(url, {
             headers: authHeader
         })

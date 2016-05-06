@@ -3,5 +3,8 @@
 }
 
 export class Tag {
-    name: string
+    id: number;
+    name: string;
+    createdBy: string;
+    createdDate: string;
 }

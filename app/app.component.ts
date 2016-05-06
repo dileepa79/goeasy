@@ -14,14 +14,14 @@ import {Dashboard} from './dashboard/dashboard.component';
 import {NotificaitonComponent} from './notifications/notifications.component';
 import {FeedbackComponent} from './feedback/feedback.component';
 import {FeedbackService} from './services/feedback.service';
-
+import {TagDetailComponent} from './tags/tag-detail.component';
 
 
 @Component({
     selector: 'my-app',
     styleUrls: ['app/app.component.css'],
     templateUrl: 'app/app.component.html',
-    directives: [ROUTER_DIRECTIVES, UserProfileComponent, NotificaitonComponent, FeedbackComponent],
+    directives: [ROUTER_DIRECTIVES, UserProfileComponent, NotificaitonComponent, FeedbackComponent, AddNoteComponent],
     providers: [
         ROUTER_PROVIDERS,
         provide(LocationStrategy, { useClass: HashLocationStrategy }),
@@ -61,6 +61,11 @@ import {FeedbackService} from './services/feedback.service';
             path: '/tags',
             name: 'Tags',
             component: TagsComponent
+        },
+        {
+             path: '/tag/:id',
+             name: 'TagDetail',
+             component: TagDetailComponent
         },
         {
             path: '/recenttimeline',

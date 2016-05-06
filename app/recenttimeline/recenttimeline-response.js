@@ -1,22 +1,30 @@
 System.register([], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var RecentTimeLineResponse, RecentTimeLineSingleResponse;
+    var RecentTimeLineResponse, RecentTimelineTag;
     return {
         setters:[],
         execute: function() {
             RecentTimeLineResponse = (function () {
-                function RecentTimeLineResponse() {
+                function RecentTimeLineResponse(id, userId, requestedTime, date, tags, isWatched) {
+                    this.id = id;
+                    this.userId = userId;
+                    this.requestedTime = requestedTime;
+                    this.date = date;
+                    this.tags = tags;
+                    this.isWatched = isWatched;
                 }
                 return RecentTimeLineResponse;
             }());
             exports_1("RecentTimeLineResponse", RecentTimeLineResponse);
-            RecentTimeLineSingleResponse = (function () {
-                function RecentTimeLineSingleResponse() {
+            RecentTimelineTag = (function () {
+                function RecentTimelineTag(id, name) {
+                    this.id = id;
+                    this.name = name;
                 }
-                return RecentTimeLineSingleResponse;
+                return RecentTimelineTag;
             }());
-            exports_1("RecentTimeLineSingleResponse", RecentTimeLineSingleResponse);
+            exports_1("RecentTimelineTag", RecentTimelineTag);
         }
     }
 });

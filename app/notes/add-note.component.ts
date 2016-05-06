@@ -4,6 +4,8 @@ import {NotesService} from '../services/notes.service';
 import {TimeLineComponent} from '../timeline/timeline.component';
 import { TagsSelectorComponent } from '../tags/tags-selector.component';
 import { MODAL_DIRECTIVES } from 'ng2-bs3-modal/ng2-bs3-modal';
+import {Editor} from 'primeng/primeng';
+import {Header} from 'primeng/primeng';
 
 @Component({
     selector: 'add-note',
@@ -11,7 +13,7 @@ import { MODAL_DIRECTIVES } from 'ng2-bs3-modal/ng2-bs3-modal';
     providers: [
         NotesService
     ],
-    directives: [TimeLineComponent, TagsSelectorComponent, MODAL_DIRECTIVES]
+    directives: [TimeLineComponent, TagsSelectorComponent, MODAL_DIRECTIVES, Editor, Header]
 })
 
 export class AddNoteComponent {
@@ -24,6 +26,7 @@ export class AddNoteComponent {
     };
     title = "ADD NOTES";
     tags: any[] = [];
+   // text1: string = '<div>Hello World!</div><div>PrimeNG <b>Editor</b> Rocks</div><div><br></div>';;
 
     Save() {
         this._notesService.addNote(this.noteRequest);

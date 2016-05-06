@@ -1,10 +1,10 @@
 ﻿<h1>{{title}}</h1>
 
-<!--<div class='row'>
-    <div class='col-md-4'>Filter by:  <input type='text' [(ngModel)]='listFilter' /></div>
+<div class='row'>
+    <div class='col-md-4'><input placeholder="Filter tags" type='text' [(ngModel)]='listFilter' /></div>
     <br />
 </div>
-<div class='row'>
+<!--<div class='row'>
     <div class='col-md-6'>
         <h3>Filtered by: {{listFilter}} </h3>
     </div>
@@ -42,11 +42,11 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor='#tag of filteredTags'>
+            <tr *ngFor='#tag of filteredTags | tagFilter:listFilter'>
                 <!--<td>
                     <img *ngIf='showImage' [src]='product.imageUrl' [title]='product.productName' [style.width.px]='imageWidth' [style.margin.px]='imageMargin' />
                 </td>-->
-                <td> {{ tag.name }}</td>
+                <td><button pButton type="text" (click)="onClick(tag)" label="{{ tag.name }}"></button></td>
             </tr>
         </tbody>
     </table>

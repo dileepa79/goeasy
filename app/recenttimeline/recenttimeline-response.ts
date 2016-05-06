@@ -1,14 +1,9 @@
 ﻿export class RecentTimeLineResponse {
-    DateFormat: string;
-    Items: RecentTimeLineSingleResponse[];
+    constructor(public id: string, public userId: string, public requestedTime: string, public date: string, public tags: RecentTimelineTag[], public isWatched: boolean)
+    {}
 }
 
-export class RecentTimeLineSingleResponse {
-    Id: number;
-    CreateDate:Date;
-    Title:string;
-    Description: string;
-    ActivityType: string;
-    ImageUrl: string;
-    Date: string;
+export class RecentTimelineTag {
+    constructor(public id: number, public name: string)
+    { }
 }
