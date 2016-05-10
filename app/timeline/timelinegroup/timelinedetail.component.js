@@ -80,7 +80,7 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 TimelineDetailGroup = __decorate([
                     core_1.Component({
                         selector: 'timeline-detail-group',
-                        inputs: ['heading', 'isOpen', 'isDisabled'],
+                        inputs: ['heading', 'isOpen', 'isDisabled', 'headerDescription'],
                         templateUrl: './app/timeline/timelinegroup/timelinedetail.component.html'
                     }), 
                     __metadata('design:paramtypes', [TimelineDetail])

@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../services/timeline.service', '../tags/tags-selector.component', './timelinegroup/timelinegroup.component', './timelinegroup/timelinedetail.component', 'angular2/router'], function(exports_1, context_1) {
+System.register(['angular2/core', '../services/timeline.service', '../tags/tags-selector.component', './timelinegroup/timelinegroup.component', './timelinegroup/timelinedetail.component', 'angular2/router', 'rxjs/Observable'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', '../services/timeline.service', '../tags/tags-
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, timeline_service_1, tags_selector_component_1, timelinegroup_component_1, timelinedetail_component_1, router_1;
+    var core_1, timeline_service_1, tags_selector_component_1, timelinegroup_component_1, timelinedetail_component_1, router_1, Observable_1;
     var TimeLineComponent;
     return {
         setters:[
@@ -31,6 +31,9 @@ System.register(['angular2/core', '../services/timeline.service', '../tags/tags-
             },
             function (router_1_1) {
                 router_1 = router_1_1;
+            },
+            function (Observable_1_1) {
+                Observable_1 = Observable_1_1;
             }],
         execute: function() {
             TimeLineComponent = (function () {
@@ -56,9 +59,10 @@ System.register(['angular2/core', '../services/timeline.service', '../tags/tags-
                     }
                     this.getTimelines();
                 };
-                TimeLineComponent.prototype.ngOnDestroy = function () {
+                TimeLineComponent.prototype.routerCanDeactivate = function (currTree, futureTree) {
                     this.timeLineRequest.isPersistedSearch = true;
                     this.getTimelines();
+                    return Observable_1.Observable.of(true).delay(1000).toPromise();
                 };
                 TimeLineComponent.prototype.onSelectedTagsAdded = function (tags) {
                     var _this = this;

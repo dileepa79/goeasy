@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, OnDestroy, Input} from 'angular2/core';
+﻿import {Component, OnInit, Input} from 'angular2/core';
 import {TimeLineService} from '../services/timeline.service';
 import {TimeLineResponse} from './timeline-response';
 import {TimeLineRequest} from './timeline-request';
@@ -6,8 +6,8 @@ import { TagsResponse, Tag } from '../tags/tags-response';
 import { TagsSelectorComponent } from '../tags/tags-selector.component';
 import {TimelineInfo, TimelineGroup} from './timelinegroup/timelinegroup.component';
 import {TimelineDetail, TimelineDetailGroup} from './timelinegroup/timelinedetail.component';
-import {RouteParams} from 'angular2/router'
-
+import {RouteParams, CanDeactivate} from 'angular2/router'
+import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'timeline',
@@ -18,7 +18,7 @@ import {RouteParams} from 'angular2/router'
     directives: [TagsSelectorComponent, TimelineInfo, TimelineGroup, TimelineDetail, TimelineDetailGroup]
 })
 
-export class TimeLineComponent implements OnInit, OnDestroy {
+export class TimeLineComponent implements OnInit, CanDeactivate {
     public oneAtATime: boolean = true;
     tagsStr: string
     tagsResponce: TagsResponse;
@@ -52,9 +52,12 @@ export class TimeLineComponent implements OnInit, OnDestroy {
         this.getTimelines();
     }
 
-    ngOnDestroy() {
+
+    routerCanDeactivate(currTree?: any, futureTree?: any) {
         this.timeLineRequest.isPersistedSearch = true;
         this.getTimelines();
+
+        return Observable.of(true).delay(1000).toPromise();
     }
 
     onSelectedTagsAdded(tags: any[]): void {

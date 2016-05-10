@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../services/tags.service', '../noteshareusers/users-selector.component'], function(exports_1, context_1) {
+System.register(['angular2/core', '../services/tags.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', '../services/tags.service', '../noteshareusers
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, tags_service_1, users_selector_component_1;
+    var core_1, tags_service_1;
     var ShareTimelineComponent;
     return {
         setters:[
@@ -19,9 +19,6 @@ System.register(['angular2/core', '../services/tags.service', '../noteshareusers
             },
             function (tags_service_1_1) {
                 tags_service_1 = tags_service_1_1;
-            },
-            function (users_selector_component_1_1) {
-                users_selector_component_1 = users_selector_component_1_1;
             }],
         execute: function() {
             ShareTimelineComponent = (function () {
@@ -47,13 +44,10 @@ System.register(['angular2/core', '../services/tags.service', '../noteshareusers
                     }
                     return filtered;
                 };
-                ShareTimelineComponent.prototype.onSelectedUsersChanged = function (users) {
-                    this.users = users.map(function (d) { return d['userName']; });
-                };
                 ShareTimelineComponent = __decorate([
                     core_1.Component({
                         selector: 'sharetimeline',
-                        directives: [users_selector_component_1.UsersSelectorComponent],
+                        directives: [],
                         templateUrl: './app/sharetimeline/sharetimeline.component.html',
                         providers: [tags_service_1.TagsService]
                     }), 

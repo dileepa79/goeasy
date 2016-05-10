@@ -83,21 +83,18 @@
                         <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
                     </div>
                     <div class="timeline-timestamp">
-                        <div class="font-14">
-                            {{Item.date }}<!--<span class="font-20">25 </span>May-->
+                        <div class="font-14" *ngIf="timeline.dateFormat != 'NOW'">
+                            {{Item.date }}
                         </div>
-                        <div class="timeline-time">{{Item.time}}</div>
+                        <div class="timeline-time" *ngIf="timeline.dateFormat == 'NOW'">{{Item.time}}</div>
                     </div>
-                    <!--<div alt="" class="timeline-img">
-                <img class="circle responsive-img" src={{Item.userImageUrl}}>
-            </div>-->
                 </div>
                 <div class="col-md-11 no-padding" style="margin-top:20px;">
                     <timelinedetail close-others="true">
                         <div alt="" class="timeline-img" style="position:absolute; margin-right:60px;">
                             <img class="circle responsive-img" src={{Item.userImageUrl}}>
                         </div>
-                        <timeline-detail-group [heading]="Item.title">
+                        <timeline-detail-group [heading]="Item.title" [headerDescription]="Item.plainDescriptionText">
 
                             <div [innerHTML]="Item.description"></div>
                         </timeline-detail-group>
