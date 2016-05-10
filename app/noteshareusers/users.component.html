@@ -1,0 +1,73 @@
+﻿<h1>{{title}}</h1>
+
+<!--<div class='row'>
+    <div class='col-md-4'>Filter by:  <input type='text' [(ngModel)]='listFilter' /></div>
+    <br />
+</div>
+<div class='row'>
+    <div class='col-md-6'>
+        <h3>Filtered by: {{listFilter}} </h3>
+    </div>
+</div>-->
+<!--<button type="button" class="btn btn-primary"
+        (click)="isCollapsed = !isCollapsed">
+    Tags
+</button>-->
+<hr>
+<!--<div [collapse]="isCollapsed">
+    <div class="well well-lg">
+        <div class="form-group">
+            <input type='text' [(ngModel)]='tagRequest.name' class="form-control" />
+            <br /><br />
+            <input type='button' value="Save" (click)="save()" class="btn btn-success" />
+        </div>
+        </div>
+</div>-->
+<!--<div class="input-group col-md-12 filter">
+    <span class="input-group-addon">
+        <i class="glyphicon glyphicon-search"></i>
+    </span>
+
+    <input class="form-control filter-input" type="text" placeholder="filter...">
+</div>-->
+
+<div class='table-responsive' *ngif='filteredUsers && filteredUsers.length'>
+    <table class='table'>
+        <thead>
+            <tr>
+                <!--<th>
+                    <button class="btn btn-primary" (click)='toggeleImage()'>{{showImage ? 'Hide' : 'Show'}} Image</button>
+                </th>-->
+                <th>User Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngfor='#user of filteredUsers'>
+                <!--<td>
+                    <img *ngIf='showImage' [src]='product.imageUrl' [title]='product.productName' [style.width.px]='imageWidth' [style.margin.px]='imageMargin' />
+                </td>-->
+                <td> {{ user.userName }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!--<ul class="media-list">
+    <li *ngFor="#tag of filteredTags" class="media">
+        <div class="media-body">
+            <div class="row">
+                <div class="col-md-1">
+                    <div class="well well-sm">
+                        <div>{{user.userName }}</div>
+                    </div>
+                </div>
+                <div class="col-md-11">
+                    <div class="well well-sm">
+                        <div>{{user.CreatedBy}}</div>
+                        <div>{{user.CreatedDate}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>-->

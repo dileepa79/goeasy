@@ -5,7 +5,8 @@
             <label>+</label>
         </div>
         <div class="form-group">
-            <label>These people</label>
+            <label>Yayi Users</label>
+            <user-app [isallowednewinput]="true" (usersadded)='onSelectedUsersChanged($event)' (usersremoved)="onSelectedUsersChanged($event)">Loading...</user-app>
             <!--p-autoComplete [(ngModel)]="users" [suggestions]="filteredUsersMultiple" (completeMethod)="filterUserMultiple($event)" style="width:100%"
                         [minLength]="1" placeholder="Select Users" field="name" [multiple]="true" [allowNewInput]="true">
             </p-autoComplete-->

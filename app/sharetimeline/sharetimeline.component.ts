@@ -1,9 +1,10 @@
 ﻿import {Component} from 'angular2/core';
 import { TagsService } from '../services/tags.service';
+import { UsersSelectorComponent } from '../noteshareusers/users-selector.component';
 
 @Component({
     selector: 'sharetimeline',
-    directives: [],
+    directives: [UsersSelectorComponent],
     templateUrl: './app/sharetimeline/sharetimeline.component.html',
     providers: [TagsService]
 })
@@ -31,4 +32,9 @@ export class ShareTimelineComponent {
         }
         return filtered;
     }
+
+    onSelectedUsersChanged(users: any[]): void {
+        this.users = users.map(function (d) { return d['userName']; });
+    }
+
 }

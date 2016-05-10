@@ -3,6 +3,7 @@ import {NoteRequest} from './note-request';
 import {NotesService} from '../services/notes.service';
 import {TimeLineComponent} from '../timeline/timeline.component';
 import { TagsSelectorComponent } from '../tags/tags-selector.component';
+import { UsersSelectorComponent } from '../noteshareusers/users-selector.component';
 import { MODAL_DIRECTIVES } from 'ng2-bs3-modal/ng2-bs3-modal';
 import {Editor} from 'primeng/primeng';
 import {Header} from 'primeng/primeng';
@@ -13,7 +14,7 @@ import {Header} from 'primeng/primeng';
     providers: [
         NotesService
     ],
-    directives: [TimeLineComponent, TagsSelectorComponent, MODAL_DIRECTIVES, Editor, Header]
+    directives: [TimeLineComponent, TagsSelectorComponent, MODAL_DIRECTIVES, Editor, Header,UsersSelectorComponent]
 })
 
 export class AddNoteComponent {
@@ -22,11 +23,12 @@ export class AddNoteComponent {
     public noteRequest: NoteRequest = {
         title: '',
         description: '',
-        tags: []
+        tags: [],
+        users : []
     };
     title = "ADD NOTES";
     tags: any[] = [];
-   // text1: string = '<div>Hello World!</div><div>PrimeNG <b>Editor</b> Rocks</div><div><br></div>';;
+    users: any[] = [];
 
     Save() {
         this._notesService.addNote(this.noteRequest);
@@ -38,5 +40,9 @@ export class AddNoteComponent {
 
     onSelectedTagsChanged(tags: any[]): void {
         this.noteRequest.tags = tags.map(function (d) { return d['name']; });
+    }
+
+    onSelectedUsersChanged(users: any[]): void {
+        this.noteRequest.users = users.map(function (d) { return d['userName']; });
     }
 }

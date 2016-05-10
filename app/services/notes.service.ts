@@ -10,7 +10,7 @@ export class NotesService {
     private webApiUrl: string;
     tags: string = '';
     constructor(private _router: Router, private http: Http, private _configuration: Configuration, private _authService: AuthService) {
-        this.webApiUrl = _configuration.ServerWithApiUrl + 'Note/AddNote';
+        this.webApiUrl = _configuration.ServerWithApiUrl + 'Note';
     }
 
     //public addNote(noteRequest) {
@@ -34,7 +34,7 @@ export class NotesService {
         headers.append('Content-Type', 'application/json; charset=utf-8');
         var options = new RequestOptions({ headers: headers });
         
-        this.http.post(this.webApiUrl, body, options)
+        this.http.post(this.webApiUrl + '/AddNote', body, options)
             .map(res => res.json())
             .subscribe(
                 data => {
