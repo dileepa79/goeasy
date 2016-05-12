@@ -6,12 +6,27 @@
             <h4 class="modal-title">Share With</h4>
         </modal-header>
         <modal-body>
-            <sharetimeline></sharetimeline>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label>+</label>
+                        </div>
+                        <div class="form-group">
+                            <label>Yayi Users</label>
+                            <user-app [isallowednewinput]="true" (usersAdded)='onSelectedUsersChanged($event)' (usersRemoved)="onSelectedUsersChanged($event)">Loading...</user-app>
+                        </div>
+                        <div class="col-md-4">
 
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </modal-body>
         <modal-footer>
             <button type="button" class="btn btn-default" data-dismiss="modal" (click)="parentModal.dismiss()">Cancel</button>
-            <button type="button" class="btn btn-primary" (click)="parentModal.close()">Share</button>
+            <button type="button" class="btn btn-primary" (click)="parentModal.close();shareTimeline()">Share</button>
         </modal-footer>
     </modal>
 
@@ -33,7 +48,8 @@
                 <div style="padding:10px 0px 10px 0px">
                     <div class="row">
                         <div class="col-md-11">
-                            <a (click)="select(timeline)"><span *ngFor="#tag of timeline.tags; #last = last">{{tag.name}}<span *ngIf="!last"> + </span></span></a> (100+ Entries)
+                            <a (click)="select(timeline)"><span *ngFor="#tag of timeline.tags; #last = last">{{tag.name}}<span *ngIf="!last"> + </span></span></a>
+                            <span *ngIf="timeline.noOfEntries">({{timeline.noOfEntries}})</span> 
                         </div>
                         <div class="col-md-1" (click) ="watch(timeline); $event.stopPropagation()">
                             <span *ngIf="timeline.isWatched" class="fa-stack fa-lg" title="Watched">
@@ -50,7 +66,7 @@
                     <div style="padding:10px 0px 10px 0px">
                         <div class="row">
                             <div class="col-md-12">
-                                1 NEW Note created by Petter L
+                                {{timeline.recentActivity}}
                             </div>
                         </div>
                     </div>
@@ -74,7 +90,7 @@
 
                             </div>
                             <div class="col-md-3">
-                                <input type="button" value='Share' (click)="parentModal.open()" class="btn btn-primary" />
+                                <input type="button" value='Share' (click)="parentModal.open(); setCurrentTimeline(timeline)" class="btn btn-primary" />
                             </div>
                         </div>
                     </div>

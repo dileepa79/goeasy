@@ -35,7 +35,7 @@ System.register(['angular2/core', '../recenttimeline/recenttimeline.component', 
                         selector: 'dashboard',
                         templateUrl: './app/dashboard/dashboard.component.html',
                         providers: [],
-                        directives: [recenttimeline_component_1.RecentTimeLineComponent, thinkhelpful_component_1.ThinkHelpful, whatisgoingon_component_1.WhatIsGoingOn]
+                        directives: [recenttimeline_component_1.RecentTimeLineComponent, thinkhelpful_component_1.ThinkHelpful, whatisgoingon_component_1.WhatIsGoingOnComponent]
                     }), 
                     __metadata('design:paramtypes', [])
                 ], Dashboard);

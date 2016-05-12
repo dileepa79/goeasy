@@ -11,7 +11,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', './auth.se
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, http_1, Observable_1, auth_service_1, app_constants_1;
-    var RecentTimeLineService;
+    var WhatIsGoingOnService;
     return {
         setters:[
             function (core_1_1) {
@@ -30,15 +30,15 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', './auth.se
                 app_constants_1 = app_constants_1_1;
             }],
         execute: function() {
-            RecentTimeLineService = (function () {
-                function RecentTimeLineService(http, _authService, _configuration) {
+            WhatIsGoingOnService = (function () {
+                function WhatIsGoingOnService(http, _authService, _configuration) {
                     this.http = http;
                     this._authService = _authService;
                     this._configuration = _configuration;
-                    this.webApiUrl = _configuration.ServerWithApiUrl + 'TagSearchRequest';
+                    this.webApiUrl = _configuration.ServerWithApiUrl + 'ActivityLog';
                     this.authService = _authService;
                 }
-                RecentTimeLineService.prototype.getRecentTimeLines = function () {
+                WhatIsGoingOnService.prototype.getWhatisGoingOnActivity = function () {
                     var headers = this.authService.getHeader();
                     return this.http.get(this.webApiUrl, {
                         headers: headers
@@ -47,36 +47,18 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', './auth.se
                         .do(function (data) { return console.log(data); })
                         .catch(this.handleError);
                 };
-                RecentTimeLineService.prototype.handleError = function (error) {
+                WhatIsGoingOnService.prototype.handleError = function (error) {
                     console.error(error);
                     return Observable_1.Observable.throw(error.json().error || 'Server error');
                 };
-                RecentTimeLineService.prototype.share = function (request) {
-                    //console.log("Title: " + request.title + ", description: " + request.description);
-                    var body = JSON.stringify(request);
-                    //var headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
-                    var headers = this._authService.getHeader();
-                    headers.append('Content-Type', 'application/json; charset=utf-8');
-                    var options = new http_1.RequestOptions({ headers: headers });
-                    this.http.post(this.webApiUrl, body, options)
-                        .map(function (res) { return res.json(); })
-                        .subscribe(function (data) {
-                        console.log("recent timeline shared : " + data);
-                    }, function (err) { return console.log("error: " + JSON.stringify(err)); }, function () {
-                        //for (var i = 0; i < request.tags.length; i++) {
-                        //    this.tags = this.tags + (request.tags[i] + (request.tags.length != i + 1 ? ',' : ''));
-                        //}
-                        //this._router.navigate(['TimeLine', { tags: this.tags }]);
-                    });
-                };
-                RecentTimeLineService = __decorate([
+                WhatIsGoingOnService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [http_1.Http, auth_service_1.AuthService, app_constants_1.Configuration])
-                ], RecentTimeLineService);
-                return RecentTimeLineService;
+                ], WhatIsGoingOnService);
+                return WhatIsGoingOnService;
             }());
-            exports_1("RecentTimeLineService", RecentTimeLineService);
+            exports_1("WhatIsGoingOnService", WhatIsGoingOnService);
         }
     }
 });
-//# sourceMappingURL=recenttimeline.service.js.map
+//# sourceMappingURL=whatisgoingon.service.js.map

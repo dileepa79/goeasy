@@ -5,6 +5,7 @@ import { TimeLineComponent } from '../timeline/timeline.component';
 import { ShareTimelineComponent } from '../sharetimeline/sharetimeline.component';
 import { RecentTimeLineResponse } from '../recenttimeline/recenttimeline-response';
 import { Router} from 'angular2/router';
+import { UsersSelectorComponent } from '../noteshareusers/users-selector.component';
 import { MODAL_DIRECTIVES, ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { TimeLineWatch } from '../shared/timeline-watch';
 
@@ -14,18 +15,18 @@ import { TimeLineWatch } from '../shared/timeline-watch';
     providers: [
         RecentTimeLineService, TimeLineWatchService
     ],
-    directives: [TimeLineComponent, MODAL_DIRECTIVES, ShareTimelineComponent]
+    directives: [TimeLineComponent, MODAL_DIRECTIVES, ShareTimelineComponent, UsersSelectorComponent]
 })
 
 export class RecentTimeLineComponent implements OnInit {
-   
-
    // @ViewChild('parentModal')
     //parentModal: ModalComponent;
 
     animation: boolean = true;
     keyboard: boolean = true;
     backdrop: string | boolean = true;
+    currentTimeline_id: string;
+    users: any[] = [];
 
     constructor(private _timeLineService: RecentTimeLineService, private _timeLineWatchService: TimeLineWatchService, public _router: Router) { }
     title = "RECENT TIMELINE";
@@ -88,6 +89,7 @@ export class RecentTimeLineComponent implements OnInit {
         this.selectedTimeline = timeline;
         //this.parentModal.open()
     }
+
     watch(selectedTimeline: any) {
 
         var timeLineWatch: TimeLineWatch = {
@@ -101,6 +103,24 @@ export class RecentTimeLineComponent implements OnInit {
         timeLineWatch.tags = selectedTimeline.tags.map(function (d) { return d['name']; })
 
         this.updateTimelineWatch(timeLineWatch, selectedTimeline);
+    }
+
+    setCurrentTimeline(_selectedTimeline: any) {
+        this.currentTimeline_id = _selectedTimeline.id;
+    }
+
+    onSelectedUsersChanged(_users: any[]): void {
+        this.users = _users.map(function (d) { return d['userName']; });
+    }
+
+    shareTimeline() {
+
+        var timeline_share = {
+            TimeLineId: this.currentTimeline_id,
+            AppUsers: this.users
+        };
+
+        this._timeLineService.share(timeline_share);
     }
 }
 

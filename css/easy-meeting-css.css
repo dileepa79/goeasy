@@ -5479,14 +5479,14 @@ prime-app input[type=text] {
   padding: 9px 0;
   font-size: 16px;
   border-radius: 50px;
-  /*margin-top: 10px;*/
-  margin: 0 0 0 -35px;
+  margin-top: 25px;
+  /*margin: 0 0 0 -35px;*/
   border: 1px solid #ddd;
   background: #fff; }
 
 .timeline-img {
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   border-radius: 50px;
   box-shadow: 0 0px 10px 0 rgba(0, 0, 0, 0.1); }
 
@@ -5497,7 +5497,7 @@ prime-app input[type=text] {
 
 .timeline-time {
   font-size: 10px;
-  margin-top: -5px; }
+  margin-top: 5px; }
 
 .timeline-wrapper {
   background: none;
@@ -5517,14 +5517,16 @@ prime-app input[type=text] {
   background-color: #2bbbad;
   box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15); }
   .timeline-group-heading:hover a {
-    color: #fff; }
+    color: #fff;
+    text-decoration: none; }
 
 .timeline-heading {
-  background: #eceff1;
+  /*background: #eceff1;*/
+  background: #fff;
   padding: 10px;
   font-weight: 400;
   margin-top: 5px;
-  margin-left: 64px;
+  /*margin-left:64px;*/
   transition: .2s ease-out;
   /*box-shadow: #f1f1f1 1px 2px 5px;*/
   font-size: 16px;
@@ -5537,14 +5539,17 @@ prime-app input[type=text] {
   background-color: #2bbbad;
   box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.05); }
   .timeline-heading:hover a {
-    color: #fff; }
+    color: #fff;
+    text-decoration: none; }
 
 .timeline-description {
   background: #fff;
   padding: 10px;
   box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.05);
   margin-bottom: 20px;
-  margin-left: 64px; }
+  /*margin-left:64px;*/
+  font-size: 12px;
+  font-weight: 300; }
 
 /*----------- timeline accordian componant------------*/
 timeline-group .panel-open a .show-content {
@@ -5552,6 +5557,13 @@ timeline-group .panel-open a .show-content {
 
 timeline-group .panel-open a .hide-content {
   display: none !important; }
+
+timeline-detail-group > .panel-open > .timeline-heading a .show-content {
+  display: none !important; }
+
+timeline-detail-group > .panel-open > .timeline-heading a .hide-content {
+  display: none !important;
+  display: inline-block; }
 
 a .hide-content {
   display: inline-block; }

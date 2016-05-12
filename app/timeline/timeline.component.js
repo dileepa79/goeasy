@@ -62,7 +62,7 @@ System.register(['angular2/core', '../services/timeline.service', '../tags/tags-
                 TimeLineComponent.prototype.routerCanDeactivate = function (currTree, futureTree) {
                     this.timeLineRequest.isPersistedSearch = true;
                     this.getTimelines();
-                    return Observable_1.Observable.of(true).delay(1000).toPromise();
+                    return Observable_1.Observable.of(true).delay(200).toPromise();
                 };
                 TimeLineComponent.prototype.onSelectedTagsAdded = function (tags) {
                     var _this = this;

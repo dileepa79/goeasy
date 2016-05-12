@@ -40,6 +40,15 @@ System.register(['angular2/core', '../services/notifications.service'], function
                             console.log(_this.errorMessage);
                     }, function () { return function () { return console.log("Done"); }; });
                 };
+                NotificaitonComponent.prototype.snoozeClicked = function (notification) {
+                    this._notificationService.updateNotifications(notification.id, true);
+                };
+                NotificaitonComponent.prototype.dismissClicked = function (notification) {
+                    this._notificationService.updateNotifications(notification.id, false);
+                };
+                NotificaitonComponent.prototype.dismissAllClicked = function () {
+                    this._notificationService.dismissAll();
+                };
                 NotificaitonComponent = __decorate([
                     core_1.Component({
                         selector: 'notifications',

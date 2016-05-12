@@ -6,13 +6,15 @@ System.register([], function(exports_1, context_1) {
         setters:[],
         execute: function() {
             RecentTimeLineResponse = (function () {
-                function RecentTimeLineResponse(id, userId, requestedTime, date, tags, isWatched) {
+                function RecentTimeLineResponse(id, userId, requestedTime, date, tags, isWatched, recentActivity, noOfEntries) {
                     this.id = id;
                     this.userId = userId;
                     this.requestedTime = requestedTime;
                     this.date = date;
                     this.tags = tags;
                     this.isWatched = isWatched;
+                    this.recentActivity = recentActivity;
+                    this.noOfEntries = noOfEntries;
                 }
                 return RecentTimeLineResponse;
             }());

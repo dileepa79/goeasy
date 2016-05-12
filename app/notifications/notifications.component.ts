@@ -42,5 +42,17 @@ export class NotificaitonComponent implements OnInit {
             () => () => console.log("Done"));
     }
 
+    snoozeClicked(notification) {
+        this._notificationService.updateNotifications(notification.id, true);
+    }
+
+    dismissClicked(notification) {
+        this._notificationService.updateNotifications(notification.id, false);
+    }
+
+    dismissAllClicked() {
+        this._notificationService.dismissAll();
+    }
+
 }
 

@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', '../app.constants'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', '../app.constants', './auth.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/http', '../app.constants'], function
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, app_constants_1;
+    var core_1, http_1, Observable_1, app_constants_1, auth_service_1;
     var UserProfileService;
     return {
         setters:[
@@ -20,20 +20,46 @@ System.register(['angular2/core', 'angular2/http', '../app.constants'], function
             function (http_1_1) {
                 http_1 = http_1_1;
             },
+            function (Observable_1_1) {
+                Observable_1 = Observable_1_1;
+            },
             function (app_constants_1_1) {
                 app_constants_1 = app_constants_1_1;
+            },
+            function (auth_service_1_1) {
+                auth_service_1 = auth_service_1_1;
             }],
         execute: function() {
             UserProfileService = (function () {
-                function UserProfileService(http, _configuration) {
+                function UserProfileService(http, _configuration, _authService) {
                     this.http = http;
                     this._configuration = _configuration;
+                    this._authService = _authService;
+                    this.webApiUrl = _configuration.ServerWithApiUrl + 'Account/GetUserProfile';
+                    this.authService = _authService;
                 }
+                UserProfileService.prototype.getUserProfile = function () {
+                    var headers = this.authService.getHeader();
+                    headers.append('Content-Type', 'application/json; charset=utf-8');
+                    return this.http.get(this.webApiUrl, {
+                        headers: headers
+                    })
+                        .map(function (res) { return res.json(); })
+                        .do(function (data) { return console.log(data); })
+                        .catch(this.handleError);
+                };
+                UserProfileService.prototype.handleError = function (error) {
+                    console.error(error);
+                    return Observable_1.Observable.throw(error.json().error || 'Server error');
+                };
                 UserProfileService.prototype.getImage = function (externalReference) {
+                    return this.http.get(this._configuration.ServerWithApiUrl + "FileContent/GetFileContent?externalReference=" + externalReference)
+                        .map(function (res) { return res.json(); })
+                        .catch(this.handleError);
                 };
                 UserProfileService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [http_1.Http, app_constants_1.Configuration])
+                    __metadata('design:paramtypes', [http_1.Http, app_constants_1.Configuration, auth_service_1.AuthService])
                 ], UserProfileService);
                 return UserProfileService;
             }());

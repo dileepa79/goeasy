@@ -36,10 +36,13 @@
 
 
 <div [class.panel-open]="isOpen">
-        <div class="timeline-heading">
-            <a href="#" tabindex="0"><span [class.text-muted]="isDisabled" (click)="toggleOpen($event)">{{heading}}</span>
-                <div class="pull-right"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span></div></a>
-            <div style=" font-size: 12px">{{headerDescription}}</div>
+        <div class="timeline-heading"  (click)="toggleOpen($event)">
+            <a href="#" tabindex="0"><span [class.text-muted]="isDisabled">{{heading}} 
+                <br /> <span class="show-content" style="font-weight: 300;font-size: 12px; text-decoration: none;">{{headerDescription}}</span> <span class="hide-content"> </span></span>
+             <!--<div class="pull-right" style="margin-top:-10px; color:#ddd;">
+                <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+             </div>-->
+            </a>
         </div>
         <div class="panel-collapse timeline-description" [hidden]="!isOpen">
             <ng-content></ng-content>

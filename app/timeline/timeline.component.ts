@@ -57,7 +57,7 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
         this.timeLineRequest.isPersistedSearch = true;
         this.getTimelines();
 
-        return Observable.of(true).delay(1000).toPromise();
+        return Observable.of(true).delay(200).toPromise();
     }
 
     onSelectedTagsAdded(tags: any[]): void {

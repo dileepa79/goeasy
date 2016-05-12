@@ -1,40 +1,20 @@
 ﻿<h3>WHAT IS GOING ON</h3>
 
-<div class="col-md-12">
-    <div class="col-md-2">
-        <div alt="" class="timeline-img">
-            <!--<span class="glyphicon glyphicon-file" aria-hidden="true"></span>-->
-            <img class="circle responsive-img" src="http://cdn.devilsworkshop.org/files/2013/01/enlarged-facebook-profile-picture.jpg">
-        </div>
+<div class="col-md-12" *ngFor="#activity of whatisgoingonTimelines; #i=index">
+    <div *ngIf="i<5">
+        <div class="col-md-2">
+            <div alt="" class="timeline-img">
+                <img class="circle responsive-img" src={{activity.userImage}}>
+            </div>
 
-    </div>
-    <div class="col-md-10">
-        <div class="timeline-heading" data-toggle="collapse"  aria-expanded="false" aria-controls="collapseExample1">
-            LISA J added a note on 15 APR
         </div>
-        <div class="timeline-description" >
-            C&W + SHAREPOINT
+        <div class="col-md-10">
+            <div class="timeline-heading" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample1">
+                {{activity.description}}
+            </div>
+            <div class="timeline-description">
+                <a (click)="select(activity)"><span *ngFor="#tag of activity.tags; #last = last">{{tag.name}}<span *ngIf="!last"> + </span></span></a>
+            </div>
         </div>
-
-    </div>
-</div>
-
-
-<div class="col-md-12">
-    <div class="col-md-2">
-        <div alt="" class="timeline-img">
-            <!--<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>-->
-            <img class="circle responsive-img" src="https://lh5.googleusercontent.com/-ZadaXoUTBfs/AAAAAAAAAAI/AAAAAAAAAGA/19US52OmBqc/photo.jpg">
-        </div>
-
-    </div>
-    <div class="col-md-10">
-        <div class="timeline-heading" data-toggle="collapse"  aria-expanded="false" aria-controls="collapseExample1">
-            TOM added a note on 15 APR  <div class="pull-right"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span></div>
-        </div>
-        <div class="timeline-description">
-            FUJI + AP TEAM + RESTRUCTURE
-        </div>
-
     </div>
 </div>

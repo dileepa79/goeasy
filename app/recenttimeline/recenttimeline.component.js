@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../services/recenttimeline.service', '../services/timeline-watch.service', '../timeline/timeline.component', '../sharetimeline/sharetimeline.component', 'angular2/router', 'ng2-bs3-modal/ng2-bs3-modal'], function(exports_1, context_1) {
+System.register(['angular2/core', '../services/recenttimeline.service', '../services/timeline-watch.service', '../timeline/timeline.component', '../sharetimeline/sharetimeline.component', 'angular2/router', '../noteshareusers/users-selector.component', 'ng2-bs3-modal/ng2-bs3-modal'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', '../services/recenttimeline.service', '../serv
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, recenttimeline_service_1, timeline_watch_service_1, timeline_component_1, sharetimeline_component_1, router_1, ng2_bs3_modal_1;
+    var core_1, recenttimeline_service_1, timeline_watch_service_1, timeline_component_1, sharetimeline_component_1, router_1, users_selector_component_1, ng2_bs3_modal_1;
     var RecentTimeLineComponent;
     return {
         setters:[
@@ -32,6 +32,9 @@ System.register(['angular2/core', '../services/recenttimeline.service', '../serv
             function (router_1_1) {
                 router_1 = router_1_1;
             },
+            function (users_selector_component_1_1) {
+                users_selector_component_1 = users_selector_component_1_1;
+            },
             function (ng2_bs3_modal_1_1) {
                 ng2_bs3_modal_1 = ng2_bs3_modal_1_1;
             }],
@@ -46,6 +49,7 @@ System.register(['angular2/core', '../services/recenttimeline.service', '../serv
                     this.animation = true;
                     this.keyboard = true;
                     this.backdrop = true;
+                    this.users = [];
                     this.title = "RECENT TIMELINE";
                     this.timeLineWatch = {
                         tags: [],
@@ -103,6 +107,19 @@ System.register(['angular2/core', '../services/recenttimeline.service', '../serv
                     timeLineWatch.tags = selectedTimeline.tags.map(function (d) { return d['name']; });
                     this.updateTimelineWatch(timeLineWatch, selectedTimeline);
                 };
+                RecentTimeLineComponent.prototype.setCurrentTimeline = function (_selectedTimeline) {
+                    this.currentTimeline_id = _selectedTimeline.id;
+                };
+                RecentTimeLineComponent.prototype.onSelectedUsersChanged = function (_users) {
+                    this.users = _users.map(function (d) { return d['userName']; });
+                };
+                RecentTimeLineComponent.prototype.shareTimeline = function () {
+                    var timeline_share = {
+                        TimeLineId: this.currentTimeline_id,
+                        AppUsers: this.users
+                    };
+                    this._timeLineService.share(timeline_share);
+                };
                 RecentTimeLineComponent = __decorate([
                     core_1.Component({
                         selector: 'recentimeline',
@@ -110,7 +127,7 @@ System.register(['angular2/core', '../services/recenttimeline.service', '../serv
                         providers: [
                             recenttimeline_service_1.RecentTimeLineService, timeline_watch_service_1.TimeLineWatchService
                         ],
-                        directives: [timeline_component_1.TimeLineComponent, ng2_bs3_modal_1.MODAL_DIRECTIVES, sharetimeline_component_1.ShareTimelineComponent]
+                        directives: [timeline_component_1.TimeLineComponent, ng2_bs3_modal_1.MODAL_DIRECTIVES, sharetimeline_component_1.ShareTimelineComponent, users_selector_component_1.UsersSelectorComponent]
                     }), 
                     __metadata('design:paramtypes', [recenttimeline_service_1.RecentTimeLineService, timeline_watch_service_1.TimeLineWatchService, router_1.Router])
                 ], RecentTimeLineComponent);
