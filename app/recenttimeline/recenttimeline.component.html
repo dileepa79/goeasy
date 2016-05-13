@@ -32,25 +32,37 @@
 
 
 
-    <div class="col-md-12" *ngFor="#timeline of recentTimelines" class="media">
-        <div class="col-md-1">
+    <div class="col-md-12 media" *ngFor="#timeline of recentTimelines" >
+        <!--<div class="col-md-1">
             <div alt="" class="timeline-icon row">
                 <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
             </div>
             <div class="timeline-timestamp" calss="row">
                 {{timeline.date }}
             </div>
-        </div>
+        </div>-->
 
-        <div class="col-md-11" >
+        <div class="col-md-12" >
             <div class="timeline-description row" id="collapseExample1">
                 <div class="col-md-12">
                 <div style="padding:10px 0px 10px 0px">
                     <div class="row">
-                        <div class="col-md-11">
-                            <a (click)="select(timeline)"><span *ngFor="#tag of timeline.tags; #last = last">{{tag.name}}<span *ngIf="!last"> + </span></span></a>
-                            <span *ngIf="timeline.noOfEntries">({{timeline.noOfEntries}})</span> 
+                        <!-- timestamp -->
+                        <div class="col-md-1">
+                            <div class="recent-timeline-timestamp" calss="row">
+                                {{timeline.date }}
+                            </div>
                         </div>
+                        <!-- tags line -->
+                        <div class="col-md-10">
+                            <a (click)="select(timeline)" class="recent-timeline-tags"><span *ngFor="#tag of timeline.tags; #last = last">{{tag.name}}<span *ngIf="!last"> + </span></span></a>
+                            <span *ngIf="timeline.noOfEntries">({{timeline.noOfEntries}})</span> 
+
+                            <div style="padding: 10px 0 0 40px;">
+                                {{timeline.recentActivity}} 
+                            </div>
+                        </div>
+                        <!-- watch -->
                         <div class="col-md-1" (click) ="watch(timeline); $event.stopPropagation()">
                             <span *ngIf="timeline.isWatched" class="fa-stack fa-lg" title="Watched">
                                 <i class="fa fa-heart fa-stack-2x" style="color:cornflowerblue"></i>
@@ -63,28 +75,39 @@
                         </div>
                     </div>
 
-                    <div style="padding:10px 0px 10px 0px">
-                        <div class="row">
-                            <div class="col-md-12">
-                                {{timeline.recentActivity}}
+                    
+                        <!--<div class="row">
+                            <div class="col-md-11 col-md-offset-1">
+                                {{timeline.recentActivity}} test text
+                            </div>
+                        </div>-->
+                    
+
+                    <div class="row">
+                        <div class="col-md-2">
+
+                        </div>
+                        <div class="col-md-3">
+                            <span style="margin-left: -10px;">SHARED WITH</span>
+                        </div>
+                        <div class="col-md-7">
+                            <div style="margin-top: -32px; margin-left: -75px;">
+                                <css-carousel></css-carousel>
+                                <input type="button" value='Share' (click)="parentModal.open(); setCurrentTimeline(timeline)" class="btn btn-primary" style="margin-left:5px" />
                             </div>
                         </div>
                     </div>
-
-                    <div class="row">
-                        <span>SHARED WITH</span>
-                    </div>
-
-                    <div style="padding:10px 0px 10px 0px">
+                    <!--<div style="padding:10px 0px 10px 0px">
                         <div class="row">
                             <div class="col-md-9">
                                 <css-carousel></css-carousel>
+                                <input type="button" value='Share' (click)="parentModal.open(); setCurrentTimeline(timeline)" class="btn btn-primary" style="margin-left:5px" />
                             </div> 
-                       
+                            
                         </div>
-                    </div>
-
+                    </div>-->
                 </div>
             </div>
         </div>
+    </div>
     </div>

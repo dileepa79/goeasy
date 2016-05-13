@@ -321,3 +321,24 @@ timeline-detail-group > .panel-open > .timeline-heading a .hide-content {
   display:block !important;
   
 }
+
+/*----------Recent timeline ---------*/
+
+.recent-timeline-timestamp {
+    text-align: center;
+    /* margin-left: -25px; */
+    margin-bottom: 20px;
+    font-size: 22px;
+}
+.recent-timeline-tags{
+    font-size: 20px;
+    text-decoration: none;
+    padding-left: 40px;
+}
+.recent-timeline-tags:hover{
+        text-decoration: none;
+        cursor:pointer;
+}
+.lv-body .btn{
+    font-size:12px !important;
+}
