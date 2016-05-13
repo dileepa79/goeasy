@@ -8921,16 +8921,23 @@ a.lv-footer:hover {
   -webkit-transition: all;
   -o-transition: all;
   transition: all;
-  -webkit-transition-duration: 300ms;
-  transition-duration: 300ms;
+  -webkit-transition-duration: 1600ms !important;
+  transition-duration: 1600ms !important;
   z-index: 10;
   opacity: 0;
+  display:none !important;
   filter: alpha(opacity=0);
 }
 #chat.toggled {
   right: 0;
   opacity: 1;
+  display:block !important;
   filter: alpha(opacity=100);
+   -webkit-transition: all;
+  -o-transition: all;
+  transition: all;
+  -webkit-transition-duration:1600ms !important;
+  transition-duration: 1600ms !important;
 }
 #chat .chat-search {
   padding: 20px 20px 15px 20px;

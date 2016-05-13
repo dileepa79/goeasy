@@ -5373,7 +5373,7 @@ body {
   text-decoration: none; }
 
 .login-logo {
-  color: #fff;
+  color: #ccc;
   text-transform: none;
   display: block;
   font-size: 60px;
@@ -5426,9 +5426,15 @@ h1, h3 {
   z-index: 8 !important; }
 
 /*-------user login and registration--------*/
-.login-content .input-field label {
-  font-weight: 300 !important;
-  margin-left: -10px; }
+.login-content {
+  /*background-image: url('../img/loging-bg.jpg');
+  background-size: contain;
+  background-position-x: -100px;*/
+  background: #0277bd;
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.05); }
+  .login-content .input-field label {
+    font-weight: 300 !important;
+    margin-left: -10px; }
 
 .top-menu > notifications > li > a.tm-notification {
   background-image: url(../img/icons/notification@2x.png);
@@ -5576,6 +5582,10 @@ a .show-content {
   width: 60% !important;
   overflow-x: hidden;
   overflow-y: scroll;
-  padding: 0 20px; }
+  padding: 0 20px;
+  display: none !important; }
+
+#chat.toggled {
+  display: block !important; }
 
 /*# sourceMappingURL=easy-meeting-css.css.map */

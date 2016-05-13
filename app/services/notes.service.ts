@@ -33,20 +33,14 @@ export class NotesService {
         var headers = this._authService.getHeader();
         headers.append('Content-Type', 'application/json; charset=utf-8');
         var options = new RequestOptions({ headers: headers });
-        
-        this.http.post(this.webApiUrl + '/AddNote', body, options)
+        return this.http.post(this.webApiUrl + '/AddNote', body, options)
             .map(res => res.json())
-            .subscribe(
-                data => {
-                    console.log("added note: " + data);
-                },
-                err => console.log("error: " + JSON.stringify(err)),
-                () => {
-                    for (var i = 0; i < noteRequest.tags.length; i++) {
-                        this.tags = this.tags + (noteRequest.tags[i] + (noteRequest.tags.length != i + 1 ? ',' : ''));
-                    }
-                    this._router.navigate(['TimeLine', { tags: this.tags }]);
-                }
-            );
+            .do(data => console.log(data))
+            .catch(this.handleError);
+    }
+
+    private handleError(error: Response) {
+        console.error(error);
+        return Observable.throw(error.json().error || 'Server error');
     }
 }

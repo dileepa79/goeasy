@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../services/notes.service', '../timeline/timeline.component', '../tags/tags-selector.component', '../noteshareusers/users-selector.component', 'ng2-bs3-modal/ng2-bs3-modal', 'primeng/primeng'], function(exports_1, context_1) {
+System.register(['angular2/core', '../services/notes.service', '../timeline/timeline.component', '../tags/tags-selector.component', '../noteshareusers/users-selector.component', 'ng2-bs3-modal/ng2-bs3-modal', 'primeng/primeng', 'angular2/router'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', '../services/notes.service', '../timeline/time
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, notes_service_1, timeline_component_1, tags_selector_component_1, users_selector_component_1, ng2_bs3_modal_1, primeng_1, primeng_2;
+    var core_1, notes_service_1, timeline_component_1, tags_selector_component_1, users_selector_component_1, ng2_bs3_modal_1, primeng_1, primeng_2, router_1;
     var AddNoteComponent;
     return {
         setters:[
@@ -35,11 +35,15 @@ System.register(['angular2/core', '../services/notes.service', '../timeline/time
             function (primeng_1_1) {
                 primeng_1 = primeng_1_1;
                 primeng_2 = primeng_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
             }],
         execute: function() {
             AddNoteComponent = (function () {
-                function AddNoteComponent(_notesService) {
+                function AddNoteComponent(_notesService, _router) {
                     this._notesService = _notesService;
+                    this._router = _router;
                     this.noteRequest = {
                         title: '',
                         description: '',
@@ -49,9 +53,22 @@ System.register(['angular2/core', '../services/notes.service', '../timeline/time
                     this.title = "ADD NOTES";
                     this.tags = [];
                     this.users = [];
+                    this.tagList = '';
                 }
                 AddNoteComponent.prototype.Save = function () {
-                    this._notesService.addNote(this.noteRequest);
+                    var _this = this;
+                    //this._notesService.addNote(this.noteRequest);
+                    this._notesService.addNote(this.noteRequest)
+                        .subscribe(function (note) {
+                        for (var i = 0; i < note.tags.length; i++) {
+                            _this.tagList = _this.tagList + (note.tags[i].name + (note.tags.length != i + 1 ? ',' : ''));
+                        }
+                        _this.clear();
+                        _this._router.navigate(['TimeLine', { tags: _this.tagList }]);
+                    }, function (error) {
+                        _this.errorMessage = error,
+                            console.log(_this.errorMessage);
+                    }, function () { return function () { return console.log("Done"); }; });
                 };
                 AddNoteComponent.prototype.Share = function () {
                     console.log('Share This Note');
@@ -62,6 +79,10 @@ System.register(['angular2/core', '../services/notes.service', '../timeline/time
                 AddNoteComponent.prototype.onSelectedUsersChanged = function (users) {
                     this.noteRequest.users = users.map(function (d) { return d['userName']; });
                 };
+                AddNoteComponent.prototype.clear = function () {
+                    this.noteRequest.title = '';
+                    this.noteRequest.description = null;
+                };
                 AddNoteComponent = __decorate([
                     core_1.Component({
                         selector: 'add-note',
@@ -71,7 +92,7 @@ System.register(['angular2/core', '../services/notes.service', '../timeline/time
                         ],
                         directives: [timeline_component_1.TimeLineComponent, tags_selector_component_1.TagsSelectorComponent, ng2_bs3_modal_1.MODAL_DIRECTIVES, primeng_1.Editor, primeng_2.Header, users_selector_component_1.UsersSelectorComponent]
                     }), 
-                    __metadata('design:paramtypes', [notes_service_1.NotesService])
+                    __metadata('design:paramtypes', [notes_service_1.NotesService, router_1.Router])
                 ], AddNoteComponent);
                 return AddNoteComponent;
             }());

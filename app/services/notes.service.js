@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', 'angular2/router', '../app.constants', './auth.service'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'angular2/router', '../app.constants', './auth.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', '../app.co
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, router_1, app_constants_1, auth_service_1;
+    var core_1, http_1, Observable_1, router_1, app_constants_1, auth_service_1;
     var NotesService;
     return {
         setters:[
@@ -19,6 +19,9 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', '../app.co
             },
             function (http_1_1) {
                 http_1 = http_1_1;
+            },
+            function (Observable_1_1) {
+                Observable_1 = Observable_1_1;
             },
             function (router_1_1) {
                 router_1 = router_1_1;
@@ -50,23 +53,20 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', '../app.co
                 //        .subscribe((res: noteRequest) => this.postResponse = res);
                 //}
                 NotesService.prototype.addNote = function (noteRequest) {
-                    var _this = this;
                     console.log("Title: " + noteRequest.title + ", description: " + noteRequest.description);
                     var body = JSON.stringify(noteRequest);
                     //var headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
                     var headers = this._authService.getHeader();
                     headers.append('Content-Type', 'application/json; charset=utf-8');
                     var options = new http_1.RequestOptions({ headers: headers });
-                    this.http.post(this.webApiUrl + '/AddNote', body, options)
+                    return this.http.post(this.webApiUrl + '/AddNote', body, options)
                         .map(function (res) { return res.json(); })
-                        .subscribe(function (data) {
-                        console.log("added note: " + data);
-                    }, function (err) { return console.log("error: " + JSON.stringify(err)); }, function () {
-                        for (var i = 0; i < noteRequest.tags.length; i++) {
-                            _this.tags = _this.tags + (noteRequest.tags[i] + (noteRequest.tags.length != i + 1 ? ',' : ''));
-                        }
-                        _this._router.navigate(['TimeLine', { tags: _this.tags }]);
-                    });
+                        .do(function (data) { return console.log(data); })
+                        .catch(this.handleError);
+                };
+                NotesService.prototype.handleError = function (error) {
+                    console.error(error);
+                    return Observable_1.Observable.throw(error.json().error || 'Server error');
                 };
                 NotesService = __decorate([
                     core_1.Injectable(), 

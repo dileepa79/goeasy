@@ -63,7 +63,7 @@ body {
 }
 
 .login-logo {
-    color: #fff;
+    color: #ccc;
     text-transform: none;
     display: block;
     font-size: 60px;
@@ -130,10 +130,17 @@ h1, h3{font-size:26px;}
 
 /*-------user login and registration--------*/
 .login-content{
+    /*background-image: url('../img/loging-bg.jpg');
+    background-size: contain;
+    background-position-x: -100px;*/
+    background:#0277bd;
+        box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.05);
+
     .input-field label{
         font-weight:300 !important;
         margin-left:-10px;
     }
+
 
 }
 .top-menu > notifications> li > a.tm-notification {
@@ -306,5 +313,11 @@ timeline-detail-group > .panel-open > .timeline-heading a .hide-content {
     overflow-x:hidden;
     overflow-y:scroll;
     padding: 0 20px;
+     display:none !important;
 }
 
+#chat.toggled {
+
+  display:block !important;
+  
+}

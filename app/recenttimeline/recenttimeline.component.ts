@@ -8,14 +8,17 @@ import { Router} from 'angular2/router';
 import { UsersSelectorComponent } from '../noteshareusers/users-selector.component';
 import { MODAL_DIRECTIVES, ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { TimeLineWatch } from '../shared/timeline-watch';
+import {CSSCarouselComponent} from '../carousel/carousel.component';
 
 @Component({
     selector: 'recentimeline',
     templateUrl: './app/recenttimeline/recenttimeline.component.html',
+    //css
+    styles: ['.wrapper{width: 1%;margin: 2px auto;}'],
     providers: [
         RecentTimeLineService, TimeLineWatchService
     ],
-    directives: [TimeLineComponent, MODAL_DIRECTIVES, ShareTimelineComponent, UsersSelectorComponent]
+    directives: [TimeLineComponent, MODAL_DIRECTIVES, ShareTimelineComponent, UsersSelectorComponent, CSSCarouselComponent]
 })
 
 export class RecentTimeLineComponent implements OnInit {

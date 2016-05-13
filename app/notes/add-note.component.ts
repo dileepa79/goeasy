@@ -7,6 +7,7 @@ import { UsersSelectorComponent } from '../noteshareusers/users-selector.compone
 import { MODAL_DIRECTIVES } from 'ng2-bs3-modal/ng2-bs3-modal';
 import {Editor} from 'primeng/primeng';
 import {Header} from 'primeng/primeng';
+import { Router} from 'angular2/router';
 
 @Component({
     selector: 'add-note',
@@ -18,20 +19,36 @@ import {Header} from 'primeng/primeng';
 })
 
 export class AddNoteComponent {
-    constructor(private _notesService: NotesService) {
+    constructor(private _notesService: NotesService, public _router: Router) {
     }
     public noteRequest: NoteRequest = {
         title: '',
         description: '',
         tags: [],
-        users : []
+        users: []
     };
+
     title = "ADD NOTES";
     tags: any[] = [];
     users: any[] = [];
+    errorMessage: string;
+    tagList: string = '';
 
     Save() {
-        this._notesService.addNote(this.noteRequest);
+        //this._notesService.addNote(this.noteRequest);
+        this._notesService.addNote(this.noteRequest)
+            .subscribe(note => {
+                    for (var i = 0; i < note.tags.length; i++) {
+                        this.tagList = this.tagList + (note.tags[i].name + (note.tags.length != i + 1 ? ',' : ''));
+                    }
+                    this.clear();
+                    this._router.navigate(['TimeLine', { tags: this.tagList }]);
+                },
+                error => {
+                    this.errorMessage = <any>error,
+                        console.log(this.errorMessage);
+                },
+                () => () => console.log("Done"));
     }
 
     Share() {
@@ -44,5 +61,9 @@ export class AddNoteComponent {
 
     onSelectedUsersChanged(users: any[]): void {
         this.noteRequest.users = users.map(function (d) { return d['userName']; });
+    }
+    clear() {
+        this.noteRequest.title = '';
+        this.noteRequest.description = null;
     }
 }

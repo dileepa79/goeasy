@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../services/recenttimeline.service', '../services/timeline-watch.service', '../timeline/timeline.component', '../sharetimeline/sharetimeline.component', 'angular2/router', '../noteshareusers/users-selector.component', 'ng2-bs3-modal/ng2-bs3-modal'], function(exports_1, context_1) {
+System.register(['angular2/core', '../services/recenttimeline.service', '../services/timeline-watch.service', '../timeline/timeline.component', '../sharetimeline/sharetimeline.component', 'angular2/router', '../noteshareusers/users-selector.component', 'ng2-bs3-modal/ng2-bs3-modal', '../carousel/carousel.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', '../services/recenttimeline.service', '../serv
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, recenttimeline_service_1, timeline_watch_service_1, timeline_component_1, sharetimeline_component_1, router_1, users_selector_component_1, ng2_bs3_modal_1;
+    var core_1, recenttimeline_service_1, timeline_watch_service_1, timeline_component_1, sharetimeline_component_1, router_1, users_selector_component_1, ng2_bs3_modal_1, carousel_component_1;
     var RecentTimeLineComponent;
     return {
         setters:[
@@ -37,6 +37,9 @@ System.register(['angular2/core', '../services/recenttimeline.service', '../serv
             },
             function (ng2_bs3_modal_1_1) {
                 ng2_bs3_modal_1 = ng2_bs3_modal_1_1;
+            },
+            function (carousel_component_1_1) {
+                carousel_component_1 = carousel_component_1_1;
             }],
         execute: function() {
             RecentTimeLineComponent = (function () {
@@ -124,10 +127,12 @@ System.register(['angular2/core', '../services/recenttimeline.service', '../serv
                     core_1.Component({
                         selector: 'recentimeline',
                         templateUrl: './app/recenttimeline/recenttimeline.component.html',
+                        //css
+                        styles: ['.wrapper{width: 1%;margin: 2px auto;}'],
                         providers: [
                             recenttimeline_service_1.RecentTimeLineService, timeline_watch_service_1.TimeLineWatchService
                         ],
-                        directives: [timeline_component_1.TimeLineComponent, ng2_bs3_modal_1.MODAL_DIRECTIVES, sharetimeline_component_1.ShareTimelineComponent, users_selector_component_1.UsersSelectorComponent]
+                        directives: [timeline_component_1.TimeLineComponent, ng2_bs3_modal_1.MODAL_DIRECTIVES, sharetimeline_component_1.ShareTimelineComponent, users_selector_component_1.UsersSelectorComponent, carousel_component_1.CSSCarouselComponent]
                     }), 
                     __metadata('design:paramtypes', [recenttimeline_service_1.RecentTimeLineService, timeline_watch_service_1.TimeLineWatchService, router_1.Router])
                 ], RecentTimeLineComponent);

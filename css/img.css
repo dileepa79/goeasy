@@ -1,0 +1,7 @@
+﻿.slides > li{
+    position:relative;
+    float:left;
+    margin:2px;
+   
+    /* width: 26px; */
+}
