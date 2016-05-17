@@ -17,7 +17,7 @@
                     </div>
                     <div class="lv-title m-b-5" style="margin-left: 31px; font-size: 12px;">{{Item.title}}</div>
                     <small class="lv-small">{{Item.description}}</small>
-                    <span *ngFor="#tag of Item.tags">{{tag}}  </span>
+                    <span *ngFor="#tag of Item.tags">{{tag.name}}  </span>
                     <input class="btn" type="button" value="GO TO TIMELINE" (click)="select(Item)" style="margin:20px 0 10px 0; ">
                         <div class="form-group" style="padding-top: 10px;">
                             <input class="btn btn-secondary " type="button" value="DISMISS" (click)="dismissClicked(Item)">

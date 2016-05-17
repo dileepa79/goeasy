@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../services/notifications.service'], function(exports_1, context_1) {
+System.register(['angular2/core', '../services/notifications.service', 'angular2/router'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', '../services/notifications.service'], function
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, notifications_service_1;
+    var core_1, notifications_service_1, router_1;
     var NotificaitonComponent;
     return {
         setters:[
@@ -19,11 +19,16 @@ System.register(['angular2/core', '../services/notifications.service'], function
             },
             function (notifications_service_1_1) {
                 notifications_service_1 = notifications_service_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
             }],
         execute: function() {
             NotificaitonComponent = (function () {
-                function NotificaitonComponent(_notificationService) {
+                function NotificaitonComponent(_notificationService, _router) {
                     this._notificationService = _notificationService;
+                    this._router = _router;
+                    this.tags = '';
                 }
                 NotificaitonComponent.prototype.ngOnInit = function () {
                     this.getNotifications();
@@ -49,6 +54,13 @@ System.register(['angular2/core', '../services/notifications.service'], function
                 NotificaitonComponent.prototype.dismissAllClicked = function () {
                     this._notificationService.dismissAll();
                 };
+                NotificaitonComponent.prototype.select = function (selectedTimeline) {
+                    this.tags = '';
+                    for (var i = 0; i < selectedTimeline.tags.length; i++) {
+                        this.tags = this.tags + (selectedTimeline.tags[i].name + (selectedTimeline.tags.length != i + 1 ? ',' : ''));
+                    }
+                    this._router.navigate(['TimeLine', { tags: this.tags }]);
+                };
                 NotificaitonComponent = __decorate([
                     core_1.Component({
                         selector: 'notifications',
@@ -58,7 +70,7 @@ System.register(['angular2/core', '../services/notifications.service'], function
                             notifications_service_1.NotificationService
                         ],
                     }), 
-                    __metadata('design:paramtypes', [notifications_service_1.NotificationService])
+                    __metadata('design:paramtypes', [notifications_service_1.NotificationService, router_1.Router])
                 ], NotificaitonComponent);
                 return NotificaitonComponent;
             }());

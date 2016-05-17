@@ -1,6 +1,7 @@
 ﻿import {Component, OnInit, Input} from 'angular2/core';
 import {NotificationService} from '../services/notifications.service';
 import {NgIf} from 'angular2/common';
+import { Router} from 'angular2/router';
 @Component({
     selector: 'notifications',
     templateUrl: './app/notifications/notifications.component.html',
@@ -18,12 +19,12 @@ import {NgIf} from 'angular2/common';
 })
 
 export class NotificaitonComponent implements OnInit {
-    constructor(private _notificationService: NotificationService) { }
+    constructor(private _notificationService: NotificationService,public _router: Router) { }
     public notificationCount: number;
     errorMessage: string;
     notifications: any[];
     filteredNotificaitons: any[];
-
+    tags: string = '';
     ngOnInit() {
         this.getNotifications();
     }
@@ -52,6 +53,14 @@ export class NotificaitonComponent implements OnInit {
 
     dismissAllClicked() {
         this._notificationService.dismissAll();
+    }
+
+    select(selectedTimeline: any) {
+        this.tags = '';
+        for (var i = 0; i < selectedTimeline.tags.length; i++) {
+            this.tags = this.tags + (selectedTimeline.tags[i].name + (selectedTimeline.tags.length != i + 1 ? ',' : ''));
+        }
+        this._router.navigate(['TimeLine', { tags: this.tags }]);
     }
 
 }
