@@ -1,84 +1,12 @@
 ﻿
-<!-- Timeline Heading and Add Note -->
-<h1>{{title}} 
-    <button class="btn-secondary waves-effect  btn" id="chat-trigger" data-trigger="#chat">
-        <i class="material-icons">playlist_add</i> <span> note</span>
-    </button>
-</h1>
-<!-- Tag search -->
-<div style="margin-bottom:20px;">
-    <prime-app [isAllowedNewInput]="false" [inputValues]="timeLineRequest.data" (tagsAdded)='onSelectedTagsChanged($event)' (tagsRemoved)="onSelectedTagsChanged($event)">Loading...</prime-app>
-</div>
-
-<!--<ul class="media-list">
-    <li *ngFor="#c of selectedTags" class="media">{{c.name}}</li>
-</ul>-->
-<!--<ul class="media-list">
-    <li *ngFor="#timeline of filteredTimelines" class="media">
-        <div *ngIf="timeline.items.length > 0">{{timeline.dateFormat}}</div>
-        <ul class="media-list">
-            <li *ngFor="#Item of timeline.items" class="media">
-                <div class="media-body">
-                    <div class="row">
-                        <div class="col-md-1">
-                            <div class="well well-sm">
-                                <div>{{Item.date }}</div>
-                                <div>{{Item.time}}</div>
-                            </div>
-                        </div>
-                        <div class="col-md-11">
-                            <div class="well well-sm">
-                                <accordion>
-                                    <accordion-group [heading]="Item.title">
-                                        {{Item.description}}
-                                    </accordion-group>
-                                </accordion>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </li>
-</ul>-->
-
-<!--<accordion [closeOthers]="oneAtATime">
-    <accordion-group [heading]="timeline.dateFormat" *ngFor="#timeline of filteredTimelines; #i = index" [isOpen]="i === 0">
-        <ul class="media-list">
-            <li *ngFor="#Item of timeline.items" class="media">
-                <div class="media-body">
-                    <div class="row">
-                        <div class="col-md-1">
-                            <div class="well well-sm">
-                                <div *ngIf="timeline.dateFormat != 'NOW'">{{Item.date }}</div>
-                                <div>{{Item.time}}</div>
-                            </div>
-                        </div>
-                        <div class="col-md-11">
-                            <div class="well well-sm">
-                                <accordion [closeOthers]="true">
-                                    <accordion-group [heading]="Item.title">
-                                        {{Item.description}}
-                                    </accordion-group>
-                                </accordion>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </accordion-group>
-</accordion>-->
-
 
 <!-- Timeline -->
-<timelineinfo close-others="true">
-    <timeline-group [heading]="timeline.dateFormat" *ngFor="#timeline of filteredTimelines;  #i = index" [isOpen]="i === 0" [availableCountText]= "timeline.availableThreadsCountText">
-        
+ <!--<timelineinfo close-others="true">
+    <timeline-group [heading]="timeline.dateFormat" *ngFor="#timeline of filteredTimelines;  #i = index" [isOpen]="i === 0" [availableCountText]="timeline.availableThreadsCountText">
+
         <div class="col-md-12 " *ngFor="#Item of timeline.items">
-            <!--<div class="col-md-1"></div>-->
             <div class="col-md-12">
-                <div class="col-md-1" >
+                <div class="col-md-1">
                     <div alt="" class="timeline-icon">
                         <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
                     </div>
@@ -97,9 +25,8 @@
 
                         <div alt="" class="timeline-img" style="margin-right: 10px; margin-top: 10px; float: right;">
                             <img class="circle responsive-img" src={{Item.userImageUrl}}>
-                            <!--<img class="circle responsive-img" src="http://cdn.devilsworkshop.org/files/2013/01/enlarged-facebook-profile-picture.jpg">-->
                         </div>
-                       
+
                         <timeline-detail-group [heading]="Item.title" [headerDescription]="Item.plainDescriptionText">
 
                             <div [innerHTML]="Item.description"></div>
@@ -109,7 +36,58 @@
             </div>
         </div>
     </timeline-group>
-</timelineinfo>
+</timelineinfo>--> 
+
+
+<section id="main-content">
+    <!--<div class="app-header-secondary">
+
+    </div>-->
+
+    <!-- Timeline Heading and Add Note -->
+    <h1>
+        {{title}}
+        <button class="btn-secondary waves-effect  btn" id="chat-trigger" data-trigger="#chat">
+            <i class="material-icons">playlist_add</i> <span> note</span>
+        </button>
+    </h1>
+    <!-- Tag search -->
+    <div style="margin-bottom: 20px;">
+        <prime-app [isAllowedNewInput]="false" [inputValues]="timeLineRequest.data" (tagsAdded)='onSelectedTagsChanged($event)' (tagsRemoved)="onSelectedTagsChanged($event)">Loading...</prime-app>
+    </div>
+    
+    <timelineinfo close-others="true">
+        <timeline-group [heading]="timeline.dateFormat" *ngFor="#timeline of filteredTimelines;  #i = index" [isOpen]="i === 0" [availableCountText]="timeline.availableThreadsCountText">
+
+            <section id="cd-timeline" class="cd-container">
+             <div class="cd-timeline-block" *ngFor="#Item of timeline.items">
+                    <div class="cd-timeline-img cd-location">
+                        <!--<img src="img/cd-icon-location.svg" alt="Location">-->
+                        <i class="fa fa-file-text" aria-hidden="true"></i>
+                    </div> <!-- cd-timeline-img -->
+                 <div class="cd-timeline-content">
+                     <timelinedetail close-others="true">
+                         <div class="pull-right" style="margin-top: 20px;padding-right: 16px;color:#ddd;">
+                             <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+                         </div>
+
+                         <div alt="" class="timeline-img" style="margin-right: 10px; margin-top: 10px; float: right;">
+                             <img class="circle responsive-img" src={{Item.userImageUrl}}>
+                         </div>
+
+                         <timeline-detail-group [heading]="Item.title" [headerDescription]="Item.plainDescriptionText">
+                             <div [innerHTML]="Item.description"></div>
+                         </timeline-detail-group>
+                     </timelinedetail>
+                     <span class="cd-date" *ngIf="timeline.dateFormat != 'NOW'">{{Item.date}}</span>
+                     <span class="cd-date" *ngIf="timeline.dateFormat == 'NOW'">{{Item.time}}</span>
+                 </div> <!-- cd-timeline-content -->
+                </div> <!-- cd-timeline-block -->
+
+            </section> <!-- cd-timeline -->
+        </timeline-group>
+    </timelineinfo>
+</section>
 <input type="hidden" value="2" id="application-view-id"/>
 
 

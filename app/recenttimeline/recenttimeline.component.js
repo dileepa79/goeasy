@@ -103,7 +103,8 @@ System.register(['angular2/core', '../services/recenttimeline.service', '../serv
                     var timeLineWatch = {
                         tags: [],
                         isWatched: false,
-                        isStatusUpdate: false
+                        isStatusUpdate: false,
+                        timeLineId: selectedTimeline.id
                     };
                     timeLineWatch.isWatched = selectedTimeline.isWatched;
                     timeLineWatch.isStatusUpdate = true;

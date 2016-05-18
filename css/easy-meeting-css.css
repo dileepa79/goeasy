@@ -5564,10 +5564,10 @@ timeline-group .panel-open a .show-content {
 timeline-group .panel-open a .hide-content {
   display: none !important; }
 
-timeline-detail-group > .panel-open > .timeline-heading a .show-content {
+timeline-detail-group > .panel-open > .timeline-heading span .show-content {
   display: none !important; }
 
-timeline-detail-group > .panel-open > .timeline-heading a .hide-content {
+timeline-detail-group > .panel-open > .timeline-heading span .hide-content {
   display: none !important;
   display: inline-block; }
 

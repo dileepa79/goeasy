@@ -98,7 +98,8 @@ export class RecentTimeLineComponent implements OnInit {
         var timeLineWatch: TimeLineWatch = {
             tags: [],
             isWatched: false,
-            isStatusUpdate: false
+            isStatusUpdate: false,
+            timeLineId: selectedTimeline.id
         };
 
         timeLineWatch.isWatched = selectedTimeline.isWatched;
