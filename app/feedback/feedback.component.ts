@@ -1,6 +1,6 @@
-﻿import {Component, OnInit, Inject} from 'angular2/core';
+﻿import {Component, OnInit, Inject} from '@angular/core';
 import {FeedbackService} from '../services/feedback.service';
-import { MODAL_DIRECTIVES } from 'ng2-bs3-modal/ng2-bs3-modal';
+import { MODAL_DIRECTIVES } from '../modal/modaldialog';
 
 @Component({
     selector: 'user-feedback',

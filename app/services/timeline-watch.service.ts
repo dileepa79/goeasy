@@ -1,5 +1,5 @@
-﻿import {Injectable, Inject} from 'angular2/core';
-import {Http, Response, RequestOptions, Headers} from 'angular2/http';
+﻿import {Injectable, Inject} from '@angular/core';
+import {Http, Response, RequestOptions, Headers} from '@angular/http';
 import { TimeLineWatch } from '../shared/timeline-watch';
 import {Observable} from 'rxjs/Observable';
 import {AuthService} from './auth.service';

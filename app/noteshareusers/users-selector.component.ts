@@ -1,4 +1,4 @@
-﻿import { Component, Output, Input, OnInit, EventEmitter } from 'angular2/core';
+﻿import { Component, Output, Input, OnInit, EventEmitter } from '@angular/core';
 import {AutoComplete} from 'primeng/primeng';
 import { UsersService } from '../services/users.service';
 import { UsersResponse } from './users-response';
@@ -7,7 +7,7 @@ import { UsersResponse } from './users-response';
     selector: 'user-app',
 
     template: `
-        <p-autoComplete [(ngModel)]="users" [suggestions]="filteredusersMultiple" (completeMethod)="filteruserMultiple($event)" style="width:100%"
+        <p-autoComplete [(ngModel)]="users" [suggestions]="filteredusersMultiple" (completeMethod)="filteruserMultiple($event)"
             [minLength]="1" placeholder="Select Users" field="userName" [multiple]="true" [allowNewInput] = "isAllowedNewInput" (onSelect)="handleSelectUser($event)" (onUnselect)="handleUnSelectUser($event)">
         </p-autoComplete>
     `,

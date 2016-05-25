@@ -1,4 +1,5 @@
-﻿import {Component, OnInit, Input} from 'angular2/core';
+﻿
+import {Component, OnInit, Input} from '@angular/core';
 import {TimeLineService} from '../services/timeline.service';
 import {TimeLineResponse} from './timeline-response';
 import {TimeLineRequest} from './timeline-request';
@@ -6,8 +7,10 @@ import { TagsResponse, Tag } from '../tags/tags-response';
 import { TagsSelectorComponent } from '../tags/tags-selector.component';
 import {TimelineInfo, TimelineGroup} from './timelinegroup/timelinegroup.component';
 import {TimelineDetail, TimelineDetailGroup} from './timelinegroup/timelinedetail.component';
-import {RouteParams, CanDeactivate} from 'angular2/router'
+import {RouteSegment, CanDeactivate} from '@angular/router'
 import { Observable } from 'rxjs/Observable';
+
+
 
 @Component({
     selector: 'timeline',
@@ -22,9 +25,9 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
     public oneAtATime: boolean = true;
     tagsStr: string
     tagsResponce: TagsResponse;
-    constructor(private _timeLineService: TimeLineService, params: RouteParams)
+    constructor(private _timeLineService: TimeLineService, routeSegment: RouteSegment)
     {
-        this.tagsStr = params.get('tags');
+        this.tagsStr = routeSegment.getParam('tags');
     }
     selectedTags: any[]
     title = "TIMELINE";

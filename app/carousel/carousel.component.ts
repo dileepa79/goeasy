@@ -1,5 +1,5 @@
 ﻿// Import Component form the angular core package
-import {Component} from 'angular2/core';
+import {Component} from '@angular/core';
 
 // Import the Image interface
 import {Image} from './image.interface';

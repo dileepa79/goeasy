@@ -1,6 +1,6 @@
-﻿import {Component, Inject, forwardRef, OnInit} from 'angular2/core';
+﻿import {Component, Inject, forwardRef, OnInit} from '@angular/core';
 import {AuthService} from '../services/auth.service';
-import { Router} from 'angular2/router';
+import { Router} from '@angular/router';
 
 export class UserDetails {
     username: string;

@@ -1,12 +1,12 @@
-﻿import {Component, OnInit} from 'angular2/core';
+﻿import {Component, OnInit} from '@angular/core';
 import { UsersService } from '../services/users.service';
 import { User } from './users-response';
-import { Collapse } from 'ng2-bootstrap/ng2-bootstrap';
+import { CollapseDirective  } from '../directives/collapse.directive';
 
 @Component({
     selector: 'add-user',
     templateUrl: './app/users/users.component.html',
-    directives: [Collapse],
+    directives: [CollapseDirective],
     providers: [
         UsersService
     ]
@@ -77,7 +77,7 @@ export class UsersComponent implements OnInit {
             },
             err => console.log("error: " + err),
             () => {
-                //this._router.navigate(['TimeLine']);
+                //this._router.navigate(['timeline']);
             }
             );
     }*/

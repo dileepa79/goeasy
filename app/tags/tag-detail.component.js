@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../services/tags.service', 'angular2/router'], function(exports_1, context_1) {
+System.register(['@angular/core', '../services/tags.service', '@angular/router'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -25,15 +25,15 @@ System.register(['angular2/core', '../services/tags.service', 'angular2/router']
             }],
         execute: function() {
             TagDetailComponent = (function () {
-                function TagDetailComponent(_router, _routeParams, _tagsService) {
+                function TagDetailComponent(_router, routeSegment, _tagsService) {
                     this._router = _router;
-                    this._routeParams = _routeParams;
+                    this.routeSegment = routeSegment;
                     this._tagsService = _tagsService;
                     this.pageTitle = 'Tag Detail';
                 }
                 TagDetailComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    var id = this._routeParams.get('id');
+                    var id = this.routeSegment.getParam('id');
                     this._tagsService.getAllTags()
                         .subscribe(function (t) {
                         _this.tag = t.data.filter(function (t) { return t.id === +id; })[0];
@@ -49,7 +49,7 @@ System.register(['angular2/core', '../services/tags.service', 'angular2/router']
                             tags_service_1.TagsService
                         ]
                     }), 
-                    __metadata('design:paramtypes', [router_1.Router, router_1.RouteParams, tags_service_1.TagsService])
+                    __metadata('design:paramtypes', [router_1.Router, router_1.RouteSegment, tags_service_1.TagsService])
                 ], TagDetailComponent);
                 return TagDetailComponent;
             }());

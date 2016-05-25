@@ -1,5 +1,5 @@
-﻿import {Injectable, Inject} from 'angular2/core';
-import {Http, Headers, RequestOptions, Response} from 'angular2/http';
+﻿import {Injectable, Inject} from '@angular/core';
+import {Http, Headers, RequestOptions, Response} from '@angular/http';
 import {RecentTimeLineResponse} from '../recenttimeline/recenttimeline-response';
 import {Observable} from 'rxjs/Observable';
 import {AuthService} from './auth.service';
@@ -52,7 +52,7 @@ export class RecentTimeLineService {
                 //for (var i = 0; i < request.tags.length; i++) {
                 //    this.tags = this.tags + (request.tags[i] + (request.tags.length != i + 1 ? ',' : ''));
                 //}
-                //this._router.navigate(['TimeLine', { tags: this.tags }]);
+                //this._router.navigate(['timeline', { tags: this.tags }]);
             }
             );
     }

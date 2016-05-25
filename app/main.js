@@ -1,11 +1,14 @@
-System.register(['angular2/platform/browser', './app.component', 'rxjs/add/operator/map', 'angular2/http', 'rxjs/Rx', './services/token.service'], function(exports_1, context_1) {
+System.register(['@angular/platform-browser-dynamic', '@angular/router', './app.component', 'rxjs/add/operator/map', '@angular/http', 'rxjs/Rx', './services/token.service', '@angular/core'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var browser_1, app_component_1, http_1, token_service_1;
+    var platform_browser_dynamic_1, router_1, app_component_1, http_1, token_service_1, core_1;
     return {
         setters:[
-            function (browser_1_1) {
-                browser_1 = browser_1_1;
+            function (platform_browser_dynamic_1_1) {
+                platform_browser_dynamic_1 = platform_browser_dynamic_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
             },
             function (app_component_1_1) {
                 app_component_1 = app_component_1_1;
@@ -17,9 +20,14 @@ System.register(['angular2/platform/browser', './app.component', 'rxjs/add/opera
             function (_2) {},
             function (token_service_1_1) {
                 token_service_1 = token_service_1_1;
+            },
+            function (core_1_1) {
+                core_1 = core_1_1;
             }],
         execute: function() {
-            browser_1.bootstrap(app_component_1.AppComponent, [
+            core_1.enableProdMode();
+            platform_browser_dynamic_1.bootstrap(app_component_1.AppComponent, [
+                router_1.ROUTER_PROVIDERS,
                 http_1.HTTP_PROVIDERS,
                 token_service_1.TokenService
             ]);

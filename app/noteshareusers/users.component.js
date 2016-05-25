@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../services/users.service', 'ng2-bootstrap/ng2-bootstrap'], function(exports_1, context_1) {
+System.register(['@angular/core', '../services/users.service', '../directives/collapse.directive'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', '../services/users.service', 'ng2-bootstrap/ng
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, users_service_1, ng2_bootstrap_1;
+    var core_1, users_service_1, collapse_directive_1;
     var UsersComponent;
     return {
         setters:[
@@ -20,8 +20,8 @@ System.register(['angular2/core', '../services/users.service', 'ng2-bootstrap/ng
             function (users_service_1_1) {
                 users_service_1 = users_service_1_1;
             },
-            function (ng2_bootstrap_1_1) {
-                ng2_bootstrap_1 = ng2_bootstrap_1_1;
+            function (collapse_directive_1_1) {
+                collapse_directive_1 = collapse_directive_1_1;
             }],
         execute: function() {
             UsersComponent = (function () {
@@ -67,7 +67,7 @@ System.register(['angular2/core', '../services/users.service', 'ng2-bootstrap/ng
                     core_1.Component({
                         selector: 'add-user',
                         templateUrl: './app/users/users.component.html',
-                        directives: [ng2_bootstrap_1.Collapse],
+                        directives: [collapse_directive_1.CollapseDirective],
                         providers: [
                             users_service_1.UsersService
                         ]

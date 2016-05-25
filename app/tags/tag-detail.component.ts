@@ -1,6 +1,6 @@
-﻿import { Component, OnInit } from 'angular2/core';
+﻿import { Component, OnInit } from '@angular/core';
 import { TagsService } from '../services/tags.service';
-import {RouteParams, Router} from 'angular2/router';
+import {RouteSegment, Router} from '@angular/router';
 import { Tag } from './tags-response';
 
 @Component({
@@ -13,7 +13,7 @@ import { Tag } from './tags-response';
 export class TagDetailComponent implements OnInit{
     constructor(
         private _router: Router,
-        private _routeParams: RouteParams,
+        private routeSegment: RouteSegment,
         private _tagsService: TagsService) {
     }
 
@@ -22,7 +22,7 @@ export class TagDetailComponent implements OnInit{
     errorMessage: string;
 
     ngOnInit() {
-        let id = this._routeParams.get('id');
+        let id = this.routeSegment.getParam('id');
 
         this._tagsService.getAllTags()
             .subscribe(t => {

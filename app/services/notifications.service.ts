@@ -1,5 +1,5 @@
-﻿import {Injectable, Inject} from 'angular2/core';
-import {Http, Response, Headers, RequestOptions} from 'angular2/http';
+﻿import {Injectable, Inject} from '@angular/core';
+import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {AuthService} from './auth.service';
 import {Configuration} from '../app.constants';
@@ -33,6 +33,7 @@ export class NotificationService {
 
     public updateNotifications(id: number, isSnooze: boolean) {
         var notificationUpdate = new NotificationUpdate();
+        var count = 0;
         notificationUpdate.NotificationId = id;
         notificationUpdate.IsSnooze = isSnooze;
         console.log('updating Notification for');
@@ -46,18 +47,10 @@ export class NotificationService {
 
         var options = new RequestOptions({ headers: headers });
 
-        this.http.post(this.webApiUrl + '/' + 'UpdateNotifications', body, options)
+        return this.http.post(this.webApiUrl + '/' + 'UpdateNotifications', body, options)
             .map(res => res.json())
-            .subscribe(
-            data => {
-                console.log("Notificaiton update: " + data);
-            },
-            err => console.log("error: " + JSON.stringify(err)),
-            () => {
-                this.getNotifications();
-                console.log("Notificaiton update successfully");
-            }
-            );
+            .do(data => console.log(data))
+            .catch(this.handleError);
     }
 
     public dismissAll() {
@@ -69,21 +62,9 @@ export class NotificationService {
 
         var options = new RequestOptions({ headers: headers });
 
-        this.http.post(this.webApiUrl + '/' + 'DismissAllNotifications', body, options)
+        return this.http.post(this.webApiUrl + '/' + 'DismissAllNotifications', body, options)
             .map(res => res.json())
-            .subscribe(
-            data => {
-                console.log("Notificaiton dismill all: " + data);
-            },
-            err => console.log("error: " + JSON.stringify(err)),
-            () => {
-                this.getNotifications();
-                console.log("Notificaiton dismissall successfully");
-            }
-            );
+            .do(data => console.log(data))
+            .catch(this.handleError);
     }
-
-
-
-
 }

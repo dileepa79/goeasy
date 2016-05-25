@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', '../services/whatisgoingon.service'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/router', '../services/whatisgoingon.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -48,7 +48,7 @@ System.register(['angular2/core', 'angular2/router', '../services/whatisgoingon.
                     for (var i = 0; i < selectedActivityTag.tags.length; i++) {
                         this.tags = this.tags + (selectedActivityTag.tags[i].name + (selectedActivityTag.tags.length != i + 1 ? ',' : ''));
                     }
-                    this._router.navigate(['TimeLine', { tags: this.tags }]);
+                    this._router.navigate(['timeline', { tags: this.tags }]);
                 };
                 WhatIsGoingOnComponent = __decorate([
                     core_1.Component({

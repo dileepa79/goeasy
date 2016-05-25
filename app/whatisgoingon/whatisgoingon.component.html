@@ -1,20 +1,32 @@
 ﻿<h3>WHAT IS GOING ON</h3>
-
-<div class="col-md-12" *ngFor="#activity of whatisgoingonTimelines; #i=index">
+<div class="col-md-12" *ngFor="let activity of whatisgoingonTimelines; let i=index">
     <div *ngIf="i<5">
         <div class="col-md-2">
             <div alt="" class="timeline-img">
                 <img class="circle responsive-img" src={{activity.userImage}}>
             </div>
-
         </div>
         <div class="col-md-10">
-            <div class="timeline-heading" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample1">
-                {{activity.description}}
-            </div>
-            <div class="timeline-description">
-                <a (click)="select(activity)"><span *ngFor="#tag of activity.tags; #last = last">{{tag.name}}<span *ngIf="!last"> + </span></span></a>
+            <div id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href=#i{{i}} aria-expanded="false" style="padding-left: 0">
+                                {{activity.title}}
+                            </a>
+                        </h4>
+                        <div>
+                            <a (click)="select(activity)"><span class="label label-default" style="margin-right: 5px" *ngFor="let tag of activity.tags; let last = last">{{tag.name}}<span *ngIf="!last"></span></span></a>
+                        </div>
+                    </div>
+                    <div id=i{{i}} class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div [innerHTML]="activity.description"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+

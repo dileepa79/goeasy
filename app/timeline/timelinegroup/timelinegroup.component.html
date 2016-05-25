@@ -18,8 +18,8 @@
         <div class="timeline-group-heading">
             <a href="#" tabindex="0">
                 <span [class.text-muted]="isDisabled" (click)="toggleOpen($event)"> {{heading}}</span>
-                <span class="show-content glyphicon glyphicon-eye-open"></span>
-                <span class="hide-content glyphicon glyphicon-eye-close"></span>
+                <span class="show-content glyphicon glyphicon-eye-open" (click)="toggleOpen($event)"></span>
+                <span class="hide-content glyphicon glyphicon-eye-close" (click)="toggleOpen($event)"></span>
             </a>
         </div>
     </div>

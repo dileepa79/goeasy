@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'primeng/primeng', '../services/users.service'], function(exports_1, context_1) {
+System.register(['@angular/core', 'primeng/primeng', '../services/users.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -70,7 +70,7 @@ System.register(['angular2/core', 'primeng/primeng', '../services/users.service'
                 UsersSelectorComponent = __decorate([
                     core_1.Component({
                         selector: 'user-app',
-                        template: "\n        <p-autoComplete [(ngModel)]=\"users\" [suggestions]=\"filteredusersMultiple\" (completeMethod)=\"filteruserMultiple($event)\" style=\"width:100%\"\n            [minLength]=\"1\" placeholder=\"Select Users\" field=\"userName\" [multiple]=\"true\" [allowNewInput] = \"isAllowedNewInput\" (onSelect)=\"handleSelectUser($event)\" (onUnselect)=\"handleUnSelectUser($event)\">\n        </p-autoComplete>\n    ",
+                        template: "\n        <p-autoComplete [(ngModel)]=\"users\" [suggestions]=\"filteredusersMultiple\" (completeMethod)=\"filteruserMultiple($event)\"\n            [minLength]=\"1\" placeholder=\"Select Users\" field=\"userName\" [multiple]=\"true\" [allowNewInput] = \"isAllowedNewInput\" (onSelect)=\"handleSelectUser($event)\" (onUnselect)=\"handleUnSelectUser($event)\">\n        </p-autoComplete>\n    ",
                         directives: [primeng_1.AutoComplete],
                         providers: [users_service_1.UsersService]
                     }), 

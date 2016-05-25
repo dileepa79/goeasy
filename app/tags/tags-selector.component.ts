@@ -1,4 +1,4 @@
-﻿import { Component, Output, Input, OnInit, EventEmitter } from 'angular2/core';
+﻿import { Component, Output, Input, OnInit, EventEmitter } from '@angular/core';
 import {AutoComplete} from 'primeng/primeng';
 import { TagsService } from '../services/tags.service';
 import { TagsResponse } from './tags-response';
@@ -7,7 +7,7 @@ import { TagsResponse } from './tags-response';
     selector: 'prime-app',
 
     template: `
-        <p-autoComplete [(ngModel)]="tags" [suggestions]="filteredtagsMultiple" (completeMethod)="filtertagMultiple($event)" style="width:100%"
+        <p-autoComplete [(ngModel)]="tags" [suggestions]="filteredtagsMultiple" (completeMethod)="filtertagMultiple($event)"
             [minLength]="1" placeholder="Select Tags" field="name" [multiple]="true" [allowNewInput] = "isAllowedNewInput" [inputValues] = "inputValues" (onSelect)="handleSelectTag($event)" (onUnselect)="handleUnSelectTag($event)">
         </p-autoComplete>
     `,

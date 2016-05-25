@@ -1,4 +1,4 @@
-﻿import {Component} from 'angular2/core';
+﻿import {Component} from '@angular/core';
 import { RecentTimeLineComponent } from '../recenttimeline/recenttimeline.component';
 import { ThinkHelpful } from '../thinkhelpful/thinkhelpful.component';
 import { WhatIsGoingOnComponent } from '../whatisgoingon/whatisgoingon.component';

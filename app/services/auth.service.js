@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', 'angular2/router', './token.service', '../app.component', '../app.constants'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/http', '@angular/router', './token.service', '../app.component', '../app.constants'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -76,7 +76,7 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', './token.s
                             _this.setCookie("username", username, 15);
                             _this.setCookie("password", password, 15);
                         }
-                        _this._router.navigate(['Dashboard']);
+                        _this._router.navigate(['dashboard']);
                     });
                 };
                 AuthService.prototype.isAuth = function () {
@@ -129,7 +129,7 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', './token.s
                     this.delete_cookie("username");
                     this.delete_cookie("password");
                     this._parent.isAuthorized = false;
-                    this._router.navigate(['Login']);
+                    this._router.navigate(['login']);
                 };
                 AuthService.prototype.delete_cookie = function (name) {
                     document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';

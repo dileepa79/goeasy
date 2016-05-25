@@ -1,16 +1,16 @@
-﻿import {Component, OnInit} from 'angular2/core';
-import {Router}  from 'angular2/router';
+﻿import {Component, OnInit} from '@angular/core';
+import {Router}  from '@angular/router';
 import { TagsService } from '../services/tags.service';
 import { Tag } from './tags-response';
 import { TagFilterPipe } from './tags-filter.pipe';
-import { Collapse } from 'ng2-bootstrap/ng2-bootstrap';
+import { CollapseDirective } from '../directives/collapse.directive';
 import {Button} from 'primeng/primeng';
 
 @Component({
     selector: 'add-tag',
     templateUrl: './app/tags/tags.component.html',
     pipes: [TagFilterPipe],
-    directives: [Collapse, Button],
+    directives: [CollapseDirective, Button],
     providers: [
         TagsService
     ]
@@ -25,7 +25,7 @@ export class TagsComponent implements OnInit{
     }
 
     onClick(tag: Tag) {
-        this._router.navigate(['TagDetail', { id: tag.id }]);
+        this._router.navigate(['tag', { id: tag.id },this.currSegment]);
     }
 
     public tagRequest: Tag = {
@@ -71,7 +71,7 @@ export class TagsComponent implements OnInit{
             },
             err => console.log("error: " + err),
             () => {
-                //this._router.navigate(['TimeLine']);
+                //this._router.navigate(['timeline']);
             }
             );
     }

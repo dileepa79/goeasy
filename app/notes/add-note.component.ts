@@ -1,13 +1,13 @@
-﻿import {Component} from 'angular2/core';
+﻿import {Component} from '@angular/core';
 import {NoteRequest} from './note-request';
 import {NotesService} from '../services/notes.service';
 import {TimeLineComponent} from '../timeline/timeline.component';
 import { TagsSelectorComponent } from '../tags/tags-selector.component';
 import { UsersSelectorComponent } from '../noteshareusers/users-selector.component';
-import { MODAL_DIRECTIVES } from 'ng2-bs3-modal/ng2-bs3-modal';
+import { MODAL_DIRECTIVES } from '../modal/modaldialog';
 import {Editor} from 'primeng/primeng';
 import {Header} from 'primeng/primeng';
-import { Router} from 'angular2/router';
+import { Router} from '@angular/router';
 
 @Component({
     selector: 'add-note',
@@ -18,8 +18,10 @@ import { Router} from 'angular2/router';
     directives: [TimeLineComponent, TagsSelectorComponent, MODAL_DIRECTIVES, Editor, Header,UsersSelectorComponent]
 })
 
-export class AddNoteComponent {
+export class AddNoteComponent{
     constructor(private _notesService: NotesService, public _router: Router) {
+        this.noteRequest = new NoteRequest('', '', [], []);
+
     }
     public noteRequest: NoteRequest = {
         title: '',
@@ -28,12 +30,12 @@ export class AddNoteComponent {
         users: []
     };
 
-    title = "ADD NOTES";
+    heading = "ADD NOTES";
     tags: any[] = [];
     users: any[] = [];
     errorMessage: string;
     tagList: string = '';
-
+    active = true;
     Save() {
         //this._notesService.addNote(this.noteRequest);
         this._notesService.addNote(this.noteRequest)
@@ -42,7 +44,7 @@ export class AddNoteComponent {
                         this.tagList = this.tagList + (note.tags[i].name + (note.tags.length != i + 1 ? ',' : ''));
                     }
                     this.clear();
-                    this._router.navigate(['TimeLine', { tags: this.tagList }]);
+                    this._router.navigate(['/timeline', { tags: this.tagList }]);
                 },
                 error => {
                     this.errorMessage = <any>error,
@@ -63,7 +65,8 @@ export class AddNoteComponent {
         this.noteRequest.users = users.map(function (d) { return d['userName']; });
     }
     clear() {
-        this.noteRequest.title = '';
-        this.noteRequest.description = null;
+        this.noteRequest = new NoteRequest('', '', [], []);
+        this.active = false;
+        setTimeout(() => this.active = true, 0);
     }
 }

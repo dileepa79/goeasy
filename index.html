@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="pragma" content="no-cache" />
     <title>YAYI Collaboration</title>
 
 
@@ -13,7 +14,8 @@
     <link href="vendors/bower_components/animate.css/animate.min.css" rel="stylesheet">
     <link href="vendors/bower_components/bootstrap-sweetalert/lib/sweet-alert.css" rel="stylesheet">
     <link href="vendors/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="node_modules/primeui/themes/delta/theme.css" />
+    
+    <link rel="stylesheet" type="text/css" href="node_modules/primeui/themes/delta/theme.css"/>
     <link rel="stylesheet" type="text/css" href="app/resources/icons/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="node_modules/primeui/primeui-ng-all.min.css"/>
     <link rel="stylesheet" type="text/css" href="node_modules/quill/dist/quill.snow.css" />
@@ -26,9 +28,6 @@
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
      <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>-->
-   
-
-
     <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,500' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Sacramento' rel='stylesheet' type='text/css'>
     <link href="css/easy-meeting-css.css" rel="stylesheet" />
@@ -47,41 +46,19 @@
 
 
     <!-- 1. Load libraries -->
-    <!-- IE required polyfills, in this exact order -->
-    <!--<script src="node_modules/requirejs/require.js"></script>-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.1/es6-shim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.27/system-polyfills.js"></script>
-    <script src="node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/2.0.0-beta.17/angular2-polyfills.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.27/system.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/2.0.0-beta.17/Rx.js"></script>
+    <!-- Polyfill(s) for older browsers -->
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
     <script src="node_modules/primeui/primeui-ng-all.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/2.0.0-beta.17/angular2.min.js"></script>
-    <script src="https://code.angularjs.org/2.0.0-beta.0/http.dev.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/2.0.0-beta.17/router.min.js"></script>
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/ng2-bootstrap/1.0.16/ng2-bootstrap.min.js"></script>-->
     <script src="node_modules/quill/dist/quill.js"></script>
-    <!--<script src="node_modules/angular2/common.js"></script>-->
 
     <!-- 2. Configure SystemJS -->
+    <script src="systemjs.config.js"></script>
     <script>
-        System.config({
-            defaultJSExtensions: true,
-            packages: {
-                'app': { format: 'register', "defaultExtension": 'js' },
-                'rxjs': { defaultExtension: 'js' }
-            },
-            map: {
-                'rxjs': 'node_modules/rxjs', moment: 'node_modules/moment/moment.js',
-                'angular2': 'node_modules/angular2',
-                'primeng': 'node_modules/primeng',
-                "ng2-bootstrap/ng2-bootstrap": "node_modules/ng2-bootstrap/ng2-bootstrap",
-                'ng2-bs3-modal': 'node_modules/ng2-bs3-modal'
-            }
-        });
-        System.import('app/main').then(null, console.error.bind(console));
+      System.import('app').catch(function(err){ console.error(err); });
     </script>
-
 </head>
 
 <!-- 3. Display the application -->
@@ -89,49 +66,6 @@
 
         <my-app></my-app>
     
-
-        <!-- UI > Older IE warning message -->
-        <!--[if lt IE 9]>
-            <div class="ie-warning">
-                <h1 class="c-white">Warning!!</h1>
-                <p>You are using an outdated version of Internet Explorer, please upgrade <br/>to any of the following web browsers to access this website.</p>
-                <div class="iew-container">
-                    <ul class="iew-download">
-                        <li>
-                            <a href="http://www.google.com/chrome/">
-                                <img src="img/browsers/chrome.png" alt="">
-                                <div>Chrome</div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.mozilla.org/en-US/firefox/new/">
-                                <img src="img/browsers/firefox.png" alt="">
-                                <div>Firefox</div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="http://www.opera.com">
-                                <img src="img/browsers/opera.png" alt="">
-                                <div>Opera</div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.apple.com/safari/">
-                                <img src="img/browsers/safari.png" alt="">
-                                <div>Safari</div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-                                <img src="img/browsers/ie.png" alt="">
-                                <div>IE (New)</div>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <p>Sorry for the inconvenience!</p>
-            </div>
-        <![endif]-->
         <!-- UI > Javascript Libraries -->
         <script src="vendors/bower_components/jquery/dist/jquery.min.js"></script>
         <script src="vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -141,11 +75,6 @@
         <script src="vendors/bootstrap-growl/bootstrap-growl.min.js"></script>
         <script src="vendors/bower_components/bootstrap-sweetalert/lib/sweet-alert.min.js"></script>
         <script src="vendors/bower_components/autosize/dist/autosize.min.js"></script>
-
-        <!-- UI > Placeholder for IE9 -->
-        <!--[if IE 9 ]>
-            <script src="vendors/bower_components/jquery-placeholder/jquery.placeholder.min.js"></script>
-        <![endif]-->
 
         <script src="js/functions.js"></script>
         <script src="js/demo.js"></script>

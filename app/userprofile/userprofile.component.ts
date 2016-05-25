@@ -1,4 +1,4 @@
-﻿import {Component, OnInit } from 'angular2/core';
+﻿import {Component, OnInit } from '@angular/core';
 import {AuthService} from '../services/auth.service';
 import {UserProfileService} from '../services/user_profile.service';
 import {Configuration} from '../app.constants';

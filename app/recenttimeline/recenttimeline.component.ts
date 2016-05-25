@@ -1,17 +1,19 @@
-﻿import {Component, OnInit, ViewChild} from 'angular2/core';
+﻿import {Component, OnInit, ViewChild} from '@angular/core';
 import {RecentTimeLineService} from '../services/recenttimeline.service';
 import {TimeLineWatchService} from '../services/timeline-watch.service';
 import { TimeLineComponent } from '../timeline/timeline.component';
 import { ShareTimelineComponent } from '../sharetimeline/sharetimeline.component';
 import { RecentTimeLineResponse } from '../recenttimeline/recenttimeline-response';
-import { Router} from 'angular2/router';
+import { Router} from '@angular/router';
 import { UsersSelectorComponent } from '../noteshareusers/users-selector.component';
-import { MODAL_DIRECTIVES, ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
+import { MODAL_DIRECTIVES, ModalComponent } from '../modal/modaldialog';
 import { TimeLineWatch } from '../shared/timeline-watch';
 import {CSSCarouselComponent} from '../carousel/carousel.component';
+import {RecentTimelineWatchFilter} from '../recenttimeline/recenttimeline.watchfilter.component';
 
 @Component({
     selector: 'recentimeline',
+    pipes: [RecentTimelineWatchFilter],
     templateUrl: './app/recenttimeline/recenttimeline.component.html',
     //css
     styles: ['.wrapper{width: 1%;margin: 2px auto;}'],
@@ -30,6 +32,7 @@ export class RecentTimeLineComponent implements OnInit {
     backdrop: string | boolean = true;
     currentTimeline_id: string;
     users: any[] = [];
+    isWatchedFilter: boolean = false;
 
     constructor(private _timeLineService: RecentTimeLineService, private _timeLineWatchService: TimeLineWatchService, public _router: Router) { }
     title = "RECENT TIMELINE";
@@ -48,6 +51,10 @@ export class RecentTimeLineComponent implements OnInit {
 
     ngOnInit() {
         this.getRecentTimelines();
+    }
+
+    watchFilter(rtl) {
+        this.isWatchedFilter = !rtl;
     }
 
 

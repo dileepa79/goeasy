@@ -19,14 +19,14 @@
             <p class="c-black f-500 m-b-20">Username</p>
             <div class="form-group">
                 <div class="fg-line">
-                    <input type="text" [(ngModel)]="userDetails.username" class="form-control" placeholder="Type your email">
+                    <input type="text" [(ngModel)]="userDetails.username" class="form-control" placeholder="Type your email" (keyup.enter)="login()">
                 </div>
             </div>
 
             <p class="c-black f-500 m-b-20">Password</p>
             <div class="form-group">
                 <div class="fg-line">
-                    <input type="password" [(ngModel)]="userDetails.password" class="form-control" placeholder="Type your password">
+                    <input type="password" [(ngModel)]="userDetails.password" class="form-control" placeholder="Type your password" (keyup.enter)="login()">
                 </div>
             </div>
 
@@ -46,7 +46,7 @@
                 <input id="remember-me" type="checkbox" class="filled-in" [(ngModel)]="userDetails.rememberMe" value="">
                 <label for="remember-me">Remember me</label>
             </div>
-            <input type="button" value='Login' (click)="login()" class="btn btn-primary" />
+            <input type="button" value='Login' (click)="login()" class="btn btn-primary" autofocus/>
         </div>
     </div>
 </div>

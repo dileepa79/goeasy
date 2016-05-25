@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../services/timeline.service', '../tags/tags-selector.component', './timelinegroup/timelinegroup.component', './timelinegroup/timelinedetail.component', 'angular2/router', 'rxjs/Observable'], function(exports_1, context_1) {
+System.register(['@angular/core', '../services/timeline.service', '../tags/tags-selector.component', './timelinegroup/timelinegroup.component', './timelinegroup/timelinedetail.component', '@angular/router', 'rxjs/Observable'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -37,7 +37,7 @@ System.register(['angular2/core', '../services/timeline.service', '../tags/tags-
             }],
         execute: function() {
             TimeLineComponent = (function () {
-                function TimeLineComponent(_timeLineService, params) {
+                function TimeLineComponent(_timeLineService, routeSegment) {
                     this._timeLineService = _timeLineService;
                     this.oneAtATime = true;
                     this.title = "TIMELINE";
@@ -46,7 +46,7 @@ System.register(['angular2/core', '../services/timeline.service', '../tags/tags-
                         data: [],
                         isPersistedSearch: false
                     };
-                    this.tagsStr = params.get('tags');
+                    this.tagsStr = routeSegment.getParam('tags');
                 }
                 TimeLineComponent.prototype.ngOnInit = function () {
                     if (this.tagsStr != null) {
@@ -145,7 +145,7 @@ System.register(['angular2/core', '../services/timeline.service', '../tags/tags-
                         ],
                         directives: [tags_selector_component_1.TagsSelectorComponent, timelinegroup_component_1.TimelineInfo, timelinegroup_component_1.TimelineGroup, timelinedetail_component_1.TimelineDetail, timelinedetail_component_1.TimelineDetailGroup]
                     }), 
-                    __metadata('design:paramtypes', [timeline_service_1.TimeLineService, router_1.RouteParams])
+                    __metadata('design:paramtypes', [timeline_service_1.TimeLineService, router_1.RouteSegment])
                 ], TimeLineComponent);
                 return TimeLineComponent;
             }());

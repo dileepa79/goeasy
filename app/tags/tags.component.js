@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', '../services/tags.service', './tags-filter.pipe', 'ng2-bootstrap/ng2-bootstrap', 'primeng/primeng'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/router', '../services/tags.service', './tags-filter.pipe', '../directives/collapse.directive', 'primeng/primeng'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', '../services/tags.service',
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, tags_service_1, tags_filter_pipe_1, ng2_bootstrap_1, primeng_1;
+    var core_1, router_1, tags_service_1, tags_filter_pipe_1, collapse_directive_1, primeng_1;
     var TagsComponent;
     return {
         setters:[
@@ -26,8 +26,8 @@ System.register(['angular2/core', 'angular2/router', '../services/tags.service',
             function (tags_filter_pipe_1_1) {
                 tags_filter_pipe_1 = tags_filter_pipe_1_1;
             },
-            function (ng2_bootstrap_1_1) {
-                ng2_bootstrap_1 = ng2_bootstrap_1_1;
+            function (collapse_directive_1_1) {
+                collapse_directive_1 = collapse_directive_1_1;
             },
             function (primeng_1_1) {
                 primeng_1 = primeng_1_1;
@@ -52,7 +52,7 @@ System.register(['angular2/core', 'angular2/router', '../services/tags.service',
                     this.getTags();
                 };
                 TagsComponent.prototype.onClick = function (tag) {
-                    this._router.navigate(['TagDetail', { id: tag.id }]);
+                    this._router.navigate(['tag', { id: tag.id }, this.currSegment]);
                 };
                 TagsComponent.prototype.filterTag = function (query, tags) {
                     var filtered = [];
@@ -82,7 +82,7 @@ System.register(['angular2/core', 'angular2/router', '../services/tags.service',
                         console.log("added tag: " + data);
                         _this.filteredTags.push(data);
                     }, function (err) { return console.log("error: " + err); }, function () {
-                        //this._router.navigate(['TimeLine']);
+                        //this._router.navigate(['timeline']);
                     });
                 };
                 TagsComponent = __decorate([
@@ -90,7 +90,7 @@ System.register(['angular2/core', 'angular2/router', '../services/tags.service',
                         selector: 'add-tag',
                         templateUrl: './app/tags/tags.component.html',
                         pipes: [tags_filter_pipe_1.TagFilterPipe],
-                        directives: [ng2_bootstrap_1.Collapse, primeng_1.Button],
+                        directives: [collapse_directive_1.CollapseDirective, primeng_1.Button],
                         providers: [
                             tags_service_1.TagsService
                         ]

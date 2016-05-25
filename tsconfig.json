@@ -11,7 +11,10 @@
   },
   "exclude": [
     "node_modules",
+    "node_modules_custom",
     "typings/main",
+    "typings/browser/ambient/core-js",
+    "typings/browser",
     "typings/main.d.ts"
   ]
 }

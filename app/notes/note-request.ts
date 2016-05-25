@@ -1,6 +1,8 @@
 ﻿export class NoteRequest {
-    title: string;
-    description: string;
-    tags: string[];
-    users: string[];
+    constructor(public title: string,
+        public description: string,
+        public tags: string[],
+        public users: string[]
+    ){}
+    
 }

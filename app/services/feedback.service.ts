@@ -1,5 +1,5 @@
-﻿import {Injectable} from 'angular2/core';
-import {Http, Headers, RequestOptions, Response} from 'angular2/http';
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers, RequestOptions, Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {Configuration} from '../app.constants';
 import {FeedbackRequest} from '../feedback/feedback-request'

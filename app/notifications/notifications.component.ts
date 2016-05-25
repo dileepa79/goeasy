@@ -1,7 +1,7 @@
-﻿import {Component, OnInit, Input} from 'angular2/core';
+﻿import {Component, OnInit, Input} from '@angular/core';
 import {NotificationService} from '../services/notifications.service';
-import {NgIf} from 'angular2/common';
-import { Router} from 'angular2/router';
+import {NgIf} from '@angular/common';
+import { Router} from '@angular/router';
 @Component({
     selector: 'notifications',
     templateUrl: './app/notifications/notifications.component.html',
@@ -44,15 +44,45 @@ export class NotificaitonComponent implements OnInit {
     }
 
     snoozeClicked(notification) {
-        this._notificationService.updateNotifications(notification.id, true);
+        this._notificationService.updateNotifications(notification.id, true)
+            .subscribe(_nots => {
+                this.filteredNotificaitons = JSON.parse(JSON.stringify(_nots));
+                this.notificationCount = _nots.length;
+                console.log(this.notificationCount);
+            },
+            error => {
+                this.errorMessage = <any>error,
+                    console.log(this.errorMessage);
+            },
+            () => () => console.log("Done"));
     }
 
     dismissClicked(notification) {
-        this._notificationService.updateNotifications(notification.id, false);
+        this._notificationService.updateNotifications(notification.id, false)
+            .subscribe(_nots => {
+                this.filteredNotificaitons = JSON.parse(JSON.stringify(_nots));
+                this.notificationCount = _nots.length;
+                console.log(this.notificationCount);
+            },
+            error => {
+                this.errorMessage = <any>error,
+                    console.log(this.errorMessage);
+            },
+            () => () => console.log("Done"));
     }
 
     dismissAllClicked() {
-        this._notificationService.dismissAll();
+        this._notificationService.dismissAll()
+            .subscribe(_nots => {
+            this.filteredNotificaitons = JSON.parse(JSON.stringify(_nots));
+            this.notificationCount = _nots.length;
+            console.log(this.notificationCount);
+        },
+            error => {
+                this.errorMessage = <any>error,
+                    console.log(this.errorMessage);
+            },
+            () => () => console.log("Done"));
     }
 
     select(selectedTimeline: any) {

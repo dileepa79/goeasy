@@ -1,11 +1,16 @@
-﻿import {Component, OnInit, Inject} from 'angular2/core';
-import { RouteConfig, Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, LocationStrategy, Location, HashLocationStrategy } from 'angular2/router';
-import {provide} from 'angular2/core';
+﻿import {Component, OnInit, Inject} from '@angular/core';
+import {provide} from '@angular/core';
+
+import { Routes , ROUTER_DIRECTIVES, ROUTER_PROVIDERS , Router} from '@angular/router';
+
+
+
+
 import {AuthService} from './services/auth.service';
 import {AddNoteComponent} from './notes/add-note.component';
 import {TimeLineComponent} from './timeline/timeline.component';
 import {LoginComponent} from './authentication/login.component';
-import {NgIf} from 'angular2/common';
+import {NgIf} from '@angular/common';
 import {Configuration} from './app.constants';
 import {TagsComponent} from './tags/tags.component';
 import {UserProfileComponent} from './userprofile/userprofile.component';
@@ -24,7 +29,6 @@ import {TagDetailComponent} from './tags/tag-detail.component';
     directives: [ROUTER_DIRECTIVES, UserProfileComponent, NotificaitonComponent, FeedbackComponent, AddNoteComponent],
     providers: [
         ROUTER_PROVIDERS,
-        provide(LocationStrategy, { useClass: HashLocationStrategy }),
         AuthService,
         LoginComponent,
         AddNoteComponent,
@@ -34,61 +38,96 @@ import {TagDetailComponent} from './tags/tag-detail.component';
     ]
 })
 
-@RouteConfig(
+@Routes(
     [
         {
             path: '/login',
-            name: 'Login',
             component: LoginComponent,
-            useAsDefault: true
         },
-        //{
-        //    path: 'signup',
-        //    name: 'Signup',
-        //    component: AuthService
-        //},
+       
         {
             path: '/addnote',
-            name: 'AddNote',
             component: AddNoteComponent
         },
         {
             path: '/timeline',
-            name: 'TimeLine',
             component: TimeLineComponent
         },
         {
             path: '/tags',
-            name: 'Tags',
             component: TagsComponent
         },
         {
              path: '/tag/:id',
-             name: 'TagDetail',
              component: TagDetailComponent
         },
         {
             path: '/recenttimeline',
-            name: 'RecentTimeline',
             component: RecentTimeLineComponent
         },
         {
             path: '/dashboard',
-            name: 'Dashboard',
             component: Dashboard
         }
 
     ]
 )
 
+//@RouteConfig(
+//    [
+//        {
+//            path: '/login',
+//            name: 'Login',
+//            component: LoginComponent,
+//            useAsDefault: true
+//        },
+//        //{
+//        //    path: 'signup',
+//        //    name: 'Signup',
+//        //    component: AuthService
+//        //},
+//        {
+//            path: '/addnote',
+//            name: 'AddNote',
+//            component: AddNoteComponent
+//        },
+//        {
+//            path: '/timeline',
+//            name: 'TimeLine',
+//            component: TimeLineComponent
+//        },
+//        {
+//            path: '/tags',
+//            name: 'Tags',
+//            component: TagsComponent
+//        },
+//        {
+//            path: '/tag/:id',
+//            name: 'TagDetail',
+//            component: TagDetailComponent
+//        },
+//        {
+//            path: '/recenttimeline',
+//            name: 'RecentTimeline',
+//            component: RecentTimeLineComponent
+//        },
+//        {
+//            path: '/dashboard',
+//            name: 'Dashboard',
+//            component: Dashboard
+//        }
+
+//    ]
+//)
+
 export class AppComponent implements OnInit {
 
     isAuthorized: boolean = false;
     ngOnInit() {
         if (this.isAuthorized)
-            this._router.navigate(['Dashboard']);
+            this._router.navigate(['/dashboard']);
         else
-            this._router.navigate(['Login']);
+            this._router.navigate(['/login']);
     }
 
     constructor(private _router: Router) {

@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../services/notes.service', '../timeline/timeline.component', '../tags/tags-selector.component', '../noteshareusers/users-selector.component', 'ng2-bs3-modal/ng2-bs3-modal', 'primeng/primeng', 'angular2/router'], function(exports_1, context_1) {
+System.register(['@angular/core', './note-request', '../services/notes.service', '../timeline/timeline.component', '../tags/tags-selector.component', '../noteshareusers/users-selector.component', '../modal/modaldialog', 'primeng/primeng', '@angular/router'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,12 +10,15 @@ System.register(['angular2/core', '../services/notes.service', '../timeline/time
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, notes_service_1, timeline_component_1, tags_selector_component_1, users_selector_component_1, ng2_bs3_modal_1, primeng_1, primeng_2, router_1;
+    var core_1, note_request_1, notes_service_1, timeline_component_1, tags_selector_component_1, users_selector_component_1, modaldialog_1, primeng_1, primeng_2, router_1;
     var AddNoteComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (note_request_1_1) {
+                note_request_1 = note_request_1_1;
             },
             function (notes_service_1_1) {
                 notes_service_1 = notes_service_1_1;
@@ -29,8 +32,8 @@ System.register(['angular2/core', '../services/notes.service', '../timeline/time
             function (users_selector_component_1_1) {
                 users_selector_component_1 = users_selector_component_1_1;
             },
-            function (ng2_bs3_modal_1_1) {
-                ng2_bs3_modal_1 = ng2_bs3_modal_1_1;
+            function (modaldialog_1_1) {
+                modaldialog_1 = modaldialog_1_1;
             },
             function (primeng_1_1) {
                 primeng_1 = primeng_1_1;
@@ -50,10 +53,12 @@ System.register(['angular2/core', '../services/notes.service', '../timeline/time
                         tags: [],
                         users: []
                     };
-                    this.title = "ADD NOTES";
+                    this.heading = "ADD NOTES";
                     this.tags = [];
                     this.users = [];
                     this.tagList = '';
+                    this.active = true;
+                    this.noteRequest = new note_request_1.NoteRequest('', '', [], []);
                 }
                 AddNoteComponent.prototype.Save = function () {
                     var _this = this;
@@ -64,7 +69,7 @@ System.register(['angular2/core', '../services/notes.service', '../timeline/time
                             _this.tagList = _this.tagList + (note.tags[i].name + (note.tags.length != i + 1 ? ',' : ''));
                         }
                         _this.clear();
-                        _this._router.navigate(['TimeLine', { tags: _this.tagList }]);
+                        _this._router.navigate(['/timeline', { tags: _this.tagList }]);
                     }, function (error) {
                         _this.errorMessage = error,
                             console.log(_this.errorMessage);
@@ -80,8 +85,10 @@ System.register(['angular2/core', '../services/notes.service', '../timeline/time
                     this.noteRequest.users = users.map(function (d) { return d['userName']; });
                 };
                 AddNoteComponent.prototype.clear = function () {
-                    this.noteRequest.title = '';
-                    this.noteRequest.description = null;
+                    var _this = this;
+                    this.noteRequest = new note_request_1.NoteRequest('', '', [], []);
+                    this.active = false;
+                    setTimeout(function () { return _this.active = true; }, 0);
                 };
                 AddNoteComponent = __decorate([
                     core_1.Component({
@@ -90,7 +97,7 @@ System.register(['angular2/core', '../services/notes.service', '../timeline/time
                         providers: [
                             notes_service_1.NotesService
                         ],
-                        directives: [timeline_component_1.TimeLineComponent, tags_selector_component_1.TagsSelectorComponent, ng2_bs3_modal_1.MODAL_DIRECTIVES, primeng_1.Editor, primeng_2.Header, users_selector_component_1.UsersSelectorComponent]
+                        directives: [timeline_component_1.TimeLineComponent, tags_selector_component_1.TagsSelectorComponent, modaldialog_1.MODAL_DIRECTIVES, primeng_1.Editor, primeng_2.Header, users_selector_component_1.UsersSelectorComponent]
                     }), 
                     __metadata('design:paramtypes', [notes_service_1.NotesService, router_1.Router])
                 ], AddNoteComponent);

@@ -1,7 +1,7 @@
-﻿import {Component, provide, Injector, Inject, forwardRef, Optional, Injectable, Host} from 'angular2/core';
-import {Http, Headers} from 'angular2/http';
+﻿import {Component, provide, Injector, Inject, forwardRef, Optional, Injectable, Host} from '@angular/core';
+import {Http, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
-import { Router} from 'angular2/router';
+import { Router} from '@angular/router';
 import {TokenService} from './token.service';
 import {AppComponent} from '../app.component';
 import {Configuration} from '../app.constants';
@@ -50,7 +50,7 @@ export class AuthService {
                     this.setCookie("username", username, 15);
                     this.setCookie("password", password, 15);
                 }
-                this._router.navigate(['Dashboard']);
+                this._router.navigate(['dashboard']);
             }
             );
     }
@@ -107,7 +107,7 @@ export class AuthService {
         this.delete_cookie("username");
         this.delete_cookie("password");
         this._parent.isAuthorized = false;
-        this._router.navigate(['Login']);
+        this._router.navigate(['login']);
     }
     delete_cookie(name) {
         document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';

@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', './auth.service', '../app.constants', '../notifications/notificationUpdate'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/http', 'rxjs/Observable', './auth.service', '../app.constants', '../notifications/notificationUpdate'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -56,8 +56,8 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', './auth.se
                     return Observable_1.Observable.throw(error.json().error || 'Server error');
                 };
                 NotificationService.prototype.updateNotifications = function (id, isSnooze) {
-                    var _this = this;
                     var notificationUpdate = new notificationUpdate_1.NotificationUpdate();
+                    var count = 0;
                     notificationUpdate.NotificationId = id;
                     notificationUpdate.IsSnooze = isSnooze;
                     console.log('updating Notification for');
@@ -67,29 +67,20 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', './auth.se
                     var headers = this._authService.getHeader();
                     headers.append('Content-Type', 'application/json; charset=utf-8');
                     var options = new http_1.RequestOptions({ headers: headers });
-                    this.http.post(this.webApiUrl + '/' + 'UpdateNotifications', body, options)
+                    return this.http.post(this.webApiUrl + '/' + 'UpdateNotifications', body, options)
                         .map(function (res) { return res.json(); })
-                        .subscribe(function (data) {
-                        console.log("Notificaiton update: " + data);
-                    }, function (err) { return console.log("error: " + JSON.stringify(err)); }, function () {
-                        _this.getNotifications();
-                        console.log("Notificaiton update successfully");
-                    });
+                        .do(function (data) { return console.log(data); })
+                        .catch(this.handleError);
                 };
                 NotificationService.prototype.dismissAll = function () {
-                    var _this = this;
                     var body = JSON.stringify("");
                     var headers = this._authService.getHeader();
                     headers.append('Content-Type', 'application/json; charset=utf-8');
                     var options = new http_1.RequestOptions({ headers: headers });
-                    this.http.post(this.webApiUrl + '/' + 'DismissAllNotifications', body, options)
+                    return this.http.post(this.webApiUrl + '/' + 'DismissAllNotifications', body, options)
                         .map(function (res) { return res.json(); })
-                        .subscribe(function (data) {
-                        console.log("Notificaiton dismill all: " + data);
-                    }, function (err) { return console.log("error: " + JSON.stringify(err)); }, function () {
-                        _this.getNotifications();
-                        console.log("Notificaiton dismissall successfully");
-                    });
+                        .do(function (data) { return console.log(data); })
+                        .catch(this.handleError);
                 };
                 NotificationService = __decorate([
                     core_1.Injectable(), 

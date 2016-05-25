@@ -1,5 +1,5 @@
-﻿import {Component, OnInit} from 'angular2/core';
-import { Router} from 'angular2/router';
+﻿import {Component, OnInit} from '@angular/core';
+import { Router} from '@angular/router';
 import {WhatIsGoingOnService} from '../services/whatisgoingon.service';
 import {WhatIsGoingOnResponse } from '../whatisgoingon/whatisgoingon-response';
 
@@ -37,7 +37,7 @@ export class WhatIsGoingOnComponent implements OnInit {
         for (var i = 0; i < selectedActivityTag.tags.length; i++) {
             this.tags = this.tags + (selectedActivityTag.tags[i].name + (selectedActivityTag.tags.length != i + 1 ? ',' : ''));
         }
-        this._router.navigate(['TimeLine', { tags: this.tags }]);
+        this._router.navigate(['timeline', { tags: this.tags }]);
     }
 }
 

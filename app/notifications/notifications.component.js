@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../services/notifications.service', 'angular2/router'], function(exports_1, context_1) {
+System.register(['@angular/core', '../services/notifications.service', '@angular/router'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -46,13 +46,40 @@ System.register(['angular2/core', '../services/notifications.service', 'angular2
                     }, function () { return function () { return console.log("Done"); }; });
                 };
                 NotificaitonComponent.prototype.snoozeClicked = function (notification) {
-                    this._notificationService.updateNotifications(notification.id, true);
+                    var _this = this;
+                    this._notificationService.updateNotifications(notification.id, true)
+                        .subscribe(function (_nots) {
+                        _this.filteredNotificaitons = JSON.parse(JSON.stringify(_nots));
+                        _this.notificationCount = _nots.length;
+                        console.log(_this.notificationCount);
+                    }, function (error) {
+                        _this.errorMessage = error,
+                            console.log(_this.errorMessage);
+                    }, function () { return function () { return console.log("Done"); }; });
                 };
                 NotificaitonComponent.prototype.dismissClicked = function (notification) {
-                    this._notificationService.updateNotifications(notification.id, false);
+                    var _this = this;
+                    this._notificationService.updateNotifications(notification.id, false)
+                        .subscribe(function (_nots) {
+                        _this.filteredNotificaitons = JSON.parse(JSON.stringify(_nots));
+                        _this.notificationCount = _nots.length;
+                        console.log(_this.notificationCount);
+                    }, function (error) {
+                        _this.errorMessage = error,
+                            console.log(_this.errorMessage);
+                    }, function () { return function () { return console.log("Done"); }; });
                 };
                 NotificaitonComponent.prototype.dismissAllClicked = function () {
-                    this._notificationService.dismissAll();
+                    var _this = this;
+                    this._notificationService.dismissAll()
+                        .subscribe(function (_nots) {
+                        _this.filteredNotificaitons = JSON.parse(JSON.stringify(_nots));
+                        _this.notificationCount = _nots.length;
+                        console.log(_this.notificationCount);
+                    }, function (error) {
+                        _this.errorMessage = error,
+                            console.log(_this.errorMessage);
+                    }, function () { return function () { return console.log("Done"); }; });
                 };
                 NotificaitonComponent.prototype.select = function (selectedTimeline) {
                     this.tags = '';

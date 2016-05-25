@@ -6,7 +6,11 @@ System.register([], function(exports_1, context_1) {
         setters:[],
         execute: function() {
             NoteRequest = (function () {
-                function NoteRequest() {
+                function NoteRequest(title, description, tags, users) {
+                    this.title = title;
+                    this.description = description;
+                    this.tags = tags;
+                    this.users = users;
                 }
                 return NoteRequest;
             }());

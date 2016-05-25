@@ -3,7 +3,7 @@
 
 <li class="dropdown hidden-xs">
     <a data-toggle="dropdown" class="tm-task" href=""><span class="glyphicon glyphicon-bell" aria-hidden="true"></span><i class="tmn-counts" *ngIf="notificationCount > 0">{{notificationCount}}</i></a>
-    <div class="dropdown-menu pull-right dropdown-menu-lg">
+    <div class="dropdown-menu pull-right dropdown-menu-lg" *ngIf="notificationCount > 0">
         <div class="listview">
             <div class="lv-header">
                 Notifications
@@ -11,13 +11,15 @@
             
             <div class="lv-body">
                 <input class="btn-secondary  btn" type="button" value="DISMISS ALL" (click)="dismissAllClicked()" style="margin-left:10px;">
-                <div *ngFor="#Item of filteredNotificaitons" class="lv-item" [ngStyle]="{'background-color': (Item.type == 1) ? '#ffffff' : '#ffffff'}" style="margin-top:20px;">
+                <div *ngFor="let Item of filteredNotificaitons" class="lv-item" [ngStyle]="{'background-color': (Item.type == 1) ? '#ffffff' : '#ffffff'}" style="margin-top:20px;">
                     <div alt="" class="timeline-img" style="position:absolute; margin-right:60px; margin-left: -10px;">
                         <img class="circle responsive-img" src={{Item.userImageUrl}}>
                     </div>
                     <div class="lv-title m-b-5" style="margin-left: 31px; font-size: 12px;">{{Item.title}}</div>
-                    <small class="lv-small">{{Item.description}}</small>
-                    <span *ngFor="#tag of Item.tags" class="label label-default" style="line-height:4">{{tag.name}}</span>
+                    <small class="lv-small" style="margin-left: 31px; font-size: 12px;">{{Item.description}}</small>
+                    <small class="lv-small" style="margin-left: 200px; font-size: 12px;" *ngIf="Item.dateFormat != 'TODAY'">{{Item.date}}</small>
+                    <small class="lv-small" style="margin-left: 200px; font-size: 12px;" *ngIf="Item.dateFormat == 'TODAY'">{{Item.time}}</small>
+                    <span *ngFor="let tag of Item.tags" class="label label-default" style="line-height:4">{{tag.name}}</span>
                     <div>
                         <input class="btn" type="button" value="GO TO TIMELINE" (click)="select(Item)" style="margin: 1px 0 0 0;">
                     </div>

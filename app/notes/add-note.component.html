@@ -1,5 +1,5 @@
 ﻿<div class="container">
-    <h1>{{title}}
+    <h1>{{heading}}
         <button class="btn-secondary waves-effect  btn" (click)="modal.open()">
             <i class="material-icons">share</i> <span>share</span>
         </button>
@@ -17,7 +17,7 @@
                         </div>
                         <div class="form-group">
                             <label>Yayi Users</label>
-                            <user-app [isallowednewinput]="true" (usersAdded)='onSelectedUsersChanged($event)' (usersRemoved)="onSelectedUsersChanged($event)" >Loading...</user-app>
+                            <user-app [isallowednewinput]="true" (usersAdded)='onSelectedUsersChanged($event)' (usersRemoved)="onSelectedUsersChanged($event)">Loading...</user-app>
                         </div>
                         <div class="col-md-4">
 
@@ -25,40 +25,50 @@
 
                     </div>
                 </div>
-              </div>
+            </div>
         </modal-body>
         <modal-footer>
             <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modal.dismiss()">Cancel</button>
             <button type="button" class="btn btn-primary" (click)="modal.close()">Ok</button>
         </modal-footer>
-        
+
     </modal>
 
-    <div class="row">
-        <div class="col-md-8">
-            <div class="form-group">
-                <label>Title</label>
-                <input [(ngModel)]="noteRequest.title" class="form-control"/>
-            </div>
-            <div class="form-group">
-                <label>Description</label>
-                <!--<textarea rows="10" cols="50" [(ngModel)]="noteRequest.description" class="form-control"></textarea>-->
-                <p-editor [(ngModel)]="noteRequest.description" style="height: 320px">
-                </p-editor>
+    <form *ngIf="active" (ngSubmit)="Save()" #noteForm="ngForm">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label>Title</label>
+                    <!-- <input [(ngModel)]="noteRequest.title" class="form-control" required ngControl="title"/>-->
+                    <input type="text" class="form-control" required [(ngModel)]="noteRequest.title" ngControl="title" #title="ngForm">
+                    <div [hidden]="title.valid || title.pristine" class="alert alert-danger">
+                        Title is required
+                    </div>
+
                 </div>
-            <div class="form-group">
-                <label>Tags</label>
-                <prime-app [isAllowedNewInput]="true" (tagsAdded)='onSelectedTagsChanged($event)' (tagsRemoved)="onSelectedTagsChanged($event)">Loading...</prime-app>
+                <div class="form-group">
+                    <label>Description</label>
+                    <!--<textarea rows="10" cols="50" [(ngModel)]="noteRequest.description" class="form-control"></textarea>-->
+                    <p-editor [(ngModel)]="noteRequest.description">
+                    </p-editor>
+                </div>
+                <div class="form-group">
+                    <label>Tags</label>
+                    <prime-app [isAllowedNewInput]="true" (tagsAdded)='onSelectedTagsChanged($event)' (tagsRemoved)="onSelectedTagsChanged($event)">Loading...</prime-app>
+                </div>
+                <!--<input type="button" value='Save' (click)="Save()" class="btn btn-success" />-->
+                <!--<input type="button" value='Share' (click)="modal.open()" class="btn btn-primary"/>-->
+                <button type="submit" class="btn btn-success" [disabled]="!noteForm.form.valid">Save</button>
+
+                <input type="button" value='Close' class="btn-secondary btn " />
+                <div class="col-md-4">
+
+                </div>
+
             </div>
-            <input type="button" value='Save' (click)="Save()" class="btn btn-success" />
-            <!--<input type="button" value='Share' (click)="modal.open()" class="btn btn-primary" />-->
-            <input type="button" value='Close' class="btn-secondary btn " />
-        <div class="col-md-4">
-
         </div>
+    </form>
+</div>
 
-    </div>
-</div>
-</div>
 <!--<timeline></timeline>-->
 <input type="hidden" value="0" id="application-view-id" />

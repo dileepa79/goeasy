@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', './auth.service', '../app.constants'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/http', 'rxjs/Observable', './auth.service', '../app.constants'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -66,7 +66,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', './auth.se
                         //for (var i = 0; i < request.tags.length; i++) {
                         //    this.tags = this.tags + (request.tags[i] + (request.tags.length != i + 1 ? ',' : ''));
                         //}
-                        //this._router.navigate(['TimeLine', { tags: this.tags }]);
+                        //this._router.navigate(['timeline', { tags: this.tags }]);
                     });
                 };
                 RecentTimeLineService = __decorate([
