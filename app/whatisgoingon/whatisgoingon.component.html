@@ -16,7 +16,7 @@
                             </a>
                         </h4>
                         <div>
-                            <a (click)="select(activity)"><span class="label label-default" style="margin-right: 5px" *ngFor="let tag of activity.tags; let last = last">{{tag.name}}<span *ngIf="!last"></span></span></a>
+                            <a style="cursor: pointer" (click)="select(activity)"><span class="label label-default" style="margin-right: 5px" *ngFor="let tag of activity.tags; let last = last">{{tag.name}}<span *ngIf="!last"></span></span></a>
                         </div>
                     </div>
                     <div id=i{{i}} class="panel-collapse collapse">

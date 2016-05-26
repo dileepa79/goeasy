@@ -42,7 +42,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor='#tag of filteredTags | tagFilter:listFilter'>
+            <tr *ngFor='let tag of filteredTags | tagFilter:listFilter'>
                 <!--<td>
                     <img *ngIf='showImage' [src]='product.imageUrl' [title]='product.productName' [style.width.px]='imageWidth' [style.margin.px]='imageMargin' />
                 </td>-->

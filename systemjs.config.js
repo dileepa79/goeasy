@@ -14,14 +14,20 @@
         '@angular/platform-browser-dynamic': 'node_modules/@angular/platform-browser-dynamic/platform-browser-dynamic.umd.js',
         '@angular/router-deprecated': 'node_modules/@angular/router-deprecated/router-deprecated.umd.js',
         '@angular/router': 'node_modules/@angular/router/router.umd.js',
-        'rxjs': 'node_modules/rxjs',
+        'rxjs': 'node_modules/rxjs/bundles/Rx.umd.min.js',
+        'rxjs/add/operator/map': 'node_modules/rxjs/bundles/Rx.umd.min.js',
+        'rxjs/Rx': 'node_modules/rxjs/bundles/Rx.umd.min.js',
+        'rxjs/Subject': 'node_modules/rxjs/bundles/Rx.umd.min.js',
+        'rxjs/observable/PromiseObservable': 'node_modules/rxjs/bundles/Rx.umd.min.js',
+        'rxjs/add/observable/fromEvent': 'node_modules/rxjs/bundles/Rx.umd.min.js',
+        'rxjs/operator/toPromise': 'node_modules/rxjs/bundles/Rx.umd.min.js',
+        'rxjs/Observable': 'node_modules/rxjs/bundles/Rx.umd.min.js',
         'primeng': 'node_modules_custom/primeng'
     };
 
     // packages tells the System loader how to load when no filename and/or no extension
     var packages = {
         'app': { main: 'main.js', defaultExtension: 'js' },
-        'rxjs': { defaultExtension: 'js' },
         'primeng': { defaultExtension: 'js' }
     };
     

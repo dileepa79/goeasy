@@ -52,7 +52,7 @@ System.register(['@angular/core', '@angular/router', '../services/tags.service',
                     this.getTags();
                 };
                 TagsComponent.prototype.onClick = function (tag) {
-                    this._router.navigate(['tag', { id: tag.id }, this.currSegment]);
+                    this._router.navigate(['tag', { id: tag.id }]);
                 };
                 TagsComponent.prototype.filterTag = function (query, tags) {
                     var filtered = [];

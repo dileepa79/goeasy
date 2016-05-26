@@ -100,7 +100,7 @@ System.register(['@angular/core', '../services/recenttimeline.service', '../serv
                     for (var i = 0; i < selectedTimeline.tags.length; i++) {
                         this.tags = this.tags + (selectedTimeline.tags[i].name + (selectedTimeline.tags.length != i + 1 ? ',' : ''));
                     }
-                    this._router.navigate(['TimeLine', { tags: this.tags }]);
+                    this._router.navigate(['timeline', { tags: this.tags }]);
                 };
                 RecentTimeLineComponent.prototype.openModal = function (timeline) {
                     this.selectedTimeline = timeline;
