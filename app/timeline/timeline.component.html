@@ -57,7 +57,14 @@
     </div>
     
     <timelineinfo close-others="true">
-        <timeline-group [heading]="timeline.dateFormat" *ngFor="let timeline of filteredTimelines;  let i = index" [isOpen]="i === 0" [availableCountText]="timeline.availableThreadsCountText">
+        <div class="search-results"
+             infinite-scroll
+             [infiniteScrollDistance]="2"
+             [infiniteScrollThrottle]="500"
+             (scrolled)="onScroll()"
+             [scrollWindow]="true">
+        </div>
+        <timeline-group [heading]="timeline.dateFormat" *ngFor="let timeline of filteredTimelines;  let i = index" [isOpen]="i === i" [availableCountText]="timeline.availableThreadsCountText" [isLabled]="timeline.isLabled">
 
             <section id="cd-timeline" class="cd-container">
              <div class="cd-timeline-block" *ngFor="let Item of timeline.items">
@@ -79,8 +86,12 @@
                              <div [innerHTML]="Item.description"></div>
                          </timeline-detail-group>
                      </timelinedetail>
-                     <span class="cd-date" *ngIf="timeline.dateFormat != 'TODAY' && timeline.dateFormat != 'YESTERDAY'">{{Item.date}}</span>
-                     <span class="cd-date" *ngIf="timeline.dateFormat == 'TODAY' || timeline.dateFormat == 'YESTERDAY'">{{Item.time}}</span>
+                     <div class="timeline-item-datetime-container">
+                         <span class="cd-date lbl-timeline-date" *ngIf="timeline.dateFormat != 'TODAY' && timeline.dateFormat != 'YESTERDAY'">{{Item.dateDay}}</span>
+                         <span class="cd-date lbl-timeline-month" *ngIf="timeline.dateFormat != 'TODAY' && timeline.dateFormat != 'YESTERDAY'">{{Item.dateMonth}}</span>
+                         <span class="cd-date lbl-timeline-date" *ngIf="timeline.dateFormat == 'TODAY' || timeline.dateFormat == 'YESTERDAY'">{{Item.timeHourMin}}</span>
+                         <span class="cd-date lbl-timeline-month" *ngIf="timeline.dateFormat == 'TODAY' || timeline.dateFormat == 'YESTERDAY'">{{Item.timeAMPM}}</span>
+                     </div>
                  </div> <!-- cd-timeline-content -->
                 </div> <!-- cd-timeline-block -->
 

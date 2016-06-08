@@ -41,20 +41,8 @@ export class RecentTimeLineService {
         headers.append('Content-Type', 'application/json; charset=utf-8');
         var options = new RequestOptions({ headers: headers });
 
-        this.http.post(this.webApiUrl, body, options)
-            .map(res => res.json())
-            .subscribe(
-            data => {
-                console.log("recent timeline shared : " + data);
-            },
-            err => console.log("error: " + JSON.stringify(err)),
-            () => {
-                //for (var i = 0; i < request.tags.length; i++) {
-                //    this.tags = this.tags + (request.tags[i] + (request.tags.length != i + 1 ? ',' : ''));
-                //}
-                //this._router.navigate(['timeline', { tags: this.tags }]);
-            }
-            );
+        return this.http.post(this.webApiUrl, body, options)
+            .map((res) => { return <AppUser[]>res.json() });
     }
 }
 

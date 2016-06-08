@@ -53,20 +53,66 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Observable', '@angular/
                 //        .subscribe((res: noteRequest) => this.postResponse = res);
                 //}
                 NotesService.prototype.addNote = function (noteRequest) {
-                    console.log("Title: " + noteRequest.title + ", description: " + noteRequest.description);
-                    var body = JSON.stringify(noteRequest);
-                    //var headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
-                    var headers = this._authService.getHeader();
-                    headers.append('Content-Type', 'application/json; charset=utf-8');
-                    var options = new http_1.RequestOptions({ headers: headers });
-                    return this.http.post(this.webApiUrl + '/AddNote', body, options)
-                        .map(function (res) { return res.json(); })
-                        .do(function (data) { return console.log(data); })
-                        .catch(this.handleError);
+                    //console.log("Title: " + noteRequest.title + ", description: " + noteRequest.description);
+                    //var body = JSON.stringify(noteRequest);
+                    ////var headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
+                    //var headers = this._authService.getHeader();
+                    //headers.append('Content-Type', 'application/json; charset=utf-8');
+                    //var options = new RequestOptions({ headers: headers });
+                    //return this.http.post(this.webApiUrl + '/AddNote', body, options)
+                    //    .map(res => res.json())
+                    //    .do(data => console.log(data))
+                    //    .catch(this.handleError);
+                    var apiUrl = this.webApiUrl + '/AddNoteWithAttachments';
+                    // var apiUrl = this.webApiUrl + '/AddNote';
+                    return this.callApi(apiUrl, noteRequest);
                 };
                 NotesService.prototype.handleError = function (error) {
                     console.error(error);
                     return Observable_1.Observable.throw(error.json().error || 'Server error');
+                };
+                NotesService.prototype.callApi = function (url, noteRequest) {
+                    // Create FormData object and attach files and other data into it and send to api
+                    // as angulr 2 still not support sending files to backend
+                    // We can change this once angular 2 support it
+                    var _this = this;
+                    var key = this.getAuthToken();
+                    return Observable_1.Observable.create(function (observer) {
+                        var formData = new FormData(), xhr = new XMLHttpRequest();
+                        // for (let i = 0; i < files.length; i++) {
+                        formData.append("title", noteRequest.title);
+                        formData.append("tags", noteRequest.tags);
+                        formData.append("users", noteRequest.users);
+                        formData.append("description", noteRequest.description);
+                        if (typeof noteRequest.filesToUpload[0] !== "undefined") {
+                            var files = noteRequest.filesToUpload[0].file;
+                            formData.append("file", files);
+                        }
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState === 4) {
+                                if (xhr.status === 201) {
+                                    observer.next(JSON.parse(xhr.response));
+                                    observer.complete();
+                                }
+                                else {
+                                    observer.error(_this.handleError);
+                                }
+                            }
+                        };
+                        //we might need to show the progress later
+                        //xhr.upload.onprogress = (event) => {
+                        //    this.progress = Math.round(event.loaded / event.total * 100);
+                        //    this.progressObserver.next(this.progress);
+                        //};
+                        xhr.open('POST', url, true);
+                        xhr.setRequestHeader('Authorization', 'Bearer ' + key);
+                        xhr.send(formData);
+                    });
+                };
+                NotesService.prototype.getAuthToken = function () {
+                    var headers = this._authService.getHeader();
+                    var key = headers._headersMap.entries().next().value[1][0].slice(7);
+                    return key;
                 };
                 NotesService = __decorate([
                     core_1.Injectable(), 

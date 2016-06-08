@@ -1,4 +1,4 @@
-System.register(['@angular/core', '../services/auth.service'], function(exports_1, context_1) {
+System.register(['@angular/core', '../services/auth.service', '../app.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,10 @@ System.register(['@angular/core', '../services/auth.service'], function(exports_
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, auth_service_1;
+    var __param = (this && this.__param) || function (paramIndex, decorator) {
+        return function (target, key) { decorator(target, key, paramIndex); }
+    };
+    var core_1, auth_service_1, app_component_1;
     var UserDetails, LoginComponent;
     return {
         setters:[
@@ -19,6 +22,9 @@ System.register(['@angular/core', '../services/auth.service'], function(exports_
             },
             function (auth_service_1_1) {
                 auth_service_1 = auth_service_1_1;
+            },
+            function (app_component_1_1) {
+                app_component_1 = app_component_1_1;
             }],
         execute: function() {
             UserDetails = (function () {
@@ -28,20 +34,35 @@ System.register(['@angular/core', '../services/auth.service'], function(exports_
             }());
             exports_1("UserDetails", UserDetails);
             LoginComponent = (function () {
-                function LoginComponent(_authService) {
+                function LoginComponent(_authService, _parent) {
                     this._authService = _authService;
+                    this._parent = _parent;
                     this.userDetails = {
                         username: '',
                         password: '',
                         rememberMe: false
                     };
+                    this.errorMsg = '';
                 }
                 LoginComponent.prototype.ngOnInit = function () {
                     if (!this._authService.loginUsingCookies())
                         return;
                 };
                 LoginComponent.prototype.login = function () {
-                    this._authService.login(this.userDetails.username, this.userDetails.password, this.userDetails.rememberMe);
+                    var _this = this;
+                    this.errorMsg = '';
+                    this._authService.login(this.userDetails.username, this.userDetails.password, this.userDetails.rememberMe).subscribe(function (data) {
+                        //console.log("access token: "+data.access_token)
+                        _this._authService.setToken(data.access_token);
+                    }, function (err) {
+                        console.log("error: " + JSON.stringify(err));
+                        _this._authService.setAuthorized(false);
+                        _this.errorMsg = 'Oops, the username or password entered is wrong. May be you have pressed a wrong key..';
+                        //alert(JSON.parse(err._body).error_description);
+                    }, function () {
+                        _this.errorMsg = '';
+                        _this._authService.setCookies(_this.userDetails.username, _this.userDetails.password, _this.userDetails.rememberMe);
+                    });
                 };
                 LoginComponent.prototype.getValues = function () {
                     this._authService.get('http://localhost:18077/api/values', function (data) {
@@ -54,9 +75,11 @@ System.register(['@angular/core', '../services/auth.service'], function(exports_
                         templateUrl: '../app/authentication/login.component.html',
                         providers: [
                             auth_service_1.AuthService
-                        ]
-                    }), 
-                    __metadata('design:paramtypes', [auth_service_1.AuthService])
+                        ],
+                        styles: [' .login-content { height: 100vh; position: fixed; left:0; top: 0;}', '.login-logo { padding: 38vh 0 0 0;}'],
+                    }),
+                    __param(1, core_1.Inject(core_1.forwardRef(function () { return app_component_1.AppComponent; }))), 
+                    __metadata('design:paramtypes', [auth_service_1.AuthService, app_component_1.AppComponent])
                 ], LoginComponent);
                 return LoginComponent;
             }());

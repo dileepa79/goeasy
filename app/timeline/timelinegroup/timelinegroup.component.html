@@ -13,13 +13,19 @@
 
 
 <div class="col-md-12 timeline-wrapper no-padding" [class.panel-open]="isOpen">
-    <div class="col-md-12 no-padding" style="background:#eceff1;margin-bottom:20px;">
-        <span class="pull-right" style="padding:10px;"> {{availableCountText}}</span>
+    <div *ngIf="isLabled" class="col-md-12 no-padding" style="background:#eceff1;margin-bottom:20px;">
+        <span class="pull-right timeline-group-heading-count" (click)="toggleOpen($event)"> 
+            <a href="#" tabindex="0">
+                    <span>
+                        {{availableCountText}}
+                    </span>
+                    <span class="show-content zmdi zmdi-chevron-up" (click)="toggleOpen($event)"></span>
+                    <span class="hide-content zmdi zmdi-chevron-down" (click)="toggleOpen($event)"></span>
+            </a>
+        </span>
         <div class="timeline-group-heading">
             <a href="#" tabindex="0">
                 <span [class.text-muted]="isDisabled" (click)="toggleOpen($event)"> {{heading}}</span>
-                <span class="show-content glyphicon glyphicon-eye-open" (click)="toggleOpen($event)"></span>
-                <span class="hide-content glyphicon glyphicon-eye-close" (click)="toggleOpen($event)"></span>
             </a>
         </div>
     </div>

@@ -83,7 +83,7 @@ Main components
 
 #cd-timeline {
   position: relative;
-  padding: 10em 0;
+  padding: 5em 0;
   /*margin-top: 2em;*/
   margin-bottom: 2em;
   /*float:left;*/
@@ -92,11 +92,11 @@ Main components
   /* this is the vertical line */
   content: '';
   position: absolute;
-  top: 0;
+  top: 40px;
   left: 18px;
   height: 100%;
-  width: 2px;
-  background: #eee;
+  width: 4px;
+  background: #97c9f1;
 }
 @media only screen and (min-width: 1170px) {
   /*#cd-timeline {
@@ -110,7 +110,7 @@ Main components
 
 .cd-timeline-block {
   position: relative;
-  margin: 2em 0;
+  margin: 1.5em 0;
 }
 .cd-timeline-block:after {
   content: "";
@@ -122,6 +122,11 @@ Main components
 }
 .cd-timeline-block:last-child {
   margin-bottom: 0;
+}
+
+.timeline-description {
+    padding: 0 10px !important;
+    box-shadow:none !important;
 }
 @media only screen and (min-width: 1170px) {
   /*.cd-timeline-block {
@@ -169,11 +174,13 @@ Main components
     text-align: center;
 }
 .cd-timeline-img.cd-location {
-  background: #D7CCC8;
+  background: #2383bc;
   padding: 6px 0;
     color: #fff;
     font-size: 18px;
     text-align: center;
+    border:2px solid #fff;
+    box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.05);
 }
 @media only screen and (min-width: 1170px) {
   .cd-timeline-img {
@@ -260,7 +267,7 @@ Main components
   border-radius: 0.25em;
   padding: 1em;
   /*box-shadow: 0 3px 0 #d7e4ed;*/
-  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.1);
 }
 .cd-timeline-content:after {
   content: "";
@@ -275,7 +282,8 @@ Main components
   font-size: 0.8125rem;
 }
 .cd-timeline-content .cd-read-more, .cd-timeline-content .cd-date {
-  display: inline-block;
+  display: block;
+  line-height:24px;
 }
 .cd-timeline-content p {
   margin: 1em 0;
@@ -284,7 +292,7 @@ Main components
 .cd-timeline-content .cd-read-more {
   float: right;
   padding: .8em 1em;
-  background: #acb7c0;
+  background: #2383bc;
   color: white;
   border-radius: 0.25em;
 }
@@ -297,11 +305,12 @@ Main components
   opacity: .7;
 }*/
 .cd-timeline-content .cd-date {
-    position: absolute;
-    width: 100%;
-    left: -16%;
-    top: 10px;
+    /*position: absolute;*/
+    min-width:50px;
+    /*left: -16%;
+    top: 10px;*/
     font-size: 16px;
+    text-align:center;
   }
 .cd-timeline-content::before {
   content: '';
@@ -313,6 +322,61 @@ Main components
   border: 7px solid transparent;
   border-right: 7px solid white;
 }
+.ui-autocomplete-input-token .ui-inputtext {
+    width:340px !important;
+}
+.cd-timeline-block .panel-open .hide-content {display:none !important;}
+
+.btn-floating.blue, .btn-floating.green, .btn-floating.red, .btn-floating.yellow {overflow:initial !important;}
+.btn-floating.blue::before {
+    content: "Dashboard";
+    position: absolute;
+    padding: 7px;
+    right: 50px;
+    background-color: #000;
+    color: #fff;
+    border-radius: 7px;
+    line-height: 12px;
+    top: 5px;
+}
+
+.btn-floating.green::before {
+    content: "Create Note";
+    position: absolute;
+    padding: 7px;
+    right: 50px;
+    background-color: #000;
+    color: #fff;
+    border-radius: 7px;
+    line-height: 12px;
+    top: 5px;
+    white-space:nowrap;
+}
+
+.btn-floating.yellow::before {
+    content: "Timeline";
+    position: absolute;
+    padding: 7px;
+    right: 50px;
+    background-color: #000;
+    color: #fff;
+    border-radius: 7px;
+    line-height: 12px;
+    top: 5px;
+}
+
+.btn-floating.tags::before {
+    content: "Tags";
+    position: absolute;
+    padding: 7px;
+    right: 50px;
+    background-color: #000;
+    color: #fff;
+    border-radius: 7px;
+    line-height: 12px;
+    top: 5px;
+}
+
 @media only screen and (min-width: 768px) {
   .cd-timeline-content h2 {
     font-size: 16px;

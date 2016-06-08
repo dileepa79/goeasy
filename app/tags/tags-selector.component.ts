@@ -39,8 +39,10 @@ export class TagsSelectorComponent{
         let filtered: any[] = [];
         for (let i = 0; i < tags.length; i++) {
             let tag = tags[i];
-            if (tag.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-                filtered.push(tag);
+            if (tag != undefined && tag.name != null) {
+                if (tag.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+                    filtered.push(tag);
+                }
             }
         }
         return filtered;

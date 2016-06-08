@@ -1,73 +1,106 @@
-﻿<div class="container">
-    <h1>{{heading}}
-        <button class="btn-secondary waves-effect  btn" (click)="modal.open()">
-            <i class="material-icons">share</i> <span>share</span>
-        </button>
-    </h1>
-    <modal #modal>
-        <modal-header [show-close]="true">
-            <h4 class="modal-title">Share with</h4>
-        </modal-header>
-        <modal-body>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-8">
+﻿<div class="container">   
+
+
+
+            <div class="col-md-8 add-note-form">
+                <h1>
+                    {{heading}}
+                    <button class="btn-secondary waves-effect  btn" (click)="modal.open()">
+                        <i class="material-icons">share</i> <span>share</span>
+                    </button>
+                </h1>
+                <!-- -------------share------------- -->
+                <modal #modal>
+                    <modal-header [show-close]="true">
+                        <p>Share</p>
+                    </modal-header>
+                    <modal-body>
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-sm-10">
+                                    <label for="user-app" class="col-sm-pull-4 control-label">Whom would you like to share with ?</label>
+                                </div>
+
+                                <div class="col-sm-10">
+                                    <user-app [isallowednewinput]="true" (usersadded)='onSelectedUsersChanged($event)' (usersremoved)="onSelectedUsersChanged($event)">Loading...</user-app>
+                                </div>
+                            </div>
+                        </div>
+                    </modal-body>
+                    <modal-footer>
                         <div class="form-group">
-                            <label>+</label>
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="button" class="btn btn-primary" (click)="modal.close()">Ok</button>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Yayi Users</label>
-                            <user-app [isallowednewinput]="true" (usersAdded)='onSelectedUsersChanged($event)' (usersRemoved)="onSelectedUsersChanged($event)">Loading...</user-app>
-                        </div>
-                        <div class="col-md-4">
+                    </modal-footer>
 
-                        </div>
+                </modal>
+                <!-- ---------------end share----------- -->
 
+                <!-- -------------Add Note Form------------- -->
+                <form *ngIf="active"  #noteForm="ngForm">
+                    <div class="form-group">
+                        <label class="float-left">Title</label>
+                        <!-- <input [(ngModel)]="noteRequest.title" class="form-control" required ngControl="title"/>-->
+                        <input type="text" class="form-control" required [(ngModel)]="noteRequest.title" ngControl="title" #title="ngForm">
+                        <div [hidden]="title.valid || title.pristine" class="alert alert-danger">
+                            Title is required
+                        </div>
                     </div>
-                </div>
-            </div>
-        </modal-body>
-        <modal-footer>
-            <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modal.dismiss()">Cancel</button>
-            <button type="button" class="btn btn-primary" (click)="modal.close()">Ok</button>
-        </modal-footer>
-
-    </modal>
-
-    <form *ngIf="active" (ngSubmit)="Save()" #noteForm="ngForm">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="form-group">
-                    <label>Title</label>
-                    <!-- <input [(ngModel)]="noteRequest.title" class="form-control" required ngControl="title"/>-->
-                    <input type="text" class="form-control" required [(ngModel)]="noteRequest.title" ngControl="title" #title="ngForm">
-                    <div [hidden]="title.valid || title.pristine" class="alert alert-danger">
-                        Title is required
+                    <div class="form-group">
+                        <label>Description</label>
+                        <!--<textarea rows="10" cols="50" [(ngModel)]="noteRequest.description" class="form-control"></textarea>-->
+                        <p-editor [(ngModel)]="noteRequest.description">
+                        </p-editor>
                     </div>
+                    <div class="form-group">
+                        <label class="col-md-12 no-padding">Tags</label>
+                        <div class="col-md-12 no-padding">
+                            <prime-app [isAllowedNewInput]="true" [inputValues]="noteRequest.tags" (tagsAdded)='onSelectedTagsChanged($event)' (tagsRemoved)="onSelectedTagsChanged($event)">Loading...</prime-app>
+                        </div>
+                    </div>
+                    <!--<input type="button" value='Save' (click)="Save()" class="btn btn-success" />-->
+                    <!--<input type="button" value='Share' (click)="modal.open()" class="btn btn-primary"/>-->
+                    <!--<div class="form-group">
+            <file-uploader [filesToUpload]="noteRequest.filesToUpload"></file-uploader>
+        </div>-->
 
-                </div>
-                <div class="form-group">
-                    <label>Description</label>
-                    <!--<textarea rows="10" cols="50" [(ngModel)]="noteRequest.description" class="form-control"></textarea>-->
-                    <p-editor [(ngModel)]="noteRequest.description">
-                    </p-editor>
-                </div>
-                <div class="form-group">
-                    <label>Tags</label>
-                    <prime-app [isAllowedNewInput]="true" (tagsAdded)='onSelectedTagsChanged($event)' (tagsRemoved)="onSelectedTagsChanged($event)">Loading...</prime-app>
-                </div>
-                <!--<input type="button" value='Save' (click)="Save()" class="btn btn-success" />-->
-                <!--<input type="button" value='Share' (click)="modal.open()" class="btn btn-primary"/>-->
-                <button type="submit" class="btn btn-success" [disabled]="!noteForm.form.valid">Save</button>
+                    <button type="button" class="btn btn-success" [disabled]="!noteForm.form.valid" (click)="Save()" data-trigger="#chat" id="noteSave-trigger">Save</button>
 
-                <input type="button" value='Close' class="btn-secondary btn " />
-                <div class="col-md-4">
+                    <input *ngIf="showCloseButton" type="button" value='Close' class="btn-secondary btn " id="noteClose-trigger" data-trigger="#chat" (click)="Close()" />
 
+                    </form>
+
+
+</div>
+
+            <!-- ------------- Tags suggestions and file upload------------- -->
+            <div class="col-md-4 p-t-20">
+                <div class="col-md-12 add-note-widget">
+
+                    <!-- file upload -->
+                    <!--<div class="input-group">
+                        <label class="input-group-btn">
+                            <span class="btn btn-primary">
+                                Browse&hellip; <input type="file" style="display: none;" multiple>
+                            </span>
+                        </label>
+                        <input type="text" class="form-control file-upload" readonly>
+                    </div>-->
+
+                    <file-uploader [filesToUpload]="noteRequest.filesToUpload"></file-uploader>
+                   
+                    
+                </div>
+
+                <div class="col-md-12 add-note-widget">
+                    sdfsdfsdfsdfsdfsdf
                 </div>
 
             </div>
-        </div>
-    </form>
+       
+
 </div>
 
 <!--<timeline></timeline>-->

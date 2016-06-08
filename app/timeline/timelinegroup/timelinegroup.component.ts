@@ -32,7 +32,7 @@ export class TimelineInfo {
 
 @Component({
     selector: 'timeline-group',
-    inputs: ['heading', 'isOpen', 'isDisabled', 'availableCountText'],
+    inputs: ['heading', 'isOpen', 'isDisabled', 'availableCountText','isLabled'],
     templateUrl: './app/timeline/timelinegroup/timelinegroup.component.html'
 })
 export class TimelineGroup implements OnDestroy {

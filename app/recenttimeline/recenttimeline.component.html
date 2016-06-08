@@ -9,11 +9,11 @@
             </div>
             <div class="col-md-1" (click)="watchFilter(isWatchedFilter); $event.stopPropagation()">
                 <span *ngIf="!isWatchedFilter" class="fa-stack fa-lg" title="">
-                    <i class="fa fa-heart fa-stack-2x" style="color:grey"></i>
+                    <i class="fa fa-heart fa-stack-2x" style="color:grey;cursor:pointer"></i>
                     <i class="fa fa-stack-2x" style="color:white"></i>
                 </span>
                 <span *ngIf="isWatchedFilter" class="fa-stack fa-lg" title="Watched">
-                    <i class="fa fa-heart fa-stack-2x" style="color:cornflowerblue"></i>
+                    <i class="fa fa-heart fa-stack-2x" style="color:cornflowerblue;cursor:pointer"></i>
                     <i class="fa fa-stack-2x" style="color:white"></i>
                 </span>
             </div>
@@ -21,38 +21,38 @@
     </div>
 </div>
 
+
+
     <modal [animation]="animation" [keyboard]="keyboard" [backdrop]="backdrop" #parentModal>
         <modal-header [show-close]="true">
-            <h4 class="modal-title">Share With</h4>
+            <p>Share</p>
         </modal-header>
         <modal-body>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="form-group">
-                            <label>+</label>
-                        </div>
-                        <div class="form-group">
-                            <label>Yayi Users</label>
-                            <user-app [isallowednewinput]="true" (usersAdded)='onSelectedUsersChanged($event)' (usersRemoved)="onSelectedUsersChanged($event)">Loading...</user-app>
-                        </div>
-                        <div class="col-md-4">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <label for="user-app" class="col-sm-pull-4 control-label">Whom would you like to share with ?</label>
+                    </div>
 
-                        </div>
-
+                    <div class="col-sm-10">
+                        <user-app [isallowednewinput]="true" (usersAdded)='onSelectedUsersChanged($event)' (usersRemoved)="onSelectedUsersChanged($event)">Loading...</user-app>
                     </div>
                 </div>
-            </div>
+            </form>
         </modal-body>
         <modal-footer>
-            <button type="button" class="btn btn-default" data-dismiss="modal" (click)="parentModal.dismiss()">Cancel</button>
-            <button type="button" class="btn btn-primary" (click)="parentModal.close();shareTimeline()">Share</button>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="parentModal.dismiss()">Cancel</button>
+                    <button type="button" class="btn btn-primary" (click)="parentModal.close();shareTimeline()">Share</button>
+                </div>
+            </div>
         </modal-footer>
+
     </modal>
 
 
-
-    <div class="col-md-12 media" *ngFor="let timeline of recentTimelines | recentTimelineWatchFilter:isWatchedFilter" >
+    <div  class="col-md-12 media" *ngFor="let timeline of recentTimelines | recentTimelineWatchFilter:isWatchedFilter" >
         <!--<div class="col-md-1">
             <div alt="" class="timeline-icon row">
                 <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
@@ -74,12 +74,12 @@
                             </div>
                         </div>
                         <!-- tags line -->
-                        <div class="col-md-10">
-                            <a (click)="select(timeline)" class="recent-timeline-tags"><span *ngFor="let tag of timeline.tags; let last = last">{{tag.name}}<span *ngIf="!last"> + </span></span></a>
-                            <span *ngIf="timeline.noOfEntries">({{timeline.noOfEntries}})</span> 
+                        <div class="col-md-10 cursor-hand" (click)="select(timeline)">
+                            <div class="recent-timeline-tags link-tag"><span *ngFor="let tag of timeline.tags; let last = last">{{tag.name}}<span *ngIf="!last"> + </span></span></div>
+                            <div class="recent-timeline-entry" *ngIf="timeline.noOfEntries">({{timeline.noOfEntries}})</div>
 
                             <div style="padding: 10px 0 0 40px;">
-                                {{timeline.recentActivity}} 
+                                {{timeline.recentActivity}}
                             </div>
                         </div>
                         <!-- watch -->
@@ -108,13 +108,13 @@
 
                         </div>
                         <div class="col-md-3">
-                            <span style="margin-left: -10px;">SHARED WITH</span>
+                            <span *ngIf="timeline.sharedWith.length > 0" style="margin-left: -10px;">SHARED WITH</span>
                         </div>
                         <div class="col-md-7">
-                            <div style="margin-top: -32px; margin-left: -75px;">
-                                <css-carousel></css-carousel>
-                                <input type="button" value='Share' (click)="parentModal.open(); setCurrentTimeline(timeline)" class="btn btn-primary" style="margin-left:5px" />
+                            <div style="margin-top: 20px; margin-left: -75px;"> 
+                                <css-carousel [images]="timeline.sharedWith"></css-carousel>
                             </div>
+                            <input type="button" value='Share' (click)="parentModal.open(); setCurrentTimeline(timeline)" class="btn btn-primary" style="margin-left:5px" />
                         </div>
                     </div>
                     <!--<div style="padding:10px 0px 10px 0px">

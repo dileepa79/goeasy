@@ -60,7 +60,7 @@ $(document).ready(function(){
      */
     (function(){
         //Toggle
-        $('body').on('click', '#menu-trigger, #chat-trigger', function(e){            
+        $('body').on('click', '#menu-trigger, #chat-trigger,#noteClose-trigger,#noteSave-trigger', function (e) {
             e.preventDefault();
             var x = $(this).data('trigger');
         
@@ -112,10 +112,13 @@ $(document).ready(function(){
                 $(document).on('click', function (e) {
                     if (($(e.target).closest($elem).length === 0) && ($(e.target).closest($elem2).length === 0)) {
                         setTimeout(function(){
-                            $('body').removeClass('modal-open');
-                            $($elem).removeClass('toggled');
-                            $('#header').removeClass('sidebar-toggled');
-                            $($elem2).removeClass('open');
+                            //$('body').removeClass('modal-open');
+                            console.log('$(e.target).id=' + e.target.id);
+                            if(e.target.id=="noteClose-trigger"){
+                                $($elem).removeClass('toggled');
+                                //$('#header').removeClass('sidebar-toggled');
+                                $($elem2).removeClass('open');
+                             }
                         });
                     }
                 });

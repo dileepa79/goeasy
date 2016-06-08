@@ -26,37 +26,69 @@ export class AuthService {
         var headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
-        this.http.post(this.webApiUrl, creds, {
-            headers: headers
-        })
-            .map(res => res.json())
-            .subscribe(
-            data => {
-                //console.log("access token: "+data.access_token)
-                this._token = data.access_token;
-            },
-            err => {
-                console.log("error: " + JSON.stringify(err));
-                this._parent.isAuthorized = false;
-                alert(JSON.parse(err._body).error_description);
-            },
-            () => {
-                this.tokenService.setToken(this._token);
-                this._parent.isAuthorized = true;
-                if (rememberMe) {
-                    console.log("saving credentials in cookie");
-                    //document.cookie = "username=" + username;
-                    //document.cookie = "password=" + password;
-                    this.setCookie("username", username, 15);
-                    this.setCookie("password", password, 15);
+        /*return this.http.post(this.webApiUrl, body, options)
+            .map((res) => { return <AppUser[]>res.json() });*/
+
+        if (rememberMe) {
+            this.http.post(this.webApiUrl, creds, {
+                headers: headers
+            }).map(res => res.json())
+                .subscribe(
+                data => {
+                    //console.log("access token: "+data.access_token)
+                    this._token = data.access_token;
+                },
+                err => {
+                    console.log("error: " + JSON.stringify(err));
+                    this._parent.isAuthorized = false;
+                    //alert(JSON.parse(err._body).error_description);
+                },
+                () => {
+                    this.tokenService.setToken(this._token);
+                    this._parent.isAuthorized = true;
+                    if (rememberMe) {
+                        console.log("saving credentials in cookie");
+                        //document.cookie = "username=" + username;
+                        //document.cookie = "password=" + password;
+                        this.setCookie("username", username, 15);
+                        this.setCookie("password", password, 15);
+                    }
+                    this._router.navigate(['dashboard']);
                 }
-                this._router.navigate(['dashboard']);
-            }
-            );
+                );
+        }
+        else {
+            return this.http.post(this.webApiUrl, creds, {
+                headers: headers
+            }).map((res) => { return res.json() });
+        }
+
+
     }
+    setToken(token) {
+        this._token = token;
+    }
+    setAuthorized(_isAuthorized) {
+        this._parent.isAuthorized = _isAuthorized;
+    }
+
+    setCookies(username, password, rememberMe) {
+        this.tokenService.setToken(this._token);
+        this._parent.isAuthorized = true;
+        if (rememberMe) {
+            console.log("saving credentials in cookie");
+            //document.cookie = "username=" + username;
+            //document.cookie = "password=" + password;
+            this.setCookie("username", username, 15);
+            this.setCookie("password", password, 15);
+        }
+        this._router.navigate(['dashboard']);
+    }
+
     isAuth() {
         return this.tokenService.getToken() != '' && this.tokenService.getToken() != null;
     }
+
     get(url, callback) {        
         var authHeader = new Headers();
         authHeader.append('Authorization', 'bearer ' + this.tokenService.getToken());
@@ -70,6 +102,7 @@ export class AuthService {
             () => console.log('Secret Quote Complete')
             );
     }
+
     getHeader() {
         var authHeader = new Headers();
         authHeader.append('Authorization', 'bearer ' + this.tokenService.getToken());

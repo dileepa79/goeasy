@@ -1,4 +1,4 @@
-System.register(['@angular/core', './note-request', '../services/notes.service', '../timeline/timeline.component', '../tags/tags-selector.component', '../noteshareusers/users-selector.component', '../modal/modaldialog', 'primeng/primeng', '@angular/router'], function(exports_1, context_1) {
+System.register(['@angular/core', './note-request', '../services/notes.service', '../tags/tags-selector.component', '../noteshareusers/users-selector.component', '../modal/modaldialog', 'primeng/primeng', '@angular/router', '../services/passtag.service', '../fileuploader/file-uploader.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, note_request_1, notes_service_1, timeline_component_1, tags_selector_component_1, users_selector_component_1, modaldialog_1, primeng_1, primeng_2, router_1;
+    var core_1, note_request_1, notes_service_1, tags_selector_component_1, users_selector_component_1, modaldialog_1, primeng_1, primeng_2, router_1, passtag_service_1, file_uploader_component_1;
     var AddNoteComponent;
     return {
         setters:[
@@ -22,9 +22,6 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
             },
             function (notes_service_1_1) {
                 notes_service_1 = notes_service_1_1;
-            },
-            function (timeline_component_1_1) {
-                timeline_component_1 = timeline_component_1_1;
             },
             function (tags_selector_component_1_1) {
                 tags_selector_component_1 = tags_selector_component_1_1;
@@ -41,28 +38,46 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
             },
             function (router_1_1) {
                 router_1 = router_1_1;
+            },
+            function (passtag_service_1_1) {
+                passtag_service_1 = passtag_service_1_1;
+            },
+            function (file_uploader_component_1_1) {
+                file_uploader_component_1 = file_uploader_component_1_1;
             }],
         execute: function() {
             AddNoteComponent = (function () {
-                function AddNoteComponent(_notesService, _router) {
+                function AddNoteComponent(_notesService, _router, _passTagService, zone) {
                     this._notesService = _notesService;
                     this._router = _router;
+                    this._passTagService = _passTagService;
+                    this.zone = zone;
                     this.noteRequest = {
                         title: '',
                         description: '',
                         tags: [],
-                        users: []
+                        users: [],
+                        filesToUpload: [],
+                        attachments: []
                     };
                     this.heading = "ADD NOTES";
                     this.tags = [];
                     this.users = [];
                     this.tagList = '';
                     this.active = true;
-                    this.noteRequest = new note_request_1.NoteRequest('', '', [], []);
+                    this.tagsStr = '';
+                    this.passedTags = [];
+                    this.showCloseButton = false;
+                    window.angularComponentRef = {
+                        zone: this.zone,
+                        // componentFn: (value) => this.callFromOutside(value), 
+                        component: this
+                    };
                 }
+                AddNoteComponent.prototype.ngOnInit = function () {
+                };
                 AddNoteComponent.prototype.Save = function () {
                     var _this = this;
-                    //this._notesService.addNote(this.noteRequest);
                     this._notesService.addNote(this.noteRequest)
                         .subscribe(function (note) {
                         for (var i = 0; i < note.tags.length; i++) {
@@ -90,6 +105,29 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                     this.active = false;
                     setTimeout(function () { return _this.active = true; }, 0);
                 };
+                AddNoteComponent.prototype.setTags = function (_tags) {
+                    this.noteRequest.tags = _tags;
+                };
+                AddNoteComponent.prototype.updateSelectedTags = function () {
+                    this.tagsStr = this._passTagService.getTags();
+                    console.log('calledFromOutside ' + this._passTagService.getTags());
+                    if (this.tagsStr != null) {
+                        var tagsArr = this.tagsStr.split(",");
+                        for (var i = 0; i < tagsArr.length; i++) {
+                            var tag = tagsArr[i];
+                            this.passedTags.push(tag);
+                        }
+                        this.noteRequest.tags = this.passedTags;
+                    }
+                    console.log('calledFromOutside tags ' + this.noteRequest.tags);
+                };
+                AddNoteComponent.prototype.Close = function () {
+                    this.clear();
+                };
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Boolean)
+                ], AddNoteComponent.prototype, "showCloseButton", void 0);
                 AddNoteComponent = __decorate([
                     core_1.Component({
                         selector: 'add-note',
@@ -97,9 +135,9 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                         providers: [
                             notes_service_1.NotesService
                         ],
-                        directives: [timeline_component_1.TimeLineComponent, tags_selector_component_1.TagsSelectorComponent, modaldialog_1.MODAL_DIRECTIVES, primeng_1.Editor, primeng_2.Header, users_selector_component_1.UsersSelectorComponent]
+                        directives: [tags_selector_component_1.TagsSelectorComponent, modaldialog_1.MODAL_DIRECTIVES, primeng_1.Editor, primeng_2.Header, users_selector_component_1.UsersSelectorComponent, file_uploader_component_1.FileUploaderComponent]
                     }), 
-                    __metadata('design:paramtypes', [notes_service_1.NotesService, router_1.Router])
+                    __metadata('design:paramtypes', [notes_service_1.NotesService, router_1.Router, passtag_service_1.PassTagService, core_1.NgZone])
                 ], AddNoteComponent);
                 return AddNoteComponent;
             }());

@@ -1,7 +1,7 @@
 System.register([], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var RecentTimeLineResponse, RecentTimelineTag;
+    var RecentTimeLineResponse, AppUser, RecentTimelineTag;
     return {
         setters:[],
         execute: function() {
@@ -19,6 +19,15 @@ System.register([], function(exports_1, context_1) {
                 return RecentTimeLineResponse;
             }());
             exports_1("RecentTimeLineResponse", RecentTimeLineResponse);
+            AppUser = (function () {
+                function AppUser(userId, userName, imageUrl) {
+                    this.userId = userId;
+                    this.userName = userName;
+                    this.imageUrl = imageUrl;
+                }
+                return AppUser;
+            }());
+            exports_1("AppUser", AppUser);
             RecentTimelineTag = (function () {
                 function RecentTimelineTag(id, name) {
                     this.id = id;

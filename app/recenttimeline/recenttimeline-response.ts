@@ -11,6 +11,14 @@
     )
     {}
 }
+export class AppUser {
+    constructor(
+        public userId: string,
+        public userName: string,
+        public imageUrl: string,
+    )
+    {}
+}
 
 export class RecentTimelineTag {
     constructor(public id: number, public name: string)

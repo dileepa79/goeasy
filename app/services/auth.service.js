@@ -55,29 +55,55 @@ System.register(['@angular/core', '@angular/http', '@angular/router', './token.s
                     var creds = "grant_type=" + grant_type + "&userName=" + username + "&password=" + password;
                     var headers = new http_1.Headers();
                     headers.append('Content-Type', 'application/x-www-form-urlencoded');
-                    this.http.post(this.webApiUrl, creds, {
-                        headers: headers
-                    })
-                        .map(function (res) { return res.json(); })
-                        .subscribe(function (data) {
-                        //console.log("access token: "+data.access_token)
-                        _this._token = data.access_token;
-                    }, function (err) {
-                        console.log("error: " + JSON.stringify(err));
-                        _this._parent.isAuthorized = false;
-                        alert(JSON.parse(err._body).error_description);
-                    }, function () {
-                        _this.tokenService.setToken(_this._token);
-                        _this._parent.isAuthorized = true;
-                        if (rememberMe) {
-                            console.log("saving credentials in cookie");
-                            //document.cookie = "username=" + username;
-                            //document.cookie = "password=" + password;
-                            _this.setCookie("username", username, 15);
-                            _this.setCookie("password", password, 15);
-                        }
-                        _this._router.navigate(['dashboard']);
-                    });
+                    /*return this.http.post(this.webApiUrl, body, options)
+                        .map((res) => { return <AppUser[]>res.json() });*/
+                    if (rememberMe) {
+                        this.http.post(this.webApiUrl, creds, {
+                            headers: headers
+                        }).map(function (res) { return res.json(); })
+                            .subscribe(function (data) {
+                            //console.log("access token: "+data.access_token)
+                            _this._token = data.access_token;
+                        }, function (err) {
+                            console.log("error: " + JSON.stringify(err));
+                            _this._parent.isAuthorized = false;
+                            //alert(JSON.parse(err._body).error_description);
+                        }, function () {
+                            _this.tokenService.setToken(_this._token);
+                            _this._parent.isAuthorized = true;
+                            if (rememberMe) {
+                                console.log("saving credentials in cookie");
+                                //document.cookie = "username=" + username;
+                                //document.cookie = "password=" + password;
+                                _this.setCookie("username", username, 15);
+                                _this.setCookie("password", password, 15);
+                            }
+                            _this._router.navigate(['dashboard']);
+                        });
+                    }
+                    else {
+                        return this.http.post(this.webApiUrl, creds, {
+                            headers: headers
+                        }).map(function (res) { return res.json(); });
+                    }
+                };
+                AuthService.prototype.setToken = function (token) {
+                    this._token = token;
+                };
+                AuthService.prototype.setAuthorized = function (_isAuthorized) {
+                    this._parent.isAuthorized = _isAuthorized;
+                };
+                AuthService.prototype.setCookies = function (username, password, rememberMe) {
+                    this.tokenService.setToken(this._token);
+                    this._parent.isAuthorized = true;
+                    if (rememberMe) {
+                        console.log("saving credentials in cookie");
+                        //document.cookie = "username=" + username;
+                        //document.cookie = "password=" + password;
+                        this.setCookie("username", username, 15);
+                        this.setCookie("password", password, 15);
+                    }
+                    this._router.navigate(['dashboard']);
                 };
                 AuthService.prototype.isAuth = function () {
                     return this.tokenService.getToken() != '' && this.tokenService.getToken() != null;

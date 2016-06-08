@@ -1,4 +1,4 @@
-System.register(['@angular/core', '../services/timeline.service', '../tags/tags-selector.component', './timelinegroup/timelinegroup.component', './timelinegroup/timelinedetail.component', '@angular/router', 'rxjs/Observable'], function(exports_1, context_1) {
+System.register(['@angular/core', '../services/timeline.service', '../tags/tags-selector.component', './timelinegroup/timelinegroup.component', './timelinegroup/timelinedetail.component', '@angular/router', 'rxjs/Observable', '../services/passtag.service', '../timeline/angular2-infinite-scroll'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', '../services/timeline.service', '../tags/tags-
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, timeline_service_1, tags_selector_component_1, timelinegroup_component_1, timelinedetail_component_1, router_1, Observable_1;
+    var core_1, timeline_service_1, tags_selector_component_1, timelinegroup_component_1, timelinedetail_component_1, router_1, Observable_1, passtag_service_1, angular2_infinite_scroll_1;
     var TimeLineComponent;
     return {
         setters:[
@@ -34,17 +34,29 @@ System.register(['@angular/core', '../services/timeline.service', '../tags/tags-
             },
             function (Observable_1_1) {
                 Observable_1 = Observable_1_1;
+            },
+            function (passtag_service_1_1) {
+                passtag_service_1 = passtag_service_1_1;
+            },
+            function (angular2_infinite_scroll_1_1) {
+                angular2_infinite_scroll_1 = angular2_infinite_scroll_1_1;
             }],
         execute: function() {
             TimeLineComponent = (function () {
-                function TimeLineComponent(_timeLineService, routeSegment) {
+                function TimeLineComponent(_timeLineService, routeSegment, passTagService) {
                     this._timeLineService = _timeLineService;
+                    this.passTagService = passTagService;
                     this.oneAtATime = true;
+                    this.tagsStr = '';
+                    this.isLoading = false;
                     this.title = "TIMELINE";
                     this.passedTags = [];
+                    this.selectedTagStr = '';
                     this.timeLineRequest = {
                         data: [],
-                        isPersistedSearch: false
+                        isPersistedSearch: false,
+                        pageNo: 1,
+                        pageSize: 10
                     };
                     this.tagsStr = routeSegment.getParam('tags');
                 }
@@ -57,6 +69,10 @@ System.register(['@angular/core', '../services/timeline.service', '../tags/tags-
                         }
                         this.timeLineRequest.data = this.passedTags;
                     }
+                    this.getTimelines();
+                };
+                TimeLineComponent.prototype.onScroll = function () {
+                    // console.log('scrolled!!')
                     this.getTimelines();
                 };
                 TimeLineComponent.prototype.routerCanDeactivate = function (currTree, futureTree) {
@@ -122,18 +138,57 @@ System.register(['@angular/core', '../services/timeline.service', '../tags/tags-
                 TimeLineComponent.prototype.onSelectedTagsChanged = function (tags) {
                     this.timeLineRequest.data = tags.map(function (d) { return d['name']; });
                     this.timeLineRequest.isPersistedSearch = false;
+                    this.timeLineRequest.pageNo = 1;
+                    if (typeof this.filteredTimelines != 'undefined') {
+                        this.filteredTimelines = new Array();
+                    }
+                    this.selectedTagStr = '';
+                    for (var i = 0; i < this.timeLineRequest.data.length; i++) {
+                        this.selectedTagStr = this.selectedTagStr + (this.timeLineRequest.data[i] + (this.timeLineRequest.data.length != i + 1 ? ',' : ''));
+                    }
+                    this.passTagService.setTags(this.selectedTagStr);
+                    window.angularComponentRef.zone.run(function () { window.angularComponentRef.component.updateSelectedTags(); });
                     this.getTimelines();
                 };
                 TimeLineComponent.prototype.getTimelines = function () {
                     var _this = this;
                     this._timeLineService.getTimeLines(this.timeLineRequest)
                         .subscribe(function (timelines) {
+                        if (timelines.length <= 0) {
+                            return;
+                        }
+                        if (_this.isLoading)
+                            return;
+                        _this.isLoading = true;
                         _this.timelines = timelines;
-                        _this.filteredTimelines = JSON.parse(JSON.stringify(timelines));
+                        if (typeof _this.filteredTimelines == 'undefined') {
+                            _this.filteredTimelines = new Array();
+                        }
+                        for (var x = 0; x < timelines.length; x++) {
+                            timelines[x].isLabled = true;
+                            _this.filteredTimelines.push(timelines[x]);
+                        }
+                        for (var y = 0; y < _this.filteredTimelines.length; y++) {
+                            if (y == _this.filteredTimelines.length - 1) {
+                                break;
+                            }
+                            if (_this.filteredTimelines[y].dateFormat == _this.filteredTimelines[y + 1].dateFormat) {
+                                _this.filteredTimelines[y + 1].isLabled = false;
+                            }
+                        }
+                        if (_this.timelines.length > 0) {
+                            _this.timeLineRequest.pageNo = _this.timeLineRequest.pageNo + 1;
+                            _this.isLoading = false;
+                        }
+                        else {
+                            _this.isLoading = true;
+                        }
                         console.log(_this.timelines);
+                        console.log(_this.filteredTimelines);
                     }, function (error) {
                         _this.errorMessage = error,
                             console.log(_this.errorMessage);
+                        _this.isLoading = false;
                     }, function () { return function () { return console.log("Done"); }; });
                 };
                 TimeLineComponent = __decorate([
@@ -143,9 +198,9 @@ System.register(['@angular/core', '../services/timeline.service', '../tags/tags-
                         providers: [
                             timeline_service_1.TimeLineService
                         ],
-                        directives: [tags_selector_component_1.TagsSelectorComponent, timelinegroup_component_1.TimelineInfo, timelinegroup_component_1.TimelineGroup, timelinedetail_component_1.TimelineDetail, timelinedetail_component_1.TimelineDetailGroup]
+                        directives: [tags_selector_component_1.TagsSelectorComponent, timelinegroup_component_1.TimelineInfo, timelinegroup_component_1.TimelineGroup, timelinedetail_component_1.TimelineDetail, timelinedetail_component_1.TimelineDetailGroup, angular2_infinite_scroll_1.InfiniteScroll]
                     }), 
-                    __metadata('design:paramtypes', [timeline_service_1.TimeLineService, router_1.RouteSegment])
+                    __metadata('design:paramtypes', [timeline_service_1.TimeLineService, router_1.RouteSegment, passtag_service_1.PassTagService])
                 ], TimeLineComponent);
                 return TimeLineComponent;
             }());

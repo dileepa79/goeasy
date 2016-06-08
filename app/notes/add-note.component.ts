@@ -1,13 +1,16 @@
-﻿import {Component} from '@angular/core';
+﻿import {Component, OnInit, NgZone, Input} from '@angular/core';
 import {NoteRequest} from './note-request';
 import {NotesService} from '../services/notes.service';
-import {TimeLineComponent} from '../timeline/timeline.component';
+//import {TimeLineComponent} from '../timeline/timeline.component';
 import { TagsSelectorComponent } from '../tags/tags-selector.component';
 import { UsersSelectorComponent } from '../noteshareusers/users-selector.component';
 import { MODAL_DIRECTIVES } from '../modal/modaldialog';
 import {Editor} from 'primeng/primeng';
 import {Header} from 'primeng/primeng';
 import { Router} from '@angular/router';
+import {PassTagService} from '../services/passtag.service';
+import { Tag } from '../tags/tags-response';
+import { FileUploaderComponent, FileToUpload } from '../fileuploader/file-uploader.component';
 
 @Component({
     selector: 'add-note',
@@ -15,19 +18,25 @@ import { Router} from '@angular/router';
     providers: [
         NotesService
     ],
-    directives: [TimeLineComponent, TagsSelectorComponent, MODAL_DIRECTIVES, Editor, Header,UsersSelectorComponent]
+    directives: [TagsSelectorComponent, MODAL_DIRECTIVES, Editor, Header, UsersSelectorComponent, FileUploaderComponent]
 })
 
-export class AddNoteComponent{
-    constructor(private _notesService: NotesService, public _router: Router) {
-        this.noteRequest = new NoteRequest('', '', [], []);
-
+export class AddNoteComponent implements OnInit{
+    constructor(private _notesService: NotesService, public _router: Router, private _passTagService: PassTagService, private zone: NgZone) {
+               
+        window.angularComponentRef = {
+            zone: this.zone,
+           // componentFn: (value) => this.callFromOutside(value), 
+            component: this
+        };
     }
     public noteRequest: NoteRequest = {
         title: '',
         description: '',
         tags: [],
-        users: []
+        users: [],
+        filesToUpload: [],
+        attachments:[]
     };
 
     heading = "ADD NOTES";
@@ -36,8 +45,14 @@ export class AddNoteComponent{
     errorMessage: string;
     tagList: string = '';
     active = true;
+    tagsStr: string='';
+
+    passedTags: Tag[] = [];
+    @Input() showCloseButton: boolean = false;
+    ngOnInit() {
+    }
+
     Save() {
-        //this._notesService.addNote(this.noteRequest);
         this._notesService.addNote(this.noteRequest)
             .subscribe(note => {
                     for (var i = 0; i < note.tags.length; i++) {
@@ -68,5 +83,28 @@ export class AddNoteComponent{
         this.noteRequest = new NoteRequest('', '', [], []);
         this.active = false;
         setTimeout(() => this.active = true, 0);
+    }
+
+    setTags(_tags) {
+        this.noteRequest.tags = _tags;
+    }
+
+    updateSelectedTags() {
+        this.tagsStr = this._passTagService.getTags();
+        console.log('calledFromOutside ' + this._passTagService.getTags());
+
+        if (this.tagsStr != null) {
+            var tagsArr = this.tagsStr.split(",");
+            for (var i = 0; i < tagsArr.length; i++) {
+                var tag: any = tagsArr[i];
+                this.passedTags.push(tag);
+            }
+            this.noteRequest.tags = this.passedTags;
+        }
+        console.log('calledFromOutside tags ' + this.noteRequest.tags);  
+    }
+
+    Close() {
+        this.clear();
     }
 }

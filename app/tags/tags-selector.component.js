@@ -43,8 +43,10 @@ System.register(['@angular/core', 'primeng/primeng', '../services/tags.service']
                     var filtered = [];
                     for (var i = 0; i < tags.length; i++) {
                         var tag = tags[i];
-                        if (tag.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-                            filtered.push(tag);
+                        if (tag != undefined && tag.name != null) {
+                            if (tag.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+                                filtered.push(tag);
+                            }
                         }
                     }
                     return filtered;

@@ -52,6 +52,14 @@ System.register(['@angular/core', '../services/recenttimeline.service', '../serv
                     this._router = _router;
                     // @ViewChild('parentModal')
                     //parentModal: ModalComponent;
+                    this.images = [
+                        { "title": "", "url": "img/profile-pics/finn.png" },
+                        { "title": "", "url": "img/profile-pics/anu.png" },
+                        { "title": "", "url": "img/profile-pics/chinthaka.png" },
+                        { "title": "", "url": "img/profile-pics/twi.png" },
+                        { "title": "", "url": "img/profile-pics/waruni.png" },
+                        { "title": "", "url": "img/profile-pics/tushara.png" },
+                        { "title": "", "url": "img/profile-pics/dileepa.png" }];
                     this.animation = true;
                     this.keyboard = true;
                     this.backdrop = true;
@@ -129,7 +137,10 @@ System.register(['@angular/core', '../services/recenttimeline.service', '../serv
                         TimeLineId: this.currentTimeline_id,
                         AppUsers: this.users
                     };
-                    this._timeLineService.share(timeline_share);
+                    var selected = this.recentTimelines.filter(function (obj) {
+                        return obj.id == timeline_share.TimeLineId;
+                    });
+                    this._timeLineService.share(timeline_share).subscribe(function (res) { return selected[0].sharedWith = res; });
                 };
                 RecentTimeLineComponent = __decorate([
                     core_1.Component({

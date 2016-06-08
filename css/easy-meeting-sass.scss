@@ -48,7 +48,10 @@ body {
         margin-top:50px;
     }
     #header {
-    background: #0277bd;}
+    background: #0277bd;
+    z-index:9999999;
+    }
+
 }
 .header-inner .logo a {
     color: #fff;
@@ -108,14 +111,31 @@ body {
     padding: 0 20px 10px;
     position: fixed;
     width: 100%;
-    z-index: 9;
+    z-index: 9999999;
 }
 
 .font-14{
     font-size:14px !important;
     font-weight:300;
 }
-h1, h3{font-size:26px;}
+
+.font-54{
+    font-size:54px !important;
+}
+h1, h3{    
+    font-size: 22px;
+    }
+
+.add-note-form{
+
+    h1, h3{    
+        font-size: 22px;
+    margin: 10px 0 20px !important;
+
+    }
+}
+
+.float-left{float:left !important;}
 
 .btn-secondary{
     background:#90a4ae !important;
@@ -227,19 +247,21 @@ prime-app{
 }
 
 .timeline-group-heading{
-    max-width: 170px;
-    background: #ffe57f;
+    width: 20%;
+    background: #2383bc;
     padding: 10px;
     border-radius: 2px;
     text-align: center;
-  transition: .2s ease-out;
+    transition: .2s ease-out;
+    position:relative;
+    z-index:99999;
 
     a{
-        color:#333;
+        color:#fff;
     }
 }
 .timeline-group-heading:hover{
-        background-color: #2bbbad;
+        background-color: #4696C5;
         box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
 
         a{
@@ -250,7 +272,7 @@ prime-app{
 .timeline-heading{
     /*background: #eceff1;*/
     background:#fff;
-   padding: 10px;
+    padding: 10px;
     font-weight: 400;
     margin-top: 5px;
     /*margin-left:64px;*/
@@ -263,19 +285,27 @@ prime-app{
         color:#333;
     }
 }
-.timeline-heading:hover{
+/*.timeline-heading:hover{
      background-color: #2bbbad;
       box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.05);
          a{
  color:#fff;
  text-decoration:none;
         }
+}*/
+.note-list-item-heading {
+    display:block;  
+    margin-bottom:10px;
+}
+
+.cd-timeline-block .panel-open .note-list-item-heading {
+    margin-bottom:0px;
 }
 
 .timeline-description{
     background: #fff;
-    padding: 10px;
-    box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.05);
+    padding: 0 10px;
+    /*box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.05);*/
     margin-bottom:20px;
     /*margin-left:64px;*/
     font-size: 12px;
@@ -314,13 +344,77 @@ timeline-detail-group > .panel-open > .timeline-heading a .hide-content {
     overflow-y:scroll;
     padding: 0 20px;
      display:none !important;
+
+     .container{
+         width: 100% !important;
+         margin: 0 !important;
+
+         #dropZone{
+             padding:10px !important;
+             font-size:16px !important;
+         }
+     }
 }
 
 #chat.toggled {
+    display: block !important;
+    padding-top: 10px;
+    background: #fbfbfb;
+    z-index:999 !important;
 
   display:block !important;
-  
+  z-index:9999 !important;
 }
+/*----------Add Note ---------*/
+
+.ql-container{
+    min-height:200px;
+    background:#fff;
+    border-left:1px solid #ddd;
+    border-right:1px solid #ddd;
+    border-bottom:1px solid #ddd;
+
+    .ql-editor{
+         min-height:200px;
+    }
+}
+
+.add-note-widget {
+    background: #fff;
+    padding: 10px;
+    box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.05); 
+    margin-bottom: 20px;
+    font-size: 12px;
+    font-weight: 300;
+    min-height:200px;
+}
+.add-note-form{background: #fff;
+    margin-top: 20px;
+    box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.05);
+    padding: 20px 40px;}
+
+.area {
+    width: 100%;
+    padding: 15px;
+
+}
+#dropZone {
+  border: 2px dashed #bbb;
+    border-radius: 5px;
+    padding: 56px;
+    text-align: center;
+    font-size: 21px;
+    color: #bbb;
+}
+.file-upload{
+background: none !important;
+    box-shadow: none !important;
+    text-transform: none;
+    color: #0277bd;
+    font-size: 21px;
+    letter-spacing: 0;
+}
+
 
 /*----------Recent timeline ---------*/
 
@@ -341,4 +435,49 @@ timeline-detail-group > .panel-open > .timeline-heading a .hide-content {
 }
 .lv-body .btn{
     font-size:12px !important;
+}
+
+.link-tag {
+    color:#0277bd;
+}
+
+.lbl-timeline-date {
+    font-size:30px !important;
+}
+
+.lbl-timeline-month {
+    top:20px !important;
+    color:#999;
+}
+
+.timeline-group-heading-count {
+    padding:10px; 
+    width:80%; 
+    text-align:center;
+    position:relative;
+    z-index:999;
+    cursor:pointer;
+
+   a {
+        color:#4696C5 !important;
+    }
+
+   .zmdi {
+       font-size:24px !important;
+       vertical-align:middle;
+       float:right;
+       line-height: 20px;
+   }
+}
+
+.timeline-item-datetime-container {
+    text-align:center; 
+    position:absolute; 
+    left: -19%;
+    top: 10px; 
+    width:100px;
+}
+
+.ui-autocomplete {
+    z-index:999;
 }

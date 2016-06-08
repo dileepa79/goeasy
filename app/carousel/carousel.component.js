@@ -11,7 +11,7 @@ System.register(['@angular/core'], function(exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1;
-    var CSSCarouselComponent, IMAGES;
+    var CSSCarouselComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -22,8 +22,12 @@ System.register(['@angular/core'], function(exports_1, context_1) {
             CSSCarouselComponent = (function () {
                 function CSSCarouselComponent() {
                     //images data to be bound to the template
-                    this.images = IMAGES;
+                    this.images = [];
                 }
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Object)
+                ], CSSCarouselComponent.prototype, "images", void 0);
                 CSSCarouselComponent = __decorate([
                     core_1.Component({
                         //Name of our tag
@@ -38,16 +42,6 @@ System.register(['@angular/core'], function(exports_1, context_1) {
                 return CSSCarouselComponent;
             }());
             exports_1("CSSCarouselComponent", CSSCarouselComponent);
-            //IMAGES array implementing Image interface
-            IMAGES = [
-                { "title": "", "url": "img/profile-pics/finn.png" },
-                { "title": "", "url": "img/profile-pics/anu.png" },
-                { "title": "", "url": "img/profile-pics/chinthaka.png" },
-                { "title": "", "url": "img/profile-pics/twi.png" },
-                { "title": "", "url": "img/profile-pics/waruni.png" },
-                { "title": "", "url": "img/profile-pics/tushara.png" },
-                { "title": "", "url": "img/profile-pics/dileepa.png" }
-            ];
         }
     }
 });

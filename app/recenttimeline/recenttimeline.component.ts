@@ -10,6 +10,8 @@ import { MODAL_DIRECTIVES, ModalComponent } from '../modal/modaldialog';
 import { TimeLineWatch } from '../shared/timeline-watch';
 import {CSSCarouselComponent} from '../carousel/carousel.component';
 import {RecentTimelineWatchFilter} from '../recenttimeline/recenttimeline.watchfilter.component';
+// Import the Image interface
+import {Image} from '../image.interface';
 
 @Component({
     selector: 'recentimeline',
@@ -26,6 +28,14 @@ import {RecentTimelineWatchFilter} from '../recenttimeline/recenttimeline.watchf
 export class RecentTimeLineComponent implements OnInit {
    // @ViewChild('parentModal')
     //parentModal: ModalComponent;
+    public images : Image[] = [
+        { "title": "", "url": "img/profile-pics/finn.png" },
+        { "title": "", "url": "img/profile-pics/anu.png" },
+        { "title": "", "url": "img/profile-pics/chinthaka.png" },
+        { "title": "", "url": "img/profile-pics/twi.png" },
+        { "title": "", "url": "img/profile-pics/waruni.png" },
+        { "title": "", "url": "img/profile-pics/tushara.png" },
+        { "title": "", "url": "img/profile-pics/dileepa.png" }];
 
     animation: boolean = true;
     keyboard: boolean = true;
@@ -56,7 +66,6 @@ export class RecentTimeLineComponent implements OnInit {
     watchFilter(rtl) {
         this.isWatchedFilter = !rtl;
     }
-
 
     getRecentTimelines() {
         this._timeLineService.getRecentTimeLines()
@@ -125,13 +134,15 @@ export class RecentTimeLineComponent implements OnInit {
     }
 
     shareTimeline() {
-
         var timeline_share = {
             TimeLineId: this.currentTimeline_id,
             AppUsers: this.users
         };
-
-        this._timeLineService.share(timeline_share);
+		var selected = this.recentTimelines.filter(function (obj) {
+			return obj.id == timeline_share.TimeLineId;
+		});
+		
+		this._timeLineService.share(timeline_share).subscribe(res => selected[0].sharedWith = res);
     }
 }
 

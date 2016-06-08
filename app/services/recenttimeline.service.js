@@ -58,16 +58,8 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Observable', './auth.se
                     var headers = this._authService.getHeader();
                     headers.append('Content-Type', 'application/json; charset=utf-8');
                     var options = new http_1.RequestOptions({ headers: headers });
-                    this.http.post(this.webApiUrl, body, options)
-                        .map(function (res) { return res.json(); })
-                        .subscribe(function (data) {
-                        console.log("recent timeline shared : " + data);
-                    }, function (err) { return console.log("error: " + JSON.stringify(err)); }, function () {
-                        //for (var i = 0; i < request.tags.length; i++) {
-                        //    this.tags = this.tags + (request.tags[i] + (request.tags.length != i + 1 ? ',' : ''));
-                        //}
-                        //this._router.navigate(['timeline', { tags: this.tags }]);
-                    });
+                    return this.http.post(this.webApiUrl, body, options)
+                        .map(function (res) { return res.json(); });
                 };
                 RecentTimeLineService = __decorate([
                     core_1.Injectable(), 
