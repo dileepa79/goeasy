@@ -5,10 +5,13 @@
 export class TokenService {
     private _token: string;
     public getToken() {
-        return this._token;
+        //return this._token;
+        return this.getCookie("yaytoken");
     }
     public setToken(token: string) {
-        this._token = token;
+
+        this.setCookie("yaytoken", token, 14);
+        //this._token = token;
     }
     public getTokenFromCookie() {
         return this.getCookie("yaytoken");
