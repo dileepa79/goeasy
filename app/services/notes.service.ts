@@ -64,9 +64,11 @@ export class NotesService {
             formData.append("tags", noteRequest.tags);
             formData.append("users", noteRequest.users);
             formData.append("description", noteRequest.description);
-            for (var item of noteRequest.filesToUpload) {
-                //formData.append("file", noteRequest.filesToUpload[0]);
-                formData.append("file", item.file);
+            if (noteRequest.filesToUpload) {
+                for (var item of noteRequest.filesToUpload) {
+                    //formData.append("file", noteRequest.filesToUpload[0]);
+                    formData.append("file", item.file);
+                }
             }
            // var files = noteRequest.filesToUpload[0].file;
            // formData.append("file", files);

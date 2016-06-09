@@ -19,10 +19,14 @@ export class UserDetails {
 })
 
 export class LoginComponent implements OnInit {
+    showLoginHtml: boolean = false;
     constructor(private _authService: AuthService, @Inject(forwardRef(() => AppComponent)) private _parent: AppComponent) {
     }
     ngOnInit() {
-        if (!this._authService.loginUsingCookies()) return;
+        if (this._authService.loginUsingCookies() == false) {
+            this.showLoginHtml = true;
+            return;
+        }
     }
     public userDetails: UserDetails = {
         username: '',

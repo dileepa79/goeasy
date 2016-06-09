@@ -1,7 +1,7 @@
 ﻿<!--<div class="block-header">
     <h2></h2>
 </div>-->
-<div class="login-content col-md-12 no-padding">
+<div class="login-content col-md-12 no-padding" *ngIf="showLoginHtml">
     <div class="col-md-7">
         <div class="login-logo">Yay! Collaboration</div>
         <div style="color: #BDC3C7; font-weight: 200; text-align: center; font-style: italic; font-size: 12px;">
@@ -31,23 +31,24 @@
                     <span style="color:red">{{errorMsg}}</span>
                 </div>
 
-            <!-- new styles for login NOT USING YET -->
-            <!--<div class="input-field col s6">
-                <input id="last_name" type="text" class="form-control">
-                <label for="last_name">Type your Email</label>
+                <!-- new styles for login NOT USING YET -->
+                <!--<div class="input-field col s6">
+                        <input id="last_name" type="text" class="form-control">
+                        <label for="last_name">Type your Email</label>
+                    </div>
+
+                    <div class="input-field col s6">
+                        <input id="last_name" type="text" class="form-control">
+                        <label for="last_name">Type your Password</label>
+                    </div>-->
+
+
+                <div class="checkbox">
+                    <input id="remember-me" type="checkbox" class="filled-in" [(ngModel)]="userDetails.rememberMe" value="">
+                    <label for="remember-me">Remember me</label>
+                </div>
+                <input type="button" value='Login' (click)="login()" class="btn btn-primary" autofocus />
             </div>
-
-            <div class="input-field col s6">
-                <input id="last_name" type="text" class="form-control">
-                <label for="last_name">Type your Password</label>
-            </div>-->
-
-
-            <div class="checkbox">
-                <input id="remember-me" type="checkbox" class="filled-in" [(ngModel)]="userDetails.rememberMe" value="">
-                <label for="remember-me">Remember me</label>
-            </div>
-            <input type="button" value='Login' (click)="login()" class="btn btn-primary" autofocus/>
         </div>
     </div>
 </div>

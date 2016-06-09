@@ -53,6 +53,10 @@ export class AddNoteComponent implements OnInit{
     }
 
     Save() {
+        if (this.noteRequest.tags && this.noteRequest.tags.length == 0) {
+            this.noteRequest.tags = $('#tagInput').text().split(",");
+        }
+
         this._notesService.addNote(this.noteRequest)
             .subscribe(note => {
                     for (var i = 0; i < note.tags.length; i++) {

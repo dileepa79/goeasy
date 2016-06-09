@@ -78,6 +78,9 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                 };
                 AddNoteComponent.prototype.Save = function () {
                     var _this = this;
+                    if (this.noteRequest.tags && this.noteRequest.tags.length == 0) {
+                        this.noteRequest.tags = $('#tagInput').text().split(",");
+                    }
                     this._notesService.addNote(this.noteRequest)
                         .subscribe(function (note) {
                         for (var i = 0; i < note.tags.length; i++) {

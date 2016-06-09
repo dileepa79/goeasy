@@ -37,6 +37,7 @@ System.register(['@angular/core', '../services/auth.service', '../app.component'
                 function LoginComponent(_authService, _parent) {
                     this._authService = _authService;
                     this._parent = _parent;
+                    this.showLoginHtml = false;
                     this.userDetails = {
                         username: '',
                         password: '',
@@ -45,8 +46,10 @@ System.register(['@angular/core', '../services/auth.service', '../app.component'
                     this.errorMsg = '';
                 }
                 LoginComponent.prototype.ngOnInit = function () {
-                    if (!this._authService.loginUsingCookies())
+                    if (this._authService.loginUsingCookies() == false) {
+                        this.showLoginHtml = true;
                         return;
+                    }
                 };
                 LoginComponent.prototype.login = function () {
                     var _this = this;

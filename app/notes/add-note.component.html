@@ -5,7 +5,7 @@
             <div class="col-md-8 add-note-form">
                 <h1>
                     {{heading}}
-                    <button class="btn-secondary  btn" (click)="modal.open()">
+                    <button *ngIf="showCloseButton==false" class="btn-secondary  btn" (click)="modal.open()">
                         <i class="material-icons">share</i> <span>share</span>
                     </button>
                 </h1>
@@ -41,6 +41,11 @@
                 <!-- -------------Add Note Form------------- -->
                 <form *ngIf="active"  #noteForm="ngForm">
                     <div class="form-group">
+                        <label class="float-left">Tags : </label>
+                        <p id="tagInput" class="float-left amber-text"></p>
+                        <br />
+                    </div>
+                    <div class="form-group">
                         <label class="float-left">Title</label>
                         <!-- <input [(ngModel)]="noteRequest.title" class="form-control" required ngControl="title"/>-->
                         <input type="text" class="form-control" required [(ngModel)]="noteRequest.title" ngControl="title" #title="ngForm">
@@ -54,10 +59,10 @@
                         <p-editor [(ngModel)]="noteRequest.description">
                         </p-editor>
                     </div>
-                    <div class="form-group">
+                    <div *ngIf="showCloseButton==false" class="form-group">
                         <label class="col-md-12 no-padding">Tags</label>
                         <div class="col-md-12 no-padding">
-                            <prime-app [isAllowedNewInput]="true" [inputValues]="noteRequest.tags" (tagsAdded)='onSelectedTagsChanged($event)' (tagsRemoved)="onSelectedTagsChanged($event)">Loading...</prime-app>
+                            <prime-app [isallowednewinput]="true" [inputvalues]="noteRequest.tags" (tagsadded)='onSelectedTagsChanged($event)' (tagsremoved)="onSelectedTagsChanged($event)">Loading...</prime-app>
                         </div>
                     </div>
                     <!--<input type="button" value='Save' (click)="Save()" class="btn btn-success" />-->

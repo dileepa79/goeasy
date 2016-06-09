@@ -90,6 +90,7 @@ System.register(['@angular/core', '../services/timeline.service', '../tags/tags-
                     this.selectedTags = tags;
                     if (this.selectedTags.length != 0) {
                         var selected = this.selectedTags;
+                        $('#tagInput').text(selected);
                         this.filteredTimelines.forEach(function (tl) {
                             var itemIndexesToDelete = [];
                             tl.items.forEach(function (item) {
@@ -152,6 +153,7 @@ System.register(['@angular/core', '../services/timeline.service', '../tags/tags-
                         this.selectedTagStr = this.selectedTagStr + (this.timeLineRequest.data[i] + (this.timeLineRequest.data.length != i + 1 ? ',' : ''));
                     }
                     this.passTagService.setTags(this.selectedTagStr);
+                    $('#tagInput').text(this.selectedTagStr);
                     window.angularComponentRef.zone.run(function () { window.angularComponentRef.component.updateSelectedTags(); });
                     this.getTimelines();
                 };
