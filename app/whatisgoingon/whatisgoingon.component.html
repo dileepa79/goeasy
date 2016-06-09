@@ -1,32 +1,55 @@
-﻿<h3>WHAT IS GOING ON</h3>
-<div class="col-md-12" *ngFor="let activity of whatisgoingonTimelines; let i=index">
-    <div *ngIf="i<5">
-        <div class="col-md-2">
-            <div alt="" class="timeline-img">
-                <img class="circle responsive-img" src={{activity.userImage}}>
-            </div>
-        </div>
-        <div class="col-md-10">
-            <div id="accordion">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a role="button" data-toggle="collapse" data-parent="#accordion" href=#i{{i}} aria-expanded="false" style="padding-left: 0">
-                                {{activity.title}}
-                            </a>
-                        </h4>
-                        <div>
-                            <a style="cursor: pointer" (click)="select(activity)"><span class="label label-default" style="margin-right: 5px" *ngFor="let tag of activity.tags; let last = last">{{tag.name}}<span *ngIf="!last"></span></span></a>
-                        </div>
+﻿<div class="box-header">
+    <h3>WHAT IS GOING ON</h3>
+</div>
+<div class="box-body">
+
+    <ul class="list">
+        <li class="list-item" *ngFor="let activity of whatisgoingonTimelines; let i=index">
+            <div *ngIf="i<5">
+                <a href="#" class="list-left">
+                    <span class="w-40 avatar">
+                        <img class="circle responsive-img" src={{activity.userImage}}>
+                    </span>
+                </a>
+                <div class="list-body">
+                    <div>
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href=#i{{i}} aria-expanded="false" style="padding-left: 0">
+                            {{activity.title}}
+                        </a>
                     </div>
-                    <div id=i{{i}} class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <div [innerHTML]="activity.description"></div>
-                        </div>
+                    <small class="text-muted text-ellipsis">
+                        <a style="cursor: pointer" (click)="select(activity)"><span class="label label-default" style="margin-right: 5px" *ngFor="let tag of activity.tags; let last = last">{{tag.name}}<span *ngIf="!last"></span></span></a>
+                    </small>
+                </div>
+                <div></div>
+            </div>
+        </li>
+    </ul>
+    <!--<div class="col-md-2">
+        <div alt="" class="timeline-img">
+            <img class="circle responsive-img" src={{activity.userImage}}>
+        </div>
+    </div>
+    <div class="col-md-10">
+        <div id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href=#i{{i}} aria-expanded="false" style="padding-left: 0">
+                            {{activity.title}}
+                        </a>
+                    </h4>
+                    <div>
+                        <a style="cursor: pointer" (click)="select(activity)"><span class="label label-default" style="margin-right: 5px" *ngFor="let tag of activity.tags; let last = last">{{tag.name}}<span *ngIf="!last"></span></span></a>
+                    </div>
+                </div>
+                <div id=i{{i}} class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div [innerHTML]="activity.description"></div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
 </div>
 

@@ -95,8 +95,8 @@ Main components
   top: 40px;
   left: 18px;
   height: 100%;
-  width: 4px;
-  background: #97c9f1;
+  width: 3px;
+  background: #e1e4e7;
 }
 @media only screen and (min-width: 1170px) {
   /*#cd-timeline {
@@ -127,6 +127,7 @@ Main components
 .timeline-description {
     padding: 0 10px !important;
     box-shadow:none !important;
+    margin-top:-4px;
 }
 @media only screen and (min-width: 1170px) {
   /*.cd-timeline-block {
@@ -160,7 +161,7 @@ Main components
   margin-top: -12px;
 }
 .cd-timeline-img.cd-picture {
-    background: #FFD180;
+    background: #6e7f88;
     padding: 6px 0;
     color: #fff;
     font-size: 18px;
@@ -174,7 +175,7 @@ Main components
     text-align: center;
 }
 .cd-timeline-img.cd-location {
-  background: #2383bc;
+  background: #90a4ae;
   padding: 6px 0;
     color: #fff;
     font-size: 18px;
@@ -290,14 +291,9 @@ Main components
   line-height: 1.6;
 }
 .cd-timeline-content .cd-read-more {
-  float: right;
-  padding: .8em 1em;
-  background: #2383bc;
-  color: white;
-  border-radius: 0.25em;
-}
-.no-touch .cd-timeline-content .cd-read-more:hover {
-  background-color: #bac4cb;
+  float: left;
+  color: #2383bc;
+  line-height:initial;
 }
 /*.cd-timeline-content .cd-date {
   float: left;
@@ -323,7 +319,11 @@ Main components
   border-right: 7px solid white;
 }
 .ui-autocomplete-input-token .ui-inputtext {
-    width:340px !important;
+    width:100% !important;
+}
+
+.ui-autocomplete-input-token .ui-inputtext:focus {
+    border-bottom:0 none !important;
 }
 .cd-timeline-block .panel-open .hide-content {display:none !important;}
 
@@ -333,9 +333,9 @@ Main components
     position: absolute;
     padding: 7px;
     right: 50px;
-    background-color: #000;
+    background-color: #222;
     color: #fff;
-    border-radius: 7px;
+    border-radius: 4px;
     line-height: 12px;
     top: 5px;
 }
@@ -345,9 +345,9 @@ Main components
     position: absolute;
     padding: 7px;
     right: 50px;
-    background-color: #000;
+    background-color: #222;
     color: #fff;
-    border-radius: 7px;
+    border-radius: 4px;
     line-height: 12px;
     top: 5px;
     white-space:nowrap;
@@ -358,9 +358,9 @@ Main components
     position: absolute;
     padding: 7px;
     right: 50px;
-    background-color: #000;
+    background-color: #222;
     color: #fff;
-    border-radius: 7px;
+    border-radius: 4px;
     line-height: 12px;
     top: 5px;
 }
@@ -370,9 +370,9 @@ Main components
     position: absolute;
     padding: 7px;
     right: 50px;
-    background-color: #000;
+    background-color: #222;
     color: #fff;
-    border-radius: 7px;
+    border-radius: 4px;
     line-height: 12px;
     top: 5px;
 }

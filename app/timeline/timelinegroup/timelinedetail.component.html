@@ -40,15 +40,25 @@
     <div class="timeline-heading">
         <span [class.text-muted]="isDisabled" style="display:block;">
         <span class="note-list-item-heading">{{heading}}</span>
-        <span class="hide-content" style="font-weight: 300; font-size: 12px; text-decoration: none; display:block;">{{headerDescription}}</span><span class="show-content" style="font-weight: 300; font-size: 12px; text-decoration: none;"></span></span>
+        <span class="hide-content note-desc">{{headerDescription}}</span><span class="show-content" style="font-weight: 300; font-size: 12px; text-decoration: none;"></span>
+        
+            
+            
+        </span>
             <!--<div class="pull-right" style="margin-top:-10px; color:#ddd;">
                 <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
             </div>-->
         
     </div>
-    
     <div class="panel-collapse timeline-description" [hidden]="!isOpen">
         <ng-content></ng-content>
     </div>
-    <a href="#" class="cd-read-more" (click)="toggleOpen($event)">Read more</a>
+    <div (click)="toggleOpen($event)" class="pull-left clear pleft-10">
+        <a href="#" tabindex="0" class="common-link">
+            {{showhideText}}
+            <span class={{showhideStyle}}></span>
+        </a>
+    </div>
+    
+    
 </div>

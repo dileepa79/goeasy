@@ -84,10 +84,13 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Observable', '@angular/
                         formData.append("tags", noteRequest.tags);
                         formData.append("users", noteRequest.users);
                         formData.append("description", noteRequest.description);
-                        if (typeof noteRequest.filesToUpload[0] !== "undefined") {
-                            var files = noteRequest.filesToUpload[0].file;
-                            formData.append("file", files);
+                        for (var _i = 0, _a = noteRequest.filesToUpload; _i < _a.length; _i++) {
+                            var item = _a[_i];
+                            //formData.append("file", noteRequest.filesToUpload[0]);
+                            formData.append("file", item.file);
                         }
+                        // var files = noteRequest.filesToUpload[0].file;
+                        // formData.append("file", files);
                         xhr.onreadystatechange = function () {
                             if (xhr.readyState === 4) {
                                 if (xhr.status === 201) {

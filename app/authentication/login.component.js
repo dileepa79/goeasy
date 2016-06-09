@@ -54,6 +54,7 @@ System.register(['@angular/core', '../services/auth.service', '../app.component'
                     this._authService.login(this.userDetails.username, this.userDetails.password, this.userDetails.rememberMe).subscribe(function (data) {
                         //console.log("access token: "+data.access_token)
                         _this._authService.setToken(data.access_token);
+                        _this._authService.setTokenExpiresIn(data.expires_in);
                     }, function (err) {
                         console.log("error: " + JSON.stringify(err));
                         _this._authService.setAuthorized(false);
@@ -76,7 +77,7 @@ System.register(['@angular/core', '../services/auth.service', '../app.component'
                         providers: [
                             auth_service_1.AuthService
                         ],
-                        styles: [' .login-content { height: 100vh; position: fixed; left:0; top: 0;}', '.login-logo { padding: 38vh 0 0 0;}'],
+                        styles: [' .login-content { height: 100vh; position: fixed; left:0; top: 0; margin-bottom: 110px;}', '.login-logo { padding: 33vh 0 0 0;}'],
                     }),
                     __param(1, core_1.Inject(core_1.forwardRef(function () { return app_component_1.AppComponent; }))), 
                     __metadata('design:paramtypes', [auth_service_1.AuthService, app_component_1.AppComponent])

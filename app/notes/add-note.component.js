@@ -105,9 +105,6 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                     this.active = false;
                     setTimeout(function () { return _this.active = true; }, 0);
                 };
-                AddNoteComponent.prototype.setTags = function (_tags) {
-                    this.noteRequest.tags = _tags;
-                };
                 AddNoteComponent.prototype.updateSelectedTags = function () {
                     this.tagsStr = this._passTagService.getTags();
                     console.log('calledFromOutside ' + this._passTagService.getTags());

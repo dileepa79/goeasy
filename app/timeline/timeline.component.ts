@@ -11,7 +11,7 @@ import {RouteSegment, CanDeactivate} from '@angular/router'
 import { Observable } from 'rxjs/Observable';
 import {PassTagService} from '../services/passtag.service';
 import {InfiniteScroll} from '../timeline/angular2-infinite-scroll'
-
+import {Configuration } from '../app.constants';
 
 
 @Component({
@@ -28,8 +28,11 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
     tagsStr: string = '';
     tagsResponce: TagsResponse;
     isLoading: boolean = false;
-    constructor(private _timeLineService: TimeLineService, routeSegment: RouteSegment, private passTagService: PassTagService) {
+    fileApiUrl;
+
+    constructor(private _timeLineService: TimeLineService, routeSegment: RouteSegment, private passTagService: PassTagService, private _configuration: Configuration) {
         this.tagsStr = routeSegment.getParam('tags');
+        this.fileApiUrl = _configuration.ServerWithApiUrl + 'FileContent';
     }
     selectedTags: any[];
     title = "TIMELINE";

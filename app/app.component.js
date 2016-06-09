@@ -1,4 +1,4 @@
-System.register(['@angular/core', '@angular/router', './services/auth.service', './notes/add-note.component', './timeline/timeline.component', './authentication/login.component', './app.constants', './tags/tags.component', './userprofile/userprofile.component', './recenttimeline/recenttimeline.component', './dashboard/dashboard.component', './notifications/notifications.component', './feedback/feedback.component', './services/feedback.service', './tags/tag-detail.component'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/router', './services/auth.service', './services/token.service', './notes/add-note.component', './timeline/timeline.component', './authentication/login.component', './app.constants', './tags/tags.component', './userprofile/userprofile.component', './recenttimeline/recenttimeline.component', './dashboard/dashboard.component', './notifications/notifications.component', './feedback/feedback.component', './services/feedback.service', './tags/tag-detail.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', '@angular/router', './services/auth.service', 
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, auth_service_1, add_note_component_1, timeline_component_1, login_component_1, app_constants_1, tags_component_1, userprofile_component_1, recenttimeline_component_1, dashboard_component_1, notifications_component_1, feedback_component_1, feedback_service_1, tag_detail_component_1;
+    var core_1, router_1, auth_service_1, token_service_1, add_note_component_1, timeline_component_1, login_component_1, app_constants_1, tags_component_1, userprofile_component_1, recenttimeline_component_1, dashboard_component_1, notifications_component_1, feedback_component_1, feedback_service_1, tag_detail_component_1;
     var AppComponent;
     return {
         setters:[
@@ -22,6 +22,9 @@ System.register(['@angular/core', '@angular/router', './services/auth.service', 
             },
             function (auth_service_1_1) {
                 auth_service_1 = auth_service_1_1;
+            },
+            function (token_service_1_1) {
+                token_service_1 = token_service_1_1;
             },
             function (add_note_component_1_1) {
                 add_note_component_1 = add_note_component_1_1;
@@ -61,15 +64,19 @@ System.register(['@angular/core', '@angular/router', './services/auth.service', 
             }],
         execute: function() {
             AppComponent = (function () {
-                function AppComponent(_router) {
+                function AppComponent(_router, _tokenService) {
                     this._router = _router;
-                    this.isAuthorized = false;
+                    this._tokenService = _tokenService;
+                    this.isAuthorized = this._tokenService.getTokenFromCookie() != "";
                 }
                 AppComponent.prototype.ngOnInit = function () {
-                    if (this.isAuthorized)
+                    if (this.isAuthorized) {
+                        this._tokenService.setToken(this._tokenService.getTokenFromCookie());
                         this._router.navigate(['/dashboard']);
-                    else
+                    }
+                    else {
                         this._router.navigate(['/login']);
+                    }
                 };
                 AppComponent = __decorate([
                     core_1.Component({
@@ -80,6 +87,7 @@ System.register(['@angular/core', '@angular/router', './services/auth.service', 
                         providers: [
                             router_1.ROUTER_PROVIDERS,
                             auth_service_1.AuthService,
+                            token_service_1.TokenService,
                             login_component_1.LoginComponent,
                             add_note_component_1.AddNoteComponent,
                             app_constants_1.Configuration,
@@ -116,7 +124,7 @@ System.register(['@angular/core', '@angular/router', './services/auth.service', 
                             component: dashboard_component_1.Dashboard
                         }
                     ]), 
-                    __metadata('design:paramtypes', [router_1.Router])
+                    __metadata('design:paramtypes', [router_1.Router, token_service_1.TokenService])
                 ], AppComponent);
                 return AppComponent;
             }());

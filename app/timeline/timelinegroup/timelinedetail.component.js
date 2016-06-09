@@ -57,12 +57,22 @@ System.register(['@angular/core'], function(exports_1, context_1) {
                 function TimelineDetailGroup(timelineDetail) {
                     this.timelineDetail = timelineDetail;
                     this._isOpen = false;
+                    this.showhideText = "show";
+                    this.showhideStyle = "zmdi zmdi-chevron-down";
                     this.timelineDetail.addGroup(this);
                 }
                 TimelineDetailGroup.prototype.toggleOpen = function (event) {
                     event.preventDefault();
                     if (!this.isDisabled) {
                         this.isOpen = !this.isOpen;
+                    }
+                    if (this.showhideText === "show") {
+                        this.showhideText = "hide";
+                        this.showhideStyle = "zmdi zmdi-chevron-up";
+                    }
+                    else {
+                        this.showhideText = "show";
+                        this.showhideStyle = "zmdi zmdi-chevron-down";
                     }
                 };
                 TimelineDetailGroup.prototype.ngOnDestroy = function () { this.timelineDetail.removeGroup(this); };

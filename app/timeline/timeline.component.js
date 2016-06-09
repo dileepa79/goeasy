@@ -1,4 +1,4 @@
-System.register(['@angular/core', '../services/timeline.service', '../tags/tags-selector.component', './timelinegroup/timelinegroup.component', './timelinegroup/timelinedetail.component', '@angular/router', 'rxjs/Observable', '../services/passtag.service', '../timeline/angular2-infinite-scroll'], function(exports_1, context_1) {
+System.register(['@angular/core', '../services/timeline.service', '../tags/tags-selector.component', './timelinegroup/timelinegroup.component', './timelinegroup/timelinedetail.component', '@angular/router', 'rxjs/Observable', '../services/passtag.service', '../timeline/angular2-infinite-scroll', '../app.constants'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', '../services/timeline.service', '../tags/tags-
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, timeline_service_1, tags_selector_component_1, timelinegroup_component_1, timelinedetail_component_1, router_1, Observable_1, passtag_service_1, angular2_infinite_scroll_1;
+    var core_1, timeline_service_1, tags_selector_component_1, timelinegroup_component_1, timelinedetail_component_1, router_1, Observable_1, passtag_service_1, angular2_infinite_scroll_1, app_constants_1;
     var TimeLineComponent;
     return {
         setters:[
@@ -40,12 +40,16 @@ System.register(['@angular/core', '../services/timeline.service', '../tags/tags-
             },
             function (angular2_infinite_scroll_1_1) {
                 angular2_infinite_scroll_1 = angular2_infinite_scroll_1_1;
+            },
+            function (app_constants_1_1) {
+                app_constants_1 = app_constants_1_1;
             }],
         execute: function() {
             TimeLineComponent = (function () {
-                function TimeLineComponent(_timeLineService, routeSegment, passTagService) {
+                function TimeLineComponent(_timeLineService, routeSegment, passTagService, _configuration) {
                     this._timeLineService = _timeLineService;
                     this.passTagService = passTagService;
+                    this._configuration = _configuration;
                     this.oneAtATime = true;
                     this.tagsStr = '';
                     this.isLoading = false;
@@ -59,6 +63,7 @@ System.register(['@angular/core', '../services/timeline.service', '../tags/tags-
                         pageSize: 10
                     };
                     this.tagsStr = routeSegment.getParam('tags');
+                    this.fileApiUrl = _configuration.ServerWithApiUrl + 'FileContent';
                 }
                 TimeLineComponent.prototype.ngOnInit = function () {
                     if (this.tagsStr != null) {
@@ -200,7 +205,7 @@ System.register(['@angular/core', '../services/timeline.service', '../tags/tags-
                         ],
                         directives: [tags_selector_component_1.TagsSelectorComponent, timelinegroup_component_1.TimelineInfo, timelinegroup_component_1.TimelineGroup, timelinedetail_component_1.TimelineDetail, timelinedetail_component_1.TimelineDetailGroup, angular2_infinite_scroll_1.InfiniteScroll]
                     }), 
-                    __metadata('design:paramtypes', [timeline_service_1.TimeLineService, router_1.RouteSegment, passtag_service_1.PassTagService])
+                    __metadata('design:paramtypes', [timeline_service_1.TimeLineService, router_1.RouteSegment, passtag_service_1.PassTagService, app_constants_1.Configuration])
                 ], TimeLineComponent);
                 return TimeLineComponent;
             }());

@@ -38,6 +38,8 @@ export class TimelineDetail {
 export class TimelineDetailGroup implements OnDestroy {
     private isDisabled: boolean;
     private _isOpen: boolean = false;
+    private showhideText: string = "show";
+    private showhideStyle: string = "zmdi zmdi-chevron-down";
 
     constructor(private timelineDetail: TimelineDetail) { this.timelineDetail.addGroup(this); }
 
@@ -45,6 +47,13 @@ export class TimelineDetailGroup implements OnDestroy {
         event.preventDefault();
         if (!this.isDisabled) {
             this.isOpen = !this.isOpen;
+        }
+        if (this.showhideText === "show") {
+            this.showhideText = "hide";
+            this.showhideStyle = "zmdi zmdi-chevron-up";
+        } else {
+            this.showhideText = "show";
+            this.showhideStyle = "zmdi zmdi-chevron-down";
         }
     }
 

@@ -36,6 +36,8 @@ System.register(['@angular/core', 'primeng/primeng', '../services/tags.service']
                     var query = event.query;
                     this.tagService.getTags().then(function (tags) {
                         _this.filteredtagsMultiple = _this.filtertag(query, tags);
+                        //let selected = { "name": query, "code": query }
+                        //this.filteredtagsMultiple.splice(0, 0, selected);
                     });
                 };
                 TagsSelectorComponent.prototype.filtertag = function (query, tags) {
@@ -76,7 +78,7 @@ System.register(['@angular/core', 'primeng/primeng', '../services/tags.service']
                 TagsSelectorComponent = __decorate([
                     core_1.Component({
                         selector: 'prime-app',
-                        template: "\n        <p-autoComplete [(ngModel)]=\"tags\" [suggestions]=\"filteredtagsMultiple\" (completeMethod)=\"filtertagMultiple($event)\"\n            [minLength]=\"1\" placeholder=\"Select Tags\" field=\"name\" [multiple]=\"true\" [allowNewInput] = \"isAllowedNewInput\" [inputValues] = \"inputValues\" (onSelect)=\"handleSelectTag($event)\" (onUnselect)=\"handleUnSelectTag($event)\">\n        </p-autoComplete>\n    ",
+                        template: "\n        <p-autoComplete [(ngModel)]=\"tags\" [suggestions]=\"filteredtagsMultiple\" (completeMethod)=\"filtertagMultiple($event)\"\n            [minLength]=\"1\" placeholder=\"Select tags & press enter for new tags\" field=\"name\" [multiple]=\"true\" [allowNewInput] = \"isAllowedNewInput\" [inputValues] = \"inputValues\" (onSelect)=\"handleSelectTag($event)\" (onUnselect)=\"handleUnSelectTag($event)\">\n        </p-autoComplete>\n    ",
                         directives: [primeng_1.AutoComplete],
                         providers: [tags_service_1.TagsService]
                     }), 

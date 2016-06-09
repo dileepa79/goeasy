@@ -85,9 +85,6 @@ export class AddNoteComponent implements OnInit{
         setTimeout(() => this.active = true, 0);
     }
 
-    setTags(_tags) {
-        this.noteRequest.tags = _tags;
-    }
 
     updateSelectedTags() {
         this.tagsStr = this._passTagService.getTags();

@@ -8,7 +8,7 @@ import { TagsResponse } from './tags-response';
 
     template: `
         <p-autoComplete [(ngModel)]="tags" [suggestions]="filteredtagsMultiple" (completeMethod)="filtertagMultiple($event)"
-            [minLength]="1" placeholder="Select Tags" field="name" [multiple]="true" [allowNewInput] = "isAllowedNewInput" [inputValues] = "inputValues" (onSelect)="handleSelectTag($event)" (onUnselect)="handleUnSelectTag($event)">
+            [minLength]="1" placeholder="Select tags & press enter for new tags" field="name" [multiple]="true" [allowNewInput] = "isAllowedNewInput" [inputValues] = "inputValues" (onSelect)="handleSelectTag($event)" (onUnselect)="handleUnSelectTag($event)">
         </p-autoComplete>
     `,
     directives: [AutoComplete],
@@ -31,6 +31,8 @@ export class TagsSelectorComponent{
         let query = event.query;
         this.tagService.getTags().then(tags => {
             this.filteredtagsMultiple = this.filtertag(query, tags);
+            //let selected = { "name": query, "code": query }
+            //this.filteredtagsMultiple.splice(0, 0, selected);
         });
     }
 

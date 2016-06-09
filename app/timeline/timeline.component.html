@@ -47,12 +47,12 @@
     <!-- Timeline Heading and Add Note -->
     <h1>
         {{title}}
-        <button class="btn-secondary waves-effect  btn" id="chat-trigger" data-trigger="#chat">
+        <button class="btn-secondary btn" id="chat-trigger" data-trigger="#chat">
             <i class="material-icons">playlist_add</i> <span> note</span>
         </button>
     </h1>
     <!-- Tag search -->
-    <div style="margin-bottom: 20px;">
+    <div style="margin-bottom: 20px;" class="fluid-autocomplete">
         <prime-app [isAllowedNewInput]="false" [inputValues]="timeLineRequest.data" (tagsAdded)='onSelectedTagsChanged($event)' (tagsRemoved)="onSelectedTagsChanged($event)">Loading...</prime-app>
     </div>
     
@@ -64,6 +64,7 @@
              (scrolled)="onScroll()"
              [scrollWindow]="true">
         </div>
+
         <timeline-group [heading]="timeline.dateFormat" *ngFor="let timeline of filteredTimelines;  let i = index" [isOpen]="i === i" [availableCountText]="timeline.availableThreadsCountText" [isLabled]="timeline.isLabled">
 
             <section id="cd-timeline" class="cd-container">
@@ -74,18 +75,25 @@
                     </div> <!-- cd-timeline-img -->
                  <div class="cd-timeline-content">
                      <timelinedetail close-others="true">
-                         <div class="pull-right" style="margin-top: 20px;padding-right: 16px;color:#ddd;">
-                             <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+                         <div style="float:right; width:90px;">
+                             <div alt="" class="timeline-img pull-right">
+                                 <img class="circle responsive-img" src={{Item.userImageUrl}}>
+                             </div>
+                             <div class="pull-left share-note-icon">
+                                 <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+                             </div>
                          </div>
-
-                         <div alt="" class="timeline-img" style="margin-right: 10px; margin-top: 10px; float: right;">
-                             <img class="circle responsive-img" src={{Item.userImageUrl}}>
-                         </div>
-
                          <timeline-detail-group [heading]="Item.title" [headerDescription]="Item.plainDescriptionText">
                              <div [innerHTML]="Item.description"></div>
                          </timeline-detail-group>
                      </timelinedetail>
+                     <div class="attachment-list-container"> <!--Attachments-->
+                         <div class="attachment-list-item" *ngFor="let attachment of Item.attachments">
+                             <span class="glyphicon glyphicon-paperclip"></span>
+                             <a href="{{fileApiUrl}}?exRef={{attachment.contentFileRef}}"
+                                download="{{attachment.fileName}}">{{attachment.fileName}}</a>
+                         </div>
+                     </div>
                      <div class="timeline-item-datetime-container">
                          <span class="cd-date lbl-timeline-date" *ngIf="timeline.dateFormat != 'TODAY' && timeline.dateFormat != 'YESTERDAY'">{{Item.dateDay}}</span>
                          <span class="cd-date lbl-timeline-month" *ngIf="timeline.dateFormat != 'TODAY' && timeline.dateFormat != 'YESTERDAY'">{{Item.dateMonth}}</span>
@@ -95,7 +103,7 @@
                  </div> <!-- cd-timeline-content -->
                 </div> <!-- cd-timeline-block -->
 
-            </section> <!-- cd-timeline -->
+            </section> <!-- cd-timeline --> 
         </timeline-group>
     </timelineinfo>
 </section>

@@ -7,6 +7,7 @@ import { Routes , ROUTER_DIRECTIVES, ROUTER_PROVIDERS , Router} from '@angular/r
 
 
 import {AuthService} from './services/auth.service';
+import {TokenService} from './services/token.service';
 import {AddNoteComponent} from './notes/add-note.component';
 import {TimeLineComponent} from './timeline/timeline.component';
 import {LoginComponent} from './authentication/login.component';
@@ -30,6 +31,7 @@ import {TagDetailComponent} from './tags/tag-detail.component';
     providers: [
         ROUTER_PROVIDERS,
         AuthService,
+        TokenService,
         LoginComponent,
         AddNoteComponent,
         Configuration,
@@ -122,14 +124,17 @@ import {TagDetailComponent} from './tags/tag-detail.component';
 
 export class AppComponent implements OnInit {
 
-    isAuthorized: boolean = false;
+    isAuthorized: boolean = this._tokenService.getTokenFromCookie() != "";
     ngOnInit() {
-        if (this.isAuthorized)
+        if (this.isAuthorized) {
+            this._tokenService.setToken(this._tokenService.getTokenFromCookie());
             this._router.navigate(['/dashboard']);
-        else
+        }
+        else {
             this._router.navigate(['/login']);
+        }
     }
 
-    constructor(private _router: Router) {
+    constructor(private _router: Router, private _tokenService: TokenService) {
     }
 }

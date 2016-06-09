@@ -89,12 +89,15 @@ System.register(['@angular/core', '@angular/http', '@angular/router', './token.s
                 };
                 AuthService.prototype.setToken = function (token) {
                     this._token = token;
+                    this.tokenService.setToken(token);
+                };
+                AuthService.prototype.setTokenExpiresIn = function (expiredIn) {
+                    this._tokenExpiresIn = expiredIn;
                 };
                 AuthService.prototype.setAuthorized = function (_isAuthorized) {
                     this._parent.isAuthorized = _isAuthorized;
                 };
                 AuthService.prototype.setCookies = function (username, password, rememberMe) {
-                    this.tokenService.setToken(this._token);
                     this._parent.isAuthorized = true;
                     if (rememberMe) {
                         console.log("saving credentials in cookie");
@@ -102,6 +105,7 @@ System.register(['@angular/core', '@angular/http', '@angular/router', './token.s
                         //document.cookie = "password=" + password;
                         this.setCookie("username", username, 15);
                         this.setCookie("password", password, 15);
+                        this.setCookie("yaytoken", this.tokenService.getToken(), this._tokenExpiresIn);
                     }
                     this._router.navigate(['dashboard']);
                 };
@@ -151,9 +155,9 @@ System.register(['@angular/core', '@angular/http', '@angular/router', './token.s
                 };
                 AuthService.prototype.logout = function () {
                     console.log("logout");
-                    this.tokenService.removeToken();
                     this.delete_cookie("username");
                     this.delete_cookie("password");
+                    this.delete_cookie("yaytoken");
                     this._parent.isAuthorized = false;
                     this._router.navigate(['login']);
                 };

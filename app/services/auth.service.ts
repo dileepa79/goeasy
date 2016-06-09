@@ -9,6 +9,7 @@ import {Configuration} from '../app.constants';
 @Injectable()
 export class AuthService {
     private _token: string;
+    private _tokenExpiresIn: number;
     private webApiUrl: string;
     constructor(public _router: Router, private http: Http, private tokenService: TokenService, private _configuration: Configuration, @Inject(forwardRef(() => AppComponent)) private _parent: AppComponent) {
         this._token = '';
@@ -67,13 +68,16 @@ export class AuthService {
     }
     setToken(token) {
         this._token = token;
+        this.tokenService.setToken(token);
+    }
+    setTokenExpiresIn(expiredIn) {
+        this._tokenExpiresIn = expiredIn;
     }
     setAuthorized(_isAuthorized) {
         this._parent.isAuthorized = _isAuthorized;
     }
 
     setCookies(username, password, rememberMe) {
-        this.tokenService.setToken(this._token);
         this._parent.isAuthorized = true;
         if (rememberMe) {
             console.log("saving credentials in cookie");
@@ -81,6 +85,7 @@ export class AuthService {
             //document.cookie = "password=" + password;
             this.setCookie("username", username, 15);
             this.setCookie("password", password, 15);
+            this.setCookie("yaytoken", this.tokenService.getToken(), this._tokenExpiresIn);
         }
         this._router.navigate(['dashboard']);
     }
@@ -136,9 +141,9 @@ export class AuthService {
     }
     logout() {
         console.log("logout");
-        this.tokenService.removeToken();
         this.delete_cookie("username");
         this.delete_cookie("password");
+        this.delete_cookie("yaytoken");
         this._parent.isAuthorized = false;
         this._router.navigate(['login']);
     }

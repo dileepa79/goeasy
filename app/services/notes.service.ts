@@ -64,10 +64,12 @@ export class NotesService {
             formData.append("tags", noteRequest.tags);
             formData.append("users", noteRequest.users);
             formData.append("description", noteRequest.description);
-            if (typeof noteRequest.filesToUpload[0] !== "undefined") {
-                var files = noteRequest.filesToUpload[0].file;
-                formData.append("file", files);
+            for (var item of noteRequest.filesToUpload) {
+                //formData.append("file", noteRequest.filesToUpload[0]);
+                formData.append("file", item.file);
             }
+           // var files = noteRequest.filesToUpload[0].file;
+           // formData.append("file", files);
             
             xhr.onreadystatechange = () => {
                 if (xhr.readyState === 4) {
