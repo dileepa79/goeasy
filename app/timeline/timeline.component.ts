@@ -46,8 +46,9 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
     passedTags: Tag[] = [];
     selectedTagStr: string = '';
 	users: any[] = [];
-	note_id: string;
-
+    note_id: string;
+    isInitialLoad: boolean = false;
+    counter: number = 0; 
     public timeLineRequest: TimeLineRequest = {
         data: [],
         isPersistedSearch: false,
@@ -56,6 +57,7 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
     };
 
     ngOnInit() {
+        
         if (this.tagsStr != null) {
             var tagsArr = this.tagsStr.split(",");
             for (var i = 0; i < tagsArr.length; i++) {
@@ -63,6 +65,7 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
                 this.passedTags.push(tag);
             }
             this.timeLineRequest.data = this.passedTags;
+            this.isInitialLoad = true;
         }
 
         this.getTimelines();
@@ -149,22 +152,32 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
     }
 
     onSelectedTagsChanged(tags: any[]): void {
-        this.timeLineRequest.data = tags.map(function (d) { return d['name']; });
-        this.timeLineRequest.isPersistedSearch = false;
-        this.timeLineRequest.pageNo = 1;
-        if (typeof this.filteredTimelines != 'undefined') {
-            this.filteredTimelines = new Array();
-        }
-        this.selectedTagStr = '';
+        if (this.tagsStr != null && this.isInitialLoad) {
 
-        for (var i = 0; i < this.timeLineRequest.data.length; i++) {
-            this.selectedTagStr = this.selectedTagStr + (this.timeLineRequest.data[i] + (this.timeLineRequest.data.length != i + 1 ? ',' : ''));
+            this.counter = this.counter + 1;
+            if (this.counter == this.passedTags.length) {
+                this.isInitialLoad = false;
+                this.counter = 0;
+            }  
         }
-        this.passTagService.setTags(this.selectedTagStr);
-        $('#tagInput').text(this.selectedTagStr);
-        window.angularComponentRef.zone.run(function () { window.angularComponentRef.component.updateSelectedTags(); });
+        else {
+            this.timeLineRequest.data = tags.map(function (d) { return d['name']; });
+            this.timeLineRequest.isPersistedSearch = false;
+            this.timeLineRequest.pageNo = 1;
+            if (typeof this.filteredTimelines != 'undefined') {
+                this.filteredTimelines = new Array();
+            }
+            this.selectedTagStr = '';
 
-        this.getTimelines();
+            for (var i = 0; i < this.timeLineRequest.data.length; i++) {
+                this.selectedTagStr = this.selectedTagStr + (this.timeLineRequest.data[i] + (this.timeLineRequest.data.length != i + 1 ? ',' : ''));
+            }
+            this.passTagService.setTags(this.selectedTagStr);
+            $('#tagInput').text(this.selectedTagStr);
+            window.angularComponentRef.zone.run(function () { window.angularComponentRef.component.updateSelectedTags(); });
+
+            this.getTimelines();
+        }
     }
 
     getTimelines() {

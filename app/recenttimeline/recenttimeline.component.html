@@ -1,15 +1,15 @@
 
-<div class="box">
+<div class="box" style="height:620px;">
     <div class="box-header">
         <!--<div class="col-md-6">-->
         <h3 class="pull-left">{{title}}</h3>
         <!--</div>-->
         <div class="pull-right" (click)="watchFilter(isWatchedFilter); $event.stopPropagation()">
             <span *ngIf="!isWatchedFilter" class="" title="" style="display:inline-block; cursor:pointer;">
-                <a class="btn-like"><i class="fa fa-heart"></i> Like</a>
+                <a class="btn-like"><i class="fa fa-heart"></i> View All</a>
             </span>
             <span *ngIf="isWatchedFilter" class="" title="Watched" style="display:inline-block; cursor:pointer;">
-                <a class="btn-like" style="background-color:#f44455 !important; color:#fff;"><i class="fa fa-heart" style="color:#fff;"></i> Unlike</a>
+                <a class="btn-like" style="background-color:#f44455 !important; color:#fff;"><i class="fa fa-heart" style="color:#fff;"></i> View Watching</a>
             </span>
             <!--<span *ngIf="!isWatchedFilter" class="fa-stack fa-lg" title="">
                 <i class="fa fa-heart fa-stack-2x" style="color:grey;cursor:pointer"></i>
@@ -20,40 +20,11 @@
                 <i class="fa fa-stack-2x" style="color:white"></i>
             </span>-->
         </div>
-        <div class="lbl-view-timeline">View watching timelines</div>
     </div>
 
 
 
-    <modal [animation]="animation" [keyboard]="keyboard" [backdrop]="backdrop" #parentModal>
-        <modal-header [show-close]="true">
-            <p>Share</p>
-        </modal-header>
-        <modal-body>
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <div class="col-sm-10">
-                        <label for="user-app" class="col-sm-pull-4 control-label">Whom would you like to share with ?</label>
-                    </div>
-
-                    <div class="col-sm-10">
-                        <user-app [isallowednewinput]="true" (usersAdded)='onSelectedUsersChanged($event)' (usersRemoved)="onSelectedUsersChanged($event)">Loading...</user-app>
-                    </div>
-                </div>
-            </form>
-        </modal-body>
-        <modal-footer>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button type="button" class="btn btn-primary" (click)="parentModal.close();shareTimeline()">Share</button>
-                </div>
-            </div>
-        </modal-footer>
-
-    </modal>
-
-
-    <div class="col-md-12 media" *ngFor="let timeline of recentTimelines | recentTimelineWatchFilter:isWatchedFilter" >
+    <div class="box-body" id="collapseExample1" *ngFor="let timeline of recentTimelines | recentTimelineWatchFilter:isWatchedFilter">
         <!--<div class="col-md-1">
             <div alt="" class="timeline-icon row">
                 <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
@@ -64,42 +35,47 @@
         </div>-->
             <div class="timeline-description" id="collapseExample1">
 
-                    <div class="row">
                         <!-- timestamp -->
-                        <div class="col-md-1">
-                            <div class="recent-timeline-timestamp" calss="row">
+                <div class="recent-timeline-timestamp">
                                 <span class="recent-timeline-date">
                                     {{timeline.dateDay}}
                                 </span>
                                 <span class="recent-timeline-month">
                                     {{timeline.dateMonth}}
                                 </span>
-                             
                             </div>
-                        </div>
                         <!-- tags line -->
-                        <div class="col-md-10 cursor-hand" (click)="select(timeline)">
-                            <div class="recent-timeline-tags link-tag"><span *ngFor="let tag of timeline.tags; let last = last">{{tag.name}}<span *ngIf="!last"> + </span></span></div>
-                            <div class="recent-timeline-entry" *ngIf="timeline.noOfEntries">({{timeline.noOfEntries}})</div>
+                <div class="recent-timeline-note" (click)="select(timeline)">
+                    <div class="recent-timeline-tags link-tag">
+                        <span *ngFor="let tag of timeline.tags; let last = last" class="pull-left">{{tag.name}}<span *ngIf="!last"> + </span></span>
 
-                            <div style="padding: 10px 0 0 40px;">
-                                {{timeline.recentActivity}}
-                            </div>
-                        </div>
-                        <!-- watch -->
-                        <div class="col-md-1" (click)="watch(timeline); $event.stopPropagation()">
-                            <span *ngIf="timeline.isWatched" class="fa-stack fa-lg" title="Watched">
+                        <div class="rece pull-right" (click)="watch(timeline); $event.stopPropagation()">
+                            <!--<span *ngIf="timeline.isWatched" class="fa-stack fa-lg" title="Watched">
                                 <i class="fa fa-heart fa-stack-2x" style="color:cornflowerblue;cursor:pointer"></i>
                                 <i class="fa fa-stack-2x" style="color:white"></i>
                             </span>
                             <span *ngIf="!timeline.isWatched" class="fa-stack fa-lg" title="">
                                 <i class="fa fa-heart fa-stack-2x" style="color:grey;cursor:pointer"></i>
                                 <i class="fa fa-stack-2x" style="color:white"></i>
+                        </span>-->
+
+                            <span *ngIf="!timeline.isWatched" class="" title="" style="display:inline-block; cursor:pointer;">
+                                <a class="btn-like"><i class="fa fa-heart"></i></a>
+                            </span>
+                            <span *ngIf="timeline.isWatched" class="" title="Watched" style="display:inline-block; cursor:pointer;">
+                                <a class="btn-like" style="background-color:#f44455 !important; color:#fff;"><i class="fa fa-heart" style="color:#fff;"></i></a>
                             </span>
                         </div>
                     </div>
+                    <div class="recent-timeline-entry" *ngIf="timeline.noOfEntries">({{timeline.noOfEntries}})</div>
+
+                    <div style="padding: 10px 0 0 40px;">
+                        {{timeline.recentActivity}}
+                    </div>
 
 
+                </div>
+                <!-- watch -->
                     <!--<div class="row">
                         <div class="col-md-11 col-md-offset-1">
                             {{timeline.recentActivity}} test text
@@ -134,6 +110,8 @@
 
             </div>
     </div>
+    
+    
 </div>
 
 

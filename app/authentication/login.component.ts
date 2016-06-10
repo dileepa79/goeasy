@@ -15,7 +15,7 @@ export class UserDetails {
     providers: [
         AuthService
     ],
-    styles: [' .login-content { height: 100vh; position: fixed; left:0; top: 0; margin-bottom: 110px;}','.login-logo { padding: 33vh 0 0 0;}'],
+    styles: [' .login-content { height: 100vh; position: fixed; left:0; top: 0; margin-bottom: 110px;}'],
 })
 
 export class LoginComponent implements OnInit {

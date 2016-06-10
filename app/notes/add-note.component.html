@@ -5,9 +5,9 @@
             <div class="col-md-8 add-note-form">
                 <h1>
                     {{heading}}
-                    <button *ngIf="showCloseButton==false" class="btn-secondary  btn" (click)="modal.open()">
+                    <!--<button *ngIf="showCloseButton==false" class="btn-secondary  btn" (click)="modal.open()">
                         <i class="material-icons">share</i> <span>share</span>
-                    </button>
+                    </button>-->
                 </h1>
                 <!-- -------------share------------- -->
                 <modal #modal>
@@ -41,15 +41,15 @@
                 <!-- -------------Add Note Form------------- -->
                 <form *ngIf="active"  #noteForm="ngForm">
                     <div class="form-group">
-                        <label class="float-left">Tags : </label>
-                        <p id="tagInput" class="float-left amber-text"></p>
+                        <label class="float-left">Tags</label>
+                        <p id="tagInput" class="float-left add-note-tag"></p>
                         <br />
                     </div>
                     <div class="form-group">
                         <label class="float-left">Title</label>
                         <!-- <input [(ngModel)]="noteRequest.title" class="form-control" required ngControl="title"/>-->
                         <input type="text" class="form-control" required [(ngModel)]="noteRequest.title" ngControl="title" #title="ngForm">
-                        <div [hidden]="title.valid || title.pristine" class="alert alert-danger">
+                        <div [hidden]="title.valid || title.pristine" class="reqire-field">
                             Title is required
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                         <label class="col-md-12 no-padding">Tags</label>
                         <div class="col-md-12 no-padding">
                             <prime-app [isAllowedNewInput]="true" [inputValues]="noteRequest.tags" (tagsAdded)='onSelectedTagsChanged($event)' (tagsRemoved)="onSelectedTagsChanged($event)">Loading...</prime-app>
-                            <div *ngIf="!istagSelectionValidated" class="alert alert-danger">
+                            <div *ngIf="!istagSelectionValidated" class="reqire-field">
                                 Please select atleast one tag for this note.
                             </div>
                         </div>
@@ -102,8 +102,10 @@
                     
                 </div>
 
-                <div class="col-md-12 add-note-widget">
+                <div class="col-md-12 tags-widget ">
                   TAG SUGGESTIONS
+
+                    <div  class="water-mark-text"> Tag suggestions come here</div>
                 </div>
 
             </div>

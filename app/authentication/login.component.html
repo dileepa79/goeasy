@@ -2,27 +2,32 @@
     <h2></h2>
 </div>-->
 <div class="login-content col-md-12 no-padding">
-    <div class="col-md-7">
+    <!--<div class="col-md-7">
         <div class="login-logo">Yay! Collaboration</div>
         <div style="color: #BDC3C7; font-weight: 200; text-align: center; font-style: italic; font-size: 12px;">
             There will be 44 trillion gigabites of data created in year 2020
         </div>
-    </div>
-    <div class="col-md-5" style="background:#ECF0F1; padding:50px; height: 100vh; padding-top: 16vh !important">
-        <div class="card-header">
-            <h2 style="font-size:26px;">Login</h2>
+    </div>-->
+    <div class="col-md-5 login-form-div">
+
+        <div class="login-logo">Yay! Collaboration</div>
+        <div class="logo-title">
+            There will be 44 trillion gigabites of data created in year 2020
         </div>
+        <!--<div class="card-header">
+            <h2 style="font-size:26px;">Login</h2>
+        </div>-->
 
         <div class="card-body card-padding">
 
-            <p class="c-black f-500 m-b-20">Username</p>
+            <!--<p class="c-black f-500 m-b-20">Username</p>-->
             <div class="form-group">
                 <div class="fg-line">
                     <input type="text" [(ngModel)]="userDetails.username" class="form-control" placeholder="Type your email" (keyup.enter)="login()">
                 </div>
             </div>
 
-            <p class="c-black f-500 m-b-20">Password</p>
+            <!--<p class="c-black f-500 m-b-20">Password</p>-->
             <div class="form-group">
                 <div class="fg-line">
                     <input type="password" [(ngModel)]="userDetails.password" class="form-control" placeholder="Type your password" (keyup.enter)="login()">
@@ -41,14 +46,18 @@
                 <input id="last_name" type="text" class="form-control">
                 <label for="last_name">Type your Password</label>
             </div>-->
+        </div>
 
-
-            <div class="checkbox">
+            
+                
+            <div class="pull-left">
+                <input type="button" value='Login' (click)="login()" class="btn btn-primary" autofocus />
+            </div>
+            <div class="checkbox pull-right">
                 <input id="remember-me" type="checkbox" class="filled-in" [(ngModel)]="userDetails.rememberMe" value="">
                 <label for="remember-me">Remember me</label>
             </div>
-            <input type="button" value='Login' (click)="login()" class="btn btn-primary" autofocus/>
-        </div>
     </div>
 </div>
+    </div>
 <input type="hidden" value="2" id="application-view-id" />

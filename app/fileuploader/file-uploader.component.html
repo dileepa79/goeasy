@@ -4,7 +4,7 @@
 <div class="area">
     <div id="dropZone">
         <i class="material-icons font-54">insert_drive_file</i>
-        <div>Drag and drop your files here or</div>
+        <!--<div>Drag and drop your files here or</div>-->
         <div class="input-group">
             <label class="input-group-btn">
                 <span class="btn file-upload">
@@ -13,10 +13,12 @@
             </label>
         </div>
     </div>
-    <div *ngFor="#fileToUpload of filesToUpload">
-        <img src='{{ fileToUpload.previwSrc }}' alt="" height="50" width="50" />
-        <span>{{fileToUpload.file.name}}</span>
-        <a href="javascript:void(0)" (click)="removeFile(fileToUpload)">Remove</a>
+    <div *ngFor="#fileToUpload of filesToUpload" class="col-md-12 no-padding m-t-10">
+        <img src='{{ fileToUpload.previwSrc }}' alt=""  width="40" class="float-left" />
+        <div class="upload-file-name">{{fileToUpload.file.name}}</div>
+        <a href="javascript:void(0)" (click)="removeFile(fileToUpload)" title="Delete this attachment" class="upload-file-delete">
+            <span class="glyphicon glyphicon-trash"></span>
+        </a>
     </div> 
 </div>
 

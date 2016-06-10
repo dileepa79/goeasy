@@ -66,18 +66,68 @@ body {
 }
 
 .login-logo {
-    color: #ccc;
+  color: #fff;
     text-transform: none;
     display: block;
     font-size: 60px;
     font-family: 'Sacramento', cursive;
     text-decoration: none;
-    padding: 180px 0 0 0;
+    padding: 50px 0 0 0;
     text-align: center;
     font-weight: 600;
 
 }
+.logo-title{
+    color: #ddd;
+    font-weight: 200;
+    text-align: center;
+    font-style: italic;
+    font-size: 12px;
+    padding-bottom: 80px;
+}
+.login-form-div{
+        background: #0277bd;
+    padding: 50px;
+    height: 100vh;
+    /* padding-top: 16vh !important; */
+    float: right;
+    [type="checkbox"].filled-in:not(:checked) + label:after{
+        border:2px solid #ddd !important;
+    }
 
+    input[type="text"]{margin-bottom:50px;}
+
+     label{
+        color:#BDC3C7 !important;
+         opacity:0.8;
+    }
+
+    input[type="text"], input[type="password"]{
+        color:#fff !important;
+        font-size: 18px;
+    font-weight: 300;
+    }
+     input[type="text"]::-moz-placeholder{
+        color:#BDC3C7;
+        opacity:0.8;
+    }
+    
+     input[type="text"]::-webkit-input-placeholder{
+         color:#BDC3C7;
+        opacity:0.8;
+        
+    }
+       input[type="password"]::-moz-placeholder{
+         color:#BDC3C7;
+        opacity:0.8;
+    }
+    
+     input[type="password"]::-webkit-input-placeholder{
+         color:#BDC3C7;
+        opacity:0.8;
+        
+    }
+}
 .top-serch{
     padding: 10px 0 15px 0;
 
@@ -111,9 +161,10 @@ body {
     padding: 0 20px 10px;
     position: fixed;
     width: 100%;
-    z-index: 9999999;
+    z-index: 100;
 }
 
+.m-t-10{margin-top:10px;}
 .font-14{
     font-size:14px !important;
     font-weight:300;
@@ -150,11 +201,11 @@ h1, h3{
 
 /*-------user login and registration--------*/
 .login-content{
-    /*background-image: url('../img/loging-bg.jpg');
+    background-image: url('../img/loging-bg.jpg');
     background-size: contain;
-    background-position-x: -100px;*/
-    background:#0277bd;
-        box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.05);
+    background-position-x: -100px;
+    /*background:#0277bd;
+        box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.05);*/
 
     .input-field label{
         font-weight:300 !important;
@@ -308,7 +359,6 @@ prime-app{
     background: #fff;
     padding: 0 10px;
     /*box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.05);*/
-    margin-bottom:20px;
     /*margin-left:64px;*/
     font-size: 12px;
     font-weight: 300;
@@ -363,6 +413,19 @@ timeline-group a .show-content, timeline-detail-group .timeline-heading  a .show
              font-size:16px !important;
          }
      }
+     .file-upload{font-size:15px;}
+     .upload-file-name{width:70%;}
+     .add-note-tag{ color:#0277bd; font-weight:500; padding:0 10px;}
+
+     .tags-widget{ .water-mark-text {
+    color: #ccc;
+    text-align: center;
+    padding: 26px;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+     }
 }
 
 #chat.toggled {
@@ -400,6 +463,15 @@ timeline-group a .show-content, timeline-detail-group .timeline-heading  a .show
     box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.05);
     padding: 20px 40px;}
 
+.reqire-field{
+    color: red;
+    font-size: 12px;
+    padding: 2px 0 5px;
+}
+
+.ui-autocomplete{width:100%;}
+.ui-autocomplete-input-token{float:none;}
+
 .area {
     width: 100%;
     padding: 15px;
@@ -408,7 +480,7 @@ timeline-group a .show-content, timeline-detail-group .timeline-heading  a .show
 #dropZone {
   border: 2px dashed #bbb;
     border-radius: 5px;
-    padding: 56px;
+    padding: 20px;
     text-align: center;
     font-size: 21px;
     color: #bbb;
@@ -418,11 +490,42 @@ background: none !important;
     box-shadow: none !important;
     text-transform: none;
     color: #0277bd;
-    font-size: 21px;
+    font-size: 18px;
     letter-spacing: 0;
 }
 
+.upload-file-name{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 80%;
+    white-space: nowrap;
+    display: block;
+    float: left;
+    padding: 12px 0 0 5px;
+}
 
+.upload-file-delete{
+    display: block;
+    padding: 12px 0;
+}
+
+.tags-widget {
+    background: #fff;
+    padding: 30px;
+    box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 400;
+    min-height: 200px;
+
+    .water-mark-text{
+            color: #ccc;
+    text-align: center;
+    padding: 45px;
+    font-size: 21px;
+    font-weight: 400;
+    }
+}
 /*----------Recent timeline ---------*/
 
 .recent-timeline-timestamp {
@@ -430,23 +533,39 @@ background: none !important;
     /* margin-left: -25px; */
     margin-bottom: 20px;
     font-size: 22px;
+    float:left;
+    width:12%;
+    background-color:#fafafa;
+    border-radius:5px;
+    padding:8px;
 }
 .recent-timeline-timestamp .recent-timeline-date {
     display: block;
     line-height: 24px;
     font-size: 30px !important;
+    font-weight:400;
+    margin-top:5px;
 }
 .recent-timeline-timestamp .recent-timeline-month {
-    top: 20px !important;
     color: #999;
     min-width: 50px;
     font-size: 16px;
     text-align: center;
+    line-height: 22px;
+    display: block;
+}
+.ui-autocomplete-input-token {
+    width:50%;
 }
 .recent-timeline-tags{
     font-size: 20px;
+    font-weight:400;
     text-decoration: none;
-    padding-left: 40px;
+}
+.recent-timeline-tags>span {
+    line-height: 18px;
+    display: block;
+    margin-bottom: 6px;
 }
 .recent-timeline-tags:hover{
         text-decoration: none;
@@ -509,8 +628,16 @@ background: none !important;
     overflow:hidden;
 }
 
-.box-body, .box-footer, .box-header {
+.box-footer, .box-header {
     padding: 1rem;
+}
+
+.box-body {
+    padding:0 1rem 1rem 1rem;
+}
+
+.box-header {
+    overflow:hidden;
 }
 
 .box-header h3 {
@@ -637,6 +764,7 @@ background: none !important;
     color: rgba(0,0,0,.87);    
     display:inline-block;
     font-weight:500;
+    font-size:12px;
 
     .fa-heart {
         color:#f44455;
@@ -663,3 +791,64 @@ background: none !important;
     margin-left:10px;
     float:left;
 }
+
+.recent-timeline-note {
+    float:left; 
+    width:85%;
+    margin-left:15px;
+}
+
+.recent-timeline-note-container {
+    overflow-y:scroll; 
+    clear:both; 
+    height:550px; 
+    margin-right:10px;
+}
+
+/*---------------------------
+    NOTIFICATION
+-----------------------------*/
+
+  .top-notification-widget{ background-color: rgba(0,0,0,.03)!important;
+    margin: 15px 0;
+    /*border: 1px solid #eee;*/
+    padding: 10px;
+
+    .btn{
+            padding: 5px 10px;
+            font-size: 10px !important;
+            height: 30px;
+            line-height: 10px;
+    }
+    .timeline-img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50px;
+        box-shadow: 0 0px 10px 0 rgba(0, 0, 0, 0.1);
+        margin-right: 10px;
+        margin-top:0;
+
+    }
+
+    
+
+  }
+  .common-tag{
+        line-height: normal !important;
+        display: block;
+        float: left;
+        padding: 5px !important;
+        background: #ccc;
+        font-size: 10px;
+        font-weight: bold;
+        border-radius: 5px;
+        margin-right:5px;
+    }
+  .lv-header{
+      padding:12px 10px 6px 0 !important;
+      text-align:left !important;
+  }
+  .listview{
+      max-height:70vh;
+      overflow-y:auto;
+  }

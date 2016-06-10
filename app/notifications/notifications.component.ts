@@ -90,7 +90,7 @@ export class NotificaitonComponent implements OnInit {
         for (var i = 0; i < selectedTimeline.tags.length; i++) {
             this.tags = this.tags + (selectedTimeline.tags[i].name + (selectedTimeline.tags.length != i + 1 ? ',' : ''));
         }
-        this._router.navigate(['TimeLine', { tags: this.tags }]);
+        this._router.navigate(['/timeline', { tags: this.tags }]);
     }
 
 }

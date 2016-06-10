@@ -10,25 +10,26 @@
             </div>
             
             <div class="lv-body">
-                <input class="btn-dismissAll  btn" type="button" value="DISMISS ALL" (click)="dismissAllClicked()" >
-                <div class="notification-widget" *ngFor="let Item of filteredNotificaitons"  [ngStyle]="{'background-color': (Item.type == 1) ? '#ffffff' : '#ffffff'}">
-                    <div alt="" class="timeline-img" style="position: absolute; margin-right: 60px; margin-left: 0;">
+                <input class="btn-dismissAll  btn" type="button" value="DISMISS ALL" (click)="dismissAllClicked()" style="background:#F44336 !important;" >
+                <div class="notification-widget top-notification-widget" *ngFor="let Item of filteredNotificaitons"  >
+                    <div alt="" class="timeline-img float-left" >
                         <img class="circle responsive-img" src={{Item.userImageUrl}}>
                     </div>
-                    <div class="lv-title m-b-5" style="margin-left: 31px; font-size: 12px;">{{Item.title}}</div>
-                    <small class="lv-small" style="margin-left: 31px; font-size: 12px;">{{Item.description}}</small>
-                    <div class="pull-right" style="margin-top: 10px;padding-right: 16px;color:#ccc;">
-                        <small class="lv-small" style="margin-left: 200px; font-size: 12px;" *ngIf="Item.dateFormat != 'TODAY'">{{Item.date}}</small>
-                        <small class="lv-small" style="margin-left: 200px; font-size: 12px;" *ngIf="Item.dateFormat == 'TODAY'">{{Item.time}}</small>
+                    <div class=" m-b-5 float-left" style="font-size: 12px; width:70%;">{{Item.title}}</div>
+                    <div class="pull-right" style="color:#ccc;">
+                        <small class="lv-small"  *ngIf="Item.dateFormat != 'TODAY'">{{Item.date}}</small>
+                        <small class="lv-small"  *ngIf="Item.dateFormat == 'TODAY'">{{Item.time}}</small>
                     </div>
-                    <span *ngFor="let tag of Item.tags" class="label label-default" style="line-height:4">{{tag.name}}</span>
-                    <div class="form-group" style="padding-top: 10px;"> 
-                        <input class="btn" type="button" value="GO TO TIMELINE" (click)="select(Item)" style="margin: 1px 0 0 0;">
-                        <div style="cursor: pointer;display: inline-block; font-weight: bold;margin-left: 10px" (click)="dismissClicked(Item)">
-                            <span class="glyphicon glyphicon-remove" style="color: #ff0000"></span> DISMISS
-                        </div>
-                        <div  style="cursor: pointer;display: inline-block; font-weight: bold;margin-left: 40px" (click)="snoozeClicked(Item)">
+                    <small class="lv-small" style="margin-left: 31px; font-size: 12px; clear:both;">{{Item.description}}</small>
+                   <div class="clear"><span *ngFor="let tag of Item.tags" class="common-tag" style="line-height:4">{{tag.name}}</span></div>
+                    
+                    <div class="form-group" style="padding-top: 15px;clear: both; margin-bottom: 5px;"> 
+                        <input class="btn btn-secondary" type="button" value="GO TO TIMELINE" (click)="select(Item)" >
+                        <div  style="cursor: pointer;display: inline-block; font-weight: bold;margin-left: 20px; float:right; margin-top:5px;" (click)="snoozeClicked(Item)">
                             <span class="glyphicon glyphicon-time" style="color: #008000"></span> SNOOZE
+                        </div>
+                        <div style="cursor: pointer;display: inline-block; font-weight: bold; float:right; margin-top:5px;" (click)="dismissClicked(Item)">
+                            <span class="glyphicon glyphicon-remove" style="color: #ff0000"></span> DISMISS
                         </div>
                     </div> 
                 </div>

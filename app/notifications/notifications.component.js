@@ -86,7 +86,7 @@ System.register(['@angular/core', '../services/notifications.service', '@angular
                     for (var i = 0; i < selectedTimeline.tags.length; i++) {
                         this.tags = this.tags + (selectedTimeline.tags[i].name + (selectedTimeline.tags.length != i + 1 ? ',' : ''));
                     }
-                    this._router.navigate(['TimeLine', { tags: this.tags }]);
+                    this._router.navigate(['/timeline', { tags: this.tags }]);
                 };
                 NotificaitonComponent = __decorate([
                     core_1.Component({

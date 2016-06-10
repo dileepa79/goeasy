@@ -70,6 +70,8 @@ System.register(['@angular/core', '../services/recenttimeline.service', '../serv
                     this.passedTags = [];
                     this.selectedTagStr = '';
                     this.users = [];
+                    this.isInitialLoad = false;
+                    this.counter = 0;
                     this.timeLineRequest = {
                         data: [],
                         isPersistedSearch: false,
@@ -87,6 +89,7 @@ System.register(['@angular/core', '../services/recenttimeline.service', '../serv
                             this.passedTags.push(tag);
                         }
                         this.timeLineRequest.data = this.passedTags;
+                        this.isInitialLoad = true;
                     }
                     this.getTimelines();
                 };
@@ -156,20 +159,29 @@ System.register(['@angular/core', '../services/recenttimeline.service', '../serv
                     }
                 };
                 TimeLineComponent.prototype.onSelectedTagsChanged = function (tags) {
-                    this.timeLineRequest.data = tags.map(function (d) { return d['name']; });
-                    this.timeLineRequest.isPersistedSearch = false;
-                    this.timeLineRequest.pageNo = 1;
-                    if (typeof this.filteredTimelines != 'undefined') {
-                        this.filteredTimelines = new Array();
+                    if (this.tagsStr != null && this.isInitialLoad) {
+                        this.counter = this.counter + 1;
+                        if (this.counter == this.passedTags.length) {
+                            this.isInitialLoad = false;
+                            this.counter = 0;
+                        }
                     }
-                    this.selectedTagStr = '';
-                    for (var i = 0; i < this.timeLineRequest.data.length; i++) {
-                        this.selectedTagStr = this.selectedTagStr + (this.timeLineRequest.data[i] + (this.timeLineRequest.data.length != i + 1 ? ',' : ''));
+                    else {
+                        this.timeLineRequest.data = tags.map(function (d) { return d['name']; });
+                        this.timeLineRequest.isPersistedSearch = false;
+                        this.timeLineRequest.pageNo = 1;
+                        if (typeof this.filteredTimelines != 'undefined') {
+                            this.filteredTimelines = new Array();
+                        }
+                        this.selectedTagStr = '';
+                        for (var i = 0; i < this.timeLineRequest.data.length; i++) {
+                            this.selectedTagStr = this.selectedTagStr + (this.timeLineRequest.data[i] + (this.timeLineRequest.data.length != i + 1 ? ',' : ''));
+                        }
+                        this.passTagService.setTags(this.selectedTagStr);
+                        $('#tagInput').text(this.selectedTagStr);
+                        window.angularComponentRef.zone.run(function () { window.angularComponentRef.component.updateSelectedTags(); });
+                        this.getTimelines();
                     }
-                    this.passTagService.setTags(this.selectedTagStr);
-                    $('#tagInput').text(this.selectedTagStr);
-                    window.angularComponentRef.zone.run(function () { window.angularComponentRef.component.updateSelectedTags(); });
-                    this.getTimelines();
                 };
                 TimeLineComponent.prototype.getTimelines = function () {
                     var _this = this;

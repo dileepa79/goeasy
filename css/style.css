@@ -107,7 +107,6 @@ Main components
     margin-left: -2px;
   }*/
 }
-
 .cd-timeline-block {
   position: relative;
   margin: 1.5em 0;
@@ -123,11 +122,10 @@ Main components
 .cd-timeline-block:last-child {
   margin-bottom: 0;
 }
-
 .timeline-description {
-    padding: 0 10px !important;
+    padding: 0 !important;
     box-shadow:none !important;
-    margin-top:-4px;
+    margin-bottom:15px;
 }
 @media only screen and (min-width: 1170px) {
   /*.cd-timeline-block {
@@ -341,7 +339,7 @@ Main components
 }
 
 .btn-floating.green::before {
-    content: "Create Note";
+    content: "Add Note";
     position: absolute;
     padding: 7px;
     right: 50px;
