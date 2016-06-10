@@ -1,5 +1,6 @@
 ﻿
 import {Component, OnInit, Input} from '@angular/core';
+import {RecentTimeLineService} from '../services/recenttimeline.service';
 import {TimeLineService} from '../services/timeline.service';
 import {TimeLineResponse} from './timeline-response';
 import {TimeLineRequest} from './timeline-request';
@@ -12,15 +13,17 @@ import { Observable } from 'rxjs/Observable';
 import {PassTagService} from '../services/passtag.service';
 import {InfiniteScroll} from '../timeline/angular2-infinite-scroll'
 import {Configuration } from '../app.constants';
-
+import { ShareTimelineComponent } from '../sharetimeline/sharetimeline.component';
+import { UsersSelectorComponent } from '../noteshareusers/users-selector.component';
+import { MODAL_DIRECTIVES, ModalComponent } from '../modal/modaldialog';
 
 @Component({
     selector: 'timeline',
     templateUrl: './app/timeline/timeline.component.html',
     providers: [
-        TimeLineService
+        TimeLineService ,RecentTimeLineService
     ],
-    directives: [TagsSelectorComponent, TimelineInfo, TimelineGroup, TimelineDetail, TimelineDetailGroup, InfiniteScroll]
+    directives: [TagsSelectorComponent, TimelineInfo, TimelineGroup, TimelineDetail, TimelineDetailGroup, InfiniteScroll , MODAL_DIRECTIVES, ShareTimelineComponent, UsersSelectorComponent]
 })
 
 export class TimeLineComponent implements OnInit, CanDeactivate {
@@ -30,10 +33,11 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
     isLoading: boolean = false;
     fileApiUrl;
 
-    constructor(private _timeLineService: TimeLineService, routeSegment: RouteSegment, private passTagService: PassTagService, private _configuration: Configuration) {
+    constructor(private _timeLineService: TimeLineService,private _recentTimeLineService: RecentTimeLineService, routeSegment: RouteSegment, private passTagService: PassTagService, private _configuration: Configuration) {
         this.tagsStr = routeSegment.getParam('tags');
         this.fileApiUrl = _configuration.ServerWithApiUrl + 'FileContent';
     }
+	
     selectedTags: any[];
     title = "TIMELINE";
     errorMessage: string;
@@ -41,6 +45,8 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
     filteredTimelines: any[];
     passedTags: Tag[] = [];
     selectedTagStr: string = '';
+	users: any[] = [];
+	note_id: string;
 
     public timeLineRequest: TimeLineRequest = {
         data: [],
@@ -204,5 +210,25 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
             },
             () => () => console.log("Done"));
     }
+	
+	setCurrentNote(selected_note: any) {
+        this.note_id = selected_note.id;
+    }
+
+    onSelectedUsersChanged(_users: any[]): void {
+        this.users = _users.map(function (d) { return d['userName']; });
+    }
+	
+    shareTimeline() {
+        var timeline_share = {
+            TimeLineId: this.note_id,
+            AppUsers: this.users
+        };
+		var selected = this.filteredTimelines.filter(function (obj) {
+			return obj.id == timeline_share.TimeLineId;
+		});
+		
+		this._recentTimeLineService.share(timeline_share).subscribe(res => selected[0].sharedWith = res);
+    }	
 }
 

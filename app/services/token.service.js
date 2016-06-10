@@ -22,12 +22,10 @@ System.register(['@angular/core'], function(exports_1, context_1) {
                 function TokenService() {
                 }
                 TokenService.prototype.getToken = function () {
-                    //return this._token;
-                    return this.getCookie("yaytoken");
+                    return this._token;
                 };
                 TokenService.prototype.setToken = function (token) {
-                    this.setCookie("yaytoken", token, 14);
-                    //this._token = token;
+                    this._token = token;
                 };
                 TokenService.prototype.getTokenFromCookie = function () {
                     return this.getCookie("yaytoken");

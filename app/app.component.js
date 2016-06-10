@@ -1,4 +1,4 @@
-System.register(['@angular/core', '@angular/router', './services/auth.service', './services/token.service', './notes/add-note.component', './timeline/timeline.component', './authentication/login.component', './app.constants', './tags/tags.component', './userprofile/userprofile.component', './recenttimeline/recenttimeline.component', './dashboard/dashboard.component', './notifications/notifications.component', './feedback/feedback.component', './services/feedback.service', './tags/tag-detail.component'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/router', '@angular/common', './services/auth.service', './services/token.service', './notes/add-note.component', './timeline/timeline.component', './authentication/login.component', './app.constants', './tags/tags.component', './userprofile/userprofile.component', './recenttimeline/recenttimeline.component', './dashboard/dashboard.component', './notifications/notifications.component', './feedback/feedback.component', './services/feedback.service', './tags/tag-detail.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,15 +10,19 @@ System.register(['@angular/core', '@angular/router', './services/auth.service', 
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, auth_service_1, token_service_1, add_note_component_1, timeline_component_1, login_component_1, app_constants_1, tags_component_1, userprofile_component_1, recenttimeline_component_1, dashboard_component_1, notifications_component_1, feedback_component_1, feedback_service_1, tag_detail_component_1;
+    var core_1, core_2, router_1, common_1, auth_service_1, token_service_1, add_note_component_1, timeline_component_1, login_component_1, app_constants_1, tags_component_1, userprofile_component_1, recenttimeline_component_1, dashboard_component_1, notifications_component_1, feedback_component_1, feedback_service_1, tag_detail_component_1;
     var AppComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+                core_2 = core_1_1;
             },
             function (router_1_1) {
                 router_1 = router_1_1;
+            },
+            function (common_1_1) {
+                common_1 = common_1_1;
             },
             function (auth_service_1_1) {
                 auth_service_1 = auth_service_1_1;
@@ -86,6 +90,7 @@ System.register(['@angular/core', '@angular/router', './services/auth.service', 
                         directives: [router_1.ROUTER_DIRECTIVES, userprofile_component_1.UserProfileComponent, notifications_component_1.NotificaitonComponent, feedback_component_1.FeedbackComponent, add_note_component_1.AddNoteComponent],
                         providers: [
                             router_1.ROUTER_PROVIDERS,
+                            core_2.provide(common_1.LocationStrategy, { useClass: common_1.HashLocationStrategy }),
                             auth_service_1.AuthService,
                             token_service_1.TokenService,
                             login_component_1.LoginComponent,

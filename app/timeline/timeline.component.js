@@ -1,4 +1,4 @@
-System.register(['@angular/core', '../services/timeline.service', '../tags/tags-selector.component', './timelinegroup/timelinegroup.component', './timelinegroup/timelinedetail.component', '@angular/router', 'rxjs/Observable', '../services/passtag.service', '../timeline/angular2-infinite-scroll', '../app.constants'], function(exports_1, context_1) {
+System.register(['@angular/core', '../services/recenttimeline.service', '../services/timeline.service', '../tags/tags-selector.component', './timelinegroup/timelinegroup.component', './timelinegroup/timelinedetail.component', '@angular/router', 'rxjs/Observable', '../services/passtag.service', '../timeline/angular2-infinite-scroll', '../app.constants', '../sharetimeline/sharetimeline.component', '../noteshareusers/users-selector.component', '../modal/modaldialog'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,12 +10,15 @@ System.register(['@angular/core', '../services/timeline.service', '../tags/tags-
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, timeline_service_1, tags_selector_component_1, timelinegroup_component_1, timelinedetail_component_1, router_1, Observable_1, passtag_service_1, angular2_infinite_scroll_1, app_constants_1;
+    var core_1, recenttimeline_service_1, timeline_service_1, tags_selector_component_1, timelinegroup_component_1, timelinedetail_component_1, router_1, Observable_1, passtag_service_1, angular2_infinite_scroll_1, app_constants_1, sharetimeline_component_1, users_selector_component_1, modaldialog_1;
     var TimeLineComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (recenttimeline_service_1_1) {
+                recenttimeline_service_1 = recenttimeline_service_1_1;
             },
             function (timeline_service_1_1) {
                 timeline_service_1 = timeline_service_1_1;
@@ -43,11 +46,21 @@ System.register(['@angular/core', '../services/timeline.service', '../tags/tags-
             },
             function (app_constants_1_1) {
                 app_constants_1 = app_constants_1_1;
+            },
+            function (sharetimeline_component_1_1) {
+                sharetimeline_component_1 = sharetimeline_component_1_1;
+            },
+            function (users_selector_component_1_1) {
+                users_selector_component_1 = users_selector_component_1_1;
+            },
+            function (modaldialog_1_1) {
+                modaldialog_1 = modaldialog_1_1;
             }],
         execute: function() {
             TimeLineComponent = (function () {
-                function TimeLineComponent(_timeLineService, routeSegment, passTagService, _configuration) {
+                function TimeLineComponent(_timeLineService, _recentTimeLineService, routeSegment, passTagService, _configuration) {
                     this._timeLineService = _timeLineService;
+                    this._recentTimeLineService = _recentTimeLineService;
                     this.passTagService = passTagService;
                     this._configuration = _configuration;
                     this.oneAtATime = true;
@@ -56,6 +69,7 @@ System.register(['@angular/core', '../services/timeline.service', '../tags/tags-
                     this.title = "TIMELINE";
                     this.passedTags = [];
                     this.selectedTagStr = '';
+                    this.users = [];
                     this.timeLineRequest = {
                         data: [],
                         isPersistedSearch: false,
@@ -198,16 +212,32 @@ System.register(['@angular/core', '../services/timeline.service', '../tags/tags-
                         _this.isLoading = false;
                     }, function () { return function () { return console.log("Done"); }; });
                 };
+                TimeLineComponent.prototype.setCurrentNote = function (selected_note) {
+                    this.note_id = selected_note.id;
+                };
+                TimeLineComponent.prototype.onSelectedUsersChanged = function (_users) {
+                    this.users = _users.map(function (d) { return d['userName']; });
+                };
+                TimeLineComponent.prototype.shareTimeline = function () {
+                    var timeline_share = {
+                        TimeLineId: this.note_id,
+                        AppUsers: this.users
+                    };
+                    var selected = this.filteredTimelines.filter(function (obj) {
+                        return obj.id == timeline_share.TimeLineId;
+                    });
+                    this._recentTimeLineService.share(timeline_share).subscribe(function (res) { return selected[0].sharedWith = res; });
+                };
                 TimeLineComponent = __decorate([
                     core_1.Component({
                         selector: 'timeline',
                         templateUrl: './app/timeline/timeline.component.html',
                         providers: [
-                            timeline_service_1.TimeLineService
+                            timeline_service_1.TimeLineService, recenttimeline_service_1.RecentTimeLineService
                         ],
-                        directives: [tags_selector_component_1.TagsSelectorComponent, timelinegroup_component_1.TimelineInfo, timelinegroup_component_1.TimelineGroup, timelinedetail_component_1.TimelineDetail, timelinedetail_component_1.TimelineDetailGroup, angular2_infinite_scroll_1.InfiniteScroll]
+                        directives: [tags_selector_component_1.TagsSelectorComponent, timelinegroup_component_1.TimelineInfo, timelinegroup_component_1.TimelineGroup, timelinedetail_component_1.TimelineDetail, timelinedetail_component_1.TimelineDetailGroup, angular2_infinite_scroll_1.InfiniteScroll, modaldialog_1.MODAL_DIRECTIVES, sharetimeline_component_1.ShareTimelineComponent, users_selector_component_1.UsersSelectorComponent]
                     }), 
-                    __metadata('design:paramtypes', [timeline_service_1.TimeLineService, router_1.RouteSegment, passtag_service_1.PassTagService, app_constants_1.Configuration])
+                    __metadata('design:paramtypes', [timeline_service_1.TimeLineService, recenttimeline_service_1.RecentTimeLineService, router_1.RouteSegment, passtag_service_1.PassTagService, app_constants_1.Configuration])
                 ], TimeLineComponent);
                 return TimeLineComponent;
             }());

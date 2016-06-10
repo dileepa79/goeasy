@@ -25,7 +25,35 @@
 
 
 
-    <div class="box-body" id="collapseExample1" *ngFor="let timeline of recentTimelines | recentTimelineWatchFilter:isWatchedFilter">
+    <modal [animation]="animation" [keyboard]="keyboard" [backdrop]="backdrop" #parentModal>
+        <modal-header [show-close]="true">
+            <p>Share</p>
+        </modal-header>
+        <modal-body>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <label for="user-app" class="col-sm-pull-4 control-label">Whom would you like to share with ?</label>
+                    </div>
+
+                    <div class="col-sm-10">
+                        <user-app [isallowednewinput]="true" (usersAdded)='onSelectedUsersChanged($event)' (usersRemoved)="onSelectedUsersChanged($event)">Loading...</user-app>
+                    </div>
+                </div>
+            </form>
+        </modal-body>
+        <modal-footer>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="button" class="btn btn-primary" (click)="parentModal.close();shareTimeline()">Share</button>
+                </div>
+            </div>
+        </modal-footer>
+
+    </modal>
+
+
+    <div class="col-md-12 media" *ngFor="let timeline of recentTimelines | recentTimelineWatchFilter:isWatchedFilter" >
         <!--<div class="col-md-1">
             <div alt="" class="timeline-icon row">
                 <span class="glyphicon glyphicon-file" aria-hidden="true"></span>

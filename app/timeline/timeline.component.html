@@ -40,6 +40,33 @@
 
 
 <section id="main-content">
+    <modal [animation]="animation" [keyboard]="keyboard" [backdrop]="backdrop" #parentModal>
+        <modal-header [show-close]="true">
+            <p>Share</p>
+        </modal-header>
+        <modal-body>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <label for="user-app" class="col-sm-pull-4 control-label">Whom would you like to share with ?</label>
+                    </div>
+
+                    <div class="col-sm-10">
+                        <user-app [isallowednewinput]="true" (usersAdded)='onSelectedUsersChanged($event)' (usersRemoved)="onSelectedUsersChanged($event)">Loading...</user-app>
+                    </div>
+                </div>
+            </form>
+        </modal-body>
+        <modal-footer>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="parentModal.dismiss()">Cancel</button>
+                    <button type="button" class="btn btn-primary" (click)="parentModal.close();shareTimeline()">Share</button>
+                </div>
+            </div>
+        </modal-footer>
+
+    </modal>
     <!--<div class="app-header-secondary">
 
     </div>-->
@@ -80,7 +107,9 @@
                                  <img class="circle responsive-img" src={{Item.userImageUrl}}>
                              </div>
                              <div class="pull-left share-note-icon">
+								 <button type="button" id="btn-share-note" (click)="parentModal.open(); setCurrentNote(Item);" class="btn share-note-icon" style="width:38px;height:27px">
                                  <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+								 </button>	
                              </div>
                          </div>
                          <timeline-detail-group [heading]="Item.title" [headerDescription]="Item.plainDescriptionText">

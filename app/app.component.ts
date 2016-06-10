@@ -3,8 +3,8 @@ import {provide} from '@angular/core';
 
 import { Routes , ROUTER_DIRECTIVES, ROUTER_PROVIDERS , Router} from '@angular/router';
 
-
-
+import {PlatformLocation,Location,LocationStrategy,HashLocationStrategy,PathLocationStrategy,APP_BASE_HREF} from '@angular/common';
+import {BrowserPlatformLocation} from '@angular/platform-browser';
 
 import {AuthService} from './services/auth.service';
 import {TokenService} from './services/token.service';
@@ -30,6 +30,7 @@ import {TagDetailComponent} from './tags/tag-detail.component';
     directives: [ROUTER_DIRECTIVES, UserProfileComponent, NotificaitonComponent, FeedbackComponent, AddNoteComponent],
     providers: [
         ROUTER_PROVIDERS,
+        provide(LocationStrategy, { useClass: HashLocationStrategy }),
         AuthService,
         TokenService,
         LoginComponent,
