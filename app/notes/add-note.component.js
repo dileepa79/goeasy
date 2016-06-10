@@ -75,9 +75,16 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                     };
                 }
                 AddNoteComponent.prototype.ngOnInit = function () {
+                    this.istagSelectionValidated = true;
                 };
                 AddNoteComponent.prototype.Save = function () {
                     var _this = this;
+                    if (this.noteRequest.tags.length == 0) {
+                        this.istagSelectionValidated = false;
+                        return;
+                    }
+                    else
+                        this.istagSelectionValidated = true;
                     if (this.noteRequest.tags && this.noteRequest.tags.length == 0) {
                         this.noteRequest.tags = $('#tagInput').text().split(",");
                     }
@@ -98,6 +105,11 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                 };
                 AddNoteComponent.prototype.onSelectedTagsChanged = function (tags) {
                     this.noteRequest.tags = tags.map(function (d) { return d['name']; });
+                    if (this.noteRequest.tags.length == 0) {
+                        this.istagSelectionValidated = false;
+                    }
+                    else
+                        this.istagSelectionValidated = true;
                 };
                 AddNoteComponent.prototype.onSelectedUsersChanged = function (users) {
                     this.noteRequest.users = users.map(function (d) { return d['userName']; });

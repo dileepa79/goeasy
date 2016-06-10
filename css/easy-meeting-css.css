@@ -5587,11 +5587,6 @@ prime-app input[type=text] {
 .panel-open a .hide-content {
   display: none; }
 
-.hide-empty {
-margin-top: -168px;
-}
-
-
 timeline-detail-group > .panel-open > .timeline-heading a .show-content {
   display: inline-block; }
 
@@ -5683,6 +5678,18 @@ timeline-group a .show-content, timeline-detail-group .timeline-heading a .show-
   margin-bottom: 20px;
   font-size: 22px; }
 
+.recent-timeline-timestamp .recent-timeline-date {
+  display: block;
+  line-height: 24px;
+  font-size: 30px !important; }
+
+.recent-timeline-timestamp .recent-timeline-month {
+  top: 20px !important;
+  color: #999;
+  min-width: 50px;
+  font-size: 16px;
+  text-align: center; }
+
 .recent-timeline-tags {
   font-size: 20px;
   text-decoration: none;
@@ -5734,7 +5741,8 @@ timeline-group a .show-content, timeline-detail-group .timeline-heading a .show-
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 -1px 0 rgba(0, 0, 0, 0.02);
   background-color: #fff;
   position: relative;
-  margin-bottom: 1.5rem; }
+  margin-bottom: 1.5rem;
+  overflow: hidden; }
 
 .box-body, .box-footer, .box-header {
   padding: 1rem; }
@@ -5742,8 +5750,9 @@ timeline-group a .show-content, timeline-detail-group .timeline-heading a .show-
 .box-header h3 {
   font-size: 16px;
   margin: 0;
-  line-height: 1;
-  font-weight: 500; }
+  line-height: 20px;
+  font-weight: 500;
+  color: #000; }
 
 .list {
   padding-top: 8px;
@@ -5828,5 +5837,34 @@ small {
 
 .share-note-icon .glyphicon {
   font-size: 20px; }
+
+.mtop-40 {
+  margin-top: 40px !important; }
+
+.btn-like {
+  border-radius: 500px;
+  padding: 0.5em 1.2em;
+  border: 1px solid rgba(120, 130, 140, 0.13);
+  color: rgba(0, 0, 0, 0.87);
+  display: inline-block;
+  font-weight: 500; }
+  .btn-like .fa-heart {
+    color: #f44455; }
+
+.btn-like:hover {
+  text-decoration: none;
+  color: #fff;
+  background-color: #f44455; }
+  .btn-like:hover .fa-heart {
+    color: #fff; }
+
+.btn-like:active {
+  background-color: #d9534f !important;
+  text-decoration: none;
+  color: #fff; }
+
+.lbl-view-timeline {
+  margin-left: 10px;
+  float: left; }
 
 /*# sourceMappingURL=easy-meeting-css.css.map */

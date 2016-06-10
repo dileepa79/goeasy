@@ -431,6 +431,18 @@ background: none !important;
     margin-bottom: 20px;
     font-size: 22px;
 }
+.recent-timeline-timestamp .recent-timeline-date {
+    display: block;
+    line-height: 24px;
+    font-size: 30px !important;
+}
+.recent-timeline-timestamp .recent-timeline-month {
+    top: 20px !important;
+    color: #999;
+    min-width: 50px;
+    font-size: 16px;
+    text-align: center;
+}
 .recent-timeline-tags{
     font-size: 20px;
     text-decoration: none;
@@ -494,6 +506,7 @@ background: none !important;
     background-color: #fff;
     position: relative;
     margin-bottom: 1.5rem;
+    overflow:hidden;
 }
 
 .box-body, .box-footer, .box-header {
@@ -503,8 +516,9 @@ background: none !important;
 .box-header h3 {
     font-size: 16px;
     margin: 0;
-    line-height: 1;
+    line-height: 20px;
     font-weight:500;
+    color:#000;
 }
 
 .list {
@@ -610,4 +624,42 @@ background: none !important;
 
 .share-note-icon .glyphicon {
     font-size:20px;
+}
+
+.mtop-40 {
+    margin-top:40px !important;
+}
+
+.btn-like {
+    border-radius: 500px;
+    padding:0.5em 1.2em;
+    border:1px solid rgba(120,130,140,.13);
+    color: rgba(0,0,0,.87);    
+    display:inline-block;
+    font-weight:500;
+
+    .fa-heart {
+        color:#f44455;
+    }
+}
+
+.btn-like:hover{
+        text-decoration:none;
+        color:#fff;
+        background-color:#f44455;
+
+        .fa-heart {
+            color:#fff;
+        }
+}
+
+.btn-like:active {
+    background-color:#d9534f !important;
+    text-decoration:none;
+    color:#fff;
+}
+
+.lbl-view-timeline {
+    margin-left:10px;
+    float:left;
 }

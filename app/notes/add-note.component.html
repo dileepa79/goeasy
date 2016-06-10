@@ -62,7 +62,10 @@
                     <div *ngIf="showCloseButton==false" class="form-group">
                         <label class="col-md-12 no-padding">Tags</label>
                         <div class="col-md-12 no-padding">
-                            <prime-app [isallowednewinput]="true" [inputvalues]="noteRequest.tags" (tagsadded)='onSelectedTagsChanged($event)' (tagsremoved)="onSelectedTagsChanged($event)">Loading...</prime-app>
+                            <prime-app [isAllowedNewInput]="true" [inputValues]="noteRequest.tags" (tagsAdded)='onSelectedTagsChanged($event)' (tagsRemoved)="onSelectedTagsChanged($event)">Loading...</prime-app>
+                            <div *ngIf="!istagSelectionValidated" class="alert alert-danger">
+                                Please select atleast one tag for this note.
+                            </div>
                         </div>
                     </div>
                     <!--<input type="button" value='Save' (click)="Save()" class="btn btn-success" />-->

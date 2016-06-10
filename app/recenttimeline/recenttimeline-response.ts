@@ -7,7 +7,9 @@
         public tags: RecentTimelineTag[],
         public isWatched: boolean,
         public recentActivity: string,
-        public noOfEntries: string
+        public noOfEntries: string,
+        public dateDay: string,
+        public dateMonth: string
     )
     {}
 }
@@ -15,7 +17,7 @@ export class AppUser {
     constructor(
         public userId: string,
         public userName: string,
-        public imageUrl: string,
+        public imageUrl: string
     )
     {}
 }

@@ -46,13 +46,22 @@ export class AddNoteComponent implements OnInit{
     tagList: string = '';
     active = true;
     tagsStr: string='';
+    istagSelectionValidated: boolean;
 
     passedTags: Tag[] = [];
     @Input() showCloseButton: boolean = false;
     ngOnInit() {
+        this.istagSelectionValidated = true;
     }
 
     Save() {
+        if (this.noteRequest.tags.length == 0) {
+            this.istagSelectionValidated = false;
+            return;
+        }
+        else
+            this.istagSelectionValidated = true;
+
         if (this.noteRequest.tags && this.noteRequest.tags.length == 0) {
             this.noteRequest.tags = $('#tagInput').text().split(",");
         }
@@ -78,6 +87,12 @@ export class AddNoteComponent implements OnInit{
 
     onSelectedTagsChanged(tags: any[]): void {
         this.noteRequest.tags = tags.map(function (d) { return d['name']; });
+
+        if (this.noteRequest.tags.length == 0) {
+            this.istagSelectionValidated = false;
+        }
+        else
+            this.istagSelectionValidated = true;
     }
 
     onSelectedUsersChanged(users: any[]): void {
