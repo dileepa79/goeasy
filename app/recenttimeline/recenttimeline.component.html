@@ -24,7 +24,7 @@
 
 
 
-    <div class="box-body" id="collapseExample1" *ngFor="let timeline of recentTimelines | recentTimelineWatchFilter:isWatchedFilter">
+    <div class="box-body recent-timeline-item" id="collapseExample1" *ngFor="let timeline of recentTimelines | recentTimelineWatchFilter:isWatchedFilter">
         <!--<div class="col-md-1">
             <div alt="" class="timeline-icon row">
                 <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
@@ -33,82 +33,72 @@
                 {{timeline.date }}
             </div>
         </div>-->
-            <div class="timeline-description" id="collapseExample1">
+        <div class="timeline-description" id="collapseExample1">
 
-                        <!-- timestamp -->
-                <div class="recent-timeline-timestamp">
-                                <span class="recent-timeline-date">
-                                    {{timeline.dateDay}}
-                                </span>
-                                <span class="recent-timeline-month">
-                                    {{timeline.dateMonth}}
-                                </span>
-                            </div>
-                        <!-- tags line -->
-                <div class="recent-timeline-note" (click)="select(timeline)">
-                    <div class="recent-timeline-tags link-tag">
-                        <span *ngFor="let tag of timeline.tags; let last = last" class="pull-left">{{tag.name}}<span *ngIf="!last"> + </span></span>
-
-                        <div class="rece pull-right" (click)="watch(timeline); $event.stopPropagation()">
-                            <!--<span *ngIf="timeline.isWatched" class="fa-stack fa-lg" title="Watched">
-                                <i class="fa fa-heart fa-stack-2x" style="color:cornflowerblue;cursor:pointer"></i>
-                                <i class="fa fa-stack-2x" style="color:white"></i>
-                            </span>
-                            <span *ngIf="!timeline.isWatched" class="fa-stack fa-lg" title="">
-                                <i class="fa fa-heart fa-stack-2x" style="color:grey;cursor:pointer"></i>
-                                <i class="fa fa-stack-2x" style="color:white"></i>
-                        </span>-->
-
-                            <span *ngIf="!timeline.isWatched" class="" title="" style="display:inline-block; cursor:pointer;">
-                                <a class="btn-like"><i class="fa fa-heart"></i></a>
-                            </span>
-                            <span *ngIf="timeline.isWatched" class="" title="Watched" style="display:inline-block; cursor:pointer;">
-                                <a class="btn-like" style="background-color:#f44455 !important;"><i class="fa fa-heart" style="color:#fff;"></i></a>
-                            </span>
+            <!-- timestamp -->
+            <div class="recent-timeline-timestamp">
+                <span class="recent-timeline-date">
+                    {{timeline.dateDay}}
+                </span>
+                <span class="recent-timeline-month">
+                    {{timeline.dateMonth}}
+                </span>
+            </div>
+            <!-- tags line -->
+            <div class="recent-timeline-note" (click)="select(timeline)">
+                <div class="recent-timeline-tags">
+                    <div>
+                        <div *ngFor="let tag of timeline.tags; let last = last" class="pull-left">
+                            <span class="pull-left link-tag">{{tag.name}}</span><span *ngIf="!last" class="add-tag"> + </span>
                         </div>
+                        <div class="recent-timeline-entry pull-left" *ngIf="timeline.noOfEntries">({{timeline.noOfEntries}})</div>
+                        <button type="button" value='Share' (click)="parentModal.open(); setCurrentTimeline(timeline)" class="share-note-icon pull-left" style="margin-left:6px;">
+                            <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+                        </button>
                     </div>
-                    <div class="recent-timeline-entry" *ngIf="timeline.noOfEntries">({{timeline.noOfEntries}})</div>
-
-                    <div style="padding: 10px 0 0 40px;">
-                        {{timeline.recentActivity}}
+                    <div class="rece pull-right" (click)="watch(timeline); $event.stopPropagation()">
+                        <span *ngIf="!timeline.isWatched" class="" title="" style="display:inline-block; cursor:pointer;">
+                            <a class="btn-like"><i class="fa fa-heart"></i></a>
+                        </span>
+                        <span *ngIf="timeline.isWatched" class="" title="Watched" style="display:inline-block; cursor:pointer;">
+                            <a class="btn-like" style="background-color:#f44455 !important;"><i class="fa fa-heart" style="color:#fff;"></i></a>
+                        </span>
                     </div>
+                </div>
+                <div style="padding: 10px 0 0 40px;">
+                    {{timeline.recentActivity}}
+                </div>
+            </div>
+            <!-- watch -->
+            <!--<div class="row">
+                <div class="col-md-11 col-md-offset-1">
+                    {{timeline.recentActivity}} test text
+                </div>
+            </div>-->
 
+
+            <div class="share-with-block">
+                <div *ngIf="timeline.sharedWith.length > 0" class="pull-left">SHARED WITH</div>
+
+                <div class="pull-left" style="clear:both;">
+                    <css-carousel [images]="timeline.sharedWith"></css-carousel>
+                </div>
+            </div>
+            <!--<div style="padding:10px 0px 10px 0px">
+                <div class="row">
+                    <div class="col-md-9">
+                        <css-carousel></css-carousel>
+                        <input type="button" value='Share' (click)="parentModal.open(); setCurrentTimeline(timeline)" class="btn btn-primary" style="margin-left:5px" />
+                    </div>
 
                 </div>
-                <!-- watch -->
-                    <!--<div class="row">
-                        <div class="col-md-11 col-md-offset-1">
-                            {{timeline.recentActivity}} test text
-                        </div>
-                    </div>-->
+            </div>-->
 
 
-                    <div class="share-with-block">
-
-                            <div *ngIf="timeline.sharedWith.length > 0" style="">SHARED WITH</div>
-
-                            <div style="margin-top: 20px; margin-left: -75px;">
-                                <css-carousel [images]="timeline.sharedWith"></css-carousel>
-                            </div>
-                            <button type="button" value='Share' (click)="parentModal.open(); setCurrentTimeline(timeline)" class="share-note-icon" style="margin-left:5px">
-                                <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-                            </button>
-                    </div>
-                    <!--<div style="padding:10px 0px 10px 0px">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <css-carousel></css-carousel>
-                                <input type="button" value='Share' (click)="parentModal.open(); setCurrentTimeline(timeline)" class="btn btn-primary" style="margin-left:5px" />
-                            </div>
-
-                        </div>
-                    </div>-->
-
-
-            </div>
+        </div>
     </div>
-    
-    
+
+
 </div>
 
 

@@ -102,5 +102,18 @@ export class NotesService {
         var headers = this._authService.getHeader();
         var key = headers._headersMap.entries().next().value[1][0].slice(7);
         return key;
-    } 
+    }
+
+    public share(request) {
+        //console.log("Title: " + request.title + ", description: " + request.description);
+
+        var body = JSON.stringify(request);
+        //var headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
+        var headers = this._authService.getHeader();
+        headers.append('Content-Type', 'application/json; charset=utf-8');
+        var options = new RequestOptions({ headers: headers });
+
+        return this.http.post(this.webApiUrl + '/ShareNote', body, options)
+            .map((res) => { return <AppUser[]>res.json() });
+    }
 }

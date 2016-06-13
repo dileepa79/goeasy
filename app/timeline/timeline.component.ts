@@ -1,6 +1,6 @@
 ﻿
 import {Component, OnInit, Input} from '@angular/core';
-import {RecentTimeLineService} from '../services/recenttimeline.service';
+import {NotesService} from '../services/notes.service';
 import {TimeLineService} from '../services/timeline.service';
 import {TimeLineResponse} from './timeline-response';
 import {TimeLineRequest} from './timeline-request';
@@ -21,7 +21,7 @@ import { MODAL_DIRECTIVES, ModalComponent } from '../modal/modaldialog';
     selector: 'timeline',
     templateUrl: './app/timeline/timeline.component.html',
     providers: [
-        TimeLineService ,RecentTimeLineService
+        TimeLineService ,NotesService
     ],
     directives: [TagsSelectorComponent, TimelineInfo, TimelineGroup, TimelineDetail, TimelineDetailGroup, InfiniteScroll , MODAL_DIRECTIVES, ShareTimelineComponent, UsersSelectorComponent]
 })
@@ -33,7 +33,7 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
     isLoading: boolean = false;
     fileApiUrl;
 
-    constructor(private _timeLineService: TimeLineService,private _recentTimeLineService: RecentTimeLineService, routeSegment: RouteSegment, private passTagService: PassTagService, private _configuration: Configuration) {
+    constructor(private _timeLineService: TimeLineService,private _noteService: NotesService, routeSegment: RouteSegment, private passTagService: PassTagService, private _configuration: Configuration) {
         this.tagsStr = routeSegment.getParam('tags');
         this.fileApiUrl = _configuration.ServerWithApiUrl + 'FileContent';
     }
@@ -245,16 +245,13 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
         this.users = _users.map(function (d) { return d['userName']; });
     }
 	
-    shareTimeline() {
-        var timeline_share = {
-            TimeLineId: this.note_id,
-            AppUsers: this.users
-        };
-		var selected = this.filteredTimelines.filter(function (obj) {
-			return obj.id == timeline_share.TimeLineId;
-		});
-		
-		this._recentTimeLineService.share(timeline_share).subscribe(res => selected[0].sharedWith = res);
-    }	
+	shareNote() {
+		var note_share = {
+			Note: this.note_id,
+			AppUsers:this.users
+		}
+		var noteShareResponse: any;
+		this._noteService.share(note_share).subscribe(res => noteShareResponse = res);
+	}
 }
 

@@ -61,7 +61,7 @@
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <button type="button" class="btn btn-default" data-dismiss="modal" (click)="parentModal.dismiss()">Cancel</button>
-                    <button type="button" class="btn btn-primary" (click)="parentModal.close();shareTimeline()">Share</button>
+                    <button type="button" class="btn btn-primary" (click)="parentModal.close();shareNote()">Share</button>
                 </div>
             </div>
         </modal-footer>
@@ -107,7 +107,7 @@
                                  <img class="circle responsive-img" src={{Item.userImageUrl}}>
                              </div>
                              <div class="pull-left">
-								 <button type="button" id="btn-share-note" (click)="parentModal.open(); setCurrentNote(Item);" class="share-note-icon" style="width:38px;height:27px">
+								 <button type="button" id="btn-share-note" (click)="parentModal.open(); setCurrentNote(Item);" class="share-note-icon mtop-14" style="width:38px;height:27px">
                                  <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
 								 </button>	
                              </div>

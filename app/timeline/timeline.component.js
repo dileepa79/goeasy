@@ -1,4 +1,4 @@
-System.register(['@angular/core', '../services/recenttimeline.service', '../services/timeline.service', '../tags/tags-selector.component', './timelinegroup/timelinegroup.component', './timelinegroup/timelinedetail.component', '@angular/router', 'rxjs/Observable', '../services/passtag.service', '../timeline/angular2-infinite-scroll', '../app.constants', '../sharetimeline/sharetimeline.component', '../noteshareusers/users-selector.component', '../modal/modaldialog'], function(exports_1, context_1) {
+System.register(['@angular/core', '../services/notes.service', '../services/timeline.service', '../tags/tags-selector.component', './timelinegroup/timelinegroup.component', './timelinegroup/timelinedetail.component', '@angular/router', 'rxjs/Observable', '../services/passtag.service', '../timeline/angular2-infinite-scroll', '../app.constants', '../sharetimeline/sharetimeline.component', '../noteshareusers/users-selector.component', '../modal/modaldialog'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,15 +10,15 @@ System.register(['@angular/core', '../services/recenttimeline.service', '../serv
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, recenttimeline_service_1, timeline_service_1, tags_selector_component_1, timelinegroup_component_1, timelinedetail_component_1, router_1, Observable_1, passtag_service_1, angular2_infinite_scroll_1, app_constants_1, sharetimeline_component_1, users_selector_component_1, modaldialog_1;
+    var core_1, notes_service_1, timeline_service_1, tags_selector_component_1, timelinegroup_component_1, timelinedetail_component_1, router_1, Observable_1, passtag_service_1, angular2_infinite_scroll_1, app_constants_1, sharetimeline_component_1, users_selector_component_1, modaldialog_1;
     var TimeLineComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (recenttimeline_service_1_1) {
-                recenttimeline_service_1 = recenttimeline_service_1_1;
+            function (notes_service_1_1) {
+                notes_service_1 = notes_service_1_1;
             },
             function (timeline_service_1_1) {
                 timeline_service_1 = timeline_service_1_1;
@@ -58,9 +58,9 @@ System.register(['@angular/core', '../services/recenttimeline.service', '../serv
             }],
         execute: function() {
             TimeLineComponent = (function () {
-                function TimeLineComponent(_timeLineService, _recentTimeLineService, routeSegment, passTagService, _configuration) {
+                function TimeLineComponent(_timeLineService, _noteService, routeSegment, passTagService, _configuration) {
                     this._timeLineService = _timeLineService;
-                    this._recentTimeLineService = _recentTimeLineService;
+                    this._noteService = _noteService;
                     this.passTagService = passTagService;
                     this._configuration = _configuration;
                     this.oneAtATime = true;
@@ -240,26 +240,24 @@ System.register(['@angular/core', '../services/recenttimeline.service', '../serv
                 TimeLineComponent.prototype.onSelectedUsersChanged = function (_users) {
                     this.users = _users.map(function (d) { return d['userName']; });
                 };
-                TimeLineComponent.prototype.shareTimeline = function () {
-                    var timeline_share = {
-                        TimeLineId: this.note_id,
+                TimeLineComponent.prototype.shareNote = function () {
+                    var note_share = {
+                        Note: this.note_id,
                         AppUsers: this.users
                     };
-                    var selected = this.filteredTimelines.filter(function (obj) {
-                        return obj.id == timeline_share.TimeLineId;
-                    });
-                    this._recentTimeLineService.share(timeline_share).subscribe(function (res) { return selected[0].sharedWith = res; });
+                    var noteShareResponse;
+                    this._noteService.share(note_share).subscribe(function (res) { return noteShareResponse = res; });
                 };
                 TimeLineComponent = __decorate([
                     core_1.Component({
                         selector: 'timeline',
                         templateUrl: './app/timeline/timeline.component.html',
                         providers: [
-                            timeline_service_1.TimeLineService, recenttimeline_service_1.RecentTimeLineService
+                            timeline_service_1.TimeLineService, notes_service_1.NotesService
                         ],
                         directives: [tags_selector_component_1.TagsSelectorComponent, timelinegroup_component_1.TimelineInfo, timelinegroup_component_1.TimelineGroup, timelinedetail_component_1.TimelineDetail, timelinedetail_component_1.TimelineDetailGroup, angular2_infinite_scroll_1.InfiniteScroll, modaldialog_1.MODAL_DIRECTIVES, sharetimeline_component_1.ShareTimelineComponent, users_selector_component_1.UsersSelectorComponent]
                     }), 
-                    __metadata('design:paramtypes', [timeline_service_1.TimeLineService, recenttimeline_service_1.RecentTimeLineService, router_1.RouteSegment, passtag_service_1.PassTagService, app_constants_1.Configuration])
+                    __metadata('design:paramtypes', [timeline_service_1.TimeLineService, notes_service_1.NotesService, router_1.RouteSegment, passtag_service_1.PassTagService, app_constants_1.Configuration])
                 ], TimeLineComponent);
                 return TimeLineComponent;
             }());

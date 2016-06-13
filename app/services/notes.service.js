@@ -119,6 +119,16 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Observable', '@angular/
                     var key = headers._headersMap.entries().next().value[1][0].slice(7);
                     return key;
                 };
+                NotesService.prototype.share = function (request) {
+                    //console.log("Title: " + request.title + ", description: " + request.description);
+                    var body = JSON.stringify(request);
+                    //var headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
+                    var headers = this._authService.getHeader();
+                    headers.append('Content-Type', 'application/json; charset=utf-8');
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    return this.http.post(this.webApiUrl + '/ShareNote', body, options)
+                        .map(function (res) { return res.json(); });
+                };
                 NotesService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [router_1.Router, http_1.Http, app_constants_1.Configuration, auth_service_1.AuthService])

@@ -37,6 +37,7 @@ System.register(['@angular/core', '../services/auth.service', '../app.component'
                 function LoginComponent(_authService, _parent) {
                     this._authService = _authService;
                     this._parent = _parent;
+                    this.showLoginHtml = false;
                     this.userDetails = {
                         username: '',
                         password: '',
@@ -45,8 +46,10 @@ System.register(['@angular/core', '../services/auth.service', '../app.component'
                     this.errorMsg = '';
                 }
                 LoginComponent.prototype.ngOnInit = function () {
-                    if (!this._authService.loginUsingCookies())
+                    if (this._authService.loginUsingCookies() == false) {
+                        this.showLoginHtml = true;
                         return;
+                    }
                 };
                 LoginComponent.prototype.login = function () {
                     var _this = this;
@@ -77,7 +80,7 @@ System.register(['@angular/core', '../services/auth.service', '../app.component'
                         providers: [
                             auth_service_1.AuthService
                         ],
-                        styles: [' .login-content { height: 100vh; position: fixed; left:0; top: 0; margin-bottom: 110px;}'],
+                        styles: [' .login-content { height: 100vh; position: fixed; left:0; top: 0; margin-bottom: 110px;}', '.login-logo { padding: 33vh 0 0 0;}'],
                     }),
                     __param(1, core_1.Inject(core_1.forwardRef(function () { return app_component_1.AppComponent; }))), 
                     __metadata('design:paramtypes', [auth_service_1.AuthService, app_component_1.AppComponent])

@@ -15,14 +15,18 @@ export class UserDetails {
     providers: [
         AuthService
     ],
-    styles: [' .login-content { height: 100vh; position: fixed; left:0; top: 0; margin-bottom: 110px;}'],
+    styles: [' .login-content { height: 100vh; position: fixed; left:0; top: 0; margin-bottom: 110px;}','.login-logo { padding: 33vh 0 0 0;}'],
 })
 
 export class LoginComponent implements OnInit {
+    showLoginHtml: boolean = false;
     constructor(private _authService: AuthService, @Inject(forwardRef(() => AppComponent)) private _parent: AppComponent) {
     }
     ngOnInit() {
-        if (!this._authService.loginUsingCookies()) return;
+        if (this._authService.loginUsingCookies() == false) {
+            this.showLoginHtml = true;
+            return;
+        }
     }
     public userDetails: UserDetails = {
         username: '',
