@@ -5808,7 +5808,9 @@ timeline-group a .show-content, timeline-detail-group .timeline-heading a .show-
 
 .link-tag {
   color: #0277bd;
-  line-height: 25px; }
+  line-height: 25px;
+  /*background-color:#fff;
+  padding: 0 5px;*/ }
 
 .lbl-timeline-date {
   font-size: 30px !important; }
@@ -5866,20 +5868,27 @@ timeline-group a .show-content, timeline-detail-group .timeline-heading a .show-
   color: #000; }
 
 .list {
-  padding-top: 8px;
   padding-bottom: 8px; }
 
 .list-item {
   display: block;
   position: relative;
-  padding: 8px 16px; }
+  padding: 8px 16px 8px 0; }
 
 .list-left {
   float: left;
   padding-right: 1rem; }
 
 .list-left + .list-body {
-  margin-left: 56px; }
+  margin-left: 46px; }
+
+.list-left .avatar {
+  margin-top: 6px;
+  display: inline-block; }
+
+.list-left .avatar img {
+  width: 30px;
+  height: 30px; }
 
 .list-body a {
   color: #333; }
@@ -5938,7 +5947,7 @@ small {
   color: #90a4ae !important; }
 
 #sidebar.toggled {
-  z-index: 9999 !important; }
+  z-index: 99999999 !important; }
 
 .share-note-icon {
   color: #90a4ae;
@@ -6062,7 +6071,7 @@ small {
   clear: both;
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0.07);
-  margin: 0.5rem;
+  margin: 0.5rem 1rem;
   padding: 0.6rem !important; }
 
 .recent-activity-block {
@@ -6074,5 +6083,12 @@ small {
   margin: 0 0 10px 0;
   font-size: 14px;
   font-weight: 400; }
+
+.custom-panel-collapse {
+  background-color: rgba(0, 0, 0, 0.07);
+  margin-top: 10px; }
+
+.custom-panel-collapse .panel-body {
+  padding: 10px; }
 
 /*# sourceMappingURL=easy-meeting-css.css.map */

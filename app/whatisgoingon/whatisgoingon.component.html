@@ -18,10 +18,14 @@
                         </a>
                     </div>
                     <small class="text-muted text-ellipsis">
-                        <a style="cursor: pointer" (click)="select(activity)"><span class="common-tag"  *ngFor="let tag of activity.tags; let last = last">{{tag.name}}<span *ngIf="!last"></span></span></a>
+                        <a style="cursor: pointer" (click)="select(activity)"><span class="common-tag" *ngFor="let tag of activity.tags; let last = last">{{tag.name}}<span *ngIf="!last"></span></span></a>
                     </small>
                 </div>
-                <div></div>
+                <div id=i{{i}} class="panel-collapse collapse custom-panel-collapse">
+                    <div class="panel-body">
+                        <div [innerHTML]="activity.description"></div>
+                    </div>
+                </div>
             </div>
         </li>
     </ul>
