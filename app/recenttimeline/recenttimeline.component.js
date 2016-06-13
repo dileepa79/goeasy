@@ -127,18 +127,20 @@ System.register(['@angular/core', '../services/recenttimeline.service', '../serv
                     this.updateTimelineWatch(timeLineWatch, selectedTimeline);
                 };
                 RecentTimeLineComponent.prototype.setCurrentTimeline = function (_selectedTimeline) {
-                    this.currentTimeline_id = _selectedTimeline.timelineId;
+                    this.currentTimeline_id = _selectedTimeline.id;
+                    this.current_id = _selectedTimeline.timelineId;
                 };
                 RecentTimeLineComponent.prototype.onSelectedUsersChanged = function (_users) {
                     this.users = _users.map(function (d) { return d['userName']; });
                 };
                 RecentTimeLineComponent.prototype.shareTimeline = function () {
                     var timeline_share = {
-                        TimeLineId: this.currentTimeline_id,
+                        TimeLineId: this.current_id,
                         AppUsers: this.users
                     };
+                    var temp = this.currentTimeline_id;
                     var selected = this.recentTimelines.filter(function (obj) {
-                        return obj.id == timeline_share.TimeLineId;
+                        return obj.id == temp;
                     });
                     this._timeLineService.share(timeline_share).subscribe(function (res) { return selected[0].sharedWith = res; });
                 };

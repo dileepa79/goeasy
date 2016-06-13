@@ -41,6 +41,7 @@ export class RecentTimeLineComponent implements OnInit {
     keyboard: boolean = true;
     backdrop: string | boolean = true;
     currentTimeline_id: string;
+	current_id: string;
     users: any[] = [];
     isWatchedFilter: boolean = false;
 
@@ -126,7 +127,8 @@ export class RecentTimeLineComponent implements OnInit {
     }
 
     setCurrentTimeline(_selectedTimeline: any) {
-        this.currentTimeline_id = _selectedTimeline.timelineId;
+        this.currentTimeline_id = _selectedTimeline.id;
+		this.current_id = _selectedTimeline.timelineId;
     }
 
     onSelectedUsersChanged(_users: any[]): void {
@@ -135,11 +137,13 @@ export class RecentTimeLineComponent implements OnInit {
 
     shareTimeline() {
         var timeline_share = {
-            TimeLineId: this.currentTimeline_id,
+            TimeLineId: this.current_id,
             AppUsers: this.users
         };
+		var temp = this.currentTimeline_id;
+		
 		var selected = this.recentTimelines.filter(function (obj) {
-			return obj.id == timeline_share.TimeLineId;
+			return obj.id == temp;
 		});
 		
 		this._timeLineService.share(timeline_share).subscribe(res => selected[0].sharedWith = res);

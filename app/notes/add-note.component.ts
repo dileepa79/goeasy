@@ -21,7 +21,8 @@ import { FileUploaderComponent, FileToUpload } from '../fileuploader/file-upload
     directives: [TagsSelectorComponent, MODAL_DIRECTIVES, Editor, Header, UsersSelectorComponent, FileUploaderComponent]
 })
 
-export class AddNoteComponent implements OnInit{
+export class AddNoteComponent implements OnInit {
+    showLoading: boolean = false;
     constructor(private _notesService: NotesService, public _router: Router, private _passTagService: PassTagService, private zone: NgZone) {
         window.angularComponentRef = {
             zone: this.zone,
@@ -72,31 +73,36 @@ export class AddNoteComponent implements OnInit{
             this.istagSelectionValidated = true;
             this.isFromSlider = true;
         }
-
+        this.showLoading = true;
         this._notesService.addNote(this.noteRequest)
             .subscribe(note => {
-                    this.tagList = '';
-                    for (var i = 0; i < note.tags.length; i++) {
-                        this.tagList = this.tagList + (note.tags[i].name + (note.tags.length != i + 1 ? ',' : ''));
-                    }
-                    this.clear();
-                    if (this.isFromSlider) {
-                        if (this.isToggle)
-                            this._router.navigate(['/timeline', { tags: this.tagList + ',,'}]);
-                        else
-                            this._router.navigate(['/timeline', { tags: this.tagList + ',' }]);
+                this.tagList = '';
+                for (var i = 0; i < note.tags.length; i++) {
+                    this.tagList = this.tagList + (note.tags[i].name + (note.tags.length != i + 1 ? ',' : ''));
+                }
+                this.clear();
+                if (this.isFromSlider) {
+                    this.showLoading = false;
+                    if (this.isToggle)
+                        this._router.navigate(['/timeline', { tags: this.tagList + ',,' }]);
+                    else
+                        this._router.navigate(['/timeline', { tags: this.tagList + ',' }]);
 
-                        this.isToggle = !this.isToggle;
-                    }
-                    else {
-                        this._router.navigate(['/timeline', { tags: this.tagList }]);
-                    }
-                },
-                error => {
-                    this.errorMessage = <any>error,
-                        console.log(this.errorMessage);
-                },
-                () => () => console.log("Done"));
+                    this.isToggle = !this.isToggle;
+                }
+                else {
+                    this._router.navigate(['/timeline', { tags: this.tagList }]);
+                }
+            },
+            error => {
+                this.errorMessage = <any>error,
+                    console.log(this.errorMessage);
+                this.showLoading = false;
+            },
+            () => () => {
+                console.log("Done");
+                this.showLoading = false;
+            });
     }
 
     Share() {

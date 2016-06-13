@@ -52,6 +52,7 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                     this._router = _router;
                     this._passTagService = _passTagService;
                     this.zone = zone;
+                    this.showLoading = false;
                     this.noteRequest = {
                         title: '',
                         description: '',
@@ -97,6 +98,7 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                         this.istagSelectionValidated = true;
                         this.isFromSlider = true;
                     }
+                    this.showLoading = true;
                     this._notesService.addNote(this.noteRequest)
                         .subscribe(function (note) {
                         _this.tagList = '';
@@ -105,6 +107,7 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                         }
                         _this.clear();
                         if (_this.isFromSlider) {
+                            _this.showLoading = false;
                             if (_this.isToggle)
                                 _this._router.navigate(['/timeline', { tags: _this.tagList + ',,' }]);
                             else
@@ -117,7 +120,11 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                     }, function (error) {
                         _this.errorMessage = error,
                             console.log(_this.errorMessage);
-                    }, function () { return function () { return console.log("Done"); }; });
+                        _this.showLoading = false;
+                    }, function () { return function () {
+                        console.log("Done");
+                        _this.showLoading = false;
+                    }; });
                 };
                 AddNoteComponent.prototype.Share = function () {
                     console.log('Share This Note');
