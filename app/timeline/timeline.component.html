@@ -74,7 +74,7 @@
     <!-- Timeline Heading and Add Note -->
     <h1>
         {{title}}
-        <button class="btn-secondary btn" id="chat-trigger" data-trigger="#chat">
+        <button (click)="getSelectedTags()" [disabled]="timeLineRequest.data.length == 0" class="btn-secondary btn" id="chat-trigger" data-trigger="#chat">
             <i class="material-icons">playlist_add</i> <span> note</span>
         </button>
     </h1>
@@ -106,8 +106,8 @@
                              <div alt="" class="timeline-img pull-right">
                                  <img class="circle responsive-img" src={{Item.userImageUrl}}>
                              </div>
-                             <div class="pull-left share-note-icon">
-								 <button type="button" id="btn-share-note" (click)="parentModal.open(); setCurrentNote(Item);" class="btn share-note-icon" style="width:38px;height:27px">
+                             <div class="pull-left">
+								 <button type="button" id="btn-share-note" (click)="parentModal.open(); setCurrentNote(Item);" class="share-note-icon" style="width:38px;height:27px">
                                  <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
 								 </button>	
                              </div>

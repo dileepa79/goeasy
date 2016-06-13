@@ -66,6 +66,8 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                     this.tagList = '';
                     this.active = true;
                     this.tagsStr = '';
+                    this.isFromSlider = false;
+                    this.isToggle = false;
                     this.passedTags = [];
                     this.showCloseButton = false;
                     window.angularComponentRef = {
@@ -76,25 +78,42 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                 }
                 AddNoteComponent.prototype.ngOnInit = function () {
                     this.istagSelectionValidated = true;
+                    this.isToggle = false;
                 };
                 AddNoteComponent.prototype.Save = function () {
                     var _this = this;
-                    if (this.noteRequest.tags.length == 0) {
-                        this.istagSelectionValidated = false;
-                        return;
+                    var inputTagStr = $('#tagInput').text();
+                    if (inputTagStr.trim() == '') {
+                        if (this.noteRequest.tags.length == 0) {
+                            this.istagSelectionValidated = false;
+                            return;
+                        }
+                        else
+                            this.istagSelectionValidated = true;
+                        this.isFromSlider = false;
                     }
-                    else
+                    else {
+                        this.noteRequest.tags = inputTagStr.trim().split(",");
                         this.istagSelectionValidated = true;
-                    if (this.noteRequest.tags && this.noteRequest.tags.length == 0) {
-                        this.noteRequest.tags = $('#tagInput').text().split(",");
+                        this.isFromSlider = true;
                     }
                     this._notesService.addNote(this.noteRequest)
                         .subscribe(function (note) {
+                        _this.tagList = '';
                         for (var i = 0; i < note.tags.length; i++) {
                             _this.tagList = _this.tagList + (note.tags[i].name + (note.tags.length != i + 1 ? ',' : ''));
                         }
                         _this.clear();
-                        _this._router.navigate(['/timeline', { tags: _this.tagList }]);
+                        if (_this.isFromSlider) {
+                            if (_this.isToggle)
+                                _this._router.navigate(['/timeline', { tags: _this.tagList + ',,' }]);
+                            else
+                                _this._router.navigate(['/timeline', { tags: _this.tagList + ',' }]);
+                            _this.isToggle = !_this.isToggle;
+                        }
+                        else {
+                            _this._router.navigate(['/timeline', { tags: _this.tagList }]);
+                        }
                     }, function (error) {
                         _this.errorMessage = error,
                             console.log(_this.errorMessage);

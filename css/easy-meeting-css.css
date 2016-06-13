@@ -5447,7 +5447,7 @@ body {
   padding: 0 20px 10px;
   position: fixed;
   width: 100%;
-  z-index: 100; }
+  z-index: 99999; }
 
 .m-t-10 {
   margin-top: 10px; }
@@ -5713,9 +5713,7 @@ timeline-group a .show-content, timeline-detail-group .timeline-heading a .show-
 .ui-autocomplete {
   width: 100%; }
 
-.ui-autocomplete-input-token {
-  float: none; }
-
+/*.ui-autocomplete-input-token{float:none;}*/
 .area {
   width: 100%;
   padding: 15px; }
@@ -5947,8 +5945,15 @@ small {
 .share-note-icon {
   margin-top: 15px;
   padding-right: 16px;
-  color: #ddd;
-  padding-left: 10px; }
+  color: #90a4ae;
+  padding-left: 10px;
+  background-color: transparent;
+  box-shadow: none;
+  border: 0 none; }
+
+.share-note-icon:hover, .share-note-icon:focus {
+  background-color: transparent !important;
+  color: #2383bc; }
 
 .share-note-icon .glyphicon {
   font-size: 20px; }
@@ -6017,21 +6022,24 @@ small {
 
 .common-tag {
   line-height: normal !important;
-  display: block;
-  float: left;
+  display: inline-block;
   padding: 5px !important;
   background: #ccc;
   font-size: 10px;
   font-weight: bold;
   border-radius: 5px;
-  margin-right: 5px; }
+  margin-right: 5px;
+  color: #333 !important; }
 
 .lv-header {
   padding: 12px 10px 6px 0 !important;
   text-align: left !important; }
 
-.listview {
-  max-height: 70vh;
-  overflow-y: auto; }
+.dropdown-menu {
+  z-index: 99999 !important; }
+
+.recent-timeline-entry {
+  display: inline-block;
+  margin-left: 5px; }
 
 /*# sourceMappingURL=easy-meeting-css.css.map */

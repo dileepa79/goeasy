@@ -23,7 +23,6 @@ import { FileUploaderComponent, FileToUpload } from '../fileuploader/file-upload
 
 export class AddNoteComponent implements OnInit{
     constructor(private _notesService: NotesService, public _router: Router, private _passTagService: PassTagService, private zone: NgZone) {
-               
         window.angularComponentRef = {
             zone: this.zone,
            // componentFn: (value) => this.callFromOutside(value), 
@@ -47,32 +46,51 @@ export class AddNoteComponent implements OnInit{
     active = true;
     tagsStr: string='';
     istagSelectionValidated: boolean;
-
+    isFromSlider: boolean = false;
+    isToggle: boolean = false;
     passedTags: Tag[] = [];
     @Input() showCloseButton: boolean = false;
     ngOnInit() {
         this.istagSelectionValidated = true;
+        this.isToggle = false;
     }
 
     Save() {
-        if (this.noteRequest.tags.length == 0) {
-            this.istagSelectionValidated = false;
-            return;
-        }
-        else
-            this.istagSelectionValidated = true;
+        let inputTagStr = $('#tagInput').text();
+        if (inputTagStr.trim() == '') {
+            if (this.noteRequest.tags.length == 0) {
+                this.istagSelectionValidated = false;
+                return;
+            }
+            else
+                this.istagSelectionValidated = true;
 
-        if (this.noteRequest.tags && this.noteRequest.tags.length == 0) {
-            this.noteRequest.tags = $('#tagInput').text().split(",");
+            this.isFromSlider = false;
+        }
+        else {
+            this.noteRequest.tags = inputTagStr.trim().split(",");
+            this.istagSelectionValidated = true;
+            this.isFromSlider = true;
         }
 
         this._notesService.addNote(this.noteRequest)
             .subscribe(note => {
+                    this.tagList = '';
                     for (var i = 0; i < note.tags.length; i++) {
                         this.tagList = this.tagList + (note.tags[i].name + (note.tags.length != i + 1 ? ',' : ''));
                     }
                     this.clear();
-                    this._router.navigate(['/timeline', { tags: this.tagList }]);
+                    if (this.isFromSlider) {
+                        if (this.isToggle)
+                            this._router.navigate(['/timeline', { tags: this.tagList + ',,'}]);
+                        else
+                            this._router.navigate(['/timeline', { tags: this.tagList + ',' }]);
+
+                        this.isToggle = !this.isToggle;
+                    }
+                    else {
+                        this._router.navigate(['/timeline', { tags: this.tagList }]);
+                    }
                 },
                 error => {
                     this.errorMessage = <any>error,

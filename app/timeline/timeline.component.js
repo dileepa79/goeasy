@@ -85,8 +85,10 @@ System.register(['@angular/core', '../services/recenttimeline.service', '../serv
                     if (this.tagsStr != null) {
                         var tagsArr = this.tagsStr.split(",");
                         for (var i = 0; i < tagsArr.length; i++) {
-                            var tag = tagsArr[i];
-                            this.passedTags.push(tag);
+                            if (tagsArr[i].trim().length > 0) {
+                                var tag = tagsArr[i];
+                                this.passedTags.push(tag);
+                            }
                         }
                         this.timeLineRequest.data = this.passedTags;
                         this.isInitialLoad = true;
@@ -173,15 +175,23 @@ System.register(['@angular/core', '../services/recenttimeline.service', '../serv
                         if (typeof this.filteredTimelines != 'undefined') {
                             this.filteredTimelines = new Array();
                         }
-                        this.selectedTagStr = '';
-                        for (var i = 0; i < this.timeLineRequest.data.length; i++) {
-                            this.selectedTagStr = this.selectedTagStr + (this.timeLineRequest.data[i] + (this.timeLineRequest.data.length != i + 1 ? ',' : ''));
-                        }
-                        this.passTagService.setTags(this.selectedTagStr);
-                        $('#tagInput').text(this.selectedTagStr);
-                        window.angularComponentRef.zone.run(function () { window.angularComponentRef.component.updateSelectedTags(); });
+                        //this.selectedTagStr = '';
+                        //for (var i = 0; i < this.timeLineRequest.data.length; i++) {
+                        //    this.selectedTagStr = this.selectedTagStr + (this.timeLineRequest.data[i] + (this.timeLineRequest.data.length != i + 1 ? ',' : ''));
+                        //}
+                        //this.passTagService.setTags(this.selectedTagStr);
+                        //$('#tagInput').text(this.selectedTagStr);
+                        //window.angularComponentRef.zone.run(function () { window.angularComponentRef.component.updateSelectedTags(); });
                         this.getTimelines();
                     }
+                };
+                TimeLineComponent.prototype.getSelectedTags = function () {
+                    this.selectedTagStr = '';
+                    for (var i = 0; i < this.timeLineRequest.data.length; i++) {
+                        this.selectedTagStr = this.selectedTagStr + (this.timeLineRequest.data[i] + (this.timeLineRequest.data.length != i + 1 ? ',' : ''));
+                    }
+                    this.passTagService.setTags(this.selectedTagStr);
+                    $('#tagInput').text(this.selectedTagStr);
                 };
                 TimeLineComponent.prototype.getTimelines = function () {
                     var _this = this;

@@ -6,10 +6,10 @@
         <!--</div>-->
         <div class="pull-right" (click)="watchFilter(isWatchedFilter); $event.stopPropagation()">
             <span *ngIf="!isWatchedFilter" class="" title="" style="display:inline-block; cursor:pointer;">
-                <a class="btn-like"><i class="fa fa-heart"></i> View All</a>
+                <a class="btn-like"><i class="fa fa-heart"></i> View Watching</a>
             </span>
             <span *ngIf="isWatchedFilter" class="" title="Watched" style="display:inline-block; cursor:pointer;">
-                <a class="btn-like" style="background-color:#f44455 !important; color:#fff;"><i class="fa fa-heart" style="color:#fff;"></i> View Watching</a>
+                <a class="btn-like" style="background-color:#f44455 !important; color:#fff;"><i class="fa fa-heart" style="color:#fff;"></i> View All</a>
             </span>
             <!--<span *ngIf="!isWatchedFilter" class="fa-stack fa-lg" title="">
                 <i class="fa fa-heart fa-stack-2x" style="color:grey;cursor:pointer"></i>
@@ -63,7 +63,7 @@
                                 <a class="btn-like"><i class="fa fa-heart"></i></a>
                             </span>
                             <span *ngIf="timeline.isWatched" class="" title="Watched" style="display:inline-block; cursor:pointer;">
-                                <a class="btn-like" style="background-color:#f44455 !important; color:#fff;"><i class="fa fa-heart" style="color:#fff;"></i></a>
+                                <a class="btn-like" style="background-color:#f44455 !important;"><i class="fa fa-heart" style="color:#fff;"></i></a>
                             </span>
                         </div>
                     </div>
@@ -83,19 +83,16 @@
                     </div>-->
 
 
-                    <div class="row">
-                        <div class="col-md-2">
+                    <div class="share-with-block">
 
-                        </div>
-                        <div class="col-md-3">
-                            <span *ngIf="timeline.sharedWith.length > 0" style="margin-left: -10px;">SHARED WITH</span>
-                        </div>
-                        <div class="col-md-7">
+                            <div *ngIf="timeline.sharedWith.length > 0" style="">SHARED WITH</div>
+
                             <div style="margin-top: 20px; margin-left: -75px;">
                                 <css-carousel [images]="timeline.sharedWith"></css-carousel>
                             </div>
-                            <input type="button" value='Share' (click)="parentModal.open(); setCurrentTimeline(timeline)" class="btn btn-primary" style="margin-left:5px" />
-                        </div>
+                            <button type="button" value='Share' (click)="parentModal.open(); setCurrentTimeline(timeline)" class="share-note-icon" style="margin-left:5px">
+                                <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+                            </button>
                     </div>
                     <!--<div style="padding:10px 0px 10px 0px">
                         <div class="row">

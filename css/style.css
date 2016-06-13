@@ -317,7 +317,7 @@ Main components
   border-right: 7px solid white;
 }
 .ui-autocomplete-input-token .ui-inputtext {
-    width:100% !important;
+    width:60% !important;
 }
 
 .ui-autocomplete-input-token .ui-inputtext:focus {
