@@ -9,7 +9,8 @@
         public recentActivity: string,
         public noOfEntries: string,
         public dateDay: string,
-        public dateMonth: string
+        public dateMonth: string,
+		public timelineId: string
     )
     {}
 }

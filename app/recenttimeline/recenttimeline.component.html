@@ -1,15 +1,15 @@
 
 <div class="box" style="height:620px;">
-    <div class="box-header">
+    <div class="box-header" style="padding-bottom:0.5rem;">
         <!--<div class="col-md-6">-->
         <h3 class="pull-left">{{title}}</h3>
         <!--</div>-->
         <div class="pull-right" (click)="watchFilter(isWatchedFilter); $event.stopPropagation()">
             <span *ngIf="!isWatchedFilter" class="" title="" style="display:inline-block; cursor:pointer;">
-                <a class="btn-like"><i class="fa fa-heart"></i> View Watching</a>
+                <a class="btn-like"><i class="fa fa-heart mright-5"></i> View Watching</a>
             </span>
             <span *ngIf="isWatchedFilter" class="" title="Watched" style="display:inline-block; cursor:pointer;">
-                <a class="btn-like" style="background-color:#f44455 !important; color:#fff;"><i class="fa fa-heart" style="color:#fff;"></i> View All</a>
+                <a class="btn-like" style="background-color:#f44455 !important; color:#fff;"><i class="fa fa-heart mright-5" style="color:#fff;"></i> View All</a>
             </span>
             <!--<span *ngIf="!isWatchedFilter" class="fa-stack fa-lg" title="">
                 <i class="fa fa-heart fa-stack-2x" style="color:grey;cursor:pointer"></i>
@@ -45,11 +45,11 @@
                 </span>
             </div>
             <!-- tags line -->
-            <div class="recent-timeline-note" (click)="select(timeline)">
+            <div class="recent-timeline-note">
                 <div class="recent-timeline-tags">
                     <div>
                         <div *ngFor="let tag of timeline.tags; let last = last" class="pull-left">
-                            <span class="pull-left link-tag">{{tag.name}}</span><span *ngIf="!last" class="add-tag"> + </span>
+                            <span class="pull-left link-tag" (click)="select(timeline)">{{tag.name}}</span><span *ngIf="!last" class="add-tag"> + </span>
                         </div>
                         <div class="recent-timeline-entry pull-left" *ngIf="timeline.noOfEntries">({{timeline.noOfEntries}})</div>
                         <button type="button" value='Share' (click)="parentModal.open(); setCurrentTimeline(timeline)" class="share-note-icon pull-left" style="margin-left:6px;">
@@ -65,7 +65,7 @@
                         </span>
                     </div>
                 </div>
-                <div style="padding: 10px 0 0 40px;">
+                <div class="recent-activity-block">
                     {{timeline.recentActivity}}
                 </div>
             </div>

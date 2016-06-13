@@ -40,7 +40,7 @@
 
                 <!-- -------------Add Note Form------------- -->
                 <form *ngIf="active"  #noteForm="ngForm">
-                    <div class="form-group">
+                    <div *ngIf="showCloseButton" class="form-group">
                         <label class="float-left">Tags</label>
                         <p id="tagInput" class="float-left add-note-tag"></p>
                         <br />

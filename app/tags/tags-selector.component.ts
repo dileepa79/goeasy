@@ -31,8 +31,19 @@ export class TagsSelectorComponent{
         let query = event.query;
         this.tagService.getTags().then(tags => {
             this.filteredtagsMultiple = this.filtertag(query, tags);
-            //let selected = { "name": query, "code": query }
-            //this.filteredtagsMultiple.splice(0, 0, selected);
+
+            let tag = { "name": query, "code": query }
+
+            if (this.filteredtagsMultiple.some(
+                function (obj) {
+                    return obj.name.toLowerCase() === tag.name.toLowerCase();
+                }
+            )
+            ) {
+                //this.filteredtagsMultiple.shift();
+            }
+            else if (this.isAllowedNewInput)
+                this.filteredtagsMultiple.splice(0, 0, tag);
         });
     }
 

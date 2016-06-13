@@ -125,7 +125,7 @@ Main components
 .timeline-description {
     padding: 0 !important;
     box-shadow:none !important;
-    margin-bottom:15px;
+    overflow:hidden;
 }
 @media only screen and (min-width: 1170px) {
   /*.cd-timeline-block {

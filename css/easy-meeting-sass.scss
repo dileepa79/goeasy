@@ -72,7 +72,7 @@ body {
     font-size: 60px;
     font-family: 'Sacramento', cursive;
     text-decoration: none;
-    padding: 50px 0 0 0;
+    padding: 50px 0 0 0 !important;
     text-align: center;
     font-weight: 600;
 
@@ -161,7 +161,7 @@ body {
     padding: 0 20px 10px;
     position: fixed;
     width: 100%;
-    z-index: 99999;
+    z-index: 999999;
 }
 
 .m-t-10{margin-top:10px;}
@@ -356,7 +356,6 @@ prime-app{
 }
 
 .timeline-description{
-    background: #fff;
     padding: 0 10px;
     /*box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.05);*/
     /*margin-left:64px;*/
@@ -530,13 +529,10 @@ background: none !important;
 
 .recent-timeline-timestamp {
     text-align: center;
-    /* margin-left: -25px; */
-    margin-bottom: 20px;
     font-size: 22px;
     float:left;
     width:12%;
-    background-color:#fafafa;
-    border-radius:5px;
+    background-color:#dbdbdb;
     padding:8px;
 }
 .recent-timeline-timestamp .recent-timeline-date {
@@ -547,7 +543,7 @@ background: none !important;
     margin-top:5px;
 }
 .recent-timeline-timestamp .recent-timeline-month {
-    color: #999;
+    color: #666;
     min-width: 50px;
     font-size: 16px;
     text-align: center;
@@ -561,6 +557,7 @@ background: none !important;
     font-size: 20px;
     font-weight:400;
     text-decoration: none;
+    position:relative;
 }
 .recent-timeline-tags>span {
     line-height: 18px;
@@ -577,6 +574,7 @@ background: none !important;
 
 .link-tag {
     color:#0277bd;
+    line-height:25px;
 }
 
 .lbl-timeline-date {
@@ -743,10 +741,7 @@ background: none !important;
 }
 
 .share-note-icon {
-    margin-top: 15px;
-    padding-right: 16px;
     color:#90a4ae;  
-    padding-left:10px;
     background-color: transparent;
     box-shadow: none;
     border: 0 none;
@@ -761,18 +756,32 @@ background: none !important;
     font-size:20px;
 }
 
+.add-tag {
+    float:left;
+    line-height:25px;
+    padding: 0 5px;
+}
+
 .mtop-40 {
     margin-top:40px !important;
 }
 
+.mtop-14 {
+    margin-top:14px !important;
+}
+
+.mright-5 {
+    margin-right:5px;
+}
+
 .btn-like {
     border-radius: 500px;
-    padding:0.5em 1.2em;
+    padding:0.4em 1.2em;
     border:1px solid rgba(120,130,140,.13);
     color: rgba(0,0,0,.87);    
     display:inline-block;
     font-weight:500;
-    font-size:12px;
+    font-size:14px;
 
     .fa-heart {
         color:#f44455;
@@ -837,9 +846,6 @@ background: none !important;
         margin-top:0;
 
     }
-
-    
-
   }
   .common-tag{
         line-height: normal !important;
@@ -857,6 +863,11 @@ background: none !important;
       text-align:left !important;
   }
 
+ .lv-body {
+    height: 72vh;
+    overflow-y: auto;
+}
+
   .dropdown-menu {
       z-index:99999 !important;
   }
@@ -865,4 +876,31 @@ background: none !important;
   .recent-timeline-entry {
       display:inline-block;
       margin-left:5px;
+      font-size:12px;
+      line-height:25px;
+  }
+
+  .share-with-block {
+      float:left;
+      padding-left:15px;
+  }
+
+  .recent-timeline-item {
+      clear:both;
+      overflow:hidden;
+      background-color:rgba(0,0,0,0.07);
+      margin: 0.5rem;
+      padding: 0.6rem !important;
+  }
+
+  .recent-activity-block {
+      clear:both;
+      margin-top:8px;
+  }
+
+  .box-item-header {
+      color:#0277bd;
+      margin:0 0 10px 0;
+      font-size:14px;
+      font-weight:400;
   }

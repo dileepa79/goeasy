@@ -127,7 +127,7 @@ System.register(['@angular/core', '../services/recenttimeline.service', '../serv
                     this.updateTimelineWatch(timeLineWatch, selectedTimeline);
                 };
                 RecentTimeLineComponent.prototype.setCurrentTimeline = function (_selectedTimeline) {
-                    this.currentTimeline_id = _selectedTimeline.id;
+                    this.currentTimeline_id = _selectedTimeline.timelineId;
                 };
                 RecentTimeLineComponent.prototype.onSelectedUsersChanged = function (_users) {
                     this.users = _users.map(function (d) { return d['userName']; });

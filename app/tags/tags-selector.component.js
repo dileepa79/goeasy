@@ -36,8 +36,13 @@ System.register(['@angular/core', 'primeng/primeng', '../services/tags.service']
                     var query = event.query;
                     this.tagService.getTags().then(function (tags) {
                         _this.filteredtagsMultiple = _this.filtertag(query, tags);
-                        //let selected = { "name": query, "code": query }
-                        //this.filteredtagsMultiple.splice(0, 0, selected);
+                        var tag = { "name": query, "code": query };
+                        if (_this.filteredtagsMultiple.some(function (obj) {
+                            return obj.name.toLowerCase() === tag.name.toLowerCase();
+                        })) {
+                        }
+                        else if (_this.isAllowedNewInput)
+                            _this.filteredtagsMultiple.splice(0, 0, tag);
                     });
                 };
                 TagsSelectorComponent.prototype.filtertag = function (query, tags) {

@@ -126,7 +126,7 @@ export class RecentTimeLineComponent implements OnInit {
     }
 
     setCurrentTimeline(_selectedTimeline: any) {
-        this.currentTimeline_id = _selectedTimeline.id;
+        this.currentTimeline_id = _selectedTimeline.timelineId;
     }
 
     onSelectedUsersChanged(_users: any[]): void {
