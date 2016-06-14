@@ -5,7 +5,7 @@
 
     <ul class="list">
         <li class="list-item" *ngFor="let activity of whatisgoingonTimelines; let i=index">
-            <div *ngIf="i<5">
+            <div *ngIf="i<=5">
                 <a href="#" class="list-left">
                     <span class="w-40 avatar">
                         <img class="circle responsive-img" src={{activity.userImage}}>

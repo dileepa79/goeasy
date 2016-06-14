@@ -107,7 +107,7 @@
                 </div>
 
                 <div class="col-sm-10">
-                    <user-app [isallowednewinput]="true" (usersAdded)='onSelectedUsersChanged($event)' (usersRemoved)="onSelectedUsersChanged($event)">Loading...</user-app>
+                    <user-app [isAllowedNewInput]="false" (usersAdded)='onSelectedUsersChanged($event)' (usersRemoved)="onSelectedUsersChanged($event)">Loading...</user-app>
                 </div>
             </div>
         </form>

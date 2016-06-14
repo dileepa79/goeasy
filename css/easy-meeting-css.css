@@ -5873,7 +5873,9 @@ timeline-group a .show-content, timeline-detail-group .timeline-heading a .show-
 .list-item {
   display: block;
   position: relative;
-  padding: 8px 16px 8px 0; }
+  padding: 8px;
+  margin: 0 0 0.5rem;
+  background-color: #e4e4e4; }
 
 .list-left {
   float: left;

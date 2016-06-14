@@ -32,11 +32,14 @@ export class TagsSelectorComponent{
         this.tagService.getTags().then(tags => {
             this.filteredtagsMultiple = this.filtertag(query, tags);
 
-            let tag = { "name": query, "code": query }
+            let tag = { "name": '*' + query, "code": query }
 
             if (this.filteredtagsMultiple.some(
                 function (obj) {
-                    return obj.name.toLowerCase() === tag.name.toLowerCase();
+                    if (tag.name.charAt(0) === '*')
+                        return obj.name.toLowerCase() === tag.name.substring(1).toLowerCase();
+                    else
+                        return obj.name.toLowerCase() === tag.name.toLowerCase();
                 }
             )
             ) {

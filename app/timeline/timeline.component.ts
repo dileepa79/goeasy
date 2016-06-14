@@ -74,8 +74,8 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
     }
 
     onScroll() {
-        // console.log('scrolled!!')
-        this.getTimelines();
+        if (!this.isLoading)
+            this.getTimelines();
     }
 
     routerCanDeactivate(currTree?: any, futureTree?: any) {

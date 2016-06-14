@@ -21,7 +21,7 @@
                                     <label for="user-app" class="col-sm-pull-4 control-label">Whom would you like to share with ?</label>
                                 </div>
                                 <div class="col-sm-10">
-                                    <user-app [isallowednewinput]="true" (usersadded)='onSelectedUsersChanged($event)' (usersremoved)="onSelectedUsersChanged($event)">Loading...</user-app>
+                                    <user-app [isAllowedNewInput]="false" (usersadded)='onSelectedUsersChanged($event)' (usersremoved)="onSelectedUsersChanged($event)">Loading...</user-app>
                                 </div>
                             </div>
                         </div>

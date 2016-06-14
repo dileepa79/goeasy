@@ -96,8 +96,8 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
                     this.getTimelines();
                 };
                 TimeLineComponent.prototype.onScroll = function () {
-                    // console.log('scrolled!!')
-                    this.getTimelines();
+                    if (!this.isLoading)
+                        this.getTimelines();
                 };
                 TimeLineComponent.prototype.routerCanDeactivate = function (currTree, futureTree) {
                     this.timeLineRequest.isPersistedSearch = true;
