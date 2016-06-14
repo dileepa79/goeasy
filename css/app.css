@@ -13259,7 +13259,7 @@ body.login-content:before {
   transition: all;
   -webkit-transition-duration: 300ms;
   transition-duration: 300ms;
-  margin: 10px 20px;
+  margin: 10px 6px;
 }
 .line-wrap .line {
   width: 18px;

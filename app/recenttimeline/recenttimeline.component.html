@@ -43,7 +43,7 @@
                                 <span class="pull-left link-tag" (click)="select(timeline)">{{tag.name}}</span><span *ngIf="!last" class="add-tag"> + </span>
                             </div>
                             <div class="recent-timeline-entry pull-left" *ngIf="timeline.noOfEntries">({{timeline.noOfEntries}})</div>
-                            <button type="button" value='Share' (click)="parentModal.open(); setCurrentTimeline(timeline)" class="share-note-icon pull-left" style="margin-left:6px;">
+                            <button type="button" value='Share' (click)="parentModal.open(); setCurrentTimeline(timeline)" class="share-note-icon pull-left" style="margin-left:6px;" title="Share">
                                 <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
                             </button>
                         </div>
@@ -97,7 +97,7 @@
 
 <modal [animation]="animation" [keyboard]="keyboard" [backdrop]="backdrop" #parentModal>
     <modal-header [show-close]="true">
-        <p>Share</p>
+        <p>SHARE</p>
     </modal-header>
     <modal-body>
         <form class="form-horizontal">

@@ -107,9 +107,9 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
                 TimeLineComponent.prototype.onSelectedTagsAdded = function (tags) {
                     var _this = this;
                     this.selectedTags = tags;
+                    var selected = this.selectedTags;
+                    $('#tagInput').text(selected);
                     if (this.selectedTags.length != 0) {
-                        var selected = this.selectedTags;
-                        $('#tagInput').text(selected);
                         this.filteredTimelines.forEach(function (tl) {
                             var itemIndexesToDelete = [];
                             tl.items.forEach(function (item) {
@@ -192,6 +192,12 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
                     }
                     this.passTagService.setTags(this.selectedTagStr);
                     $('#tagInput').text(this.selectedTagStr);
+                    var selectedTagArray = this.selectedTagStr.split(",");
+                    var selected = '<span>&nbsp;</span>';
+                    for (var i = 0; i < selectedTagArray.length; i++) {
+                        selected += '<span class="common-tag">' + selectedTagArray[i] + '</span>';
+                    }
+                    $('#tagInput1').html(selected);
                 };
                 TimeLineComponent.prototype.getTimelines = function () {
                     var _this = this;

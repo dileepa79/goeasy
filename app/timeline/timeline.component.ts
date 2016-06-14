@@ -84,12 +84,14 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
 
         return Observable.of(true).delay(200).toPromise();
     }
+	
 
+	
     onSelectedTagsAdded(tags: any[]): void {
         this.selectedTags = tags;
+        var selected = this.selectedTags;
+        $('#tagInput').text(selected);		
         if (this.selectedTags.length != 0) {
-            var selected = this.selectedTags;
-            $('#tagInput').text(selected);
             this.filteredTimelines.forEach((tl) => {
                 var itemIndexesToDelete = [];
                 tl.items.forEach((item) => {
@@ -191,6 +193,14 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
         }
         this.passTagService.setTags(this.selectedTagStr);
         $('#tagInput').text(this.selectedTagStr);
+		
+		 var selectedTagArray = this.selectedTagStr.split(",");
+		 var selected = '<span>&nbsp;</span>';
+		 for (var i = 0; i < selectedTagArray.length; i++) {
+			selected += '<span class="common-tag">' + selectedTagArray[i] + '</span>';
+		 }
+		$('#tagInput1').html(selected);	
+		
     }
 
     getTimelines() {

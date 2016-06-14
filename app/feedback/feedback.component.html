@@ -6,7 +6,7 @@
 
 <modal #modal>
     <modal-header [show-close]="true">
-        <h4 class="modal-title">Please give your Feedback</h4>
+        <p style="text-transform: uppercase ">Please give your Feedback</p>
     </modal-header>
     <modal-body>
         <input type="button" class="btn btn-default" value="Like" (click)="sendFeedback(true)" />
@@ -14,4 +14,4 @@
     </modal-body>
     <!--<modal-footer [show-default-buttons]="true"></modal-footer>-->
 </modal>
-<div (click)="modal.open()">Feedback</div>
+<div (click)="modal.open()" style="cursor: pointer">Feedback</div>

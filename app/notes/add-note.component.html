@@ -41,7 +41,8 @@
                 <form *ngIf="active"  #noteForm="ngForm">
                     <div *ngIf="showCloseButton" class="form-group">
                         <label class="float-left">Tags</label>
-                        <p id="tagInput" class="float-left add-note-tag"></p>
+						<div id="tagInput1"></div>
+						<div id="tagInput" class="hidden"></div>
                         <br />
                     </div>
                     <div class="form-group">
@@ -49,7 +50,7 @@
                         <!-- <input [(ngModel)]="noteRequest.title" class="form-control" required ngControl="title"/>-->
                         <input type="text" class="form-control" required [(ngModel)]="noteRequest.title" ngControl="title" #title="ngForm">
                         <div [hidden]="title.valid || title.pristine" class="reqire-field">
-                            Title is required
+                            Oops! Seems you have forgotten to enter title. 
                         </div>
                     </div>
                     <div class="form-group">
@@ -63,7 +64,7 @@
                         <div class="col-md-12 no-padding">
                             <prime-app [isAllowedNewInput]="true" [inputValues]="noteRequest.tags" (tagsAdded)='onSelectedTagsChanged($event)' (tagsRemoved)="onSelectedTagsChanged($event)">Loading...</prime-app>
                             <div *ngIf="!istagSelectionValidated" class="reqire-field">
-                                Please select atleast one tag for this note.
+                                Oops! Seems you have forgotten to select any tag for this note.
                             </div>
                         </div>
                     </div>

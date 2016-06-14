@@ -76,7 +76,7 @@ $(document).ready(function(){
             
             
 
-	    $('.profile-menu .main-menu').hide();
+	    $('.profile-menu .main-menu').show();
             
             if (x == '#sidebar') {
                 
@@ -384,11 +384,11 @@ $(document).ready(function(){
     /*
     * Profile Menu
     */
-    $('body').on('click', '.profile-menu > a', function(e){
-        e.preventDefault();
-        $(this).parent().toggleClass('toggled');
-	    $(this).next().slideToggle(200);
-    });
+    //$('body').on('click', '.profile-menu > a', function(e){
+    //    e.preventDefault();
+    //    $(this).parent().toggleClass('toggled');
+	//    $(this).next().slideToggle(200);
+    //});
 
     /*
      * Text Feild
