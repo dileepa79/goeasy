@@ -629,3 +629,14 @@ p-autocomplete .ui-autocomplete.ui-widget ul li.ui-autocomplete-token .ui-autoco
 .timeline-group-heading a:hover, .timeline-group-heading:hover a {
     color:#333;
 }
+
+  .no-records-container  {
+    background: #eceff1;
+    padding:1rem;
+    margin-bottom: 20px;
+  }
+
+ .no-records-container p{
+        margin:0;
+        color:#666;
+    }

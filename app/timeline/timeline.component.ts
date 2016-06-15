@@ -103,7 +103,7 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
             this.timeLineRequest.pageNo = 1;
             this.filteredTimelines = [];
             this.timeLinesList = [];
-
+            this.isLoading = false;
             this.getTimelines();
         }
     }
@@ -141,10 +141,10 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
     getTimelines() {
         this._timeLineService.getTimeLines(this.timeLineRequest)
             .subscribe(timelines => {
-                if (timelines.length <= 0) {
-                    this.showlabel = true;
-                    return;
-                }
+                //if (timelines.length <= 0) {
+                //    this.showlabel = true;
+                //    return;
+                //}
                 if (this.isLoading) return;
                 this.isLoading = true;
                 this.timelines = timelines;
@@ -214,12 +214,15 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
                 if (this.timelines.length > 0) {
                     this.timeLineRequest.pageNo = this.timeLineRequest.pageNo + 1;
                     this.isLoading = false;
+                }
+                //else {
+                //    this.isLoading = true;
+                //}
+                if (this.timeLinesList.length > 0)
                     this.showlabel = false;
-                }
-                else {
-                    this.isLoading = true;
+                else
                     this.showlabel = true;
-                }
+
                 console.log(this.timelines);
                 console.log(this.filteredTimelines);
 

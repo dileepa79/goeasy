@@ -120,6 +120,7 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
                         this.timeLineRequest.pageNo = 1;
                         this.filteredTimelines = [];
                         this.timeLinesList = [];
+                        this.isLoading = false;
                         this.getTimelines();
                     }
                 };
@@ -152,10 +153,10 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
                     var _this = this;
                     this._timeLineService.getTimeLines(this.timeLineRequest)
                         .subscribe(function (timelines) {
-                        if (timelines.length <= 0) {
-                            _this.showlabel = true;
-                            return;
-                        }
+                        //if (timelines.length <= 0) {
+                        //    this.showlabel = true;
+                        //    return;
+                        //}
                         if (_this.isLoading)
                             return;
                         _this.isLoading = true;
@@ -221,12 +222,14 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
                         if (_this.timelines.length > 0) {
                             _this.timeLineRequest.pageNo = _this.timeLineRequest.pageNo + 1;
                             _this.isLoading = false;
+                        }
+                        //else {
+                        //    this.isLoading = true;
+                        //}
+                        if (_this.timeLinesList.length > 0)
                             _this.showlabel = false;
-                        }
-                        else {
-                            _this.isLoading = true;
+                        else
                             _this.showlabel = true;
-                        }
                         console.log(_this.timelines);
                         console.log(_this.filteredTimelines);
                     }, function (error) {

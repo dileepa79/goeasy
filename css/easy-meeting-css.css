@@ -5565,7 +5565,7 @@ prime-app input[type=text] {
 
 .timeline-group-heading {
   width: 20%;
-  background: #90a4ae;
+  background-color:transparent;
   padding: 10px;
   border-radius: 2px;
   text-align: center;
@@ -5573,7 +5573,7 @@ prime-app input[type=text] {
   position: relative;
   z-index: 99; }
   .timeline-group-heading a {
-    color: #fff; }
+    color: #333; }
 
 .timeline-group-heading:hover {
   background-color: #738a95;
@@ -6040,13 +6040,52 @@ small {
 .common-tag {
   line-height: normal !important;
   display: inline-block;
-  padding: 5px !important;
+  padding: 5px 12px 5px 5px !important;
   background: #ccc;
   font-size: 10px;
   font-weight: bold;
   border-radius: 5px;
   margin-right: 5px;
-  color: #333 !important; }
+  color: #fff !important;
+    -webkit-border-top-left-radius: 4px !important;
+    -webkit-border-bottom-left-radius: 4px !important;
+    -moz-border-radius-topleft: 4px !important;
+    -moz-border-radius-bottomleft: 4px !important;
+    border-top-left-radius: 4px !important;
+    border-bottom-left-radius: 4px !important;
+    background-image: url('../img/tag-right-bg.jpg');
+    background-position:top right;
+    background-repeat:no-repeat;
+    background-size:auto 100%;
+    border:1px solid #fff !important;
+    background-color:#90a4ae !important;
+
+}
+
+whatisgoingon .common-tag {
+  line-height: normal !important;
+  display: inline-block;
+  padding: 5px 12px 5px 5px !important;
+  font-size: 10px;
+  font-weight: bold;
+  border-radius: 5px;
+  margin-right: 5px;
+  color: #fff !important;
+    -webkit-border-top-left-radius: 4px !important;
+    -webkit-border-bottom-left-radius: 4px !important;
+    -moz-border-radius-topleft: 4px !important;
+    -moz-border-radius-bottomleft: 4px !important;
+    border-top-left-radius: 4px !important;
+    border-bottom-left-radius: 4px !important;
+    background-image: url('../img/tag-right-bg-2.jpg');
+    background-position:top right;
+    background-repeat:no-repeat;
+    background-size:auto 100%;
+    border:0px solid #fff !important;
+    background-color:#90a4ae !important;
+
+}
+
 
 .lv-header {
   padding: 12px 10px 6px 0 !important;
@@ -6092,13 +6131,5 @@ small {
 
 .custom-panel-collapse .panel-body {
   padding: 10px; }
-
-.no-records-container {
-  background: #eceff1;
-  padding: 1rem;
-  margin-bottom: 20px; }
-  .no-records-container p {
-    margin: 0;
-    color: #666; }
 
 /*# sourceMappingURL=easy-meeting-css.css.map */
