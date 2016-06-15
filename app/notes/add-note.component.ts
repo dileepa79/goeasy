@@ -11,6 +11,7 @@ import { Router} from '@angular/router';
 import {PassTagService} from '../services/passtag.service';
 import { Tag } from '../tags/tags-response';
 import { FileUploaderComponent, FileToUpload } from '../fileuploader/file-uploader.component';
+import {LoadingComponent} from '../loader/loading.component';
 
 @Component({
     selector: 'add-note',
@@ -22,11 +23,9 @@ import { FileUploaderComponent, FileToUpload } from '../fileuploader/file-upload
 })
 
 export class AddNoteComponent implements OnInit {
-    showLoading: boolean = false;
     constructor(private _notesService: NotesService, public _router: Router, private _passTagService: PassTagService, private zone: NgZone) {
         window.angularComponentRef = {
-            zone: this.zone,
-           // componentFn: (value) => this.callFromOutside(value), 
+            zone: this.zone, 
             component: this
         };
     }
@@ -73,7 +72,7 @@ export class AddNoteComponent implements OnInit {
             this.istagSelectionValidated = true;
             this.isFromSlider = true;
         }
-        this.showLoading = true;
+        window.loadingComponentRef.zone.run(function () { window.loadingComponentRef.component.show(); });
         this._notesService.addNote(this.noteRequest)
             .subscribe(note => {
                 this.tagList = '';
@@ -81,8 +80,8 @@ export class AddNoteComponent implements OnInit {
                     this.tagList = this.tagList + (note.tags[i].name + (note.tags.length != i + 1 ? ',' : ''));
                 }
                 this.clear();
+                window.loadingComponentRef.zone.run(function () { window.loadingComponentRef.component.hide(); });
                 if (this.isFromSlider) {
-                    this.showLoading = false;
                     if (this.isToggle)
                         this._router.navigate(['/timeline', { tags: this.tagList + ',,' }]);
                     else
@@ -97,11 +96,11 @@ export class AddNoteComponent implements OnInit {
             error => {
                 this.errorMessage = <any>error,
                     console.log(this.errorMessage);
-                this.showLoading = false;
+                window.loadingComponentRef.zone.run(function () { window.loadingComponentRef.component.hide(); });
             },
             () => () => {
                 console.log("Done");
-                this.showLoading = false;
+                window.loadingComponentRef.zone.run(function () { window.loadingComponentRef.component.hide(); });
             });
     }
 

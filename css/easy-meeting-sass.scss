@@ -797,14 +797,14 @@ background: none !important;
     font-size:14px;
 
     .fa-heart {
-        color:#f44455;
+        color:#26a69a;
     }
 }
 
 .btn-like:hover{
         text-decoration:none;
         color:#fff;
-        background-color:#f44455;
+        background-color:#26a69a;
 
         .fa-heart {
             color:#fff;
@@ -812,7 +812,7 @@ background: none !important;
 }
 
 .btn-like:active {
-    background-color:#d9534f !important;
+    background-color:#1a9489 !important;
     text-decoration:none;
     color:#fff;
 }
@@ -925,4 +925,15 @@ background: none !important;
 
   .custom-panel-collapse .panel-body {
       padding:10px;
+  }
+
+  .no-records-container  {
+    background: #eceff1;
+    padding:1rem;
+    margin-bottom: 20px;
+
+    p{
+        margin:0;
+        color:#666;
+    }
   }

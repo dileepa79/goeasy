@@ -53,12 +53,15 @@ System.register(['@angular/core', '../services/auth.service', '../app.component'
                 };
                 LoginComponent.prototype.login = function () {
                     var _this = this;
+                    window.loadingComponentRef.zone.run(function () { window.loadingComponentRef.component.show(); });
                     this.errorMsg = '';
                     this._authService.login(this.userDetails.username, this.userDetails.password, this.userDetails.rememberMe).subscribe(function (data) {
                         //console.log("access token: "+data.access_token)
                         _this._authService.setToken(data.access_token);
                         _this._authService.setTokenExpiresIn(data.expires_in);
+                        window.loadingComponentRef.zone.run(function () { window.loadingComponentRef.component.hide(); });
                     }, function (err) {
+                        window.loadingComponentRef.zone.run(function () { window.loadingComponentRef.component.hide(); });
                         console.log("error: " + JSON.stringify(err));
                         _this._authService.setAuthorized(false);
                         _this.errorMsg = 'Oops, the username or password entered is wrong. May be you have pressed a wrong key..';

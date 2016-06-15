@@ -92,7 +92,7 @@
              [scrollWindow]="true">
         </div>
 
-        <timeline-group [heading]="timeline.dateFormat" *ngFor="let timeline of filteredTimelines;  let i = index" [isOpen]="i === i" [availableCountText]="timeline.availableThreadsCountText" [isLabled]="timeline.isLabled">
+        <timeline-group [heading]="timeline.dateFormat" *ngFor="let timeline of timeLinesList;  let i = index" [isOpen]="i === i" [availableCountText]="timeline.availableThreadsCountText">
 
             <section id="cd-timeline" class="cd-container">
              <div class="cd-timeline-block" *ngFor="let Item of timeline.items">
@@ -134,6 +134,7 @@
 
             </section> <!-- cd-timeline --> 
         </timeline-group>
+        <div *ngIf="showlabel">No Records are found for the given Tag Combination</div>
     </timelineinfo>
 </section>
 <input type="hidden" value="2" id="application-view-id"/>

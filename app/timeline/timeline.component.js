@@ -72,6 +72,7 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
                     this.users = [];
                     this.isInitialLoad = false;
                     this.counter = 0;
+                    this.showlabel = false;
                     this.timeLineRequest = {
                         data: [],
                         isPersistedSearch: false,
@@ -96,69 +97,14 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
                     this.getTimelines();
                 };
                 TimeLineComponent.prototype.onScroll = function () {
-                    if (!this.isLoading)
+                    //if (!this.isLoading)
+                    if (this.timeLineRequest.pageNo > 1)
                         this.getTimelines();
                 };
                 TimeLineComponent.prototype.routerCanDeactivate = function (currTree, futureTree) {
                     this.timeLineRequest.isPersistedSearch = true;
                     this.getTimelines();
                     return Observable_1.Observable.of(true).delay(200).toPromise();
-                };
-                TimeLineComponent.prototype.onSelectedTagsAdded = function (tags) {
-                    var _this = this;
-                    this.selectedTags = tags;
-                    var selected = this.selectedTags;
-                    $('#tagInput').text(selected);
-                    if (this.selectedTags.length != 0) {
-                        this.filteredTimelines.forEach(function (tl) {
-                            var itemIndexesToDelete = [];
-                            tl.items.forEach(function (item) {
-                                var selectedArr = selected.map(function (d) { return d['name']; });
-                                var itemsArr = item.tags.map(function (d) { return d['name']; });
-                                var isExists = selectedArr.every(function (i) { return itemsArr.indexOf(i) !== -1; });
-                                if (!isExists) {
-                                    var index = tl.items.indexOf(item);
-                                    if (index > -1) {
-                                        itemIndexesToDelete.push(index);
-                                    }
-                                }
-                            });
-                            for (var i = itemIndexesToDelete.length - 1; i >= 0; i--)
-                                tl.items.splice(itemIndexesToDelete[i], 1);
-                            console.log(_this.filteredTimelines);
-                        });
-                    }
-                    else {
-                        this.filteredTimelines = JSON.parse(JSON.stringify(this.timelines));
-                    }
-                };
-                TimeLineComponent.prototype.onSelectedTagsRemoved = function (tags) {
-                    var _this = this;
-                    this.selectedTags = tags;
-                    if (this.selectedTags.length != 0) {
-                        this.filteredTimelines = JSON.parse(JSON.stringify(this.timelines));
-                        var selected = this.selectedTags;
-                        this.filteredTimelines.forEach(function (tl) {
-                            var itemIndexesToDelete = [];
-                            tl.items.forEach(function (item) {
-                                var selectedArr = selected.map(function (d) { return d['name']; });
-                                var itemsArr = item.tags.map(function (d) { return d['name']; });
-                                var isExists = selectedArr.every(function (i) { return itemsArr.indexOf(i) !== -1; });
-                                if (!isExists) {
-                                    var index = tl.items.indexOf(item);
-                                    if (index > -1) {
-                                        itemIndexesToDelete.push(index);
-                                    }
-                                }
-                            });
-                            for (var i = itemIndexesToDelete.length - 1; i >= 0; i--)
-                                tl.items.splice(itemIndexesToDelete[i], 1);
-                            console.log(_this.filteredTimelines);
-                        });
-                    }
-                    else {
-                        this.filteredTimelines = JSON.parse(JSON.stringify(this.timelines));
-                    }
                 };
                 TimeLineComponent.prototype.onSelectedTagsChanged = function (tags) {
                     if (this.tagsStr != null && this.isInitialLoad) {
@@ -172,16 +118,8 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
                         this.timeLineRequest.data = tags.map(function (d) { return d['name']; });
                         this.timeLineRequest.isPersistedSearch = false;
                         this.timeLineRequest.pageNo = 1;
-                        if (typeof this.filteredTimelines != 'undefined') {
-                            this.filteredTimelines = new Array();
-                        }
-                        //this.selectedTagStr = '';
-                        //for (var i = 0; i < this.timeLineRequest.data.length; i++) {
-                        //    this.selectedTagStr = this.selectedTagStr + (this.timeLineRequest.data[i] + (this.timeLineRequest.data.length != i + 1 ? ',' : ''));
-                        //}
-                        //this.passTagService.setTags(this.selectedTagStr);
-                        //$('#tagInput').text(this.selectedTagStr);
-                        //window.angularComponentRef.zone.run(function () { window.angularComponentRef.component.updateSelectedTags(); });
+                        this.filteredTimelines = [];
+                        this.timeLinesList = [];
                         this.getTimelines();
                     }
                 };
@@ -199,11 +137,23 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
                     }
                     $('#tagInput1').html(selected);
                 };
+                TimeLineComponent.prototype.groupBy = function (array, f) {
+                    var groups = {};
+                    array.forEach(function (o) {
+                        var group = JSON.stringify(f(o));
+                        groups[group] = groups[group] || [];
+                        groups[group].push(o);
+                    });
+                    return Object.keys(groups).map(function (group) {
+                        return groups[group];
+                    });
+                };
                 TimeLineComponent.prototype.getTimelines = function () {
                     var _this = this;
                     this._timeLineService.getTimeLines(this.timeLineRequest)
                         .subscribe(function (timelines) {
                         if (timelines.length <= 0) {
+                            _this.showlabel = true;
                             return;
                         }
                         if (_this.isLoading)
@@ -213,6 +163,15 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
                         if (typeof _this.filteredTimelines == 'undefined') {
                             _this.filteredTimelines = new Array();
                         }
+                        if (_this.filteredTimelines.length > 0) {
+                            for (var x = 0; x < _this.filteredTimelines.length; x++) {
+                                if (_this.filteredTimelines[x].isLabled == false) {
+                                    _this.filteredTimelines.splice(x, 1);
+                                }
+                            }
+                        }
+                        console.log(timelines);
+                        console.log(_this.filteredTimelines);
                         for (var x = 0; x < timelines.length; x++) {
                             timelines[x].isLabled = true;
                             _this.filteredTimelines.push(timelines[x]);
@@ -225,12 +184,48 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
                                 _this.filteredTimelines[y + 1].isLabled = false;
                             }
                         }
+                        var result = _this.groupBy(_this.filteredTimelines, function (item) {
+                            return [item.dateFormat];
+                        });
+                        console.log(result);
+                        if (typeof _this.timeLinesList == 'undefined') {
+                            _this.timeLinesList = new Array();
+                        }
+                        else {
+                            _this.timeLinesList = [];
+                        }
+                        console.log(_this.timeLinesList);
+                        for (var y = 0; y < result.length; y++) {
+                            for (var z = 0; z < result[y].length; z++) {
+                                if (result[y][z].isLabled == true) {
+                                    _this.timeLinesList.push(result[y][z]);
+                                }
+                                else {
+                                    for (var x = 0; x < _this.timeLinesList.length; x++) {
+                                        if (result[y][z].dateFormat == _this.timeLinesList[x].dateFormat && _this.timeLinesList[x].isLabled == true) {
+                                            for (var a = 0; a < result[y][z].items.length; a++) {
+                                                _this.timeLinesList[x].items.push(result[y][z].items[a]);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        console.log(_this.timeLinesList);
+                        for (var y = 0; y < _this.timeLinesList.length; y++) {
+                            if (_this.timeLinesList[y].items.length > 1)
+                                _this.timeLinesList[y].availableThreadsCountText = _this.timeLinesList[y].items.length.toString() + " Threads Available";
+                            else
+                                _this.timeLinesList[y].availableThreadsCountText = _this.timeLinesList[y].items.length.toString() + " Thread Available";
+                        }
                         if (_this.timelines.length > 0) {
                             _this.timeLineRequest.pageNo = _this.timeLineRequest.pageNo + 1;
                             _this.isLoading = false;
+                            _this.showlabel = false;
                         }
                         else {
                             _this.isLoading = true;
+                            _this.showlabel = true;
                         }
                         console.log(_this.timelines);
                         console.log(_this.filteredTimelines);

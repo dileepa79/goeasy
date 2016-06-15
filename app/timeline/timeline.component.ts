@@ -43,12 +43,14 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
     errorMessage: string;
     timelines: any[];
     filteredTimelines: any[];
+    timeLinesList: any[];
     passedTags: Tag[] = [];
     selectedTagStr: string = '';
 	users: any[] = [];
     note_id: string;
     isInitialLoad: boolean = false;
     counter: number = 0; 
+    showlabel: boolean = false;
     public timeLineRequest: TimeLineRequest = {
         data: [],
         isPersistedSearch: false,
@@ -74,7 +76,8 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
     }
 
     onScroll() {
-        if (!this.isLoading)
+        //if (!this.isLoading)
+        if (this.timeLineRequest.pageNo > 1)
             this.getTimelines();
     }
 
@@ -83,76 +86,6 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
         this.getTimelines();
 
         return Observable.of(true).delay(200).toPromise();
-    }
-	
-
-	
-    onSelectedTagsAdded(tags: any[]): void {
-        this.selectedTags = tags;
-        var selected = this.selectedTags;
-        $('#tagInput').text(selected);		
-        if (this.selectedTags.length != 0) {
-            this.filteredTimelines.forEach((tl) => {
-                var itemIndexesToDelete = [];
-                tl.items.forEach((item) => {
-                    var selectedArr = selected.map(function (d) { return d['name']; })
-                    var itemsArr = item.tags.map(function (d) { return d['name']; })
-
-                    var isExists = selectedArr.every(i => itemsArr.indexOf(i) !== -1);
-
-                    if (!isExists) {
-                        var index = tl.items.indexOf(item);
-                        if (index > -1) {
-                            itemIndexesToDelete.push(index);
-                        }
-                    }
-                }
-                )
-                for (var i = itemIndexesToDelete.length - 1; i >= 0; i--)
-                    tl.items.splice(itemIndexesToDelete[i], 1);
-
-                console.log(this.filteredTimelines);
-            }
-
-            )
-        }
-        else {
-            this.filteredTimelines = JSON.parse(JSON.stringify(this.timelines));
-        }
-    }
-
-    onSelectedTagsRemoved(tags: any[]): void {
-        this.selectedTags = tags;
-        if (this.selectedTags.length != 0) {
-            this.filteredTimelines = JSON.parse(JSON.stringify(this.timelines));
-            var selected = this.selectedTags;
-
-            this.filteredTimelines.forEach((tl) => {
-                var itemIndexesToDelete = [];
-                tl.items.forEach((item) => {
-                    var selectedArr = selected.map(function (d) { return d['name']; })
-                    var itemsArr = item.tags.map(function (d) { return d['name']; })
-
-                    var isExists = selectedArr.every(i => itemsArr.indexOf(i) !== -1);
-
-                    if (!isExists) {
-                        var index = tl.items.indexOf(item);
-                        if (index > -1) {
-                            itemIndexesToDelete.push(index);
-                        }
-                    }
-                }
-                )
-
-                for (var i = itemIndexesToDelete.length - 1; i >= 0; i--)
-                    tl.items.splice(itemIndexesToDelete[i], 1);
-                console.log(this.filteredTimelines);
-            }
-            )
-        }
-        else {
-            this.filteredTimelines = JSON.parse(JSON.stringify(this.timelines));
-        }
     }
 
     onSelectedTagsChanged(tags: any[]): void {
@@ -168,18 +101,8 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
             this.timeLineRequest.data = tags.map(function (d) { return d['name']; });
             this.timeLineRequest.isPersistedSearch = false;
             this.timeLineRequest.pageNo = 1;
-            if (typeof this.filteredTimelines != 'undefined') {
-                this.filteredTimelines = new Array();
-            }
-
-            //this.selectedTagStr = '';
-
-            //for (var i = 0; i < this.timeLineRequest.data.length; i++) {
-            //    this.selectedTagStr = this.selectedTagStr + (this.timeLineRequest.data[i] + (this.timeLineRequest.data.length != i + 1 ? ',' : ''));
-            //}
-            //this.passTagService.setTags(this.selectedTagStr);
-            //$('#tagInput').text(this.selectedTagStr);
-            //window.angularComponentRef.zone.run(function () { window.angularComponentRef.component.updateSelectedTags(); });
+            this.filteredTimelines = [];
+            this.timeLinesList = [];
 
             this.getTimelines();
         }
@@ -203,10 +126,23 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
 		
     }
 
+    groupBy(array: any[], f) {
+        var groups = {};
+        array.forEach(function (o) {
+            var group = JSON.stringify(f(o));
+            groups[group] = groups[group] || [];
+            groups[group].push(o);
+        });
+        return Object.keys(groups).map(function (group) {
+            return groups[group];
+        })
+    }
+
     getTimelines() {
         this._timeLineService.getTimeLines(this.timeLineRequest)
             .subscribe(timelines => {
                 if (timelines.length <= 0) {
+                    this.showlabel = true;
                     return;
                 }
                 if (this.isLoading) return;
@@ -216,6 +152,16 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
                     this.filteredTimelines = new Array();
                 }
 
+                if (this.filteredTimelines.length > 0) {
+                    for (var x = 0; x < this.filteredTimelines.length; x++) {
+                        if (this.filteredTimelines[x].isLabled == false) {
+                            this.filteredTimelines.splice(x, 1);
+                        }
+                    }
+                }
+
+                console.log(timelines);
+                console.log(this.filteredTimelines);
                 for (var x = 0; x < timelines.length; x++) {
                     timelines[x].isLabled = true;
                     this.filteredTimelines.push(timelines[x]);
@@ -227,13 +173,52 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
                         this.filteredTimelines[y + 1].isLabled = false;
                     }
                 }
+                var result = this.groupBy(this.filteredTimelines, function (item) {
+                    return [item.dateFormat];
+                });
+                console.log(result);
+
+                if (typeof this.timeLinesList == 'undefined') {
+                    this.timeLinesList = new Array();
+                }
+                else {
+                    this.timeLinesList = [];
+                }
+                console.log(this.timeLinesList);
+
+                for (var y = 0; y < result.length; y++) {
+                    for (var z = 0; z < result[y].length; z++) {
+                        if (result[y][z].isLabled == true) {
+                            this.timeLinesList.push(result[y][z]);
+                        }
+                        else {
+                            for (var x = 0; x < this.timeLinesList.length; x++) {
+                                if (result[y][z].dateFormat == this.timeLinesList[x].dateFormat && this.timeLinesList[x].isLabled == true) {
+                                    for (var a = 0; a < result[y][z].items.length; a++) {
+                                        this.timeLinesList[x].items.push(result[y][z].items[a])
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+                console.log(this.timeLinesList);
+                for (var y = 0; y < this.timeLinesList.length; y++) {
+                    if (this.timeLinesList[y].items.length > 1)
+                        this.timeLinesList[y].availableThreadsCountText = this.timeLinesList[y].items.length.toString() + " Threads Available";
+                    else
+                        this.timeLinesList[y].availableThreadsCountText = this.timeLinesList[y].items.length.toString() + " Thread Available";
+                }
 
                 if (this.timelines.length > 0) {
                     this.timeLineRequest.pageNo = this.timeLineRequest.pageNo + 1;
                     this.isLoading = false;
+                    this.showlabel = false;
                 }
                 else {
                     this.isLoading = true;
+                    this.showlabel = true;
                 }
                 console.log(this.timelines);
                 console.log(this.filteredTimelines);

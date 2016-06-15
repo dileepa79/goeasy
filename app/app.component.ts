@@ -21,13 +21,14 @@ import {NotificaitonComponent} from './notifications/notifications.component';
 import {FeedbackComponent} from './feedback/feedback.component';
 import {FeedbackService} from './services/feedback.service';
 import {TagDetailComponent} from './tags/tag-detail.component';
+import {LoadingComponent} from './loader/loading.component';
 
 
 @Component({
     selector: 'my-app',
     styleUrls: ['app/app.component.css'],
     templateUrl: 'app/app.component.html',
-    directives: [ROUTER_DIRECTIVES, UserProfileComponent, NotificaitonComponent, FeedbackComponent, AddNoteComponent],
+    directives: [ROUTER_DIRECTIVES, UserProfileComponent, NotificaitonComponent, FeedbackComponent, AddNoteComponent, LoadingComponent],
     providers: [
         ROUTER_PROVIDERS,
         provide(LocationStrategy, { useClass: HashLocationStrategy }),
@@ -37,7 +38,6 @@ import {TagDetailComponent} from './tags/tag-detail.component';
         AddNoteComponent,
         Configuration,
         FeedbackService
-
     ]
 })
 

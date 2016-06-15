@@ -585,3 +585,47 @@ Main components
 .modal .modal-footer .btn-default {
     margin-left:10px !important;
 }
+
+
+/* tag ui - Hasika */
+p-autocomplete .ui-autocomplete.ui-widget ul li.ui-autocomplete-token {
+    -webkit-border-top-left-radius: 4px !important;
+    -webkit-border-bottom-left-radius: 4px !important;
+    -moz-border-radius-topleft: 4px !important;
+    -moz-border-radius-bottomleft: 4px !important;
+    border-top-left-radius: 4px !important;
+    border-bottom-left-radius: 4px !important;
+    background-image: url('../img/tag-right-bg.jpg');
+    padding:10px;
+    background-position:top right;
+    background-repeat:no-repeat;
+    background-size:auto 100%;
+    border:1px solid #fff !important;
+    background-color:#90a4ae !important;
+}
+
+p-autocomplete .ui-autocomplete.ui-widget ul li.ui-autocomplete-token .ui-autocomplete-token-icon {
+    margin-top: -8px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    cursor: pointer;
+}
+
+.ui-autocomplete-multiple li .ui-inputtext {
+    height: 38px;
+}
+
+.timeline-group-heading:hover {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    color:#fff;
+}
+
+.timeline-group-heading a {
+    color:#333;
+}
+
+.timeline-group-heading a:hover, .timeline-group-heading:hover a {
+    color:#333;
+}

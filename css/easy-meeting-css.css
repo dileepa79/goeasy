@@ -5987,17 +5987,17 @@ small {
   font-weight: 500;
   font-size: 14px; }
   .btn-like .fa-heart {
-    color: #f44455; }
+    color: #26a69a; }
 
 .btn-like:hover {
   text-decoration: none;
   color: #fff;
-  background-color: #f44455; }
+  background-color: #26a69a; }
   .btn-like:hover .fa-heart {
     color: #fff; }
 
 .btn-like:active {
-  background-color: #d9534f !important;
+  background-color: #1a9489 !important;
   text-decoration: none;
   color: #fff; }
 
@@ -6092,5 +6092,13 @@ small {
 
 .custom-panel-collapse .panel-body {
   padding: 10px; }
+
+.no-records-container {
+  background: #eceff1;
+  padding: 1rem;
+  margin-bottom: 20px; }
+  .no-records-container p {
+    margin: 0;
+    color: #666; }
 
 /*# sourceMappingURL=easy-meeting-css.css.map */

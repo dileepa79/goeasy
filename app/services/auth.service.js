@@ -78,6 +78,7 @@ System.register(['@angular/core', '@angular/http', '@angular/router', './token.s
                                 _this.setCookie("username", username, 15);
                                 _this.setCookie("password", password, 15);
                             }
+                            window.loadingComponentRef.zone.run(function () { window.loadingComponentRef.component.hide(); });
                             _this._router.navigate(['dashboard']);
                         });
                     }
@@ -107,6 +108,7 @@ System.register(['@angular/core', '@angular/http', '@angular/router', './token.s
                         this.setCookie("password", password, 15);
                         this.setCookie("yaytoken", this.tokenService.getToken(), this._tokenExpiresIn);
                     }
+                    window.loadingComponentRef.zone.run(function () { window.loadingComponentRef.component.hide(); });
                     this._router.navigate(['dashboard']);
                 };
                 AuthService.prototype.isAuth = function () {
