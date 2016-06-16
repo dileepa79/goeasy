@@ -38,6 +38,17 @@ export class TimeLineService {
             .catch(this.handleError);
     }
 
+	public getMostPopularTags(timeLineRequest) {
+		var most_pop_url = this.webApiUrl + "/GetMostPopularTags" ;
+		var body = JSON.stringify(timeLineRequest);
+        var headers = this.authService.getHeader();
+        headers.append('Content-Type', 'application/json; charset=utf-8' );
+        var options = new RequestOptions({ headers: headers });
+
+        return this.http.get(most_pop_url, { headers: headers })
+            .map((res) => { return res.json() });
+	}
+	
     private handleError(error: Response) {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');

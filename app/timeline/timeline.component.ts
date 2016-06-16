@@ -32,7 +32,7 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
     tagsResponce: TagsResponse;
     isLoading: boolean = false;
     fileApiUrl;
-
+	
     constructor(private _timeLineService: TimeLineService,private _noteService: NotesService, routeSegment: RouteSegment, private passTagService: PassTagService, private _configuration: Configuration) {
         this.tagsStr = routeSegment.getParam('tags');
         this.fileApiUrl = _configuration.ServerWithApiUrl + 'FileContent';
@@ -44,6 +44,7 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
     timelines: any[];
     filteredTimelines: any[];
     timeLinesList: any[];
+	popularTags: any[];
     passedTags: Tag[] = [];
     selectedTagStr: string = '';
 	users: any[] = [];
@@ -51,6 +52,7 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
     isInitialLoad: boolean = false;
     counter: number = 0; 
     showlabel: boolean = false;
+    isLoadingShow: boolean = false;
     public timeLineRequest: TimeLineRequest = {
         data: [],
         isPersistedSearch: false,
@@ -71,8 +73,12 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
             this.timeLineRequest.data = this.passedTags;
             this.isInitialLoad = true;
         }
-
+		
+		if (typeof this.popularTags == 'undefined') {
+			this.popularTags = new Array();
+		}
         this.getTimelines();
+		this.getPopularTags();
     }
 
     onScroll() {
@@ -104,10 +110,46 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
             this.filteredTimelines = [];
             this.timeLinesList = [];
             this.isLoading = false;
+            this.isLoadingShow = false;
             this.getTimelines();
         }
     }
 
+	getPopularTags(){
+		this._timeLineService.getMostPopularTags(this.timeLineRequest).subscribe(lines => { 
+			this.popularTags = JSON.parse(JSON.stringify(lines));
+			console.log('len = ' +  this.popularTags.length);
+			console.log('len = ' +  this.popularTags[0].count);
+			//this.popularTags = lines ; 
+			//console.log('popular Tags = ' + JSON.stringify(lines)); 
+		});
+	}
+	
+	/*
+	getPopularTags(){
+		this.popularTags = '';
+		this._timeLineService.getMostPopularTags(this.timeLineRequest).subscribe(lines => {
+			var data = lines;
+			console.log('popular Tags = ' + JSON.stringify(data));
+			
+			var htmldiv1 = '';
+			for (var x = 0; x < data.length; x++) {
+				var tags = data[x].tags ;
+				var htmldiv2 = '<div>';
+				for (var y = 0; y < tags.length; y++) {
+					var htmldiv2 = '<span>' + tags[y].name + '</span'>;
+					htmldiv2 += '<span>' + tags[y].createdBy + '</span'>; 
+					htmldiv2 += '<span>' + tags[y].createdDate + '</span'>;
+				}
+				var htmldiv1 = htmldiv1 + htmldiv2 + '<span>' + data.count + '/</span>';
+					htmldiv1 = htmldiv1 + '<span>' + data.displayName + '/</span>';
+				htmldiv1 = htmldiv1 + '</br>' ;
+			};
+			
+			$('#popularTags').html(htmldiv1);
+		});
+	}*/
+	
     getSelectedTags() {
         this.selectedTagStr = '';
 
@@ -139,14 +181,11 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
     }
 
     getTimelines() {
+        if (this.isLoading) return;
+        this.isLoading = true;
         this._timeLineService.getTimeLines(this.timeLineRequest)
             .subscribe(timelines => {
-                //if (timelines.length <= 0) {
-                //    this.showlabel = true;
-                //    return;
-                //}
-                if (this.isLoading) return;
-                this.isLoading = true;
+
                 this.timelines = timelines;
                 if (typeof this.filteredTimelines == 'undefined') {
                     this.filteredTimelines = new Array();
@@ -213,7 +252,9 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
 
                 if (this.timelines.length > 0) {
                     this.timeLineRequest.pageNo = this.timeLineRequest.pageNo + 1;
-                    this.isLoading = false;
+                }
+                else {
+                    this.isLoadingShow = true;
                 }
                 //else {
                 //    this.isLoading = true;
@@ -222,7 +263,7 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
                     this.showlabel = false;
                 else
                     this.showlabel = true;
-
+                this.isLoading = false;
                 console.log(this.timelines);
                 console.log(this.filteredTimelines);
 
@@ -232,7 +273,10 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
                     console.log(this.errorMessage);
                 this.isLoading = false;
             },
-            () => () => console.log("Done"));
+            () => () => {
+                console.log("Done");
+                this.isLoading = false;
+            });
     }
 	
 	setCurrentNote(selected_note: any) {

@@ -79,7 +79,7 @@
         </button>
     </h1>
     <!-- Tag search -->
-    <div style="margin-bottom: 20px;" class="fluid-autocomplete">
+    <div class="fluid-autocomplete">
         <prime-app [isAllowedNewInput]="false" [inputValues]="timeLineRequest.data" (tagsAdded)='onSelectedTagsChanged($event)' (tagsRemoved)="onSelectedTagsChanged($event)">Loading...</prime-app>
     </div>
     
@@ -91,8 +91,22 @@
              (scrolled)="onScroll()"
              [scrollWindow]="true">
         </div>
-
-        <timeline-group [heading]="timeline.dateFormat" *ngFor="let timeline of timeLinesList;  let i = index" [isOpen]="i === i" [availableCountText]="timeline.availableThreadsCountText">
+		
+<!--        <div id="popularTags1" *ngFor="let group of popularTags">-->
+<!--            <p>{{ group.count }}</p>-->
+<!--            <p>{{ group.displayName }}</p>-->
+<!--            <div id="popularTags2" *ngFor="let tag of group.tags">-->
+<!--                <p>{{ tag.name }}</p>-->
+<!--                <p>{{ tag.createdBy }}</p>			-->
+<!--                <p>{{ tag.createdDate }}</p>	-->
+<!--            </div>-->
+<!--        </div>-->
+        <div class="tag-suggestions-container">
+            <span class="title">Recently Used Tags:</span>
+            <div class="common-tag" *ngFor="let group of popularTags"><a style="padding-right: 5px;">{{group.displayName}}</a></div>
+        </div>
+		
+        <timeline-group [heading]="timeline.dateFormat" *ngFor="let timeline of timeLinesList;  let i = index; let last = last" [isOpen]="i === i" [availableCountText]="timeline.availableThreadsCountText">
 
             <section id="cd-timeline" class="cd-container">
              <div class="cd-timeline-block" *ngFor="let Item of timeline.items">
@@ -116,6 +130,9 @@
                              <div [innerHTML]="Item.description"></div>
                          </timeline-detail-group>
                      </timelinedetail>
+                     <div class="timeline-common-tag-container">
+                         <span class="common-tag" *ngFor="let tag of Item.tags; let last = last">{{tag.name}}<span *ngIf="!last"></span></span>
+                     </div>
                      <div class="attachment-list-container"> <!--Attachments-->
                          <div class="attachment-list-item" *ngFor="let attachment of Item.attachments">
                              <span class="glyphicon glyphicon-paperclip"></span>
@@ -131,7 +148,7 @@
                      </div>
                  </div> <!-- cd-timeline-content -->
                 </div> <!-- cd-timeline-block -->
-
+                <div *ngIf="last && isLoading && !isLoadingShow" class="cd-timeline-block"><div class="cd-timeline-content"><timelinedetail close-others="true" style="color:#0277bd;">Loading..</timelinedetail></div></div>
             </section> <!-- cd-timeline --> 
         </timeline-group>
         <div *ngIf="showlabel" class="no-records-container">No Records are found for the given Tag Combination</div>

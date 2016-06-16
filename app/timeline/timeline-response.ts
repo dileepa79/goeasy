@@ -11,4 +11,5 @@ export class TimeLineSingleResponse {
     ActivityType: string;
     ImageUrl: string;
     Date: string;
+    Tags: any[];
 }

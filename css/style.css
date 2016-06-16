@@ -596,7 +596,7 @@ p-autocomplete .ui-autocomplete.ui-widget ul li.ui-autocomplete-token {
     border-top-left-radius: 4px !important;
     border-bottom-left-radius: 4px !important;
     background-image: url('../img/tag-right-bg.jpg');
-    padding:10px;
+    padding:6px;
     background-position:top right;
     background-repeat:no-repeat;
     background-size:auto 100%;
@@ -613,7 +613,7 @@ p-autocomplete .ui-autocomplete.ui-widget ul li.ui-autocomplete-token .ui-autoco
 }
 
 .ui-autocomplete-multiple li .ui-inputtext {
-    height: 38px;
+    height: 32px;
 }
 
 .timeline-group-heading:hover {
@@ -631,6 +631,7 @@ p-autocomplete .ui-autocomplete.ui-widget ul li.ui-autocomplete-token .ui-autoco
 }
 
   .no-records-container  {
+      clear: both;
     background: #eceff1;
     padding:1rem;
     margin-bottom: 20px;
@@ -640,3 +641,58 @@ p-autocomplete .ui-autocomplete.ui-widget ul li.ui-autocomplete-token .ui-autoco
         margin:0;
         color:#666;
     }
+
+whatisgoingon .common-tag {
+  line-height: normal !important;
+  display: inline-block;
+  padding: 5px 12px 5px 5px !important;
+  font-size: 10px;
+  font-weight: bold;
+  border-radius: 5px;
+  margin-right: 5px;
+  color: #fff !important;
+    -webkit-border-top-left-radius: 4px !important;
+    -webkit-border-bottom-left-radius: 4px !important;
+    -moz-border-radius-topleft: 4px !important;
+    -moz-border-radius-bottomleft: 4px !important;
+    border-top-left-radius: 4px !important;
+    border-bottom-left-radius: 4px !important;
+    background-image: url('../img/tag-right-bg-2.jpg');
+    background-position:top right;
+    background-repeat:no-repeat;
+    background-size:auto 100%;
+    border:0px solid #fff !important;
+    background-color:#90a4ae !important;
+
+}
+
+.tag-suggestions-container {
+    clear: both;
+    float: left;
+    width: 100%;
+    margin:0.5rem 0 2.5rem;
+}
+
+.tag-suggestions-container span.title {
+    display: block;
+    margin-right: 10px;
+    line-height: 26px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.tag-suggestions-container .common-tag a {
+    display: block;
+    color: #fff;
+    margin: 0;
+    line-height: 15px;
+    font-size: 14px;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.timeline-common-tag-container {
+    clear:both;
+    float:left;
+    margin:0.3rem 0 0 0.5rem;
+}

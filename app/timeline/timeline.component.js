@@ -73,6 +73,7 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
                     this.isInitialLoad = false;
                     this.counter = 0;
                     this.showlabel = false;
+                    this.isLoadingShow = false;
                     this.timeLineRequest = {
                         data: [],
                         isPersistedSearch: false,
@@ -94,7 +95,11 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
                         this.timeLineRequest.data = this.passedTags;
                         this.isInitialLoad = true;
                     }
+                    if (typeof this.popularTags == 'undefined') {
+                        this.popularTags = new Array();
+                    }
                     this.getTimelines();
+                    this.getPopularTags();
                 };
                 TimeLineComponent.prototype.onScroll = function () {
                     //if (!this.isLoading)
@@ -121,9 +126,44 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
                         this.filteredTimelines = [];
                         this.timeLinesList = [];
                         this.isLoading = false;
+                        this.isLoadingShow = false;
                         this.getTimelines();
                     }
                 };
+                TimeLineComponent.prototype.getPopularTags = function () {
+                    var _this = this;
+                    this._timeLineService.getMostPopularTags(this.timeLineRequest).subscribe(function (lines) {
+                        _this.popularTags = JSON.parse(JSON.stringify(lines));
+                        console.log('len = ' + _this.popularTags.length);
+                        console.log('len = ' + _this.popularTags[0].count);
+                        //this.popularTags = lines ; 
+                        //console.log('popular Tags = ' + JSON.stringify(lines)); 
+                    });
+                };
+                /*
+                getPopularTags(){
+                    this.popularTags = '';
+                    this._timeLineService.getMostPopularTags(this.timeLineRequest).subscribe(lines => {
+                        var data = lines;
+                        console.log('popular Tags = ' + JSON.stringify(data));
+                        
+                        var htmldiv1 = '';
+                        for (var x = 0; x < data.length; x++) {
+                            var tags = data[x].tags ;
+                            var htmldiv2 = '<div>';
+                            for (var y = 0; y < tags.length; y++) {
+                                var htmldiv2 = '<span>' + tags[y].name + '</span'>;
+                                htmldiv2 += '<span>' + tags[y].createdBy + '</span'>;
+                                htmldiv2 += '<span>' + tags[y].createdDate + '</span'>;
+                            }
+                            var htmldiv1 = htmldiv1 + htmldiv2 + '<span>' + data.count + '/</span>';
+                                htmldiv1 = htmldiv1 + '<span>' + data.displayName + '/</span>';
+                            htmldiv1 = htmldiv1 + '</br>' ;
+                        };
+                        
+                        $('#popularTags').html(htmldiv1);
+                    });
+                }*/
                 TimeLineComponent.prototype.getSelectedTags = function () {
                     this.selectedTagStr = '';
                     for (var i = 0; i < this.timeLineRequest.data.length; i++) {
@@ -151,15 +191,11 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
                 };
                 TimeLineComponent.prototype.getTimelines = function () {
                     var _this = this;
+                    if (this.isLoading)
+                        return;
+                    this.isLoading = true;
                     this._timeLineService.getTimeLines(this.timeLineRequest)
                         .subscribe(function (timelines) {
-                        //if (timelines.length <= 0) {
-                        //    this.showlabel = true;
-                        //    return;
-                        //}
-                        if (_this.isLoading)
-                            return;
-                        _this.isLoading = true;
                         _this.timelines = timelines;
                         if (typeof _this.filteredTimelines == 'undefined') {
                             _this.filteredTimelines = new Array();
@@ -221,7 +257,9 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
                         }
                         if (_this.timelines.length > 0) {
                             _this.timeLineRequest.pageNo = _this.timeLineRequest.pageNo + 1;
-                            _this.isLoading = false;
+                        }
+                        else {
+                            _this.isLoadingShow = true;
                         }
                         //else {
                         //    this.isLoading = true;
@@ -230,13 +268,17 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
                             _this.showlabel = false;
                         else
                             _this.showlabel = true;
+                        _this.isLoading = false;
                         console.log(_this.timelines);
                         console.log(_this.filteredTimelines);
                     }, function (error) {
                         _this.errorMessage = error,
                             console.log(_this.errorMessage);
                         _this.isLoading = false;
-                    }, function () { return function () { return console.log("Done"); }; });
+                    }, function () { return function () {
+                        console.log("Done");
+                        _this.isLoading = false;
+                    }; });
                 };
                 TimeLineComponent.prototype.setCurrentNote = function (selected_note) {
                     this.note_id = selected_note.id;
