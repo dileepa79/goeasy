@@ -22,7 +22,12 @@
         </div>
     </div>
 
-    <div style="height:550px; overflow-y:scroll; margin-right:10px;">
+    <div style="height: 550px; overflow-y: scroll; margin-right: 10px;"
+     infinite-scroll
+     [infiniteScrollDistance]="2"
+     [infiniteScrollThrottle]="500"
+     (scrolled)="onScroll()"
+     [scrollWindow]="true">
         <div class="box-body recent-timeline-item" id="collapseExample1" *ngFor="let timeline of recentTimelines | recentTimelineWatchFilter:isWatchedFilter">
             <div class="timeline-description" id="collapseExample1">
 
@@ -68,11 +73,17 @@
                 </div>-->
 
 
+<!--                <div class="share-with-block">-->
+<!--                    <div *ngIf="timeline.sharedWith.length > 0" class="pull-left">SHARED WITH</div>-->
+<!---->
+<!--                    <div class="pull-left" style="clear:both;">-->
+<!--                        <css-carousel [images]="timeline.sharedWith"></css-carousel>-->
+<!--                    </div>-->
+<!--                </div>-->
                 <div class="share-with-block">
-                    <div *ngIf="timeline.sharedWith.length > 0" class="pull-left">SHARED WITH</div>
-
-                    <div class="pull-left" style="clear:both;">
-                        <css-carousel [images]="timeline.sharedWith"></css-carousel>
+                    <div *ngIf="timeline.contributedBy.length > 0" class="pull-left">CONTRIBUTED BY</div>
+                    <div class="pull-left" style="clear: both">
+                        <css-carousel [images]="timeline.contributedBy"></css-carousel>
                     </div>
                 </div>
                 <!--<div style="padding:10px 0px 10px 0px">

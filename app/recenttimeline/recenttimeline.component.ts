@@ -10,8 +10,10 @@ import { MODAL_DIRECTIVES, ModalComponent } from '../modal/modaldialog';
 import { TimeLineWatch } from '../shared/timeline-watch';
 import {CSSCarouselComponent} from '../carousel/carousel.component';
 import {RecentTimelineWatchFilter} from '../recenttimeline/recenttimeline.watchfilter.component';
+import {RecentTimeLineRequest } from '../recenttimeline/recenttimeline-request';
+import {InfiniteScroll} from '../timeline/angular2-infinite-scroll';
 // Import the Image interface
-import {Image} from '../image.interface';
+//import {Image} from '../image.interface';
 
 @Component({
     selector: 'recentimeline',
@@ -22,13 +24,13 @@ import {Image} from '../image.interface';
     providers: [
         RecentTimeLineService, TimeLineWatchService
     ],
-    directives: [TimeLineComponent, MODAL_DIRECTIVES, ShareTimelineComponent, UsersSelectorComponent, CSSCarouselComponent]
+    directives: [TimeLineComponent, MODAL_DIRECTIVES, ShareTimelineComponent, UsersSelectorComponent, CSSCarouselComponent, InfiniteScroll]
 })
 
 export class RecentTimeLineComponent implements OnInit {
    // @ViewChild('parentModal')
     //parentModal: ModalComponent;
-    public images : Image[] = [
+    public images : any[] = [
         { "title": "", "url": "img/profile-pics/finn.png" },
         { "title": "", "url": "img/profile-pics/anu.png" },
         { "title": "", "url": "img/profile-pics/chinthaka.png" },
@@ -50,6 +52,7 @@ export class RecentTimeLineComponent implements OnInit {
     errorMessage: string;
     recentTimelines: RecentTimeLineResponse[];
     selectedTimeline: RecentTimeLineResponse;
+    recentTimelinesTagSearch: RecentTimeLineResponse[];
 
     timeLineWatch: any = {
         tags: [],
@@ -59,6 +62,13 @@ export class RecentTimeLineComponent implements OnInit {
 
     tags: string = '';
     isWatched: boolean;
+    isLoading: boolean = false;
+    totalPages: number = 0;
+
+    public recentTimeLineRequest: RecentTimeLineRequest = {
+        pageNo: 1,
+        pageSize: 10
+    };
 
     ngOnInit() {
         this.getRecentTimelines();
@@ -68,17 +78,43 @@ export class RecentTimeLineComponent implements OnInit {
         this.isWatchedFilter = !rtl;
     }
 
+    onScroll() {
+        if (this.recentTimeLineRequest.pageNo > 1)
+            this.getRecentTimelines();
+    }
+
     getRecentTimelines() {
-        this._timeLineService.getRecentTimeLines()
+        if (this.isLoading) return;
+        this.isLoading = true;
+        this._timeLineService.getRecentTimeLines(this.recentTimeLineRequest)
             .subscribe(timelines => {
-                this.recentTimelines = timelines;
+                this.recentTimelinesTagSearch = timelines;
+
+                if (typeof this.recentTimelines == 'undefined') {
+                    this.recentTimelines = new Array();
+                }
+                console.log(this.recentTimelinesTagSearch);
+
+                for (var x = 0; x < this.recentTimelinesTagSearch.length; x++) {
+                    this.totalPages = this.recentTimelinesTagSearch[x].totalPages;
+                    this.recentTimelines.push(this.recentTimelinesTagSearch[x]);
+                }
                 console.log(this.recentTimelines);
-            },
+
+                if (this.recentTimeLineRequest.pageNo < this.totalPages) {
+                    this.recentTimeLineRequest.pageNo = this.recentTimeLineRequest.pageNo + 1;
+                    this.isLoading = false;
+                }
+                },
             error => {
                 this.errorMessage = <any>error,
-                    console.log(this.errorMessage);
+                console.log(this.errorMessage);
+                this.isLoading = false;
             },
-            () => () => console.log("Done"));
+            () => () => {
+                console.log("Done");
+                this.isLoading = false;
+            });
     }
 
     updateTimelineWatch(timeLineWatch: TimeLineWatch, selectedTimeline: RecentTimeLineResponse) {

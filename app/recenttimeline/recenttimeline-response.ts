@@ -10,7 +10,9 @@
         public noOfEntries: string,
         public dateDay: string,
         public dateMonth: string,
-		public timelineId: string
+        public timelineId: string,
+        public sharedWith: any,
+        public totalPages: number
     )
     {}
 }

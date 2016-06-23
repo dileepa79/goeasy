@@ -75,7 +75,7 @@
     <h1>
         {{title}}
         <button (click)="getSelectedTags()" [disabled]="timeLineRequest.data.length == 0" class="btn-secondary btn" id="chat-trigger" data-trigger="#chat">
-            <i class="material-icons">playlist_add</i> <span> note</span>
+            <i class="material-icons">playlist_add</i> <span>add note</span>
         </button>
     </h1>
     <!-- Tag search -->
@@ -102,8 +102,8 @@
 <!--            </div>-->
 <!--        </div>-->
         <div class="tag-suggestions-container">
-            <span class="title">Recently Used Tags:</span>
-            <div class="common-tag" *ngFor="let group of popularTags"><a style="padding-right: 5px;">{{group.displayName}}</a></div>
+            <span class="title">Trending</span>
+            <div class="common-tag" *ngFor="let group of popularTags"><a style="padding-right: 5px;" (click)="selectTrend(group.data)">{{group.displayName}}</a></div>
         </div>
 		
         <timeline-group [heading]="timeline.dateFormat" *ngFor="let timeline of timeLinesList;  let i = index; let last = last" [isOpen]="i === i" [availableCountText]="timeline.availableThreadsCountText">
@@ -148,7 +148,7 @@
                      </div>
                  </div> <!-- cd-timeline-content -->
                 </div> <!-- cd-timeline-block -->
-                <div *ngIf="last && isLoading && !isLoadingShow" class="cd-timeline-block"><div class="cd-timeline-content"><timelinedetail close-others="true" style="color:#0277bd;">Loading..</timelinedetail></div></div>
+                <div *ngIf="last && isLoading && !loadingLabelHide" class="cd-timeline-block"><div class="cd-timeline-content"><timelinedetail close-others="true" style="color:#0277bd;">Loading..</timelinedetail></div></div>
             </section> <!-- cd-timeline --> 
         </timeline-group>
         <div *ngIf="showlabel" class="no-records-container">No Records are found for the given Tag Combination</div>

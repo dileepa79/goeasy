@@ -38,11 +38,13 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Observable', './auth.se
                     this.webApiUrl = _configuration.ServerWithApiUrl + 'TagSearchRequest';
                     this.authService = _authService;
                 }
-                RecentTimeLineService.prototype.getRecentTimeLines = function () {
+                RecentTimeLineService.prototype.getRecentTimeLines = function (recentTimelineRequest) {
                     var headers = this.authService.getHeader();
-                    return this.http.get(this.webApiUrl, {
-                        headers: headers
-                    })
+                    var options = new http_1.RequestOptions({
+                        headers: headers,
+                        search: new http_1.URLSearchParams('PageNo=' + recentTimelineRequest.pageNo + '&PageSize=' + recentTimelineRequest.pageSize)
+                    });
+                    return this.http.get(this.webApiUrl, options)
                         .map(function (res) { return res.json(); })
                         .do(function (data) { return console.log(data); })
                         .catch(this.handleError);

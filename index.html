@@ -33,6 +33,7 @@
     <link href="css/easy-meeting-css.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="js/materialize.min.js"></script>
+    <script src="http://js.maxmind.com/js/apis/geoip2/v2.1/geoip2.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- Custom style added by madhawee -->
@@ -53,6 +54,20 @@
     <script src="node_modules/systemjs/dist/system.src.js"></script>
     <script src="node_modules/primeui/primeui-ng-all.min.js"></script>
     <script src="node_modules/quill/dist/quill.js"></script>
+
+    <script type="text/javascript">
+    var ip_country = '';
+    var onSuccess = function (location) {
+        ip_country = location.country.names.en;
+        console.log('country : ' + ip_country);
+    };
+
+    var onError = function (error) {
+    };
+
+    geoip2.country(onSuccess, onError);
+
+    </script>
 
     <!-- 2. Configure SystemJS -->
     <script src="systemjs.config.js"></script>

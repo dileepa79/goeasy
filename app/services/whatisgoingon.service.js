@@ -38,11 +38,13 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Observable', './auth.se
                     this.webApiUrl = _configuration.ServerWithApiUrl + 'ActivityLog';
                     this.authService = _authService;
                 }
-                WhatIsGoingOnService.prototype.getWhatisGoingOnActivity = function () {
+                WhatIsGoingOnService.prototype.getWhatisGoingOnActivity = function (whatIsGoingOnRequest) {
                     var headers = this.authService.getHeader();
-                    return this.http.get(this.webApiUrl, {
-                        headers: headers
-                    })
+                    var options = new http_1.RequestOptions({
+                        headers: headers,
+                        search: new http_1.URLSearchParams('PageNo=' + whatIsGoingOnRequest.pageNo + '&PageSize=' + whatIsGoingOnRequest.pageSize)
+                    });
+                    return this.http.get(this.webApiUrl, options)
                         .map(function (res) { return res.json(); })
                         .do(function (data) { return console.log(data); })
                         .catch(this.handleError);

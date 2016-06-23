@@ -8,7 +8,8 @@ import {AuthService} from './auth.service';
 @Injectable()
 export class NotesService {
     private webApiUrl: string;
-    tags: string = '';
+    //tags: string = '';
+    tags: any;
     constructor(private _router: Router, private http: Http, private _configuration: Configuration, private _authService: AuthService) {
         this.webApiUrl = _configuration.ServerWithApiUrl + 'Note';
     }
@@ -47,7 +48,7 @@ export class NotesService {
         return Observable.throw(error.json().error || 'Server error');
     }
 
-    private callApi(url:string, noteRequest): Observable {
+    private callApi(url: string, noteRequest): Observable<NotesService> {
         // Create FormData object and attach files and other data into it and send to api
         // as angulr 2 still not support sending files to backend
         // We can change this once angular 2 support it
@@ -114,6 +115,6 @@ export class NotesService {
         var options = new RequestOptions({ headers: headers });
 
         return this.http.post(this.webApiUrl + '/ShareNote', body, options)
-            .map((res) => { return <AppUser[]>res.json() });
+            .map((res) => { return <any[]>res.json() });
     }
 }

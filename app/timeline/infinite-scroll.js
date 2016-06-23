@@ -35,7 +35,9 @@ System.register(['@angular/core', '../timeline/scroller'], function(exports_1, c
                     this.scroller = new scroller_1.Scroller(containerElement, setInterval, this.element, this.onScroll.bind(this), this._distance, {}, this._throttle, this._immediate);
                 };
                 InfiniteScroll.prototype.ngOnDestroy = function () {
-                    this.scroller.clean();
+                    if (typeof this.scroller != 'undefined') {
+                        this.scroller.clean();
+                    }
                 };
                 InfiniteScroll.prototype.onScroll = function () {
                     this.scrolled.next({});

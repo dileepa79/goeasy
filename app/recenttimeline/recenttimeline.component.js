@@ -1,4 +1,4 @@
-System.register(['@angular/core', '../services/recenttimeline.service', '../services/timeline-watch.service', '../timeline/timeline.component', '../sharetimeline/sharetimeline.component', '@angular/router', '../noteshareusers/users-selector.component', '../modal/modaldialog', '../carousel/carousel.component', '../recenttimeline/recenttimeline.watchfilter.component'], function(exports_1, context_1) {
+System.register(['@angular/core', '../services/recenttimeline.service', '../services/timeline-watch.service', '../timeline/timeline.component', '../sharetimeline/sharetimeline.component', '@angular/router', '../noteshareusers/users-selector.component', '../modal/modaldialog', '../carousel/carousel.component', '../recenttimeline/recenttimeline.watchfilter.component', '../timeline/angular2-infinite-scroll'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', '../services/recenttimeline.service', '../serv
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, recenttimeline_service_1, timeline_watch_service_1, timeline_component_1, sharetimeline_component_1, router_1, users_selector_component_1, modaldialog_1, carousel_component_1, recenttimeline_watchfilter_component_1;
+    var core_1, recenttimeline_service_1, timeline_watch_service_1, timeline_component_1, sharetimeline_component_1, router_1, users_selector_component_1, modaldialog_1, carousel_component_1, recenttimeline_watchfilter_component_1, angular2_infinite_scroll_1;
     var RecentTimeLineComponent;
     return {
         setters:[
@@ -43,8 +43,13 @@ System.register(['@angular/core', '../services/recenttimeline.service', '../serv
             },
             function (recenttimeline_watchfilter_component_1_1) {
                 recenttimeline_watchfilter_component_1 = recenttimeline_watchfilter_component_1_1;
+            },
+            function (angular2_infinite_scroll_1_1) {
+                angular2_infinite_scroll_1 = angular2_infinite_scroll_1_1;
             }],
         execute: function() {
+            // Import the Image interface
+            //import {Image} from '../image.interface';
             RecentTimeLineComponent = (function () {
                 function RecentTimeLineComponent(_timeLineService, _timeLineWatchService, _router) {
                     this._timeLineService = _timeLineService;
@@ -72,6 +77,12 @@ System.register(['@angular/core', '../services/recenttimeline.service', '../serv
                         isStatusUpdate: false
                     };
                     this.tags = '';
+                    this.isLoading = false;
+                    this.totalPages = 0;
+                    this.recentTimeLineRequest = {
+                        pageNo: 1,
+                        pageSize: 10
+                    };
                 }
                 RecentTimeLineComponent.prototype.ngOnInit = function () {
                     this.getRecentTimelines();
@@ -79,16 +90,39 @@ System.register(['@angular/core', '../services/recenttimeline.service', '../serv
                 RecentTimeLineComponent.prototype.watchFilter = function (rtl) {
                     this.isWatchedFilter = !rtl;
                 };
+                RecentTimeLineComponent.prototype.onScroll = function () {
+                    if (this.recentTimeLineRequest.pageNo > 1)
+                        this.getRecentTimelines();
+                };
                 RecentTimeLineComponent.prototype.getRecentTimelines = function () {
                     var _this = this;
-                    this._timeLineService.getRecentTimeLines()
+                    if (this.isLoading)
+                        return;
+                    this.isLoading = true;
+                    this._timeLineService.getRecentTimeLines(this.recentTimeLineRequest)
                         .subscribe(function (timelines) {
-                        _this.recentTimelines = timelines;
+                        _this.recentTimelinesTagSearch = timelines;
+                        if (typeof _this.recentTimelines == 'undefined') {
+                            _this.recentTimelines = new Array();
+                        }
+                        console.log(_this.recentTimelinesTagSearch);
+                        for (var x = 0; x < _this.recentTimelinesTagSearch.length; x++) {
+                            _this.totalPages = _this.recentTimelinesTagSearch[x].totalPages;
+                            _this.recentTimelines.push(_this.recentTimelinesTagSearch[x]);
+                        }
                         console.log(_this.recentTimelines);
+                        if (_this.recentTimeLineRequest.pageNo < _this.totalPages) {
+                            _this.recentTimeLineRequest.pageNo = _this.recentTimeLineRequest.pageNo + 1;
+                            _this.isLoading = false;
+                        }
                     }, function (error) {
                         _this.errorMessage = error,
                             console.log(_this.errorMessage);
-                    }, function () { return function () { return console.log("Done"); }; });
+                        _this.isLoading = false;
+                    }, function () { return function () {
+                        console.log("Done");
+                        _this.isLoading = false;
+                    }; });
                 };
                 RecentTimeLineComponent.prototype.updateTimelineWatch = function (timeLineWatch, selectedTimeline) {
                     var _this = this;
@@ -154,7 +188,7 @@ System.register(['@angular/core', '../services/recenttimeline.service', '../serv
                         providers: [
                             recenttimeline_service_1.RecentTimeLineService, timeline_watch_service_1.TimeLineWatchService
                         ],
-                        directives: [timeline_component_1.TimeLineComponent, modaldialog_1.MODAL_DIRECTIVES, sharetimeline_component_1.ShareTimelineComponent, users_selector_component_1.UsersSelectorComponent, carousel_component_1.CSSCarouselComponent]
+                        directives: [timeline_component_1.TimeLineComponent, modaldialog_1.MODAL_DIRECTIVES, sharetimeline_component_1.ShareTimelineComponent, users_selector_component_1.UsersSelectorComponent, carousel_component_1.CSSCarouselComponent, angular2_infinite_scroll_1.InfiniteScroll]
                     }), 
                     __metadata('design:paramtypes', [recenttimeline_service_1.RecentTimeLineService, timeline_watch_service_1.TimeLineWatchService, router_1.Router])
                 ], RecentTimeLineComponent);

@@ -1,4 +1,4 @@
-﻿
+﻿import { Router} from '@angular/router';
 import {Component, OnInit, Input} from '@angular/core';
 import {NotesService} from '../services/notes.service';
 import {TimeLineService} from '../services/timeline.service';
@@ -16,7 +16,7 @@ import {Configuration } from '../app.constants';
 import { ShareTimelineComponent } from '../sharetimeline/sharetimeline.component';
 import { UsersSelectorComponent } from '../noteshareusers/users-selector.component';
 import { MODAL_DIRECTIVES, ModalComponent } from '../modal/modaldialog';
-
+declare var $;
 @Component({
     selector: 'timeline',
     templateUrl: './app/timeline/timeline.component.html',
@@ -32,8 +32,8 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
     tagsResponce: TagsResponse;
     isLoading: boolean = false;
     fileApiUrl;
-	
-    constructor(private _timeLineService: TimeLineService,private _noteService: NotesService, routeSegment: RouteSegment, private passTagService: PassTagService, private _configuration: Configuration) {
+
+    constructor(private _timeLineService: TimeLineService, private _noteService: NotesService, routeSegment: RouteSegment, private _router: Router, private passTagService: PassTagService, private _configuration: Configuration) {
         this.tagsStr = routeSegment.getParam('tags');
         this.fileApiUrl = _configuration.ServerWithApiUrl + 'FileContent';
     }
@@ -52,7 +52,8 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
     isInitialLoad: boolean = false;
     counter: number = 0; 
     showlabel: boolean = false;
-    isLoadingShow: boolean = false;
+    loadingLabelHide: boolean = false;
+    totalPages: number = 0;
     public timeLineRequest: TimeLineRequest = {
         data: [],
         isPersistedSearch: false,
@@ -82,12 +83,12 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
     }
 
     onScroll() {
-        //if (!this.isLoading)
         if (this.timeLineRequest.pageNo > 1)
             this.getTimelines();
     }
 
     routerCanDeactivate(currTree?: any, futureTree?: any) {
+        this.isLoading = false;
         this.timeLineRequest.isPersistedSearch = true;
         this.getTimelines();
 
@@ -110,7 +111,7 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
             this.filteredTimelines = [];
             this.timeLinesList = [];
             this.isLoading = false;
-            this.isLoadingShow = false;
+            this.loadingLabelHide = false;
             this.getTimelines();
         }
     }
@@ -120,35 +121,19 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
 			this.popularTags = JSON.parse(JSON.stringify(lines));
 			console.log('len = ' +  this.popularTags.length);
 			console.log('len = ' +  this.popularTags[0].count);
-			//this.popularTags = lines ; 
-			//console.log('popular Tags = ' + JSON.stringify(lines)); 
 		});
-	}
-	
-	/*
-	getPopularTags(){
-		this.popularTags = '';
-		this._timeLineService.getMostPopularTags(this.timeLineRequest).subscribe(lines => {
-			var data = lines;
-			console.log('popular Tags = ' + JSON.stringify(data));
-			
-			var htmldiv1 = '';
-			for (var x = 0; x < data.length; x++) {
-				var tags = data[x].tags ;
-				var htmldiv2 = '<div>';
-				for (var y = 0; y < tags.length; y++) {
-					var htmldiv2 = '<span>' + tags[y].name + '</span'>;
-					htmldiv2 += '<span>' + tags[y].createdBy + '</span'>; 
-					htmldiv2 += '<span>' + tags[y].createdDate + '</span'>;
-				}
-				var htmldiv1 = htmldiv1 + htmldiv2 + '<span>' + data.count + '/</span>';
-					htmldiv1 = htmldiv1 + '<span>' + data.displayName + '/</span>';
-				htmldiv1 = htmldiv1 + '</br>' ;
-			};
-			
-			$('#popularTags').html(htmldiv1);
-		});
-	}*/
+    }
+
+    selectTrend(tags: any[]) {
+        this.timeLineRequest.data = tags.map(function (d) { return d['name']; });
+        let tagList = '';
+
+        for (var i = 0; i < this.timeLineRequest.data.length; i++) {
+            tagList = tagList + (this.timeLineRequest.data[i] + (this.timeLineRequest.data.length != i + 1 ? ',' : ''));
+        }
+
+        this._router.navigate(['/timeline', { tags: tagList }]);
+    }
 	
     getSelectedTags() {
         this.selectedTagStr = '';
@@ -186,7 +171,8 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
         this._timeLineService.getTimeLines(this.timeLineRequest)
             .subscribe(timelines => {
 
-                this.timelines = timelines;
+                this.timelines = timelines.group;
+                this.totalPages = timelines.totalPages;
                 if (typeof this.filteredTimelines == 'undefined') {
                     this.filteredTimelines = new Array();
                 }
@@ -199,11 +185,11 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
                     }
                 }
 
-                console.log(timelines);
+                console.log(this.timelines);
                 console.log(this.filteredTimelines);
-                for (var x = 0; x < timelines.length; x++) {
-                    timelines[x].isLabled = true;
-                    this.filteredTimelines.push(timelines[x]);
+                for (var x = 0; x < this.timelines.length; x++) {
+                    this.timelines[x].isLabled = true;
+                    this.filteredTimelines.push(this.timelines[x]);
                 }
 
                 for (var y = 0; y < this.filteredTimelines.length; y++) {
@@ -245,25 +231,22 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
                 console.log(this.timeLinesList);
                 for (var y = 0; y < this.timeLinesList.length; y++) {
                     if (this.timeLinesList[y].items.length > 1)
-                        this.timeLinesList[y].availableThreadsCountText = this.timeLinesList[y].items.length.toString() + " Threads Available";
+                        this.timeLinesList[y].availableThreadsCountText = this.timeLinesList[y].items.length.toString() + " Notes Available";
                     else
-                        this.timeLinesList[y].availableThreadsCountText = this.timeLinesList[y].items.length.toString() + " Thread Available";
+                        this.timeLinesList[y].availableThreadsCountText = this.timeLinesList[y].items.length.toString() + " Note Available";
                 }
 
-                if (this.timelines.length > 0) {
+                if (this.timeLineRequest.pageNo < this.totalPages) {
                     this.timeLineRequest.pageNo = this.timeLineRequest.pageNo + 1;
+                    this.isLoading = false;
                 }
                 else {
-                    this.isLoadingShow = true;
+                    this.loadingLabelHide = true;
                 }
-                //else {
-                //    this.isLoading = true;
-                //}
                 if (this.timeLinesList.length > 0)
                     this.showlabel = false;
                 else
                     this.showlabel = true;
-                this.isLoading = false;
                 console.log(this.timelines);
                 console.log(this.filteredTimelines);
 

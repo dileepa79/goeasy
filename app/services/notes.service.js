@@ -39,7 +39,6 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Observable', '@angular/
                     this.http = http;
                     this._configuration = _configuration;
                     this._authService = _authService;
-                    this.tags = '';
                     this.webApiUrl = _configuration.ServerWithApiUrl + 'Note';
                 }
                 //public addNote(noteRequest) {

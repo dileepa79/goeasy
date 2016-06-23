@@ -6,7 +6,7 @@ System.register([], function(exports_1, context_1) {
         setters:[],
         execute: function() {
             RecentTimeLineResponse = (function () {
-                function RecentTimeLineResponse(id, userId, requestedTime, date, tags, isWatched, recentActivity, noOfEntries, dateDay, dateMonth, timelineId) {
+                function RecentTimeLineResponse(id, userId, requestedTime, date, tags, isWatched, recentActivity, noOfEntries, dateDay, dateMonth, timelineId, sharedWith, totalPages) {
                     this.id = id;
                     this.userId = userId;
                     this.requestedTime = requestedTime;
@@ -18,6 +18,8 @@ System.register([], function(exports_1, context_1) {
                     this.dateDay = dateDay;
                     this.dateMonth = dateMonth;
                     this.timelineId = timelineId;
+                    this.sharedWith = sharedWith;
+                    this.totalPages = totalPages;
                 }
                 return RecentTimeLineResponse;
             }());

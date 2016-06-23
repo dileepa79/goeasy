@@ -22,11 +22,13 @@ export class InfiniteScroll implements OnDestroy, OnInit {
         , this._throttle, this._immediate);
   }
 
-  ngOnDestroy () {
-    this.scroller.clean();
-  }
-  
-  onScroll() {
+    ngOnDestroy() {
+        if (typeof this.scroller != 'undefined') {
+            this.scroller.clean();
+        }
+    }
+
+    onScroll() {
     this.scrolled.next({});
   }
 

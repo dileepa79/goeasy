@@ -58,7 +58,7 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Observable', './auth.se
                         .catch(this.handleError);
                 };
                 TimeLineService.prototype.getMostPopularTags = function (timeLineRequest) {
-                    var most_pop_url = this.webApiUrl + "/GetMostPopularTags";
+                    var most_pop_url = this.webApiUrl + "/GetTrendingTimelines";
                     var body = JSON.stringify(timeLineRequest);
                     var headers = this.authService.getHeader();
                     headers.append('Content-Type', 'application/json; charset=utf-8');

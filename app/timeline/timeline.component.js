@@ -1,4 +1,4 @@
-System.register(['@angular/core', '../services/notes.service', '../services/timeline.service', '../tags/tags-selector.component', './timelinegroup/timelinegroup.component', './timelinegroup/timelinedetail.component', '@angular/router', 'rxjs/Observable', '../services/passtag.service', '../timeline/angular2-infinite-scroll', '../app.constants', '../sharetimeline/sharetimeline.component', '../noteshareusers/users-selector.component', '../modal/modaldialog'], function(exports_1, context_1) {
+System.register(['@angular/router', '@angular/core', '../services/notes.service', '../services/timeline.service', '../tags/tags-selector.component', './timelinegroup/timelinegroup.component', './timelinegroup/timelinedetail.component', 'rxjs/Observable', '../services/passtag.service', '../timeline/angular2-infinite-scroll', '../app.constants', '../sharetimeline/sharetimeline.component', '../noteshareusers/users-selector.component', '../modal/modaldialog'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,10 +10,14 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, notes_service_1, timeline_service_1, tags_selector_component_1, timelinegroup_component_1, timelinedetail_component_1, router_1, Observable_1, passtag_service_1, angular2_infinite_scroll_1, app_constants_1, sharetimeline_component_1, users_selector_component_1, modaldialog_1;
+    var router_1, core_1, notes_service_1, timeline_service_1, tags_selector_component_1, timelinegroup_component_1, timelinedetail_component_1, router_2, Observable_1, passtag_service_1, angular2_infinite_scroll_1, app_constants_1, sharetimeline_component_1, users_selector_component_1, modaldialog_1;
     var TimeLineComponent;
     return {
         setters:[
+            function (router_1_1) {
+                router_1 = router_1_1;
+                router_2 = router_1_1;
+            },
             function (core_1_1) {
                 core_1 = core_1_1;
             },
@@ -31,9 +35,6 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
             },
             function (timelinedetail_component_1_1) {
                 timelinedetail_component_1 = timelinedetail_component_1_1;
-            },
-            function (router_1_1) {
-                router_1 = router_1_1;
             },
             function (Observable_1_1) {
                 Observable_1 = Observable_1_1;
@@ -58,9 +59,10 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
             }],
         execute: function() {
             TimeLineComponent = (function () {
-                function TimeLineComponent(_timeLineService, _noteService, routeSegment, passTagService, _configuration) {
+                function TimeLineComponent(_timeLineService, _noteService, routeSegment, _router, passTagService, _configuration) {
                     this._timeLineService = _timeLineService;
                     this._noteService = _noteService;
+                    this._router = _router;
                     this.passTagService = passTagService;
                     this._configuration = _configuration;
                     this.oneAtATime = true;
@@ -73,7 +75,8 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
                     this.isInitialLoad = false;
                     this.counter = 0;
                     this.showlabel = false;
-                    this.isLoadingShow = false;
+                    this.loadingLabelHide = false;
+                    this.totalPages = 0;
                     this.timeLineRequest = {
                         data: [],
                         isPersistedSearch: false,
@@ -102,11 +105,11 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
                     this.getPopularTags();
                 };
                 TimeLineComponent.prototype.onScroll = function () {
-                    //if (!this.isLoading)
                     if (this.timeLineRequest.pageNo > 1)
                         this.getTimelines();
                 };
                 TimeLineComponent.prototype.routerCanDeactivate = function (currTree, futureTree) {
+                    this.isLoading = false;
                     this.timeLineRequest.isPersistedSearch = true;
                     this.getTimelines();
                     return Observable_1.Observable.of(true).delay(200).toPromise();
@@ -126,7 +129,7 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
                         this.filteredTimelines = [];
                         this.timeLinesList = [];
                         this.isLoading = false;
-                        this.isLoadingShow = false;
+                        this.loadingLabelHide = false;
                         this.getTimelines();
                     }
                 };
@@ -136,34 +139,16 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
                         _this.popularTags = JSON.parse(JSON.stringify(lines));
                         console.log('len = ' + _this.popularTags.length);
                         console.log('len = ' + _this.popularTags[0].count);
-                        //this.popularTags = lines ; 
-                        //console.log('popular Tags = ' + JSON.stringify(lines)); 
                     });
                 };
-                /*
-                getPopularTags(){
-                    this.popularTags = '';
-                    this._timeLineService.getMostPopularTags(this.timeLineRequest).subscribe(lines => {
-                        var data = lines;
-                        console.log('popular Tags = ' + JSON.stringify(data));
-                        
-                        var htmldiv1 = '';
-                        for (var x = 0; x < data.length; x++) {
-                            var tags = data[x].tags ;
-                            var htmldiv2 = '<div>';
-                            for (var y = 0; y < tags.length; y++) {
-                                var htmldiv2 = '<span>' + tags[y].name + '</span'>;
-                                htmldiv2 += '<span>' + tags[y].createdBy + '</span'>;
-                                htmldiv2 += '<span>' + tags[y].createdDate + '</span'>;
-                            }
-                            var htmldiv1 = htmldiv1 + htmldiv2 + '<span>' + data.count + '/</span>';
-                                htmldiv1 = htmldiv1 + '<span>' + data.displayName + '/</span>';
-                            htmldiv1 = htmldiv1 + '</br>' ;
-                        };
-                        
-                        $('#popularTags').html(htmldiv1);
-                    });
-                }*/
+                TimeLineComponent.prototype.selectTrend = function (tags) {
+                    this.timeLineRequest.data = tags.map(function (d) { return d['name']; });
+                    var tagList = '';
+                    for (var i = 0; i < this.timeLineRequest.data.length; i++) {
+                        tagList = tagList + (this.timeLineRequest.data[i] + (this.timeLineRequest.data.length != i + 1 ? ',' : ''));
+                    }
+                    this._router.navigate(['/timeline', { tags: tagList }]);
+                };
                 TimeLineComponent.prototype.getSelectedTags = function () {
                     this.selectedTagStr = '';
                     for (var i = 0; i < this.timeLineRequest.data.length; i++) {
@@ -196,7 +181,8 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
                     this.isLoading = true;
                     this._timeLineService.getTimeLines(this.timeLineRequest)
                         .subscribe(function (timelines) {
-                        _this.timelines = timelines;
+                        _this.timelines = timelines.group;
+                        _this.totalPages = timelines.totalPages;
                         if (typeof _this.filteredTimelines == 'undefined') {
                             _this.filteredTimelines = new Array();
                         }
@@ -207,11 +193,11 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
                                 }
                             }
                         }
-                        console.log(timelines);
+                        console.log(_this.timelines);
                         console.log(_this.filteredTimelines);
-                        for (var x = 0; x < timelines.length; x++) {
-                            timelines[x].isLabled = true;
-                            _this.filteredTimelines.push(timelines[x]);
+                        for (var x = 0; x < _this.timelines.length; x++) {
+                            _this.timelines[x].isLabled = true;
+                            _this.filteredTimelines.push(_this.timelines[x]);
                         }
                         for (var y = 0; y < _this.filteredTimelines.length; y++) {
                             if (y == _this.filteredTimelines.length - 1) {
@@ -251,24 +237,21 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
                         console.log(_this.timeLinesList);
                         for (var y = 0; y < _this.timeLinesList.length; y++) {
                             if (_this.timeLinesList[y].items.length > 1)
-                                _this.timeLinesList[y].availableThreadsCountText = _this.timeLinesList[y].items.length.toString() + " Threads Available";
+                                _this.timeLinesList[y].availableThreadsCountText = _this.timeLinesList[y].items.length.toString() + " Notes Available";
                             else
-                                _this.timeLinesList[y].availableThreadsCountText = _this.timeLinesList[y].items.length.toString() + " Thread Available";
+                                _this.timeLinesList[y].availableThreadsCountText = _this.timeLinesList[y].items.length.toString() + " Note Available";
                         }
-                        if (_this.timelines.length > 0) {
+                        if (_this.timeLineRequest.pageNo < _this.totalPages) {
                             _this.timeLineRequest.pageNo = _this.timeLineRequest.pageNo + 1;
+                            _this.isLoading = false;
                         }
                         else {
-                            _this.isLoadingShow = true;
+                            _this.loadingLabelHide = true;
                         }
-                        //else {
-                        //    this.isLoading = true;
-                        //}
                         if (_this.timeLinesList.length > 0)
                             _this.showlabel = false;
                         else
                             _this.showlabel = true;
-                        _this.isLoading = false;
                         console.log(_this.timelines);
                         console.log(_this.filteredTimelines);
                     }, function (error) {
@@ -303,7 +286,7 @@ System.register(['@angular/core', '../services/notes.service', '../services/time
                         ],
                         directives: [tags_selector_component_1.TagsSelectorComponent, timelinegroup_component_1.TimelineInfo, timelinegroup_component_1.TimelineGroup, timelinedetail_component_1.TimelineDetail, timelinedetail_component_1.TimelineDetailGroup, angular2_infinite_scroll_1.InfiniteScroll, modaldialog_1.MODAL_DIRECTIVES, sharetimeline_component_1.ShareTimelineComponent, users_selector_component_1.UsersSelectorComponent]
                     }), 
-                    __metadata('design:paramtypes', [timeline_service_1.TimeLineService, notes_service_1.NotesService, router_1.RouteSegment, passtag_service_1.PassTagService, app_constants_1.Configuration])
+                    __metadata('design:paramtypes', [timeline_service_1.TimeLineService, notes_service_1.NotesService, router_2.RouteSegment, router_1.Router, passtag_service_1.PassTagService, app_constants_1.Configuration])
                 ], TimeLineComponent);
                 return TimeLineComponent;
             }());

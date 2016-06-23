@@ -9,22 +9,32 @@ import {Editor} from 'primeng/primeng';
 import {Header} from 'primeng/primeng';
 import { Router} from '@angular/router';
 import {PassTagService} from '../services/passtag.service';
+import {UserProfileService} from '../services/user_profile.service';
 import { Tag } from '../tags/tags-response';
 import { FileUploaderComponent, FileToUpload } from '../fileuploader/file-uploader.component';
 import {LoadingComponent} from '../loader/loading.component';
+declare var $;
+declare var ip_country;
+
+export class UserProfileData {
+    email: string;
+    name: string;
+    profileImageId: string;
+}
 
 @Component({
     selector: 'add-note',
     templateUrl: './app/notes/add-note.component.html',
     providers: [
-        NotesService
+        NotesService,
+		UserProfileService
     ],
     directives: [TagsSelectorComponent, MODAL_DIRECTIVES, Editor, Header, UsersSelectorComponent, FileUploaderComponent]
 })
 
 export class AddNoteComponent implements OnInit {
-    constructor(private _notesService: NotesService, public _router: Router, private _passTagService: PassTagService, private zone: NgZone) {
-        window.angularComponentRef = {
+    constructor(private _notesService: NotesService, public _router: Router, private _passTagService: PassTagService, private _userProfileService: UserProfileService, private zone: NgZone) {
+        (<any>window).angularComponentRef = {
             zone: this.zone, 
             component: this
         };
@@ -36,6 +46,12 @@ export class AddNoteComponent implements OnInit {
         users: [],
         filesToUpload: [],
         attachments:[]
+    };
+	
+	public userProfileData: UserProfileData = {
+        email: '',
+        name: '',
+        profileImageId: ''
     };
 
     heading = "ADD NOTES";
@@ -49,14 +65,34 @@ export class AddNoteComponent implements OnInit {
     isFromSlider: boolean = false;
     isToggle: boolean = false;
     passedTags: Tag[] = [];
+    initialTags: any[] = [];
+
     @Input() showCloseButton: boolean = false;
     ngOnInit() {
-        this.istagSelectionValidated = true;
-        this.isToggle = false;
+		this.active = false;
+        this._userProfileService.getUserProfile()
+		.subscribe(data => {
+			this.userProfileData = JSON.parse(JSON.stringify(data));
+			console.log('this.userProfileData.email - ' + this.userProfileData.email);
+			this.initialTags.push(this.userProfileData.email);
+			this.istagSelectionValidated = true;
+			this.isToggle = false;
+			this.initialTags.push(ip_country);
+			this.noteRequest.tags = this.initialTags;
+			this.active = true;
+			},
+		error => {
+			this.errorMessage = <any>error,
+			console.log(this.errorMessage);
+		},
+		() => () => console.log("Done"));	
+		
+
     }
 
     Save() {
         let inputTagStr = $('#tagInput').text();
+
         if (inputTagStr.trim() == '') {
             if (this.noteRequest.tags.length == 0) {
                 this.istagSelectionValidated = false;
@@ -72,7 +108,8 @@ export class AddNoteComponent implements OnInit {
             this.istagSelectionValidated = true;
             this.isFromSlider = true;
         }
-        window.loadingComponentRef.zone.run(function () { window.loadingComponentRef.component.show(); });
+
+        (<any>window).loadingComponentRef.zone.run(function () { (<any>window).loadingComponentRef.component.show(); });
         this._notesService.addNote(this.noteRequest)
             .subscribe(note => {
                 this.tagList = '';
@@ -80,7 +117,7 @@ export class AddNoteComponent implements OnInit {
                     this.tagList = this.tagList + (note.tags[i].name + (note.tags.length != i + 1 ? ',' : ''));
                 }
                 this.clear();
-                window.loadingComponentRef.zone.run(function () { window.loadingComponentRef.component.hide(); });
+                (<any>window).loadingComponentRef.zone.run(function () { (<any>window).loadingComponentRef.component.hide(); });
                 if (this.isFromSlider) {
                     if (this.isToggle)
                         this._router.navigate(['/timeline', { tags: this.tagList + ',,' }]);
@@ -96,18 +133,18 @@ export class AddNoteComponent implements OnInit {
             error => {
                 this.errorMessage = <any>error,
                     console.log(this.errorMessage);
-                window.loadingComponentRef.zone.run(function () { window.loadingComponentRef.component.hide(); });
+                (<any>window).loadingComponentRef.zone.run(function () { (<any>window).loadingComponentRef.component.hide(); });
             },
             () => () => {
                 console.log("Done");
-                window.loadingComponentRef.zone.run(function () { window.loadingComponentRef.component.hide(); });
+                (<any>window).loadingComponentRef.zone.run(function () { (<any>window).loadingComponentRef.component.hide(); });
             });
     }
 
     Share() {
         console.log('Share This Note');
     }
-
+	
     onSelectedTagsChanged(tags: any[]): void {
         this.noteRequest.tags = tags.map(function (d) { return d['name']; });
 
@@ -121,8 +158,9 @@ export class AddNoteComponent implements OnInit {
     onSelectedUsersChanged(users: any[]): void {
         this.noteRequest.users = users.map(function (d) { return d['userName']; });
     }
+	
     clear() {
-        this.noteRequest = new NoteRequest('', '', [], []);
+        this.noteRequest = new NoteRequest('', '', [], [], [] ,[]);
         this.active = false;
         setTimeout(() => this.active = true, 0);
     }

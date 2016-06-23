@@ -1,5 +1,5 @@
 ﻿import {Injectable, Inject} from '@angular/core';
-import {Http, Headers, RequestOptions, Response} from '@angular/http';
+import {Http, Headers, RequestOptions, Response, URLSearchParams} from '@angular/http';
 import {RecentTimeLineResponse} from '../recenttimeline/recenttimeline-response';
 import {Observable} from 'rxjs/Observable';
 import {AuthService} from './auth.service';
@@ -17,11 +17,13 @@ export class RecentTimeLineService {
         this.authService = _authService;
     }
 
-    public getRecentTimeLines() {
+    public getRecentTimeLines(recentTimelineRequest) {
         var headers = this.authService.getHeader();
-        return this.http.get(this.webApiUrl, {
-            headers: headers
-        })
+        var options = new RequestOptions({
+            headers: headers,
+            search: new URLSearchParams('PageNo=' + recentTimelineRequest.pageNo + '&PageSize=' + recentTimelineRequest.pageSize)
+        });
+        return this.http.get(this.webApiUrl, options )
             .map(res => <RecentTimeLineResponse[]>res.json())
             .do(data => console.log(data))
             .catch(this.handleError);
@@ -42,7 +44,7 @@ export class RecentTimeLineService {
         var options = new RequestOptions({ headers: headers });
 
         return this.http.post(this.webApiUrl, body, options)
-            .map((res) => { return <AppUser[]>res.json() });
+            .map((res) => { return <any[]>res.json() });
     }
 }
 

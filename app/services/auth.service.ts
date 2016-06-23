@@ -54,7 +54,7 @@ export class AuthService {
                         this.setCookie("username", username, 15);
                         this.setCookie("password", password, 15);
                     }
-                    window.loadingComponentRef.zone.run(function () { window.loadingComponentRef.component.hide(); });
+                    (<any>window).loadingComponentRef.zone.run(function () { (<any>window).loadingComponentRef.component.hide(); });
                     this._router.navigate(['dashboard']);
                 }
                 );
@@ -88,7 +88,7 @@ export class AuthService {
             this.setCookie("password", password, 15);
             this.setCookie("yaytoken", this.tokenService.getToken(), this._tokenExpiresIn);
         }
-        window.loadingComponentRef.zone.run(function () { window.loadingComponentRef.component.hide(); });
+        (<any>window).loadingComponentRef.zone.run(function () { (<any>window).loadingComponentRef.component.hide(); });
         this._router.navigate(['dashboard']);
     }
 

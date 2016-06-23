@@ -36,17 +36,17 @@ export class LoginComponent implements OnInit {
     public errorMsg = '';
 
     login() {
-        window.loadingComponentRef.zone.run(function () { window.loadingComponentRef.component.show(); });
+        (<any>window).loadingComponentRef.zone.run(function () { (<any>window).loadingComponentRef.component.show(); });
         this.errorMsg = '';
         this._authService.login(this.userDetails.username, this.userDetails.password, this.userDetails.rememberMe).subscribe(
             data => {
                 //console.log("access token: "+data.access_token)
                 this._authService.setToken(data.access_token);
                 this._authService.setTokenExpiresIn(data.expires_in);
-                window.loadingComponentRef.zone.run(function () { window.loadingComponentRef.component.hide(); });
+                (<any>window).loadingComponentRef.zone.run(function () { (<any>window).loadingComponentRef.component.hide(); });
             },
             err => {
-                window.loadingComponentRef.zone.run(function () { window.loadingComponentRef.component.hide(); });
+                (<any>window).loadingComponentRef.zone.run(function () { (<any>window).loadingComponentRef.component.hide(); });
                 console.log("error: " + JSON.stringify(err));
                 this._authService.setAuthorized(false);
                 this.errorMsg = 'Oops, the username or password entered is wrong. May be you have pressed a wrong key..';

@@ -1,4 +1,4 @@
-System.register(['@angular/core', './note-request', '../services/notes.service', '../tags/tags-selector.component', '../noteshareusers/users-selector.component', '../modal/modaldialog', 'primeng/primeng', '@angular/router', '../services/passtag.service', '../fileuploader/file-uploader.component'], function(exports_1, context_1) {
+System.register(['@angular/core', './note-request', '../services/notes.service', '../tags/tags-selector.component', '../noteshareusers/users-selector.component', '../modal/modaldialog', 'primeng/primeng', '@angular/router', '../services/passtag.service', '../services/user_profile.service', '../fileuploader/file-uploader.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,8 +10,8 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, note_request_1, notes_service_1, tags_selector_component_1, users_selector_component_1, modaldialog_1, primeng_1, primeng_2, router_1, passtag_service_1, file_uploader_component_1;
-    var AddNoteComponent;
+    var core_1, note_request_1, notes_service_1, tags_selector_component_1, users_selector_component_1, modaldialog_1, primeng_1, primeng_2, router_1, passtag_service_1, user_profile_service_1, file_uploader_component_1;
+    var UserProfileData, AddNoteComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -42,15 +42,25 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
             function (passtag_service_1_1) {
                 passtag_service_1 = passtag_service_1_1;
             },
+            function (user_profile_service_1_1) {
+                user_profile_service_1 = user_profile_service_1_1;
+            },
             function (file_uploader_component_1_1) {
                 file_uploader_component_1 = file_uploader_component_1_1;
             }],
         execute: function() {
+            UserProfileData = (function () {
+                function UserProfileData() {
+                }
+                return UserProfileData;
+            }());
+            exports_1("UserProfileData", UserProfileData);
             AddNoteComponent = (function () {
-                function AddNoteComponent(_notesService, _router, _passTagService, zone) {
+                function AddNoteComponent(_notesService, _router, _passTagService, _userProfileService, zone) {
                     this._notesService = _notesService;
                     this._router = _router;
                     this._passTagService = _passTagService;
+                    this._userProfileService = _userProfileService;
                     this.zone = zone;
                     this.noteRequest = {
                         title: '',
@@ -59,6 +69,11 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                         users: [],
                         filesToUpload: [],
                         attachments: []
+                    };
+                    this.userProfileData = {
+                        email: '',
+                        name: '',
+                        profileImageId: ''
                     };
                     this.heading = "ADD NOTES";
                     this.tags = [];
@@ -69,6 +84,7 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                     this.isFromSlider = false;
                     this.isToggle = false;
                     this.passedTags = [];
+                    this.initialTags = [];
                     this.showCloseButton = false;
                     window.angularComponentRef = {
                         zone: this.zone,
@@ -76,8 +92,22 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                     };
                 }
                 AddNoteComponent.prototype.ngOnInit = function () {
-                    this.istagSelectionValidated = true;
-                    this.isToggle = false;
+                    var _this = this;
+                    this.active = false;
+                    this._userProfileService.getUserProfile()
+                        .subscribe(function (data) {
+                        _this.userProfileData = JSON.parse(JSON.stringify(data));
+                        console.log('this.userProfileData.email - ' + _this.userProfileData.email);
+                        _this.initialTags.push(_this.userProfileData.email);
+                        _this.istagSelectionValidated = true;
+                        _this.isToggle = false;
+                        _this.initialTags.push(ip_country);
+                        _this.noteRequest.tags = _this.initialTags;
+                        _this.active = true;
+                    }, function (error) {
+                        _this.errorMessage = error,
+                            console.log(_this.errorMessage);
+                    }, function () { return function () { return console.log("Done"); }; });
                 };
                 AddNoteComponent.prototype.Save = function () {
                     var _this = this;
@@ -140,7 +170,7 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                 };
                 AddNoteComponent.prototype.clear = function () {
                     var _this = this;
-                    this.noteRequest = new note_request_1.NoteRequest('', '', [], []);
+                    this.noteRequest = new note_request_1.NoteRequest('', '', [], [], [], []);
                     this.active = false;
                     setTimeout(function () { return _this.active = true; }, 0);
                 };
@@ -169,11 +199,12 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                         selector: 'add-note',
                         templateUrl: './app/notes/add-note.component.html',
                         providers: [
-                            notes_service_1.NotesService
+                            notes_service_1.NotesService,
+                            user_profile_service_1.UserProfileService
                         ],
                         directives: [tags_selector_component_1.TagsSelectorComponent, modaldialog_1.MODAL_DIRECTIVES, primeng_1.Editor, primeng_2.Header, users_selector_component_1.UsersSelectorComponent, file_uploader_component_1.FileUploaderComponent]
                     }), 
-                    __metadata('design:paramtypes', [notes_service_1.NotesService, router_1.Router, passtag_service_1.PassTagService, core_1.NgZone])
+                    __metadata('design:paramtypes', [notes_service_1.NotesService, router_1.Router, passtag_service_1.PassTagService, user_profile_service_1.UserProfileService, core_1.NgZone])
                 ], AddNoteComponent);
                 return AddNoteComponent;
             }());

@@ -39,7 +39,7 @@ export class TimeLineService {
     }
 
 	public getMostPopularTags(timeLineRequest) {
-		var most_pop_url = this.webApiUrl + "/GetMostPopularTags" ;
+        var most_pop_url = this.webApiUrl + "/GetTrendingTimelines" ;
 		var body = JSON.stringify(timeLineRequest);
         var headers = this.authService.getHeader();
         headers.append('Content-Type', 'application/json; charset=utf-8' );

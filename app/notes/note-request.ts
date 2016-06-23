@@ -4,7 +4,9 @@ export class NoteRequest {
     constructor(public title: string,
         public description: string,
         public tags: Tag[],
-        public users: string[]
+        public users: string[],
+        public filesToUpload: any[],
+        public attachments: any[]
     ){}
     
 }

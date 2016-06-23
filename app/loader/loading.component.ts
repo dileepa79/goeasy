@@ -7,7 +7,7 @@
 export class LoadingComponent {
     showLoading: boolean = false;
     constructor(private zone: NgZone) {
-    window.loadingComponentRef = {
+        (<any>window).loadingComponentRef = {
         zone: this.zone,
         component: this
     }; }
