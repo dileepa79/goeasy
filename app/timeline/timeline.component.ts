@@ -125,6 +125,7 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
     }
 
     selectTrend(tags: any[]) {
+        //this.timeLineRequest.data.length = 0;
         this.timeLineRequest.data = tags.map(function (d) { return d['name']; });
         let tagList = '';
 
@@ -133,6 +134,7 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
         }
 
         this._router.navigate(['/timeline', { tags: tagList }]);
+        //(<any>window).AutoCompleteComponentRef.zone.run(function () { (<any>window).AutoCompleteComponentRef.component.LoadExternalInputData(); });
     }
 	
     getSelectedTags() {

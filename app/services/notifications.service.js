@@ -39,7 +39,6 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Observable', './auth.se
                     this._authService = _authService;
                     this._configuration = _configuration;
                     this.webApiUrl = _configuration.ServerWithApiUrl + 'Notification';
-                    console.log('not cons');
                 }
                 NotificationService.prototype.getNotifications = function () {
                     var headers = this._authService.getHeader(); //new Headers({ 'Content-Type': 'application/json; charset=utf-8' });

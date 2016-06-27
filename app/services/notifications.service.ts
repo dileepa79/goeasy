@@ -11,7 +11,6 @@ export class NotificationService {
 
     constructor(private http: Http, private _authService: AuthService, private _configuration: Configuration) {
         this.webApiUrl = _configuration.ServerWithApiUrl + 'Notification';
-        console.log('not cons');
     }
 
     public getNotifications() {

@@ -50,7 +50,6 @@ System.register(["@angular/core"], function(exports_1, context_1) {
                     }
                 };
                 FileUploaderComponent.prototype.removeFile = function (file) {
-                    debugger;
                     var index = this.filesToUpload.findIndex(function (x) { return x === file; });
                     this.filesToUpload.splice(index, 1);
                 };

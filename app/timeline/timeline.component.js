@@ -142,12 +142,14 @@ System.register(['@angular/router', '@angular/core', '../services/notes.service'
                     });
                 };
                 TimeLineComponent.prototype.selectTrend = function (tags) {
+                    //this.timeLineRequest.data.length = 0;
                     this.timeLineRequest.data = tags.map(function (d) { return d['name']; });
                     var tagList = '';
                     for (var i = 0; i < this.timeLineRequest.data.length; i++) {
                         tagList = tagList + (this.timeLineRequest.data[i] + (this.timeLineRequest.data.length != i + 1 ? ',' : ''));
                     }
                     this._router.navigate(['/timeline', { tags: tagList }]);
+                    //(<any>window).AutoCompleteComponentRef.zone.run(function () { (<any>window).AutoCompleteComponentRef.component.LoadExternalInputData(); });
                 };
                 TimeLineComponent.prototype.getSelectedTags = function () {
                     this.selectedTagStr = '';

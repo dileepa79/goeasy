@@ -41,7 +41,6 @@ export class FileUploaderComponent {
     }
 
     removeFile(file) {
-        debugger;
         var index = this.filesToUpload.findIndex(x=> x === file);
         this.filesToUpload.splice(index, 1);   
     }
