@@ -21,6 +21,7 @@ export class UserProfileData {
     email: string;
     name: string;
     profileImageId: string;
+	userTags:any[];
 }
 
 @Component({

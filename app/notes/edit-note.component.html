@@ -1,0 +1,43 @@
+﻿<div class="container">   
+
+
+
+            <div class="col-md-8 add-note-form">
+                <h1>
+                    {{heading}}
+                    <!--<button *ngIf="showCloseButton==false" class="btn-secondary  btn" (click)="modal.open()">
+                        <i class="material-icons">share</i> <span>share</span>
+                    </button>-->
+                </h1>
+                <!-- -------------Add Note Form------------- -->
+                <form #noteForm="ngForm">
+                    <div *ngIf="showCloseButton" class="form-group">
+                        <label class="float-left">Tags</label>
+						<div id="tagInput1"></div>
+						<div id="tagInput" class="hidden"></div>
+                        <br />
+                    </div>
+                    <div class="form-group">
+                        <label class="float-left">Title</label>
+                        <!-- <input [(ngModel)]="noteRequest.title" class="form-control" required ngControl="title"/>-->
+                                                <input type="text" class="form-control" required [(ngModel)]="editNoteRequest.Title" ngcontrol="title" #title="ngForm">
+                        <div [hidden]="title.valid || title.pristine" class="reqire-field">
+                            Oops! Seems you have forgotten to enter title. 
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <!--<textarea rows="10" cols="50" [(ngModel)]="noteRequest.description" class="form-control"></textarea>-->
+                        <p-editor [(ngModel)]="editNoteRequest.Description">
+                        </p-editor>
+                    </div>
+                    <button type="button" class="btn btn-success" [disabled]="!noteForm.form.valid" (click)="Save()" id="noteSave-trigger">Save</button>
+
+                    </form>
+
+
+</div>
+</div>
+
+<!--<timeline></timeline>-->
+<input type="hidden" value="0" id="application-view-id" />
