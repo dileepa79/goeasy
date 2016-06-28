@@ -1,6 +1,7 @@
 ﻿import { Router} from '@angular/router';
 import {Component, OnInit, Input, NgZone} from '@angular/core';
 import {NotesService} from '../services/notes.service';
+import {UserProfileService} from '../services/user_profile.service';
 import {TimeLineService} from '../services/timeline.service';
 import {TimeLineResponse} from './timeline-response';
 import {TimeLineRequest} from './timeline-request';
@@ -18,14 +19,17 @@ import { UsersSelectorComponent } from '../noteshareusers/users-selector.compone
 import { MODAL_DIRECTIVES, ModalComponent } from '../modal/modaldialog';
 import {EditNoteComponent} from '../notes/edit-note.component';
 declare var $;
+declare var ip_country;
+
 @Component({
     selector: 'timeline',
     templateUrl: './app/timeline/timeline.component.html',
     providers: [
-        TimeLineService ,NotesService
+        TimeLineService ,NotesService,UserProfileService
     ],
     directives: [TagsSelectorComponent, TimelineInfo, TimelineGroup, TimelineDetail, TimelineDetailGroup, InfiniteScroll, MODAL_DIRECTIVES, ShareTimelineComponent, UsersSelectorComponent, EditNoteComponent]
 })
+
 
 export class TimeLineComponent implements OnInit, CanDeactivate {
     public oneAtATime: boolean = true;
@@ -34,7 +38,14 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
     isLoading: boolean = false;
     fileApiUrl;
 
-    constructor(private _timeLineService: TimeLineService, private _noteService: NotesService, routeSegment: RouteSegment,
+	public userProfileData: UserProfileData = {
+        email: '',
+        name: '',
+        profileImageId: '',
+		userTags:[]
+    };
+	
+    constructor(private _timeLineService: TimeLineService, private _noteService: NotesService, private _userProfileService: UserProfileService , routeSegment: RouteSegment,
         private _router: Router, private passTagService: PassTagService, private _configuration: Configuration, private zone: NgZone) {
         this.tagsStr = routeSegment.getParam('tags');
         this.fileApiUrl = _configuration.ServerWithApiUrl + 'FileContent';
@@ -62,6 +73,9 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
     totalPages: number = 0;
     private _isOpen: boolean = false;
     private _selectedId: number = 0;
+    initialTags: any[] = [];	
+
+	
     public timeLineRequest: TimeLineRequest = {
         data: [],
         isPersistedSearch: false,
@@ -70,7 +84,22 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
     };
 
     ngOnInit() {
-        
+		
+        this._userProfileService.getUserProfile()
+		.subscribe(data => {
+			this.userProfileData = JSON.parse(JSON.stringify(data));
+			if(this.userProfileData.userTags && this.userProfileData.userTags.length > 0){
+				var tags = this.userProfileData.userTags;
+				for(var x=0;x<tags.length;x++){
+					this.initialTags.push(tags[x].description);
+				}
+			}
+			if(this.userProfileData.name != '')
+				this.initialTags.push(this.userProfileData.name);	
+			if(ip_country != '')				
+				this.initialTags.push(ip_country);	
+		});
+		
         if (this.tagsStr != null) {
             var tagsArr = this.tagsStr.split(",");
             for (var i = 0; i < tagsArr.length; i++) {
@@ -147,6 +176,9 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
 	
     getSelectedTags() {
         this.selectedTagStr = '';
+		
+		if(this.initialTags && this.initialTags.length > 0)
+			this.selectedTagStr = this.initialTags.join();
 
         for (var i = 0; i < this.timeLineRequest.data.length; i++) {
             this.selectedTagStr = this.selectedTagStr + (this.timeLineRequest.data[i] + (this.timeLineRequest.data.length != i + 1 ? ',' : ''));

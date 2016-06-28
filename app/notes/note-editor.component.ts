@@ -103,13 +103,13 @@ export class NoteEditorComponent implements OnInit {
                             var posArray = tagsArray[s].trim().split(/\s/);
                             if (posArray.length > 1) {
                                 for (let v = 0; v < posArray.length; v++) {
-                                    if (tag.name.toLowerCase().indexOf(posArray[v].toLowerCase().trim()) !== -1) {
+                                    if (tag.name.toLowerCase().indexOf(posArray[v].toLowerCase().trim()) !== -1 && tag.name.trim().length == posArray[v].trim().length) {
                                         tagsReturn[i] = tag.name;
                                     }
                                 }
                             }
                             else {
-                                if (tag.name.toLowerCase().indexOf(tagsArray[s].toLowerCase().trim()) !== -1) {
+                                if (tag.name.toLowerCase().indexOf(tagsArray[s].toLowerCase().trim()) !== -1 && tag.name.trim().length == tagsArray[s].trim().length) {
                                     tagsReturn[i] = tag.name;
                                 }
                             }

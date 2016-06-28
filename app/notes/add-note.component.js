@@ -76,7 +76,8 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                     this.userProfileData = {
                         email: '',
                         name: '',
-                        profileImageId: ''
+                        profileImageId: '',
+                        userTags: []
                     };
                     this.heading = "ADD NOTES";
                     this.tags = [];
@@ -100,8 +101,12 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                     this._userProfileService.getUserProfile()
                         .subscribe(function (data) {
                         _this.userProfileData = JSON.parse(JSON.stringify(data));
-                        console.log('this.userProfileData.email - ' + _this.userProfileData.email);
-                        _this.initialTags.push(_this.userProfileData.email);
+<<<<<<< HEAD
+                        console.log('this.userProfileData.name - ' + _this.userProfileData.name);
+=======
+                        console.log('this.userProfileData.email - ' + _this.userProfileData.email + ', this.userProfileData.name - ' + _this.userProfileData.name);
+>>>>>>> a4e5ec120ac23c478373ae9b836aa2cc0550ba0e
+                        _this.initialTags.push(_this.userProfileData.name);
                         if (_this.userProfileData.userTags && _this.userProfileData.userTags.length > 0) {
                             var tags = _this.userProfileData.userTags;
                             for (var x = 0; x < tags.length; x++) {
@@ -196,11 +201,23 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                         //if (existingTags.indexOf(e.toLowerCase()) == -1) {
                         //}
                     });
+                    stringTags = this.removeDuplicates(stringTags);
                     if (stringTags.length != 0) {
                         this.noteRequest.tags.length = 0;
                         this.noteRequest.tags = stringTags;
                         window.AutoCompleteComponentRef.zone.run(function () { window.AutoCompleteComponentRef.component.LoadExternalInputData(true); });
                     }
+                };
+                AddNoteComponent.prototype.removeDuplicates = function (num) {
+                    var x, len = num.length, out = [], obj = {};
+                    for (x = 0; x < len; x++) {
+                        obj[num[x]] = 0;
+                    }
+                    for (x in obj) {
+                        if (x != 'undefined')
+                            out.push(x);
+                    }
+                    return out;
                 };
                 AddNoteComponent.prototype.TagsAddedDesc = function (event) {
                     this.noteRequest.description = event;

@@ -53,7 +53,8 @@ export class AddNoteComponent implements OnInit {
 	public userProfileData: UserProfileData = {
         email: '',
         name: '',
-        profileImageId: ''
+        profileImageId: '',
+		userTags:[]
     };
 
     heading = "ADD NOTES";
@@ -75,8 +76,7 @@ export class AddNoteComponent implements OnInit {
         this._userProfileService.getUserProfile()
 		.subscribe(data => {
 			this.userProfileData = JSON.parse(JSON.stringify(data));
-			console.log('this.userProfileData.email - ' + this.userProfileData.email);
-			this.initialTags.push(this.userProfileData.email);
+			this.initialTags.push(this.userProfileData.name);
 			if(this.userProfileData.userTags && this.userProfileData.userTags.length > 0){
 				var tags = this.userProfileData.userTags;
 				for(var x=0;x<tags.length;x++){
@@ -191,12 +191,30 @@ export class AddNoteComponent implements OnInit {
             //}
         });
 
+        stringTags = this.removeDuplicates(stringTags);
+
         if (stringTags.length != 0) {
             this.noteRequest.tags.length = 0;
             this.noteRequest.tags = stringTags;
 
             (<any>window).AutoCompleteComponentRef.zone.run(function () { (<any>window).AutoCompleteComponentRef.component.LoadExternalInputData(true); });
         }
+    }
+
+    removeDuplicates(num) {
+        var x,
+            len = num.length,
+            out = [],
+            obj = {};
+
+        for (x = 0; x < len; x++) {
+            obj[num[x]] = 0;
+        }
+        for (x in obj) {
+            if (x != 'undefined')
+                out.push(x);
+        }
+        return out;
     }
 
     TagsAddedDesc(event: string): void {
