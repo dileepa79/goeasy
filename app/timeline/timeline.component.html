@@ -116,9 +116,14 @@
                     </div> <!-- cd-timeline-img -->
                  <div class="cd-timeline-content">
                      <timelinedetail close-others="true">
-                         <div style="float:right; width:90px;">
+                         <div style="float:right; width:120px;">
                              <div alt="" class="timeline-img pull-right">
                                  <img class="circle responsive-img" src={{Item.userImageUrl}}>
+                             </div>
+                             <div class="pull-left">
+                                 <button type="button" id="btn-edit-note" class="share-note-icon mtop-14" style="width:38px;height:27px" title="Edit" (click)="toggleOpenEditNote($event, Item)">
+                                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                 </button>
                              </div>
                              <div class="pull-left">
 								 <button type="button" id="btn-share-note" (click)="parentModal.open(); setCurrentNote(Item);" class="share-note-icon mtop-14" style="width:38px;height:27px" title="Share">
@@ -140,6 +145,7 @@
                                 download="{{attachment.fileName}}">{{attachment.fileName}}</a>
                          </div>
                      </div>
+                     <edit-note class="panel-collapse" [hidden]="!isEditNoteOpen || Item.id != selectedId" [title]="Item.title" [description]="Item.description" [id]="Item.id"></edit-note>
                      <div class="timeline-item-datetime-container">
                          <span class="cd-date lbl-timeline-date" *ngIf="timeline.dateFormat != 'TODAY' && timeline.dateFormat != 'YESTERDAY'">{{Item.dateDay}}</span>
                          <span class="cd-date lbl-timeline-month" *ngIf="timeline.dateFormat != 'TODAY' && timeline.dateFormat != 'YESTERDAY'">{{Item.dateMonth}}</span>

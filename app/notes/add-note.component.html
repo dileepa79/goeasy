@@ -56,8 +56,9 @@
                     <div class="form-group">
                         <label>Description</label>
                         <!--<textarea rows="10" cols="50" [(ngModel)]="noteRequest.description" class="form-control"></textarea>-->
-                        <p-editor [(ngModel)]="noteRequest.description">
-                        </p-editor>
+                        <!--<p-editor [(ngModel)]="noteRequest.description">
+                        </p-editor>-->
+                        <prime-editor (tagsAddedEditor) ="TagsAdded($event)" (tagsAddedDescription) ="TagsAddedDesc($event)"></prime-editor>
                     </div>
                     <div *ngIf="showCloseButton==false" class="form-group">
                         <label class="col-md-12 no-padding">Tags</label>

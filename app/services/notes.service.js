@@ -66,6 +66,16 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Observable', '@angular/
                     // var apiUrl = this.webApiUrl + '/AddNote';
                     return this.callApi(apiUrl, noteRequest);
                 };
+                NotesService.prototype.editNote = function (editNoteRequest) {
+                    var editApiUrl = this.webApiUrl + '/EditNote';
+                    var body = JSON.stringify(editNoteRequest);
+                    var headers = this.getAuthHeader();
+                    headers.append('Content-Type', 'application/json; charset=utf-8');
+                    var options = new http_1.RequestOptions({ headers: headers, url: editApiUrl, body: body });
+                    return this.http.post(editApiUrl, body, options)
+                        .do(function (data) { return console.log(data); })
+                        .catch(this.handleError);
+                };
                 NotesService.prototype.handleError = function (error) {
                     console.error(error);
                     return Observable_1.Observable.throw(error.json().error || 'Server error');
@@ -113,10 +123,37 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Observable', '@angular/
                         xhr.send(formData);
                     });
                 };
+                NotesService.prototype.callEditApi = function (url, editNoteRequest) {
+                    var _this = this;
+                    var key = this.getAuthToken();
+                    return Observable_1.Observable.create(function (observer) {
+                        var formData = new FormData(), xhr = new XMLHttpRequest();
+                        formData.append("title", editNoteRequest.Title);
+                        formData.append("tags", editNoteRequest.Description);
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState === 4) {
+                                if (xhr.status === 201) {
+                                    observer.next(JSON.parse(xhr.response));
+                                    observer.complete();
+                                }
+                                else {
+                                    observer.error(_this.handleError);
+                                }
+                            }
+                        };
+                        xhr.open('POST', url, true);
+                        xhr.setRequestHeader('Authorization', 'Bearer ' + key);
+                        xhr.send(formData);
+                    });
+                };
                 NotesService.prototype.getAuthToken = function () {
                     var headers = this._authService.getHeader();
                     var key = headers._headersMap.entries().next().value[1][0].slice(7);
                     return key;
+                };
+                NotesService.prototype.getAuthHeader = function () {
+                    var headers = this._authService.getHeader();
+                    return headers;
                 };
                 NotesService.prototype.share = function (request) {
                     //console.log("Title: " + request.title + ", description: " + request.description);

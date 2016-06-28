@@ -1,5 +1,5 @@
 ﻿import { Router} from '@angular/router';
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, NgZone} from '@angular/core';
 import {NotesService} from '../services/notes.service';
 import {TimeLineService} from '../services/timeline.service';
 import {TimeLineResponse} from './timeline-response';
@@ -16,6 +16,7 @@ import {Configuration } from '../app.constants';
 import { ShareTimelineComponent } from '../sharetimeline/sharetimeline.component';
 import { UsersSelectorComponent } from '../noteshareusers/users-selector.component';
 import { MODAL_DIRECTIVES, ModalComponent } from '../modal/modaldialog';
+import {EditNoteComponent} from '../notes/edit-note.component';
 declare var $;
 @Component({
     selector: 'timeline',
@@ -23,7 +24,7 @@ declare var $;
     providers: [
         TimeLineService ,NotesService
     ],
-    directives: [TagsSelectorComponent, TimelineInfo, TimelineGroup, TimelineDetail, TimelineDetailGroup, InfiniteScroll , MODAL_DIRECTIVES, ShareTimelineComponent, UsersSelectorComponent]
+    directives: [TagsSelectorComponent, TimelineInfo, TimelineGroup, TimelineDetail, TimelineDetailGroup, InfiniteScroll, MODAL_DIRECTIVES, ShareTimelineComponent, UsersSelectorComponent, EditNoteComponent]
 })
 
 export class TimeLineComponent implements OnInit, CanDeactivate {
@@ -33,9 +34,14 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
     isLoading: boolean = false;
     fileApiUrl;
 
-    constructor(private _timeLineService: TimeLineService, private _noteService: NotesService, routeSegment: RouteSegment, private _router: Router, private passTagService: PassTagService, private _configuration: Configuration) {
+    constructor(private _timeLineService: TimeLineService, private _noteService: NotesService, routeSegment: RouteSegment,
+        private _router: Router, private passTagService: PassTagService, private _configuration: Configuration, private zone: NgZone) {
         this.tagsStr = routeSegment.getParam('tags');
         this.fileApiUrl = _configuration.ServerWithApiUrl + 'FileContent';
+        (<any>window).timelineComponentRef = {
+            zone: this.zone,
+            component: this
+        };
     }
 	
     selectedTags: any[];
@@ -54,6 +60,8 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
     showlabel: boolean = false;
     loadingLabelHide: boolean = false;
     totalPages: number = 0;
+    private _isOpen: boolean = false;
+    private _selectedId: number = 0;
     public timeLineRequest: TimeLineRequest = {
         data: [],
         isPersistedSearch: false,
@@ -203,7 +211,7 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
                 var result = this.groupBy(this.filteredTimelines, function (item) {
                     return [item.dateFormat];
                 });
-                console.log(result);
+                console.log(result+"fdsf");
 
                 if (typeof this.timeLinesList == 'undefined') {
                     this.timeLinesList = new Array();
@@ -279,6 +287,48 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
 		}
 		var noteShareResponse: any;
 		this._noteService.share(note_share).subscribe(res => noteShareResponse = res);
-	}
+    }
+    selectedNote: any;
+    toggleOpenEditNote(event, note) {
+        this.selectedId = note.id;
+        this.selectedNote = note;
+        console.log(note);
+        event.preventDefault();
+        this.isEditNoteOpen = !this.isEditNoteOpen;
+    }
+    toggleOpenEditNoteWithoutEvent(note) {
+        this.selectedId = note.id;
+        this.isEditNoteOpen = !this.isEditNoteOpen;
+//        this.selectedNote = note;
+
+//        this.selectedNote.id = note.id;
+//        this.selectedNote.createDate = note.createDate;
+        console.log(note.title);
+        this.selectedNote.title = note.title;
+        this.selectedNote.description = note.description;
+//        this.selectedNote.activityType = note.activityType;
+//        this.selectedNote.userImageUrl = note.userImageUrl;
+//        this.selectedNote.date = note.date;
+//        this.selectedNote.dateMonth = note.dateMonth;
+//        this.selectedNote.dateDay = note.dateDay;
+//        this.selectedNote.time = note.time;
+//        this.selectedNote.timeHourMin = note.timeHourMin;
+//        this.selectedNote.timeAMPM = note.timeAMPM;
+//        this.selectedNote.imageUrl = note.imageUrl;
+//        this.selectedNote.tags = note.tags;
+//        this.selectedNote.attachments = note.attachments;
+        this.selectedNote.plainDescriptionText = note.plainDescriptionText;
+    }
+
+    public get isEditNoteOpen(): boolean { return this._isOpen; }
+
+    public set isEditNoteOpen(value: boolean) {
+        this._isOpen = value;
+    }
+    public get selectedId(): number { return this._selectedId; }
+
+    public set selectedId(value: number) {
+        this._selectedId = value;
+    }
 }
 

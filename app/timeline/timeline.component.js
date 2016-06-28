@@ -1,4 +1,4 @@
-System.register(['@angular/router', '@angular/core', '../services/notes.service', '../services/timeline.service', '../tags/tags-selector.component', './timelinegroup/timelinegroup.component', './timelinegroup/timelinedetail.component', 'rxjs/Observable', '../services/passtag.service', '../timeline/angular2-infinite-scroll', '../app.constants', '../sharetimeline/sharetimeline.component', '../noteshareusers/users-selector.component', '../modal/modaldialog'], function(exports_1, context_1) {
+System.register(['@angular/router', '@angular/core', '../services/notes.service', '../services/timeline.service', '../tags/tags-selector.component', './timelinegroup/timelinegroup.component', './timelinegroup/timelinedetail.component', 'rxjs/Observable', '../services/passtag.service', '../timeline/angular2-infinite-scroll', '../app.constants', '../sharetimeline/sharetimeline.component', '../noteshareusers/users-selector.component', '../modal/modaldialog', '../notes/edit-note.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/router', '@angular/core', '../services/notes.service'
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var router_1, core_1, notes_service_1, timeline_service_1, tags_selector_component_1, timelinegroup_component_1, timelinedetail_component_1, router_2, Observable_1, passtag_service_1, angular2_infinite_scroll_1, app_constants_1, sharetimeline_component_1, users_selector_component_1, modaldialog_1;
+    var router_1, core_1, notes_service_1, timeline_service_1, tags_selector_component_1, timelinegroup_component_1, timelinedetail_component_1, router_2, Observable_1, passtag_service_1, angular2_infinite_scroll_1, app_constants_1, sharetimeline_component_1, users_selector_component_1, modaldialog_1, edit_note_component_1;
     var TimeLineComponent;
     return {
         setters:[
@@ -56,15 +56,19 @@ System.register(['@angular/router', '@angular/core', '../services/notes.service'
             },
             function (modaldialog_1_1) {
                 modaldialog_1 = modaldialog_1_1;
+            },
+            function (edit_note_component_1_1) {
+                edit_note_component_1 = edit_note_component_1_1;
             }],
         execute: function() {
             TimeLineComponent = (function () {
-                function TimeLineComponent(_timeLineService, _noteService, routeSegment, _router, passTagService, _configuration) {
+                function TimeLineComponent(_timeLineService, _noteService, routeSegment, _router, passTagService, _configuration, zone) {
                     this._timeLineService = _timeLineService;
                     this._noteService = _noteService;
                     this._router = _router;
                     this.passTagService = passTagService;
                     this._configuration = _configuration;
+                    this.zone = zone;
                     this.oneAtATime = true;
                     this.tagsStr = '';
                     this.isLoading = false;
@@ -77,6 +81,8 @@ System.register(['@angular/router', '@angular/core', '../services/notes.service'
                     this.showlabel = false;
                     this.loadingLabelHide = false;
                     this.totalPages = 0;
+                    this._isOpen = false;
+                    this._selectedId = 0;
                     this.timeLineRequest = {
                         data: [],
                         isPersistedSearch: false,
@@ -85,6 +91,10 @@ System.register(['@angular/router', '@angular/core', '../services/notes.service'
                     };
                     this.tagsStr = routeSegment.getParam('tags');
                     this.fileApiUrl = _configuration.ServerWithApiUrl + 'FileContent';
+                    window.timelineComponentRef = {
+                        zone: this.zone,
+                        component: this
+                    };
                 }
                 TimeLineComponent.prototype.ngOnInit = function () {
                     if (this.tagsStr != null) {
@@ -212,7 +222,7 @@ System.register(['@angular/router', '@angular/core', '../services/notes.service'
                         var result = _this.groupBy(_this.filteredTimelines, function (item) {
                             return [item.dateFormat];
                         });
-                        console.log(result);
+                        console.log(result + "fdsf");
                         if (typeof _this.timeLinesList == 'undefined') {
                             _this.timeLinesList = new Array();
                         }
@@ -279,6 +289,51 @@ System.register(['@angular/router', '@angular/core', '../services/notes.service'
                     var noteShareResponse;
                     this._noteService.share(note_share).subscribe(function (res) { return noteShareResponse = res; });
                 };
+                TimeLineComponent.prototype.toggleOpenEditNote = function (event, note) {
+                    this.selectedId = note.id;
+                    this.selectedNote = note;
+                    console.log(note);
+                    event.preventDefault();
+                    this.isEditNoteOpen = !this.isEditNoteOpen;
+                };
+                TimeLineComponent.prototype.toggleOpenEditNoteWithoutEvent = function (note) {
+                    this.selectedId = note.id;
+                    this.isEditNoteOpen = !this.isEditNoteOpen;
+                    //        this.selectedNote = note;
+                    //        this.selectedNote.id = note.id;
+                    //        this.selectedNote.createDate = note.createDate;
+                    console.log(note.title);
+                    this.selectedNote.title = note.title;
+                    this.selectedNote.description = note.description;
+                    //        this.selectedNote.activityType = note.activityType;
+                    //        this.selectedNote.userImageUrl = note.userImageUrl;
+                    //        this.selectedNote.date = note.date;
+                    //        this.selectedNote.dateMonth = note.dateMonth;
+                    //        this.selectedNote.dateDay = note.dateDay;
+                    //        this.selectedNote.time = note.time;
+                    //        this.selectedNote.timeHourMin = note.timeHourMin;
+                    //        this.selectedNote.timeAMPM = note.timeAMPM;
+                    //        this.selectedNote.imageUrl = note.imageUrl;
+                    //        this.selectedNote.tags = note.tags;
+                    //        this.selectedNote.attachments = note.attachments;
+                    this.selectedNote.plainDescriptionText = note.plainDescriptionText;
+                };
+                Object.defineProperty(TimeLineComponent.prototype, "isEditNoteOpen", {
+                    get: function () { return this._isOpen; },
+                    set: function (value) {
+                        this._isOpen = value;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(TimeLineComponent.prototype, "selectedId", {
+                    get: function () { return this._selectedId; },
+                    set: function (value) {
+                        this._selectedId = value;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
                 TimeLineComponent = __decorate([
                     core_1.Component({
                         selector: 'timeline',
@@ -286,9 +341,9 @@ System.register(['@angular/router', '@angular/core', '../services/notes.service'
                         providers: [
                             timeline_service_1.TimeLineService, notes_service_1.NotesService
                         ],
-                        directives: [tags_selector_component_1.TagsSelectorComponent, timelinegroup_component_1.TimelineInfo, timelinegroup_component_1.TimelineGroup, timelinedetail_component_1.TimelineDetail, timelinedetail_component_1.TimelineDetailGroup, angular2_infinite_scroll_1.InfiniteScroll, modaldialog_1.MODAL_DIRECTIVES, sharetimeline_component_1.ShareTimelineComponent, users_selector_component_1.UsersSelectorComponent]
+                        directives: [tags_selector_component_1.TagsSelectorComponent, timelinegroup_component_1.TimelineInfo, timelinegroup_component_1.TimelineGroup, timelinedetail_component_1.TimelineDetail, timelinedetail_component_1.TimelineDetailGroup, angular2_infinite_scroll_1.InfiniteScroll, modaldialog_1.MODAL_DIRECTIVES, sharetimeline_component_1.ShareTimelineComponent, users_selector_component_1.UsersSelectorComponent, edit_note_component_1.EditNoteComponent]
                     }), 
-                    __metadata('design:paramtypes', [timeline_service_1.TimeLineService, notes_service_1.NotesService, router_2.RouteSegment, router_1.Router, passtag_service_1.PassTagService, app_constants_1.Configuration])
+                    __metadata('design:paramtypes', [timeline_service_1.TimeLineService, notes_service_1.NotesService, router_2.RouteSegment, router_1.Router, passtag_service_1.PassTagService, app_constants_1.Configuration, core_1.NgZone])
                 ], TimeLineComponent);
                 return TimeLineComponent;
             }());

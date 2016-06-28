@@ -56,16 +56,41 @@
     <script src="node_modules/quill/dist/quill.js"></script>
 
     <script type="text/javascript">
-    var ip_country = '';
-    var onSuccess = function (location) {
-        ip_country = location.country.names.en;
-        console.log('country : ' + ip_country);
-    };
 
-    var onError = function (error) {
-    };
+	var ip_country = '';
+	var findLocation = function() {
+		 var startPos;
+		 var geoOptions = {
+			timeout: 10 * 1000
+		 }
 
-    geoip2.country(onSuccess, onError);
+		  var geoSuccess = function(position) {
+			startPos = position;
+			var geocode_url = 'https://maps.googleapis.com/maps/api/geocode/json';
+			var api_key = 'AIzaSyBIu3y0OTkfrNC70ndgP6toq_9OyNOXFUU';
+				$.get(
+					geocode_url, 
+					{latlng : startPos.coords.latitude + "," +  startPos.coords.longitude, key : api_key},
+					function(data) {
+					   //console.log(JSON.stringify(data));		
+					   ip_country = data.results[0].formatted_address.replace(/,/g , ' ');
+					   console.log('ip_country : ' + ip_country)
+					}
+				);
+		  };
+		  
+		  var geoError = function(error) {
+			console.log('Error occurred. Error code: ' + error.code);
+			// error.code can be:
+			//   0: unknown error
+			//   1: permission denied
+			//   2: position unavailable (error response from location provider)
+			//   3: timed out
+		  };
+
+	  navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions);
+	};
+	findLocation();
 
     </script>
 

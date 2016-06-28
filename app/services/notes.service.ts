@@ -43,6 +43,19 @@ export class NotesService {
         return this.callApi(apiUrl, noteRequest);
     }
 
+    public editNote(editNoteRequest) {
+        var editApiUrl = this.webApiUrl + '/EditNote';
+
+        var body = JSON.stringify(editNoteRequest);
+        var headers = this.getAuthHeader();
+        headers.append('Content-Type', 'application/json; charset=utf-8');
+        var options = new RequestOptions({ headers: headers, url: editApiUrl, body: body });
+
+        return this.http.post(editApiUrl, body, options)
+            .do(data => console.log(data))
+            .catch(this.handleError);
+    }
+
     private handleError(error: Response) {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');
@@ -99,10 +112,40 @@ export class NotesService {
         });
     }
 
+    private callEditApi(url: string, editNoteRequest): Observable<NotesService> {
+        var key = this.getAuthToken();
+
+        return Observable.create(observer => {
+            let formData: FormData = new FormData(),
+                xhr: XMLHttpRequest = new XMLHttpRequest();
+            formData.append("title", editNoteRequest.Title);
+            formData.append("tags", editNoteRequest.Description);
+
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 201) {
+                        observer.next(JSON.parse(xhr.response));
+                        observer.complete();
+                    } else {
+                        observer.error(this.handleError);
+                    }
+                }
+            };
+            xhr.open('POST', url, true);
+            xhr.setRequestHeader('Authorization', 'Bearer ' + key);
+
+            xhr.send(formData);
+        });
+    }
+
     private getAuthToken() {
         var headers = this._authService.getHeader();
         var key = headers._headersMap.entries().next().value[1][0].slice(7);
         return key;
+    }
+    private getAuthHeader() {
+        var headers = this._authService.getHeader();
+        return headers;
     }
 
     public share(request) {

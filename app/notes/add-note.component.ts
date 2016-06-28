@@ -13,6 +13,7 @@ import {UserProfileService} from '../services/user_profile.service';
 import { Tag } from '../tags/tags-response';
 import { FileUploaderComponent, FileToUpload } from '../fileuploader/file-uploader.component';
 import {LoadingComponent} from '../loader/loading.component';
+import {NoteEditorComponent} from '../notes/note-editor.component';
 declare var $;
 declare var ip_country;
 
@@ -29,7 +30,7 @@ export class UserProfileData {
         NotesService,
 		UserProfileService
     ],
-    directives: [TagsSelectorComponent, MODAL_DIRECTIVES, Editor, Header, UsersSelectorComponent, FileUploaderComponent]
+    directives: [TagsSelectorComponent, MODAL_DIRECTIVES, Editor, Header, UsersSelectorComponent, FileUploaderComponent, NoteEditorComponent]
 })
 
 export class AddNoteComponent implements OnInit {
@@ -75,6 +76,12 @@ export class AddNoteComponent implements OnInit {
 			this.userProfileData = JSON.parse(JSON.stringify(data));
 			console.log('this.userProfileData.email - ' + this.userProfileData.email);
 			this.initialTags.push(this.userProfileData.email);
+			if(this.userProfileData.userTags && this.userProfileData.userTags.length > 0){
+				var tags = this.userProfileData.userTags;
+				for(var x=0;x<tags.length;x++){
+					this.initialTags.push(tags[x].description);
+				}
+			}
 			this.istagSelectionValidated = true;
 			this.isToggle = false;
 			this.initialTags.push(ip_country);
@@ -165,6 +172,35 @@ export class AddNoteComponent implements OnInit {
         setTimeout(() => this.active = true, 0);
     }
 
+    TagsAdded(tags: any[]): void {
+        var stringTags: any[] = [];
+
+        this.initialTags.map(function (item) {
+            stringTags.push(item);
+        });
+
+        //var existingTags = this.noteRequest.tags.map(function (item) {
+        //    return item.toString().toLowerCase();
+        //});
+
+        tags.map(function (e) {
+            stringTags.push(e);
+            //if (existingTags.indexOf(e.toLowerCase()) == -1) {
+                
+            //}
+        });
+
+        if (stringTags.length != 0) {
+            this.noteRequest.tags.length = 0;
+            this.noteRequest.tags = stringTags;
+
+            (<any>window).AutoCompleteComponentRef.zone.run(function () { (<any>window).AutoCompleteComponentRef.component.LoadExternalInputData(true); });
+        }
+    }
+
+    TagsAddedDesc(event: string): void {
+        this.noteRequest.description = event;
+    }
 
     updateSelectedTags() {
         this.tagsStr = this._passTagService.getTags();
