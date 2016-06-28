@@ -101,11 +101,6 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                     this._userProfileService.getUserProfile()
                         .subscribe(function (data) {
                         _this.userProfileData = JSON.parse(JSON.stringify(data));
-<<<<<<< HEAD
-                        console.log('this.userProfileData.name - ' + _this.userProfileData.name);
-=======
-                        console.log('this.userProfileData.email - ' + _this.userProfileData.email + ', this.userProfileData.name - ' + _this.userProfileData.name);
->>>>>>> a4e5ec120ac23c478373ae9b836aa2cc0550ba0e
                         _this.initialTags.push(_this.userProfileData.name);
                         if (_this.userProfileData.userTags && _this.userProfileData.userTags.length > 0) {
                             var tags = _this.userProfileData.userTags;

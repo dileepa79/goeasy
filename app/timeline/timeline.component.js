@@ -64,12 +64,6 @@ System.register(['@angular/router', '@angular/core', '../services/notes.service'
                 edit_note_component_1 = edit_note_component_1_1;
             }],
         execute: function() {
-            /*export class UserProfileData {
-                email: string;
-                name: string;
-                profileImageId: string;
-                userTags:any[];
-            } */
             TimeLineComponent = (function () {
                 function TimeLineComponent(_timeLineService, _noteService, _userProfileService, routeSegment, _router, passTagService, _configuration, zone) {
                     this._timeLineService = _timeLineService;
