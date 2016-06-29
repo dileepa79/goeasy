@@ -2,6 +2,7 @@
 import {Component, OnInit, Input, NgZone} from '@angular/core';
 import {NotesService} from '../services/notes.service';
 import {UserProfileService} from '../services/user_profile.service';
+import {UserProfileData} from '../userprofile/userprofile.component';
 import {TimeLineService} from '../services/timeline.service';
 import {TimeLineResponse} from './timeline-response';
 import {TimeLineRequest} from './timeline-request';
@@ -179,10 +180,20 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
 		
 		if(this.initialTags && this.initialTags.length > 0)
 			this.selectedTagStr = this.initialTags.join();
-
+			
+		if(this.initialTags.length > 0 && this.timeLineRequest.data.length > 0)
+			this.selectedTagStr += ',';
+			
         for (var i = 0; i < this.timeLineRequest.data.length; i++) {
             this.selectedTagStr = this.selectedTagStr + (this.timeLineRequest.data[i] + (this.timeLineRequest.data.length != i + 1 ? ',' : ''));
         }
+		
+		var uniqueList=this.selectedTagStr.split(',').filter(function(item,i,allItems){
+			return i==allItems.indexOf(item);
+		}).join(',');
+		
+		this.selectedTagStr = uniqueList;
+		
         this.passTagService.setTags(this.selectedTagStr);
         $('#tagInput').text(this.selectedTagStr);
 		

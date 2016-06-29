@@ -1,7 +1,7 @@
 ﻿import {Component, OnInit, NgZone, Input} from '@angular/core';
 import {NoteRequest} from './note-request';
 import {NotesService} from '../services/notes.service';
-//import {TimeLineComponent} from '../timeline/timeline.component';
+import {UserProfileData} from '../userprofile/userprofile.component';
 import { TagsSelectorComponent } from '../tags/tags-selector.component';
 import { UsersSelectorComponent } from '../noteshareusers/users-selector.component';
 import { MODAL_DIRECTIVES } from '../modal/modaldialog';
@@ -16,13 +16,6 @@ import {LoadingComponent} from '../loader/loading.component';
 import {NoteEditorComponent} from '../notes/note-editor.component';
 declare var $;
 declare var ip_country;
-
-export class UserProfileData {
-    email: string;
-    name: string;
-    profileImageId: string;
-	userTags:any[];
-}
 
 @Component({
     selector: 'add-note',
@@ -85,7 +78,7 @@ export class AddNoteComponent implements OnInit {
 			}
 			this.istagSelectionValidated = true;
 			this.isToggle = false;
-			this.initialTags.push(ip_country);
+			this.initialTags.push(ip_country.trim());
 			this.noteRequest.tags = this.initialTags;
 			this.active = true;
 			},
@@ -176,22 +169,28 @@ export class AddNoteComponent implements OnInit {
     TagsAdded(tags: any[]): void {
         var stringTags: any[] = [];
 
-        this.initialTags.map(function (item) {
-            stringTags.push(item);
+        //Get existing tags from AutoComplete component 
+        var existingTags = this.noteRequest.tags.map(function (item) {
+            return item.toString().toLowerCase();
         });
 
-        //var existingTags = this.noteRequest.tags.map(function (item) {
-        //    return item.toString().toLowerCase();
-        //});
+        //Add initial tags if exists in existingTags array.
+        this.initialTags.map(function (item) {
+            if (existingTags.indexOf(item.toLowerCase()) !== -1) {
+                stringTags.push(item);
+            }
+        });
 
         tags.map(function (e) {
             stringTags.push(e);
-            //if (existingTags.indexOf(e.toLowerCase()) == -1) {
-                
-            //}
         });
 
-        stringTags = this.removeDuplicates(stringTags);
+        //Case insensitive duplicate removal
+        stringTags = stringTags.reduce(function (a, b) {
+            if (a.toString().toLowerCase().indexOf(b.toLowerCase()) < 0) a.push(b);
+            return a;
+        }, []);
+
 
         if (stringTags.length != 0) {
             this.noteRequest.tags.length = 0;
@@ -199,22 +198,6 @@ export class AddNoteComponent implements OnInit {
 
             (<any>window).AutoCompleteComponentRef.zone.run(function () { (<any>window).AutoCompleteComponentRef.component.LoadExternalInputData(true); });
         }
-    }
-
-    removeDuplicates(num) {
-        var x,
-            len = num.length,
-            out = [],
-            obj = {};
-
-        for (x = 0; x < len; x++) {
-            obj[num[x]] = 0;
-        }
-        for (x in obj) {
-            if (x != 'undefined')
-                out.push(x);
-        }
-        return out;
     }
 
     TagsAddedDesc(event: string): void {

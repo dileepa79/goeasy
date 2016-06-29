@@ -7,6 +7,7 @@ export class UserProfileData {
     email: string;
     name: string;
     profileImageId: string;
+    userTags: any[];
 }
 
 @Component({
@@ -37,7 +38,8 @@ export class UserProfileComponent implements OnInit {
     public userProfileData: UserProfileData = {
         email: '',
         name: '',
-        profileImageId: ''
+        profileImageId: '',
+        userTags: []
     };
 
     logout() {

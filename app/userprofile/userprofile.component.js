@@ -41,7 +41,8 @@ System.register(['@angular/core', '../services/auth.service', '../services/user_
                     this.userProfileData = {
                         email: '',
                         name: '',
-                        profileImageId: ''
+                        profileImageId: '',
+                        userTags: []
                     };
                 }
                 UserProfileComponent.prototype.ngOnInit = function () {

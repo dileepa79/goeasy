@@ -91,6 +91,7 @@ export class NoteEditorComponent implements OnInit {
             inputString = tagsArray[s].trim();
             inputString = inputString.replace(/[^a-zA-Z0-9]/g, "");
             if (inputString.length > 0) {
+                var isIncrement = false;
                 if (z == 1) {
 
                     tagsReturn[i] = tagsArray[s].trim();
@@ -102,9 +103,11 @@ export class NoteEditorComponent implements OnInit {
                         if (tag != undefined && tag.name != null) {
                             var posArray = tagsArray[s].trim().split(/\s/);
                             if (posArray.length > 1) {
+                                isIncrement = true;
                                 for (let v = 0; v < posArray.length; v++) {
                                     if (tag.name.toLowerCase().indexOf(posArray[v].toLowerCase().trim()) !== -1 && tag.name.trim().length == posArray[v].trim().length) {
                                         tagsReturn[i] = tag.name;
+                                        i = i + 1;
                                     }
                                 }
                             }
@@ -118,7 +121,8 @@ export class NoteEditorComponent implements OnInit {
 
                     }
                 }
-                i = i + 1;
+                if (!isIncrement)
+                    i = i + 1;
             }
         }
 

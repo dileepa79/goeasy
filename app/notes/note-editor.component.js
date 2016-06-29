@@ -82,6 +82,7 @@ System.register(['@angular/core', 'primeng/primeng', '../services/tags.service']
                         inputString = tagsArray[s].trim();
                         inputString = inputString.replace(/[^a-zA-Z0-9]/g, "");
                         if (inputString.length > 0) {
+                            var isIncrement = false;
                             if (z == 1) {
                                 tagsReturn[i] = tagsArray[s].trim();
                             }
@@ -92,9 +93,11 @@ System.register(['@angular/core', 'primeng/primeng', '../services/tags.service']
                                     if (tag != undefined && tag.name != null) {
                                         var posArray = tagsArray[s].trim().split(/\s/);
                                         if (posArray.length > 1) {
+                                            isIncrement = true;
                                             for (var v = 0; v < posArray.length; v++) {
                                                 if (tag.name.toLowerCase().indexOf(posArray[v].toLowerCase().trim()) !== -1 && tag.name.trim().length == posArray[v].trim().length) {
                                                     tagsReturn[i] = tag.name;
+                                                    i = i + 1;
                                                 }
                                             }
                                         }
@@ -106,7 +109,8 @@ System.register(['@angular/core', 'primeng/primeng', '../services/tags.service']
                                     }
                                 }
                             }
-                            i = i + 1;
+                            if (!isIncrement)
+                                i = i + 1;
                         }
                     }
                     var uniqueArray = this.removeDuplicates(tagsReturn);

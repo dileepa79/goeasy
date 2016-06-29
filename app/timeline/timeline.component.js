@@ -191,9 +191,15 @@ System.register(['@angular/router', '@angular/core', '../services/notes.service'
                     this.selectedTagStr = '';
                     if (this.initialTags && this.initialTags.length > 0)
                         this.selectedTagStr = this.initialTags.join();
+                    if (this.initialTags.length > 0 && this.timeLineRequest.data.length > 0)
+                        this.selectedTagStr += ',';
                     for (var i = 0; i < this.timeLineRequest.data.length; i++) {
                         this.selectedTagStr = this.selectedTagStr + (this.timeLineRequest.data[i] + (this.timeLineRequest.data.length != i + 1 ? ',' : ''));
                     }
+                    var uniqueList = this.selectedTagStr.split(',').filter(function (item, i, allItems) {
+                        return i == allItems.indexOf(item);
+                    }).join(',');
+                    this.selectedTagStr = uniqueList;
                     this.passTagService.setTags(this.selectedTagStr);
                     $('#tagInput').text(this.selectedTagStr);
                     var selectedTagArray = this.selectedTagStr.split(",");

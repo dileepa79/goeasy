@@ -11,7 +11,7 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, note_request_1, notes_service_1, tags_selector_component_1, users_selector_component_1, modaldialog_1, primeng_1, primeng_2, router_1, passtag_service_1, user_profile_service_1, file_uploader_component_1, note_editor_component_1;
-    var UserProfileData, AddNoteComponent;
+    var AddNoteComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -52,12 +52,6 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                 note_editor_component_1 = note_editor_component_1_1;
             }],
         execute: function() {
-            UserProfileData = (function () {
-                function UserProfileData() {
-                }
-                return UserProfileData;
-            }());
-            exports_1("UserProfileData", UserProfileData);
             AddNoteComponent = (function () {
                 function AddNoteComponent(_notesService, _router, _passTagService, _userProfileService, zone) {
                     this._notesService = _notesService;
@@ -110,7 +104,7 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                         }
                         _this.istagSelectionValidated = true;
                         _this.isToggle = false;
-                        _this.initialTags.push(ip_country);
+                        _this.initialTags.push(ip_country.trim());
                         _this.noteRequest.tags = _this.initialTags;
                         _this.active = true;
                     }, function (error) {
@@ -185,34 +179,30 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                 };
                 AddNoteComponent.prototype.TagsAdded = function (tags) {
                     var stringTags = [];
-                    this.initialTags.map(function (item) {
-                        stringTags.push(item);
+                    //Get existing tags from AutoComplete component 
+                    var existingTags = this.noteRequest.tags.map(function (item) {
+                        return item.toString().toLowerCase();
                     });
-                    //var existingTags = this.noteRequest.tags.map(function (item) {
-                    //    return item.toString().toLowerCase();
-                    //});
+                    //Add initial tags if exists in existingTags array.
+                    this.initialTags.map(function (item) {
+                        if (existingTags.indexOf(item.toLowerCase()) !== -1) {
+                            stringTags.push(item);
+                        }
+                    });
                     tags.map(function (e) {
                         stringTags.push(e);
-                        //if (existingTags.indexOf(e.toLowerCase()) == -1) {
-                        //}
                     });
-                    stringTags = this.removeDuplicates(stringTags);
+                    //Case insensitive duplicate removal
+                    stringTags = stringTags.reduce(function (a, b) {
+                        if (a.toString().toLowerCase().indexOf(b.toLowerCase()) < 0)
+                            a.push(b);
+                        return a;
+                    }, []);
                     if (stringTags.length != 0) {
                         this.noteRequest.tags.length = 0;
                         this.noteRequest.tags = stringTags;
                         window.AutoCompleteComponentRef.zone.run(function () { window.AutoCompleteComponentRef.component.LoadExternalInputData(true); });
                     }
-                };
-                AddNoteComponent.prototype.removeDuplicates = function (num) {
-                    var x, len = num.length, out = [], obj = {};
-                    for (x = 0; x < len; x++) {
-                        obj[num[x]] = 0;
-                    }
-                    for (x in obj) {
-                        if (x != 'undefined')
-                            out.push(x);
-                    }
-                    return out;
                 };
                 AddNoteComponent.prototype.TagsAddedDesc = function (event) {
                     this.noteRequest.description = event;
