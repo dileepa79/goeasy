@@ -62,6 +62,8 @@ export class AddNoteComponent implements OnInit {
     isToggle: boolean = false;
     passedTags: Tag[] = [];
     initialTags: any[] = [];
+    automaticInitialTags: any[] = [];
+    userAddedTags: any[] = [];
 
     @Input() showCloseButton: boolean = false;
     ngOnInit() {
@@ -147,7 +149,19 @@ export class AddNoteComponent implements OnInit {
     }
 	
     onSelectedTagsChanged(tags: any[]): void {
-        this.noteRequest.tags = tags.map(function (d) { return d['name']; });
+        var automaticInitialTags = this.automaticInitialTags;
+        var userAddedTags: any[] = [];
+
+        //Identify user entered tags via Autocomplete component
+        this.noteRequest.tags = tags.map(function (d) {
+            var tag = d['name'];
+            if (automaticInitialTags.indexOf(tag) === -1) {
+                userAddedTags.push(tag);
+            }
+            return tag;
+        });
+
+        this.userAddedTags = userAddedTags;
 
         if (this.noteRequest.tags.length == 0) {
             this.istagSelectionValidated = false;
@@ -169,6 +183,9 @@ export class AddNoteComponent implements OnInit {
     TagsAdded(tags: any[]): void {
         var stringTags: any[] = [];
 
+        //automaticInitialTags = InitialTags + Automatic tags
+        var automaticInitialTags: any[] = [];
+
         //Get existing tags from AutoComplete component 
         var existingTags = this.noteRequest.tags.map(function (item) {
             return item.toString().toLowerCase();
@@ -178,24 +195,33 @@ export class AddNoteComponent implements OnInit {
         this.initialTags.map(function (item) {
             if (existingTags.indexOf(item.toLowerCase()) !== -1) {
                 stringTags.push(item);
+                automaticInitialTags.push(item);
+            }
+        });
+
+        this.userAddedTags.map(function (item) {
+            if (existingTags.indexOf(item.toLowerCase()) !== -1) {
+                stringTags.push(item);
             }
         });
 
         tags.map(function (e) {
             stringTags.push(e);
+            automaticInitialTags.push(e);
         });
 
         //Case insensitive duplicate removal
         stringTags = stringTags.reduce(function (a, b) {
-            if (a.toString().toLowerCase().indexOf(b.toLowerCase()) < 0) a.push(b);
+            var strArray = a.toString().toLowerCase().split(',')
+            if (strArray.indexOf(b.toLowerCase()) < 0) a.push(b);
             return a;
         }, []);
 
+        this.automaticInitialTags = automaticInitialTags;
 
         if (stringTags.length != 0) {
             this.noteRequest.tags.length = 0;
-            this.noteRequest.tags = stringTags;
-
+            this.noteRequest.tags = stringTags;         
             (<any>window).AutoCompleteComponentRef.zone.run(function () { (<any>window).AutoCompleteComponentRef.component.LoadExternalInputData(true); });
         }
     }

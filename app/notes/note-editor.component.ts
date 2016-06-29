@@ -89,7 +89,7 @@ export class NoteEditorComponent implements OnInit {
         for (var s = 0; s < tagsArray.length; s++) {
             var z = (s % 2);
             inputString = tagsArray[s].trim();
-            inputString = inputString.replace(/[^a-zA-Z0-9]/g, "");
+            inputString = inputString.replace(/[^a-zA-Z0-9\s]/g, "");
             if (inputString.length > 0) {
                 var isIncrement = false;
                 if (z == 1) {
@@ -110,12 +110,17 @@ export class NoteEditorComponent implements OnInit {
                                         i = i + 1;
                                     }
                                 }
+                                if (tagsArray[s].toLowerCase().indexOf(tag.name.toLowerCase().trim()) !== -1) {
+                                    tagsReturn[i] = tag.name;
+                                    i = i + 1;
+                                }
                             }
                             else {
                                 if (tag.name.toLowerCase().indexOf(tagsArray[s].toLowerCase().trim()) !== -1 && tag.name.trim().length == tagsArray[s].trim().length) {
                                     tagsReturn[i] = tag.name;
                                 }
                             }
+
 
                         }
 

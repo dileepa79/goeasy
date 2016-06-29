@@ -80,7 +80,7 @@ System.register(['@angular/core', 'primeng/primeng', '../services/tags.service']
                     for (var s = 0; s < tagsArray.length; s++) {
                         var z = (s % 2);
                         inputString = tagsArray[s].trim();
-                        inputString = inputString.replace(/[^a-zA-Z0-9]/g, "");
+                        inputString = inputString.replace(/[^a-zA-Z0-9\s]/g, "");
                         if (inputString.length > 0) {
                             var isIncrement = false;
                             if (z == 1) {
@@ -99,6 +99,10 @@ System.register(['@angular/core', 'primeng/primeng', '../services/tags.service']
                                                     tagsReturn[i] = tag.name;
                                                     i = i + 1;
                                                 }
+                                            }
+                                            if (tagsArray[s].toLowerCase().indexOf(tag.name.toLowerCase().trim()) !== -1) {
+                                                tagsReturn[i] = tag.name;
+                                                i = i + 1;
                                             }
                                         }
                                         else {

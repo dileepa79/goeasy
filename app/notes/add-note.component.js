@@ -83,6 +83,8 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                     this.isToggle = false;
                     this.passedTags = [];
                     this.initialTags = [];
+                    this.automaticInitialTags = [];
+                    this.userAddedTags = [];
                     this.showCloseButton = false;
                     window.angularComponentRef = {
                         zone: this.zone,
@@ -161,7 +163,17 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                     console.log('Share This Note');
                 };
                 AddNoteComponent.prototype.onSelectedTagsChanged = function (tags) {
-                    this.noteRequest.tags = tags.map(function (d) { return d['name']; });
+                    var automaticInitialTags = this.automaticInitialTags;
+                    var userAddedTags = [];
+                    //Identify user entered tags via Autocomplete component
+                    this.noteRequest.tags = tags.map(function (d) {
+                        var tag = d['name'];
+                        if (automaticInitialTags.indexOf(tag) === -1) {
+                            userAddedTags.push(tag);
+                        }
+                        return tag;
+                    });
+                    this.userAddedTags = userAddedTags;
                     if (this.noteRequest.tags.length == 0) {
                         this.istagSelectionValidated = false;
                     }
@@ -179,6 +191,8 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                 };
                 AddNoteComponent.prototype.TagsAdded = function (tags) {
                     var stringTags = [];
+                    //automaticInitialTags = InitialTags + Automatic tags
+                    var automaticInitialTags = [];
                     //Get existing tags from AutoComplete component 
                     var existingTags = this.noteRequest.tags.map(function (item) {
                         return item.toString().toLowerCase();
@@ -187,17 +201,26 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                     this.initialTags.map(function (item) {
                         if (existingTags.indexOf(item.toLowerCase()) !== -1) {
                             stringTags.push(item);
+                            automaticInitialTags.push(item);
+                        }
+                    });
+                    this.userAddedTags.map(function (item) {
+                        if (existingTags.indexOf(item.toLowerCase()) !== -1) {
+                            stringTags.push(item);
                         }
                     });
                     tags.map(function (e) {
                         stringTags.push(e);
+                        automaticInitialTags.push(e);
                     });
                     //Case insensitive duplicate removal
                     stringTags = stringTags.reduce(function (a, b) {
-                        if (a.toString().toLowerCase().indexOf(b.toLowerCase()) < 0)
+                        var strArray = a.toString().toLowerCase().split(',');
+                        if (strArray.indexOf(b.toLowerCase()) < 0)
                             a.push(b);
                         return a;
                     }, []);
+                    this.automaticInitialTags = automaticInitialTags;
                     if (stringTags.length != 0) {
                         this.noteRequest.tags.length = 0;
                         this.noteRequest.tags = stringTags;
