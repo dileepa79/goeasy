@@ -94,13 +94,19 @@ System.register(['@angular/core', 'primeng/primeng', '../services/tags.service']
                                         var posArray = tagsArray[s].trim().split(/\s/);
                                         if (posArray.length > 1) {
                                             isIncrement = true;
-                                            for (var v = 0; v < posArray.length; v++) {
-                                                if (tag.name.toLowerCase().indexOf(posArray[v].toLowerCase().trim()) !== -1 && tag.name.trim().length == posArray[v].trim().length) {
-                                                    tagsReturn[i] = tag.name;
-                                                    i = i + 1;
-                                                }
-                                            }
-                                            if (tagsArray[s].toLowerCase().indexOf(tag.name.toLowerCase().trim()) !== -1) {
+                                            //for (let v = 0; v < posArray.length; v++) {
+                                            //    if (tag.name.toLowerCase().indexOf(posArray[v].toLowerCase().trim()) !== -1 && tag.name.trim().length == posArray[v].trim().length) {
+                                            //        tagsReturn[i] = tag.name;
+                                            //        i = i + 1;
+                                            //    }
+                                            //}
+                                            //if (tagsArray[s].toLowerCase().indexOf(tag.name.toLowerCase().trim()) !== -1 && tag.name.trim().length < tagsArray[s].trim().length) {
+                                            //    tagsReturn[i] = tag.name;
+                                            //    i = i + 1;
+                                            //}
+                                            var regex = new RegExp('\\b' + tag.name.toLowerCase().trim() + '\\b');
+                                            var index = tagsArray[s].toLowerCase().search(regex);
+                                            if (index > -1) {
                                                 tagsReturn[i] = tag.name;
                                                 i = i + 1;
                                             }

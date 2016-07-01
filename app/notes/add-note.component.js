@@ -106,7 +106,8 @@ System.register(['@angular/core', './note-request', '../services/notes.service',
                         }
                         _this.istagSelectionValidated = true;
                         _this.isToggle = false;
-                        _this.initialTags.push(ip_country.trim());
+                        if (ip_country && ip_country != '')
+                            _this.initialTags.push(ip_country.trim());
                         _this.noteRequest.tags = _this.initialTags;
                         _this.active = true;
                     }, function (error) {

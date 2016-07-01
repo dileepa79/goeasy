@@ -80,7 +80,8 @@ export class AddNoteComponent implements OnInit {
 			}
 			this.istagSelectionValidated = true;
 			this.isToggle = false;
-			this.initialTags.push(ip_country.trim());
+			if(ip_country && ip_country != '')
+				this.initialTags.push(ip_country.trim());
 			this.noteRequest.tags = this.initialTags;
 			this.active = true;
 			},
