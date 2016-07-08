@@ -28,6 +28,7 @@ System.register(['@angular/core', 'primeng/primeng', '../services/tags.service']
                 function NoteEditorComponent(tagService) {
                     this.tagService = tagService;
                     this.tags = [];
+                    //tags: TagsResponse[] = []
                     this.tagsAddedEditor = new core_1.EventEmitter();
                     this.tagsAddedDescription = new core_1.EventEmitter();
                 }
@@ -37,8 +38,11 @@ System.register(['@angular/core', 'primeng/primeng', '../services/tags.service']
                     if (typeof this.filteredtagsMultiple == 'undefined') {
                         this.filteredtagsMultiple = new Array();
                     }
-                    if (typeof this.tagsArray == 'undefined') {
-                        this.tagsArray = new Array();
+                    if (typeof this.tags == 'undefined') {
+                        this.tags = new Array();
+                    }
+                    else {
+                        this.tags = [];
                     }
                     if (this.filteredtagsMultiple.length == 0) {
                         this.tagService.getTags().then(function (tags) {
@@ -47,27 +51,106 @@ System.register(['@angular/core', 'primeng/primeng', '../services/tags.service']
                     }
                 };
                 NoteEditorComponent.prototype.OnTextChange = function (event) {
+                    this.isFocus = false;
                     console.log(event.textValue);
                     console.log(event.htmlValue);
                     console.log(event.delta);
+                    console.log(event.hashValue);
+                    var textLength = event.textValue.length;
                     var query = event.textValue;
-                    query = query.replace(/(\r\n|\n|\r)/gm, "");
-                    var splitArray = query.split('/');
-                    if (splitArray.length == 3) {
-                        this.tagsArray.push(splitArray[1]);
+                    var checkEmpty = query;
+                    checkEmpty = checkEmpty.replace(/(\r\n|\n|\r|\s)/gm, "");
+                    if (checkEmpty.length == 1) {
+                        this.tags = [];
                     }
-                    var param = splitArray[1];
-                    this.inputHTMLValue = event.htmlValue;
-                    this.inputValue = event.textValue + "12";
-                    // var text1 = event.htmlValue.replace(/(<([^>]+)>)/ig, "").trim();
-                    // var replaced = text1.search(param) >= 0;
-                    // if (replaced) {
-                    //     document.body.innerHTML = text1.replace(param, '*' + param + '*');
-                    //  } else {
-                    //param was not replaced   //What to do here?
-                    //   }
-                    // this.filtertag(query, this.filteredtagsMultiple);
+                    var index, text, isDelete;
+                    index = event.delta.ops[0].retain;
+                    if (index == null) {
+                        index = 0;
+                        text = event.delta.ops[0].insert;
+                    }
+                    else {
+                        text = event.delta.ops[1].insert;
+                        isDelete = event.delta.ops[1].delete;
+                    }
+                    if (isDelete) {
+                    }
+                    var tagsArray = query.slice(0, -1).split(/\s/);
+                    var isAdded = false;
+                    if (event.hashValue != "") {
+                        this.tags.push(event.hashValue);
+                        isAdded = true;
+                    }
+                    if (textLength == index + 2 && text == " ") {
+                        var count = tagsArray.length;
+                        var item = tagsArray[count - 2];
+                        for (var u = 0; u < this.filteredtagsMultiple.length; u++) {
+                            var tag = this.filteredtagsMultiple[u];
+                            if (tag != undefined && tag.name != null) {
+                                if (tag.name.toLowerCase().trim() == item.toLowerCase().trim()) {
+                                    this.tags.push(tag.name);
+                                    this.indexValue = index;
+                                    this.existingTag = tag.name;
+                                    isAdded = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (textLength > index + 2) {
+                        for (var u = 0; u < this.filteredtagsMultiple.length; u++) {
+                            var tag = this.filteredtagsMultiple[u];
+                            if (tag != undefined && tag.name != null) {
+                                var regex = new RegExp('\\b' + tag.name.toLowerCase().trim() + '\\b');
+                                var index = query.toLowerCase().search(regex);
+                                if (index > -1) {
+                                    this.tags.push(tag.name);
+                                    this.indexValue = index;
+                                    this.existingTag = tag.name;
+                                    isAdded = true;
+                                }
+                            }
+                        }
+                    }
+                    if (isAdded) {
+                        var uniqueArray = this.removeDuplicates(this.tags);
+                        this.isFocus = true;
+                        this.tagsAddedEditor.emit(uniqueArray);
+                        this.tagsAddedDescription.emit(event.htmlValue);
+                    }
                 };
+                //    var splitArray = query.split('/');
+                //    if (splitArray.length == 3) {
+                //        this.tagsArray.push(splitArray[1]);
+                //        var param = splitArray[1].trim();
+                //        var searchText = "/" + param + "/";
+                //        var htmlString = event.htmlValue;
+                //        if (htmlString.indexOf(searchText) !== -1) {
+                //            // searchText = "\/" + searchText + "\/"+ "gi";
+                //            xx = htmlString.replace(searchText, '<b>' + param + '</b>');
+                //        }
+                //        //  this.inputHTMLValue = xx;
+                //    }
+                //    // this.inputValue = event.textValue;
+                //}
+                //var htmlString = event.htmlValue;//"<div><b>xbc</b></div>"
+                //this.inputHTMLValue = htmlString;
+                //var firstIndex = inputString.indexOf('/');
+                //if (firstIndex != -1)
+                //{
+                // var secondIndex = inputString.indexOf('/',firstIndex);
+                // }
+                // if (secondIndex != -1) {
+                //  var textEntered = inputString.substring(firstIndex, secondIndex);
+                // var text1 = event.htmlValue.replace(/(<([^>]+)>)/ig, "").trim();
+                // var replaced = text1.search(param) >= 0;
+                // if (replaced) {
+                //     document.body.innerHTML = text1.replace(param, '*' + param + '*');
+                //  } else {
+                //param was not replaced   //What to do here?
+                //   }
+                // this.filtertag(query, this.filteredtagsMultiple);
+                //   }
                 NoteEditorComponent.prototype.OnSelectionChange = function (event) {
                     var x = event.text.replace(/(\r\n|\n|\r)/gm, "");
                     var edDescription = x.replace(/\//g, ' ');
@@ -167,7 +250,7 @@ System.register(['@angular/core', 'primeng/primeng', '../services/tags.service']
                 NoteEditorComponent = __decorate([
                     core_1.Component({
                         selector: 'prime-editor',
-                        template: "\n        <p-editor (onTextChange)=\"OnTextChange($event)\" (onSelectionChange)=\"OnSelectionChange($event)\"> \n        </p-editor>\n    ",
+                        template: "\n        <p-editor (onTextChange)=\"OnTextChange($event)\" [isFocus]=\"isFocus\" [existingTag]=\"existingTag\" [indexValue]=\"indexValue\"> \n        </p-editor>\n    ",
                         directives: [primeng_1.Editor],
                         providers: [tags_service_1.TagsService]
                     }), 
