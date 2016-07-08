@@ -1,0 +1,49 @@
+﻿<h1>Edit Tag</h1>
+<div class="container">   
+	<div class="col-md-8 add-note-form">
+	
+	<form *ngIf="active" #addTagForm="ngForm">
+		<div class="form-group">
+			<label class="float-left">Name</label>
+			<input type="text" class="form-control" required [(ngModel)]="name" ngControl="name" #title="ngForm">
+		</div>
+		<div class="form-group">
+			<label class="float-left">Description</label>
+			<input type="text" class="form-control" required [(ngModel)]="description" ngControl="description" #title="ngForm">
+		</div>		
+		<div class="form-group">
+			<label class="float-left">Latitude</label>
+			<input type="text" class="form-control" required [(ngModel)]="lat" ngControl="lat" #title="ngForm">
+		</div>		
+		<div class="form-group">
+			<label class="float-left">Longtitude</label>
+			<input type="text" class="form-control" required [(ngModel)]="long" ngControl="long" #title="ngForm">
+		</div>			
+		<div class="form-group">
+			<label class="float-left">Location</label>
+			<input type="text" class="form-control" required [(ngModel)]="location" ngControl="location" #title="ngForm">
+		</div>
+		<div class="form-group">
+			<label class="float-left">Web</label>
+			<input type="text" class="form-control" required [(ngModel)]="web" ngControl="web" #title="ngForm">
+		</div>
+		<div class="form-group">
+			<label class="float-left">BizCategory</label>			
+			<input type="text" class="form-control" required [(ngModel)]="bizCategory" ngControl="bizCategory" #title="ngForm">
+		</div>
+		<div class="form-group">
+			<label class="float-left">NoOfEmployees</label>
+			<input type="text" class="form-control" required [(ngModel)]="noOfEmployees" ngControl="noOfEmployees" #title="ngForm">
+		</div>
+		<div class="form-group">
+			<label class="float-left">AnnualRevenue</label>
+			<input type="text" class="form-control" required [(ngModel)]="annualRevenue" ngControl="annualRevenue" #title="ngForm">
+		</div>
+		<div class="form-group">
+			<button type="button" class="btn btn-success" [disabled]="false" (click)="save()">Save</button>
+		</div>
+	</form>
+	
+	</div>
+	
+</div>
