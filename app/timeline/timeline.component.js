@@ -100,6 +100,12 @@ System.register(['@angular/router', '@angular/core', '../services/notes.service'
                         pageNo: 1,
                         pageSize: 10
                     };
+                    this.timeLineTagSearchRequest = {
+                        data: []
+                    };
+                    this.timeLineSearchRequest = {
+                        data: []
+                    };
                     this.tagsStr = routeSegment.getParam('tags');
                     this.fileApiUrl = _configuration.ServerWithApiUrl + 'FileContent';
                     window.timelineComponentRef = {
@@ -137,6 +143,7 @@ System.register(['@angular/router', '@angular/core', '../services/notes.service'
                     if (typeof this.popularTags == 'undefined') {
                         this.popularTags = new Array();
                     }
+                    this.time = new Date();
                     this.getTimelines();
                     this.getPopularTags();
                 };
@@ -146,8 +153,12 @@ System.register(['@angular/router', '@angular/core', '../services/notes.service'
                 };
                 TimeLineComponent.prototype.routerCanDeactivate = function (currTree, futureTree) {
                     this.isLoading = false;
-                    this.timeLineRequest.isPersistedSearch = true;
-                    this.getTimelines();
+                    //this.timeLineRequest.isPersistedSearch = true;
+                    //this.getTimelines();
+                    var dateDiffInSeconds = (new Date().getTime() - this.time.getTime()) / 1000;
+                    if (dateDiffInSeconds <= 60 && this.timeLineSearchRequest.data.length > 0)
+                        this.timeLineSearchRequest.data.pop();
+                    this.postTimeLineTagSearchRequests();
                     return Observable_1.Observable.of(true).delay(200).toPromise();
                 };
                 TimeLineComponent.prototype.onSelectedTagsChanged = function (tags) {
@@ -156,6 +167,10 @@ System.register(['@angular/router', '@angular/core', '../services/notes.service'
                         if (this.counter == this.passedTags.length) {
                             this.isInitialLoad = false;
                             this.counter = 0;
+                            this.time = new Date();
+                            this.timeLineTagSearchRequest.data = this.timeLineRequest.data;
+                            var timeLineTagSearchRequestObject = JSON.parse(JSON.stringify(this.timeLineTagSearchRequest));
+                            this.timeLineSearchRequest.data.push(timeLineTagSearchRequestObject);
                         }
                     }
                     else {
@@ -167,6 +182,13 @@ System.register(['@angular/router', '@angular/core', '../services/notes.service'
                         this.isLoading = false;
                         this.loadingLabelHide = false;
                         this.getTimelines();
+                        var dateDiffInSeconds = (new Date().getTime() - this.time.getTime()) / 1000;
+                        if (dateDiffInSeconds <= 60 && this.timeLineSearchRequest.data.length > 0)
+                            this.timeLineSearchRequest.data.pop();
+                        this.time = new Date();
+                        this.timeLineTagSearchRequest.data = this.timeLineRequest.data;
+                        var timeLineTagSearchRequestObject = JSON.parse(JSON.stringify(this.timeLineTagSearchRequest));
+                        this.timeLineSearchRequest.data.push(timeLineTagSearchRequestObject);
                     }
                 };
                 TimeLineComponent.prototype.getPopularTags = function () {
@@ -219,6 +241,16 @@ System.register(['@angular/router', '@angular/core', '../services/notes.service'
                     return Object.keys(groups).map(function (group) {
                         return groups[group];
                     });
+                };
+                TimeLineComponent.prototype.postTimeLineTagSearchRequests = function () {
+                    var _this = this;
+                    this._timeLineService.postTimeLineTagSearchRequests(this.timeLineSearchRequest).
+                        subscribe(function (req) { }, function (error) {
+                        _this.errorMessage = error,
+                            console.log(_this.errorMessage);
+                    }, function () { return function () {
+                        console.log("Done");
+                    }; });
                 };
                 TimeLineComponent.prototype.getTimelines = function () {
                     var _this = this;

@@ -1,4 +1,4 @@
-System.register(['@angular/core', '@angular/router', '@angular/common', './services/auth.service', './services/token.service', './notes/add-note.component', './timeline/timeline.component', './authentication/login.component', './app.constants', './tags/tags.component', './userprofile/userprofile.component', './recenttimeline/recenttimeline.component', './dashboard/dashboard.component', './notifications/notifications.component', './feedback/feedback.component', './services/feedback.service', './tags/tag-detail.component', './loader/loading.component'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/router', '@angular/common', './services/auth.service', './services/token.service', './notes/add-note.component', './timeline/timeline.component', './authentication/login.component', './app.constants', './tags/tags.component', './tags/add-tag.component', './userprofile/userprofile.component', './recenttimeline/recenttimeline.component', './dashboard/dashboard.component', './notifications/notifications.component', './feedback/feedback.component', './services/feedback.service', './tags/tag-detail.component', './loader/loading.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', '@angular/router', '@angular/common', './servi
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, core_2, router_1, common_1, auth_service_1, token_service_1, add_note_component_1, timeline_component_1, login_component_1, app_constants_1, tags_component_1, userprofile_component_1, recenttimeline_component_1, dashboard_component_1, notifications_component_1, feedback_component_1, feedback_service_1, tag_detail_component_1, loading_component_1;
+    var core_1, core_2, router_1, common_1, auth_service_1, token_service_1, add_note_component_1, timeline_component_1, login_component_1, app_constants_1, tags_component_1, add_tag_component_1, userprofile_component_1, recenttimeline_component_1, dashboard_component_1, notifications_component_1, feedback_component_1, feedback_service_1, tag_detail_component_1, loading_component_1;
     var AppComponent;
     return {
         setters:[
@@ -44,6 +44,9 @@ System.register(['@angular/core', '@angular/router', '@angular/common', './servi
             },
             function (tags_component_1_1) {
                 tags_component_1 = tags_component_1_1;
+            },
+            function (add_tag_component_1_1) {
+                add_tag_component_1 = add_tag_component_1_1;
             },
             function (userprofile_component_1_1) {
                 userprofile_component_1 = userprofile_component_1_1;
@@ -122,6 +125,10 @@ System.register(['@angular/core', '@angular/router', '@angular/common', './servi
                         {
                             path: '/tag/:id',
                             component: tag_detail_component_1.TagDetailComponent
+                        },
+                        {
+                            path: '/newtag',
+                            component: add_tag_component_1.TagIdentityComponent
                         },
                         {
                             path: '/recenttimeline',

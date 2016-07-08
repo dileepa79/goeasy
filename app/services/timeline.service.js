@@ -57,6 +57,15 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Observable', './auth.se
                         .do(function (data) { return console.log(data); })
                         .catch(this.handleError);
                 };
+                TimeLineService.prototype.postTimeLineTagSearchRequests = function (timeLineSearchRequest) {
+                    var body = JSON.stringify(timeLineSearchRequest);
+                    var headers = this.authService.getHeader();
+                    headers.append('Content-Type', 'application/json; charset=utf-8');
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    return this.http.post(this.webApiUrl + "/PostTagSearchRequests", body, options)
+                        .do(function (data) { return console.log(data); })
+                        .catch(this.handleError);
+                };
                 TimeLineService.prototype.getMostPopularTags = function (timeLineRequest) {
                     var most_pop_url = this.webApiUrl + "/GetTrendingTimelines";
                     var body = JSON.stringify(timeLineRequest);

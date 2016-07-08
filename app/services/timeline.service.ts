@@ -1,6 +1,7 @@
 ﻿import {Injectable, Inject} from '@angular/core';
 import {Http, Response, RequestOptions, Headers} from '@angular/http';
 import {TimeLineResponse} from '../timeline/timeline-response';
+import {TimeLineSearchRequest} from '../timeline/timeline-search-request';
 import {Observable} from 'rxjs/Observable';
 import {AuthService} from './auth.service';
 import {TokenService} from './token.service';
@@ -35,6 +36,18 @@ export class TimeLineService {
         return this.http.post(this.webApiUrl, body, options)
             .map(res => <any>res.json())
              .do(data => console.log(data))
+            .catch(this.handleError);
+    }
+
+    public postTimeLineTagSearchRequests(timeLineSearchRequest) {
+
+        var body = JSON.stringify(timeLineSearchRequest);
+        var headers = this.authService.getHeader();
+        headers.append('Content-Type', 'application/json; charset=utf-8');
+        var options = new RequestOptions({ headers: headers });
+
+        return this.http.post(this.webApiUrl + "/PostTagSearchRequests", body, options)
+            .do(data => console.log(data))
             .catch(this.handleError);
     }
 

@@ -14,6 +14,7 @@ import {LoginComponent} from './authentication/login.component';
 import {NgIf} from '@angular/common';
 import {Configuration} from './app.constants';
 import {TagsComponent} from './tags/tags.component';
+import {TagIdentityComponent} from './tags/add-tag.component';
 import {UserProfileComponent} from './userprofile/userprofile.component';
 import {RecentTimeLineComponent} from './recenttimeline/recenttimeline.component';
 import {Dashboard} from './dashboard/dashboard.component';
@@ -63,6 +64,10 @@ import {LoadingComponent} from './loader/loading.component';
         {
              path: '/tag/:id',
              component: TagDetailComponent
+        },
+		{
+             path: '/newtag',
+             component: TagIdentityComponent
         },
         {
             path: '/recenttimeline',

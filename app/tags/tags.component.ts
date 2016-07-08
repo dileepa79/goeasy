@@ -25,7 +25,7 @@ export class TagsComponent implements OnInit{
     }
 
     onClick(tag: Tag) {
-        this._router.navigate(['tag', { id: tag.id }]);
+        this._router.navigate(['/tag', tag.id]);
     }
 
     public tagRequest: Tag = {
@@ -75,4 +75,10 @@ export class TagsComponent implements OnInit{
             }
             );
     }
+	
+	
+	onTagCreate(){
+		console.log('onTagCreate');
+		this._router.navigate(['/newtag','']);
+	}
 }

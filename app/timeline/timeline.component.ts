@@ -6,6 +6,7 @@ import {UserProfileData} from '../userprofile/userprofile.component';
 import {TimeLineService} from '../services/timeline.service';
 import {TimeLineResponse} from './timeline-response';
 import {TimeLineRequest} from './timeline-request';
+import {TimeLineTagSearchRequest, TimeLineSearchRequest} from './timeline-search-request';
 import { TagsResponse, Tag } from '../tags/tags-response';
 import { TagsSelectorComponent } from '../tags/tags-selector.component';
 import {TimelineInfo, TimelineGroup} from './timelinegroup/timelinegroup.component';
@@ -75,7 +76,7 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
     private _isOpen: boolean = false;
     private _selectedId: number = 0;
     initialTags: any[] = [];	
-
+    time: Date;
 	
     public timeLineRequest: TimeLineRequest = {
         data: [],
@@ -83,6 +84,14 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
         pageNo: 1,
         pageSize: 10
     };
+
+    public timeLineTagSearchRequest: TimeLineTagSearchRequest = {
+        data: []
+    }
+
+    public timeLineSearchRequest: TimeLineSearchRequest = {
+        data: []
+    }
 
     ngOnInit() {
 		
@@ -115,7 +124,8 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
 		
 		if (typeof this.popularTags == 'undefined') {
 			this.popularTags = new Array();
-		}
+        }
+        this.time = new Date();
         this.getTimelines();
 		this.getPopularTags();
     }
@@ -127,8 +137,14 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
 
     routerCanDeactivate(currTree?: any, futureTree?: any) {
         this.isLoading = false;
-        this.timeLineRequest.isPersistedSearch = true;
-        this.getTimelines();
+        //this.timeLineRequest.isPersistedSearch = true;
+        //this.getTimelines();
+        var dateDiffInSeconds = (new Date().getTime() - this.time.getTime()) / 1000;
+
+        if (dateDiffInSeconds <= 60 && this.timeLineSearchRequest.data.length > 0)
+            this.timeLineSearchRequest.data.pop();
+
+        this.postTimeLineTagSearchRequests();
 
         return Observable.of(true).delay(200).toPromise();
     }
@@ -140,6 +156,11 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
             if (this.counter == this.passedTags.length) {
                 this.isInitialLoad = false;
                 this.counter = 0;
+
+                this.time = new Date();
+                this.timeLineTagSearchRequest.data = this.timeLineRequest.data;
+                var timeLineTagSearchRequestObject = JSON.parse(JSON.stringify(this.timeLineTagSearchRequest));
+                this.timeLineSearchRequest.data.push(timeLineTagSearchRequestObject);
             }  
         }
         else {
@@ -151,6 +172,16 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
             this.isLoading = false;
             this.loadingLabelHide = false;
             this.getTimelines();
+
+            var dateDiffInSeconds = (new Date().getTime() - this.time.getTime()) / 1000;
+
+            if (dateDiffInSeconds <= 60 && this.timeLineSearchRequest.data.length > 0)
+                this.timeLineSearchRequest.data.pop();
+
+            this.time = new Date();
+            this.timeLineTagSearchRequest.data = this.timeLineRequest.data;
+            var timeLineTagSearchRequestObject = JSON.parse(JSON.stringify(this.timeLineTagSearchRequest));
+            this.timeLineSearchRequest.data.push(timeLineTagSearchRequestObject);
         }
     }
 
@@ -216,6 +247,18 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
         return Object.keys(groups).map(function (group) {
             return groups[group];
         })
+    }
+
+    postTimeLineTagSearchRequests() {
+        this._timeLineService.postTimeLineTagSearchRequests(this.timeLineSearchRequest).
+            subscribe(req => { },
+            error => {
+                this.errorMessage = <any>error,
+                    console.log(this.errorMessage);
+            },
+            () => () => {
+                console.log("Done");
+            })
     }
 
     getTimelines() {

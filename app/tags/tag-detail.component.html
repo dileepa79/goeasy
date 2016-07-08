@@ -1,5 +1,6 @@
 ﻿<h2>Tags</h2>
 <div *ngIf="tag">
+	<a style="cursor: pointer" (click)="onTagEdit(tag)">Edit</a>
     <h3>{{tag.name}}</h3>
     <div>
         Tag: {{tag.name}}

@@ -18,7 +18,7 @@ export class TagDetailComponent implements OnInit{
     }
 
     pageTitle: string = 'Tag Detail';
-    tag: Tag
+    tag: Tag;
     errorMessage: string;
 
     ngOnInit() {
@@ -34,4 +34,10 @@ export class TagDetailComponent implements OnInit{
             },
             () => () => console.log("Done"));
     }
+	
+	onTagEdit(tag){
+		//this._router.navigate(['/newtag' ,tag.name]);
+		console.log('tag.name : ' + tag.name);
+		this._router.navigate(['/newtag','test']);
+	}
 }

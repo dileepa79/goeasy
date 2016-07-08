@@ -1,5 +1,7 @@
 ﻿<h1>{{title}}</h1>
-
+<div class='row'>
+<a style="cursor: pointer" (click)="onTagCreate()">Create Tag</a>
+</div>
 <div class='row'>
     <div class='col-md-4'><input placeholder="Filter tags" type='text' [(ngModel)]='listFilter' /></div>
     <br />

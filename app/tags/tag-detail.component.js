@@ -42,6 +42,11 @@ System.register(['@angular/core', '../services/tags.service', '@angular/router']
                         console.log(_this.tag);
                     }, function () { return function () { return console.log("Done"); }; });
                 };
+                TagDetailComponent.prototype.onTagEdit = function (tag) {
+                    //this._router.navigate(['/newtag' ,tag.name]);
+                    console.log('tag.name : ' + tag.name);
+                    this._router.navigate(['/newtag', 'test']);
+                };
                 TagDetailComponent = __decorate([
                     core_1.Component({
                         templateUrl: './app/tags/tag-detail.component.html',

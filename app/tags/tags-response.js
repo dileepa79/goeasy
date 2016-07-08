@@ -1,7 +1,7 @@
 System.register([], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var TagsResponse, Tag;
+    var TagsResponse, Tag, TagIdentity;
     return {
         setters:[],
         execute: function() {
@@ -17,6 +17,12 @@ System.register([], function(exports_1, context_1) {
                 return Tag;
             }());
             exports_1("Tag", Tag);
+            TagIdentity = (function () {
+                function TagIdentity() {
+                }
+                return TagIdentity;
+            }());
+            exports_1("TagIdentity", TagIdentity);
         }
     }
 });
