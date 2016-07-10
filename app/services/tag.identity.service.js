@@ -38,6 +38,11 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Observable', '../app.co
                     this.webApiUrl = _configuration.ServerWithApiUrl + 'tagIdentity';
                     this.authService = _authService;
                 }
+                TagIdentityService.prototype.GetById = function (id) {
+                    return this.http.get(this.webApiUrl + "?id=" + id)
+                        .map(function (res) { return res.json(); })
+                        .catch(this.handleError);
+                };
                 TagIdentityService.prototype.getTags = function () {
                     var headers = this.authService.getHeader();
                     headers.append('Content-Type', 'application/json; charset=utf-8');

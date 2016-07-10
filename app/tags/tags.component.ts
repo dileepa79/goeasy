@@ -25,7 +25,8 @@ export class TagsComponent implements OnInit{
     }
 
     onClick(tag: Tag) {
-        this._router.navigate(['/tag', tag.id]);
+		this._router.navigate(['/newtag',tag.id]);
+        //this._router.navigate(['/tag', tag.id]);
     }
 
     public tagRequest: Tag = {

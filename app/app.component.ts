@@ -66,7 +66,7 @@ import {LoadingComponent} from './loader/loading.component';
              component: TagDetailComponent
         },
 		{
-             path: '/newtag',
+             path: '/newtag/:id',
              component: TagIdentityComponent
         },
         {

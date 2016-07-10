@@ -127,7 +127,7 @@ System.register(['@angular/core', '@angular/router', '@angular/common', './servi
                             component: tag_detail_component_1.TagDetailComponent
                         },
                         {
-                            path: '/newtag',
+                            path: '/newtag/:id',
                             component: add_tag_component_1.TagIdentityComponent
                         },
                         {

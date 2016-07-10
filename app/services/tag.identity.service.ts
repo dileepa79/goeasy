@@ -14,7 +14,14 @@ export class TagIdentityService {
         this.webApiUrl = _configuration.ServerWithApiUrl + 'tagIdentity';
         this.authService = _authService;
     }
-
+	
+    public GetById(id) {
+        return this.http.get(this.webApiUrl + "?id=" + id)
+            .map(res => <any>res.json())
+            //.do(data => console.log(data))
+            .catch(this.handleError);
+    }
+	
     getTags() {
         var headers = this.authService.getHeader();
         headers.append('Content-Type', 'application/json; charset=utf-8');
@@ -26,7 +33,6 @@ export class TagIdentityService {
     }
 
     getAllTags() {
-
         var headers = this.authService.getHeader();
         headers.append('Content-Type', 'application/json; charset=utf-8');
         var options = new RequestOptions({ headers: headers });
