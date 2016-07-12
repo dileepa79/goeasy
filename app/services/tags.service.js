@@ -56,6 +56,11 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Observable', '../app.co
                         .do(function (data) { return console.log(data); })
                         .catch(this.handleError);
                 };
+                TagsService.prototype.getById = function (id) {
+                    return this.http.get(this.webApiUrl + "?id=" + id)
+                        .map(function (res) { return res.json(); })
+                        .catch(this.handleError);
+                };
                 TagsService.prototype.addTag = function (tagRequest) {
                     console.log("Tag: " + tagRequest);
                     var body = JSON.stringify(tagRequest);

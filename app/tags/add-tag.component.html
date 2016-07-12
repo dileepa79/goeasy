@@ -1,16 +1,26 @@
 ﻿<h1>Edit Tag</h1>
 <div class="container">   
 	<div class="col-md-8 add-note-form">
-	
 	<form *ngIf="active" #addTagForm="ngForm">
+        <div class="form-group">
+            <label class="float-left">Type</label>
+            <select class="form-control" required [(ngModel)]="tagIdentityType" name="tagIdentityType">
+                <option *ngFor="let r of tagIdentityTypes" [value]="r">{{r}}</option>
+            </select>
+        </div>
+
 		<div class="form-group">
 			<label class="float-left">Name</label>
 			<input type="text" class="form-control" required [(ngModel)]="name" ngControl="name" #title="ngForm">
 		</div>
 		<div class="form-group">
-			<label class="float-left">Description</label>
+			<label class="float-left">Note</label>
 			<input type="text" class="form-control" required [(ngModel)]="description" ngControl="description" #title="ngForm">
 		</div>		
+        <div class="form-group">
+            <label class="float-left">Address</label>
+            <input type="text" class="form-control" required [(ngModel)]="address" ngControl="address" #title="ngForm">
+        </div>	
 		<div class="form-group">
 			<label class="float-left">Latitude</label>
 			<input type="text" class="form-control" required [(ngModel)]="lat" ngControl="lat" #title="ngForm">
@@ -29,16 +39,66 @@
 		</div>
 		<div class="form-group">
 			<label class="float-left">BizCategory</label>			
-			<input type="text" class="form-control" required [(ngModel)]="bizCategory" ngControl="bizCategory" #title="ngForm">
+            <select class="form-control" required >
+                <option *ngFor="let r of bizCategories" [value]="r.value">{{r.label}}</option>
+            </select>
 		</div>
 		<div class="form-group">
 			<label class="float-left">NoOfEmployees</label>
-			<input type="text" class="form-control" required [(ngModel)]="noOfEmployees" ngControl="noOfEmployees" #title="ngForm">
+            <select class="form-control" required >
+                <option *ngFor="let r of employeeRanges" [value]="r.value">{{r.label}}</option>
+            </select>
 		</div>
 		<div class="form-group">
 			<label class="float-left">AnnualRevenue</label>
 			<input type="text" class="form-control" required [(ngModel)]="annualRevenue" ngControl="annualRevenue" #title="ngForm">
 		</div>
+
+        <div *ngIf="tagIdentityType=='Person'" class="form-group">
+            <label class="float-left">Mobile</label>
+            <input type="text" class="form-control" required [(ngModel)]="mobile" ngControl="mobile" #title="ngForm">
+        </div>
+
+        <div *ngIf="tagIdentityType=='Person'" class="form-group">
+            <label class="float-left">WorkPhone</label>
+            <input type="text" class="form-control" required [(ngModel)]="workPhone" ngControl="workPhone" #title="ngForm">
+        </div>
+
+        <div *ngIf="tagIdentityType=='Person'" class="form-group">
+            <label class="float-left">Email</label>
+            <input type="text" class="form-control" required [(ngModel)]="email" ngControl="email" #title="ngForm">
+        </div>
+
+        <div *ngIf="tagIdentityType=='Person'" class="form-group">
+            <label class="float-left">Twitter</label>
+            <input type="text" class="form-control" required [(ngModel)]="twitter" ngControl="twitter" #title="ngForm">
+        </div>
+
+        <div *ngIf="tagIdentityType=='Person'" class="form-group">
+            <label class="float-left">LinkedIn</label>
+            <input type="text" class="form-control" required [(ngModel)]="linkedIn" ngControl="linkedIn" #title="ngForm">
+        </div>
+
+        <div *ngIf="tagIdentityType=='Person'" class="form-group">
+            <label class="float-left">Company</label>
+            <input type="text" class="form-control" required [(ngModel)]="company" ngControl="company" #title="ngForm">
+        </div>
+
+        <div *ngIf="tagIdentityType=='Person'" class="form-group">
+            <label class="float-left">IM</label>
+            <input type="text" class="form-control" required [(ngModel)]="im" ngControl="im" #title="ngForm">
+        </div>
+
+        <div *ngIf="tagIdentityType=='Person'" class="form-group">
+            <label class="float-left">Blog</label>
+            <input type="text" class="form-control" required [(ngModel)]="blog" ngControl="blog" #title="ngForm">
+        </div>
+
+        <div *ngIf="tagIdentityType=='Person'" class="form-group">
+            <label class="float-left">Birth Date</label>
+            <input type="date" class="form-control" required [(ngModel)]="birthDate" ngControl="birthDate" #title="ngForm">
+        </div>
+
 		<div class="form-group">
 			<button type="button" class="btn btn-success" [disabled]="false" (click)="save()">Save</button>
 		</div>

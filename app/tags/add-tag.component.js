@@ -34,10 +34,16 @@ System.register(['@angular/core', '@angular/router', '../services/tags.service',
                     this.routeSegment = routeSegment;
                     this._tagIdentityService = _tagIdentityService;
                     this._tagsService = _tagsService;
+                    this.tag1 = {
+                        id: 0,
+                        name: ''
+                    };
                     this.tagIdentityRequest = {
                         id: 0,
                         name: '',
                         description: '',
+                        type: '',
+                        address: '',
                         lat: '',
                         long: '',
                         location: '',
@@ -45,14 +51,27 @@ System.register(['@angular/core', '@angular/router', '../services/tags.service',
                         bizCategory: '',
                         noOfEmployees: '',
                         annualRevenue: '',
+                        title: '',
+                        mobile: '',
+                        workPhone: '',
+                        email: '',
+                        twitter: '',
+                        linkedIn: '',
+                        company: '',
+                        im: '',
+                        blog: '',
+                        birthDate: '',
                         createdBy: '',
-                        createdDate: ''
+                        createdDate: '',
+                        tag: { id: 0, name: '' }
                     };
                     this.heading = "TAG EDITOR";
                     this.active = true;
                     this.name = "";
                     this.title = "";
                     this.description = "";
+                    this.type = "";
+                    this.address = "";
                     this.lat = "";
                     this.long = "";
                     this.location = "";
@@ -60,33 +79,79 @@ System.register(['@angular/core', '@angular/router', '../services/tags.service',
                     this.bizCategory = "";
                     this.noOfEmployees = "";
                     this.annualRevenue = "";
+                    this.birthDate = "";
+                    this.mobile = "";
+                    this.workPhone = "";
+                    this.email = "";
+                    this.twitter = "";
+                    this.linkedIn = "";
+                    this.company = "";
+                    this.im = "";
+                    this.blog = "";
+                    this.employeeRanges = [];
+                    this.bizCategories = [];
+                    this.tagIdentityTypes = [];
+                    //employeeRanges = [{ label: 'less than 100', value: 0 }, { label: '100 - 500', value: 1 }, { label: '500 - 1000', value: 2 }, { label: '1000 - 5000', value: 3 }, { label: 'more than 5000', value: 4 }];
+                    this.tagIdentityType = "";
                 }
                 TagIdentityComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     if (this.routeSegment) {
-                        console.log(' tag id ' + id_1);
-                        var id_1 = this.routeSegment.getParam('id');
-                        this._tagIdentityService.GetById(id_1).subscribe(function (t) {
-                            console.log(JSON.stringify(t));
-                            //this.tagIdentityRequest.id = t.id;
-                            _this.description = t.description;
-                            _this.lat = t.lat;
-                            _this.long = t.long;
-                            _this.location = t.location;
-                            _this.web = t.web;
-                            _this.bizCategory = t.bizCategory;
-                            _this.noOfEmployees = t.noOfEmployees;
-                            _this.annualRevenue = t.annualRevenue;
-                            _this.name = t.name;
+                        var id = this.routeSegment.getParam('id');
+                        console.log(' tag id ' + id);
+                        this.tagIdentityTypes.push('General');
+                        this.tagIdentityTypes.push('Customer');
+                        this.tagIdentityTypes.push('Prospect');
+                        this.tagIdentityTypes.push('Person');
+                        this.tagIdentityTypes.push('Vacancy');
+                        this.employeeRanges.push({ label: 'less than 100', value: 'less than 100' });
+                        this.employeeRanges.push({ label: '100 - 500', value: '100 - 500' });
+                        this.employeeRanges.push({ label: '500 - 1000', value: '500 - 1000' });
+                        this.employeeRanges.push({ label: '1000 - 5000', value: '1000 - 5000' });
+                        this.employeeRanges.push({ label: 'more than 5000', value: 'more than 5000' });
+                        this.bizCategories.push({ label: 'Logistics', value: 'Logistics' });
+                        this.bizCategories.push({ label: 'Technology', value: 'Technology' });
+                        this.bizCategories.push({ label: 'Telecommunications', value: 'Telecommunications' });
+                        this._tagIdentityService.GetById(id).subscribe(function (t) {
+                            if (t) {
+                                //console.log(JSON.stringify(t));
+                                //this.tagIdentityRequest.id = t.id;
+                                _this.type = t.type;
+                                _this.tagIdentityType = t.type;
+                                _this.description = t.description;
+                                _this.address = t.address;
+                                _this.lat = t.lat;
+                                _this.long = t.long;
+                                _this.location = t.location;
+                                _this.web = t.web;
+                                _this.bizCategory = t.bizCategory;
+                                _this.noOfEmployees = t.noOfEmployees;
+                                _this.annualRevenue = t.annualRevenue;
+                                _this.name = t.name;
+                                _this.tag = t.tag;
+                                _this.tagIdentityRequest.id = _this.tag.id;
+                                _this.tagIdentityRequest.name = _this.tag.name;
+                                _this.title = t.title;
+                                _this.birthDate = t.birthDate;
+                                _this.name = t.tag.name;
+                                _this.mobile = t.mobile;
+                                _this.workPhone = t.workPhone;
+                                _this.email = t.email;
+                                _this.twitter = t.twitter;
+                                _this.linkedIn = t.linkedIn;
+                                _this.company = t.company;
+                                _this.im = t.im;
+                                _this.blog = t.blog;
+                            }
                         }, function (error) {
                         }, function () { return function () { return console.log("Done"); }; });
-                        this._tagsService.getAllTags()
-                            .subscribe(function (t) {
-                            _this.tag = t.data.filter(function (t) { return t.id === +id_1; })[0];
+                        this._tagsService.getById(id)
+                            .subscribe(function (g) {
+                            console.log(JSON.stringify(g));
+                            _this.tag = g;
                             _this.tagIdentityRequest.id = _this.tag.id;
                             _this.tagIdentityRequest.name = _this.tag.name;
                             _this.name = _this.tag.name;
-                            console.log(_this.errorMessage);
                         }, function (error) {
                             console.log(_this.tag);
                         }, function () { return function () { return console.log("Done"); }; });
@@ -94,9 +159,12 @@ System.register(['@angular/core', '@angular/router', '../services/tags.service',
                     this.active = true;
                 };
                 TagIdentityComponent.prototype.save = function () {
+                    var _this = this;
                     this.tagIdentityRequest.id = this.tag.id;
                     this.tagIdentityRequest.name = this.tag.name;
                     this.tagIdentityRequest.description = this.description;
+                    this.tagIdentityRequest.type = this.tagIdentityType;
+                    this.tagIdentityRequest.address = this.address;
                     this.tagIdentityRequest.lat = this.lat;
                     this.tagIdentityRequest.long = this.long;
                     this.tagIdentityRequest.location = this.location;
@@ -104,9 +172,20 @@ System.register(['@angular/core', '@angular/router', '../services/tags.service',
                     this.tagIdentityRequest.bizCategory = this.bizCategory;
                     this.tagIdentityRequest.noOfEmployees = this.noOfEmployees;
                     this.tagIdentityRequest.annualRevenue = this.annualRevenue;
+                    this.tagIdentityRequest.title = this.title;
+                    this.tagIdentityRequest.birthDate = this.birthDate;
+                    this.tagIdentityRequest.mobile = this.mobile;
+                    this.tagIdentityRequest.workPhone = this.workPhone;
+                    this.tagIdentityRequest.email = this.email;
+                    this.tagIdentityRequest.twitter = this.twitter;
+                    this.tagIdentityRequest.linkedIn = this.linkedIn;
+                    this.tagIdentityRequest.company = this.company;
+                    this.tagIdentityRequest.im = this.im;
+                    this.tagIdentityRequest.blog = this.blog;
                     this._tagIdentityService.addTag(this.tagIdentityRequest)
                         .subscribe(function (tag) {
                         console.log('Tag Saved');
+                        _this._router.navigate(['/tags']);
                     }, function (error) {
                         console.log('error when saving');
                     }, function () { return function () {

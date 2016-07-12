@@ -36,6 +36,13 @@ export class TagsService {
             .catch(this.handleError);
     }
 
+    public getById(id) {
+        return this.http.get(this.webApiUrl + "?id=" + id)
+            .map(res => <any>res.json())
+            //.do(data => console.log(data))
+            .catch(this.handleError);
+    }
+
     public addTag(tagRequest): Observable<Tag> {
         console.log("Tag: " + tagRequest);
 

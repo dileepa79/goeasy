@@ -54,7 +54,6 @@ export class NoteEditorComponent implements OnInit {
         }
     }
 
-
     OnTextChange(event) {
         this.isFocus = false;
         console.log(event.textValue);
@@ -65,26 +64,29 @@ export class NoteEditorComponent implements OnInit {
         let query = event.textValue;
         let checkEmpty = query;
         checkEmpty = checkEmpty.replace(/(\r\n|\n|\r|\s)/gm, "");
-        if (checkEmpty.length == 1) {
-            this.tags = [];
-        }
         
         var index, text, isDelete;
-        index = event.delta.ops[0].retain;
-        if (index == null) {
+        if (event.delta.ops.length == 1) {
             index = 0;
-            text = event.delta.ops[0].insert;
+            if (typeof event.delta.ops[0].insert == 'undefined') {
+                isDelete = 1;
+            }
+            else {
+                text = event.delta.ops[0].insert;
+            }
         }
-        else {
-            text = event.delta.ops[1].insert;
-            isDelete = event.delta.ops[1].delete;
+        else if (event.delta.ops.length == 2) {
+            index = event.delta.ops[0].retain;
+            if (typeof event.delta.ops[1].insert == 'undefined') {
+                isDelete = 1;
+            }
+            else {
+                text = event.delta.ops[1].insert;
+            }
         }
-        if (isDelete) {
 
-
-        }
-    
         var tagsArray = query.slice(0, -1).split(/\s/);
+       
         var isAdded = false;
         if (event.hashValue != "") {
             this.tags.push(event.hashValue);
@@ -106,7 +108,7 @@ export class NoteEditorComponent implements OnInit {
                 }
             }
         }
-        if (textLength > index + 2) {
+        if (textLength > index + 2 || isDelete) {
             for (let u = 0; u < this.filteredtagsMultiple.length; u++) {
                 let tag = this.filteredtagsMultiple[u];
                 if (tag != undefined && tag.name != null) {
@@ -116,18 +118,25 @@ export class NoteEditorComponent implements OnInit {
                         this.tags.push(tag.name);
                         this.indexValue = index;
                         this.existingTag = tag.name;
-                        isAdded = true;
                     }
+                    else {
+                        var indexRemove = this.tags.indexOf(tag.name);
+                        if (indexRemove >= 0) {
+                            this.tags.splice(indexRemove, 1);
+                        }
+                    }
+                    isAdded = true;
                 }
             }
 
         }
+        var uniqueArray = this.removeDuplicates(this.tags);
+        this.tags = uniqueArray;
+
         if (isAdded) {
-            var uniqueArray = this.removeDuplicates(this.tags);
             this.isFocus = true;
             this.tagsAddedEditor.emit(uniqueArray);
             this.tagsAddedDescription.emit(event.htmlValue);
-
         }
     }
 
