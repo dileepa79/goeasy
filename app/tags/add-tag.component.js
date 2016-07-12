@@ -92,7 +92,7 @@ System.register(['@angular/core', '@angular/router', '../services/tags.service',
                     this.bizCategories = [];
                     this.tagIdentityTypes = [];
                     //employeeRanges = [{ label: 'less than 100', value: 0 }, { label: '100 - 500', value: 1 }, { label: '500 - 1000', value: 2 }, { label: '1000 - 5000', value: 3 }, { label: 'more than 5000', value: 4 }];
-                    this.tagIdentityType = "";
+                    this.tagIdentityType = "Customer";
                 }
                 TagIdentityComponent.prototype.ngOnInit = function () {
                     var _this = this;

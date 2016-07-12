@@ -81,7 +81,7 @@ export class TagIdentityComponent implements OnInit {
     bizCategories: SelectItem[] = [];
     tagIdentityTypes = [];
     //employeeRanges = [{ label: 'less than 100', value: 0 }, { label: '100 - 500', value: 1 }, { label: '500 - 1000', value: 2 }, { label: '1000 - 5000', value: 3 }, { label: 'more than 5000', value: 4 }];
-    tagIdentityType : string = "";
+    tagIdentityType: string = "Customer";
 
 	ngOnInit() {
 		if(this.routeSegment){
