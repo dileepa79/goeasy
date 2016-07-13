@@ -80,6 +80,6 @@ export class TagsComponent implements OnInit{
 	
 	onTagCreate(){
 		console.log('onTagCreate');
-		this._router.navigate(['/newtag','']);
+		this._router.navigate(['/newtag','0']);
 	}
 }

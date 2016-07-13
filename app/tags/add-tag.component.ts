@@ -85,7 +85,7 @@ export class TagIdentityComponent implements OnInit {
 
 	ngOnInit() {
 		if(this.routeSegment){
-			let id = this.routeSegment.getParam('id');
+            let id = this.routeSegment.getParam('id');
             console.log(' tag id ' + id);
             this.tagIdentityTypes.push('General');
             this.tagIdentityTypes.push('Customer');
@@ -100,6 +100,11 @@ export class TagIdentityComponent implements OnInit {
             this.bizCategories.push({ label: 'Logistics', value: 'Logistics' });
             this.bizCategories.push({ label: 'Technology', value: 'Technology' });
             this.bizCategories.push({ label: 'Telecommunications', value: 'Telecommunications' });
+
+            if (id == '0') {
+                this.active = true;
+                return;
+            }
             this._tagIdentityService.GetById(id).subscribe(t => {
                 if (t) {
                     //console.log(JSON.stringify(t));
@@ -155,9 +160,15 @@ export class TagIdentityComponent implements OnInit {
 			this.active = true;
 	}
 	
-	save(){
-		this.tagIdentityRequest.id = this.tag.id;
-		this.tagIdentityRequest.name = this.tag.name;
+    save() {
+        if (this.tag) {
+            this.tagIdentityRequest.id = this.tag.id;
+            this.tagIdentityRequest.name = this.tag.name;
+        }
+        else {
+            this.tagIdentityRequest.name = this.name;
+        }
+
         this.tagIdentityRequest.description = this.description;
         this.tagIdentityRequest.type = this.tagIdentityType;
         this.tagIdentityRequest.address = this.address;

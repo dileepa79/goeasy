@@ -112,6 +112,10 @@ System.register(['@angular/core', '@angular/router', '../services/tags.service',
                         this.bizCategories.push({ label: 'Logistics', value: 'Logistics' });
                         this.bizCategories.push({ label: 'Technology', value: 'Technology' });
                         this.bizCategories.push({ label: 'Telecommunications', value: 'Telecommunications' });
+                        if (id == '0') {
+                            this.active = true;
+                            return;
+                        }
                         this._tagIdentityService.GetById(id).subscribe(function (t) {
                             if (t) {
                                 //console.log(JSON.stringify(t));
@@ -160,8 +164,13 @@ System.register(['@angular/core', '@angular/router', '../services/tags.service',
                 };
                 TagIdentityComponent.prototype.save = function () {
                     var _this = this;
-                    this.tagIdentityRequest.id = this.tag.id;
-                    this.tagIdentityRequest.name = this.tag.name;
+                    if (this.tag) {
+                        this.tagIdentityRequest.id = this.tag.id;
+                        this.tagIdentityRequest.name = this.tag.name;
+                    }
+                    else {
+                        this.tagIdentityRequest.name = this.name;
+                    }
                     this.tagIdentityRequest.description = this.description;
                     this.tagIdentityRequest.type = this.tagIdentityType;
                     this.tagIdentityRequest.address = this.address;
