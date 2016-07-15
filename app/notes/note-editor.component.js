@@ -28,6 +28,7 @@ System.register(['@angular/core', 'primeng/primeng', '../services/tags.service']
                 function NoteEditorComponent(tagService) {
                     this.tagService = tagService;
                     this.tags = [];
+                    this.newTags = [];
                     //tags: TagsResponse[] = []
                     this.tagsAddedEditor = new core_1.EventEmitter();
                     this.tagsAddedDescription = new core_1.EventEmitter();
@@ -44,6 +45,12 @@ System.register(['@angular/core', 'primeng/primeng', '../services/tags.service']
                     else {
                         this.tags = [];
                     }
+                    if (typeof this.newTags == 'undefined') {
+                        this.newTags = new Array();
+                    }
+                    else {
+                        this.newTags = [];
+                    }
                     if (this.filteredtagsMultiple.length == 0) {
                         this.tagService.getTags().then(function (tags) {
                             _this.filteredtagsMultiple = tags;
@@ -59,6 +66,7 @@ System.register(['@angular/core', 'primeng/primeng', '../services/tags.service']
                     var textLength = event.textValue.length;
                     var query = event.textValue;
                     var checkEmpty = query;
+                    this.existingTag = "";
                     checkEmpty = checkEmpty.replace(/(\r\n|\n|\r|\s)/gm, "");
                     var index, text, isDelete;
                     if (event.delta.ops.length == 1) {
@@ -83,9 +91,10 @@ System.register(['@angular/core', 'primeng/primeng', '../services/tags.service']
                     var isAdded = false;
                     if (event.hashValue != "") {
                         this.tags.push(event.hashValue);
+                        this.newTags.push(event.hashValue);
                         isAdded = true;
                     }
-                    if (textLength == index + 2 && text == " ") {
+                    else if (textLength == index + 2 && text == " " && event.hashValue == "") {
                         var count = tagsArray.length;
                         var item = tagsArray[count - 2];
                         for (var u = 0; u < this.filteredtagsMultiple.length; u++) {
@@ -122,9 +131,26 @@ System.register(['@angular/core', 'primeng/primeng', '../services/tags.service']
                             }
                         }
                     }
-                    var uniqueArray = this.removeDuplicates(this.tags);
-                    this.tags = uniqueArray;
+                    if (isDelete) {
+                        for (var u = 0; u < this.newTags.length; u++) {
+                            var tag = this.newTags[u];
+                            var regex = new RegExp('\\b' + tag.toLowerCase().trim() + '\\b');
+                            var index = query.toLowerCase().search(regex);
+                            if (index == -1) {
+                                var indexRemove = this.newTags.indexOf(tag);
+                                if (indexRemove >= 0) {
+                                    this.newTags.splice(indexRemove, 1);
+                                }
+                                indexRemove = this.tags.indexOf(tag);
+                                if (indexRemove >= 0) {
+                                    this.tags.splice(indexRemove, 1);
+                                }
+                            }
+                        }
+                    }
                     if (isAdded) {
+                        var uniqueArray = this.removeDuplicates(this.tags);
+                        this.tags = uniqueArray;
                         this.isFocus = true;
                         this.tagsAddedEditor.emit(uniqueArray);
                         this.tagsAddedDescription.emit(event.htmlValue);

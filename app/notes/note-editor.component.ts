@@ -25,6 +25,7 @@ export class NoteEditorComponent implements OnInit {
     filteredtagsMultiple: any[];
     filtered: any[];
     tags: any[] = [];
+    newTags: any[] = [];
     inputValue: string;
     inputHTMLValue: string;
     isFocus: boolean;
@@ -46,6 +47,12 @@ export class NoteEditorComponent implements OnInit {
         else {
             this.tags = [];
         }
+        if (typeof this.newTags == 'undefined') {
+            this.newTags = new Array();
+        }
+        else {
+            this.newTags = [];
+        }
 
         if (this.filteredtagsMultiple.length == 0) {
             this.tagService.getTags().then(tags => {
@@ -63,6 +70,7 @@ export class NoteEditorComponent implements OnInit {
         var textLength = event.textValue.length;
         let query = event.textValue;
         let checkEmpty = query;
+        this.existingTag = "";
         checkEmpty = checkEmpty.replace(/(\r\n|\n|\r|\s)/gm, "");
         
         var index, text, isDelete;
@@ -86,13 +94,13 @@ export class NoteEditorComponent implements OnInit {
         }
 
         var tagsArray = query.slice(0, -1).split(/\s/);
-       
         var isAdded = false;
         if (event.hashValue != "") {
             this.tags.push(event.hashValue);
+            this.newTags.push(event.hashValue);
             isAdded = true;
         }
-        if (textLength == index + 2 && text == " ") {
+        else if (textLength == index + 2 && text == " " && event.hashValue == "") {
             var count = tagsArray.length;
             var item = tagsArray[count - 2];
             for (let u = 0; u < this.filteredtagsMultiple.length; u++) {
@@ -108,32 +116,50 @@ export class NoteEditorComponent implements OnInit {
                 }
             }
         }
+
         if (textLength > index + 2 || isDelete) {
-            for (let u = 0; u < this.filteredtagsMultiple.length; u++) {
-                let tag = this.filteredtagsMultiple[u];
-                if (tag != undefined && tag.name != null) {
-                    var regex = new RegExp('\\b' + tag.name.toLowerCase().trim() + '\\b');
-                    var index = query.toLowerCase().search(regex);
-                    if (index > -1) {
-                        this.tags.push(tag.name);
-                        this.indexValue = index;
-                        this.existingTag = tag.name;
-                    }
-                    else {
-                        var indexRemove = this.tags.indexOf(tag.name);
-                        if (indexRemove >= 0) {
-                            this.tags.splice(indexRemove, 1);
+                for (let u = 0; u < this.filteredtagsMultiple.length; u++) {
+                    let tag = this.filteredtagsMultiple[u];
+                    if (tag != undefined && tag.name != null) {
+                        var regex = new RegExp('\\b' + tag.name.toLowerCase().trim() + '\\b');
+                        var index = query.toLowerCase().search(regex);
+                        if (index > -1) {
+                            this.tags.push(tag.name);
+                            this.indexValue = index;
+                            this.existingTag = tag.name;
                         }
+                        else {
+                            var indexRemove = this.tags.indexOf(tag.name);
+                            if (indexRemove >= 0) {
+                                this.tags.splice(indexRemove, 1);
+                            }
+                        }
+                        isAdded = true;
                     }
-                    isAdded = true;
                 }
-            }
 
         }
-        var uniqueArray = this.removeDuplicates(this.tags);
-        this.tags = uniqueArray;
+        if (isDelete) {
+            for (let u = 0; u < this.newTags.length; u++) {
+                let tag = this.newTags[u];
+                var regex = new RegExp('\\b' + tag.toLowerCase().trim() + '\\b');
+                var index = query.toLowerCase().search(regex);
+                if (index == -1) {
+                    var indexRemove = this.newTags.indexOf(tag);
+                    if (indexRemove >= 0) {
+                        this.newTags.splice(indexRemove, 1);
+                    }
+                    indexRemove = this.tags.indexOf(tag);
+                    if (indexRemove >= 0) {
+                        this.tags.splice(indexRemove, 1);
+                    }
+                }
+            }
+        }
 
         if (isAdded) {
+            var uniqueArray = this.removeDuplicates(this.tags);
+            this.tags = uniqueArray;
             this.isFocus = true;
             this.tagsAddedEditor.emit(uniqueArray);
             this.tagsAddedDescription.emit(event.htmlValue);
