@@ -1,6 +1,7 @@
-﻿import {Component, OnInit, Inject} from '@angular/core';
+﻿import {Component, OnInit, Inject, Input} from '@angular/core';
 import {FeedbackService} from '../services/feedback.service';
 import { MODAL_DIRECTIVES } from '../modal/modaldialog';
+import {FeedbackRequest} from '../feedback/feedback-request'
 
 @Component({
     selector: 'user-feedback',
@@ -8,10 +9,15 @@ import { MODAL_DIRECTIVES } from '../modal/modaldialog';
     directives: [MODAL_DIRECTIVES]
 })
 export class FeedbackComponent {
-    constructor(private _feedbackService: FeedbackService) {  }
+    constructor(private _feedbackService: FeedbackService) { }
+    comment: string;
 
-    sendFeedback(response:boolean) {
+    sendFeedback(response: boolean) {
+        var feedbackRequest = new FeedbackRequest();
         var applicationViewId = (<HTMLInputElement>document.getElementById('application-view-id')).value;
-        this._feedbackService.sendFeedback(applicationViewId, response);
+        feedbackRequest.ApplicationViewKey = parseInt(applicationViewId);
+        feedbackRequest.Liked = response;
+        feedbackRequest.Comment = this.comment;
+        this._feedbackService.sendFeedback(feedbackRequest);
     }
 }

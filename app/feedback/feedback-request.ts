@@ -1,4 +1,5 @@
 ﻿export class FeedbackRequest {
     ApplicationViewKey: number;
-    Liked:boolean;
+    Liked: boolean;
+    Comment: string;
 }

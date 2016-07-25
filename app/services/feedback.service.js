@@ -1,4 +1,4 @@
-System.register(['@angular/core', '@angular/http', '../app.constants', '../feedback/feedback-request'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/http', '../app.constants'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', '@angular/http', '../app.constants', '../feedb
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, app_constants_1, feedback_request_1;
+    var core_1, http_1, app_constants_1;
     var FeedbackService;
     return {
         setters:[
@@ -22,9 +22,6 @@ System.register(['@angular/core', '@angular/http', '../app.constants', '../feedb
             },
             function (app_constants_1_1) {
                 app_constants_1 = app_constants_1_1;
-            },
-            function (feedback_request_1_1) {
-                feedback_request_1 = feedback_request_1_1;
             }],
         execute: function() {
             FeedbackService = (function () {
@@ -33,13 +30,10 @@ System.register(['@angular/core', '@angular/http', '../app.constants', '../feedb
                     this._configuration = _configuration;
                     this.webApiUrl = _configuration.ServerWithApiUrl + 'Feedback';
                 }
-                FeedbackService.prototype.sendFeedback = function (applicationViewId, liked) {
-                    var feedbackRequest = new feedback_request_1.FeedbackRequest();
-                    feedbackRequest.ApplicationViewKey = parseInt(applicationViewId);
-                    feedbackRequest.Liked = liked;
+                FeedbackService.prototype.sendFeedback = function (feedbackReq) {
                     console.log('Sending Feedback for');
-                    console.log(feedbackRequest);
-                    var body = JSON.stringify(feedbackRequest);
+                    console.log(feedbackReq);
+                    var body = JSON.stringify(feedbackReq);
                     console.log(body);
                     var headers = new http_1.Headers();
                     headers.append('Content-Type', 'application/json; charset=utf-8');

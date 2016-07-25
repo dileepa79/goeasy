@@ -1,4 +1,4 @@
-System.register(['@angular/core', '../services/feedback.service', '../modal/modaldialog'], function(exports_1, context_1) {
+System.register(['@angular/core', '../services/feedback.service', '../modal/modaldialog', '../feedback/feedback-request'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', '../services/feedback.service', '../modal/moda
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, feedback_service_1, modaldialog_1;
+    var core_1, feedback_service_1, modaldialog_1, feedback_request_1;
     var FeedbackComponent;
     return {
         setters:[
@@ -22,6 +22,9 @@ System.register(['@angular/core', '../services/feedback.service', '../modal/moda
             },
             function (modaldialog_1_1) {
                 modaldialog_1 = modaldialog_1_1;
+            },
+            function (feedback_request_1_1) {
+                feedback_request_1 = feedback_request_1_1;
             }],
         execute: function() {
             FeedbackComponent = (function () {
@@ -29,8 +32,12 @@ System.register(['@angular/core', '../services/feedback.service', '../modal/moda
                     this._feedbackService = _feedbackService;
                 }
                 FeedbackComponent.prototype.sendFeedback = function (response) {
+                    var feedbackRequest = new feedback_request_1.FeedbackRequest();
                     var applicationViewId = document.getElementById('application-view-id').value;
-                    this._feedbackService.sendFeedback(applicationViewId, response);
+                    feedbackRequest.ApplicationViewKey = parseInt(applicationViewId);
+                    feedbackRequest.Liked = response;
+                    feedbackRequest.Comment = this.comment;
+                    this._feedbackService.sendFeedback(feedbackRequest);
                 };
                 FeedbackComponent = __decorate([
                     core_1.Component({

@@ -11,14 +11,11 @@ export class FeedbackService {
         this.webApiUrl = _configuration.ServerWithApiUrl + 'Feedback';
     }
 
-    public sendFeedback(applicationViewId:string, liked: boolean) {
-        var feedbackRequest = new FeedbackRequest();
-        feedbackRequest.ApplicationViewKey = parseInt(applicationViewId);
-        feedbackRequest.Liked = liked;
+    public sendFeedback( feedbackReq  ) { 
         console.log('Sending Feedback for');
-        console.log(feedbackRequest);
+        console.log(feedbackReq);
 
-        var body = JSON.stringify(feedbackRequest);
+        var body = JSON.stringify(feedbackReq);
         console.log(body);
 
         var headers = new Headers();
