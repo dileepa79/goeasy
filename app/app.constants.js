@@ -22,7 +22,7 @@ System.register(['@angular/core'], function(exports_1, context_1) {
                 function Configuration() {
                     //public Server: string = "http://yaycollaborationapi.azurewebsites.net/";
                     //public Server: string = "http://localhost:54736/";
-                    this.Server = "http://yayprod.azurewebsites.net/";
+                    this.Server = "http://yayprodapi.azurewebsites.net/";
                     this.ApiUrl = "api/";
                     this.ServerWithApiUrl = this.Server + this.ApiUrl;
                 }
