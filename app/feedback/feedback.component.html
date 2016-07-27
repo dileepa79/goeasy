@@ -10,9 +10,10 @@
     </modal-header>
     <modal-body>
         <input type="text" class="form-control" [(ngModel)]="comment" />
-        <input type="button" class="btn btn-default" value="Like" (click)="sendFeedback(true)" />
-        <input type="button" class="btn btn-danger" value="Unike" (click)="sendFeedback(false)" />
+        <input type="button" class="btn btn-default" value="Like" (click)="sendFeedback(true)" data-dismiss="modal" />
+        <input type="button" class="btn btn-danger" value="Unike" (click)="sendFeedback(false)" data-dismiss="modal"/>
     </modal-body>
     <!--<modal-footer [show-default-buttons]="true"></modal-footer>-->
 </modal>
 <div (click)="modal.open()" style="cursor: pointer">Feedback</div>
+

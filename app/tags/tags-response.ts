@@ -12,6 +12,7 @@ export class TagIdentity {
     name: string;
     description: string;
     type: string;
+    subType: string;
     address: string;
 	lat: string;
 	long: string;
@@ -30,6 +31,15 @@ export class TagIdentity {
     im: string;
     blog: string;
     birthDate: string;
+    expNoOfYears: string;
+    currentCompany: string;
+    noticePeriod: string;
+    appliedPosition: string;
+    highestQualification: string;
+    expectedSalary: string;
+    planToMigrate: string;
+    expiryDate: string;
+    expiryStatus: string;
     createdBy: string;
     createdDate: string;
     tag: Tag; 

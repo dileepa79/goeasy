@@ -43,6 +43,7 @@ System.register(['@angular/core', '@angular/router', '../services/tags.service',
                         name: '',
                         description: '',
                         type: '',
+                        subType: '',
                         address: '',
                         lat: '',
                         long: '',
@@ -61,6 +62,15 @@ System.register(['@angular/core', '@angular/router', '../services/tags.service',
                         im: '',
                         blog: '',
                         birthDate: '',
+                        expNoOfYears: '',
+                        currentCompany: '',
+                        noticePeriod: '',
+                        appliedPosition: '',
+                        highestQualification: '',
+                        expectedSalary: '',
+                        planToMigrate: '',
+                        expiryDate: '',
+                        expiryStatus: '',
                         createdBy: '',
                         createdDate: '',
                         tag: { id: 0, name: '' }
@@ -71,6 +81,7 @@ System.register(['@angular/core', '@angular/router', '../services/tags.service',
                     this.title = "";
                     this.description = "";
                     this.type = "";
+                    this.subType = "";
                     this.address = "";
                     this.lat = "";
                     this.long = "";
@@ -88,11 +99,21 @@ System.register(['@angular/core', '@angular/router', '../services/tags.service',
                     this.company = "";
                     this.im = "";
                     this.blog = "";
+                    this.expNoOfYears = "";
+                    this.currentCompany = "";
+                    this.noticePeriod = "";
+                    this.appliedPosition = "";
+                    this.highestQualification = "";
+                    this.expectedSalary = "";
+                    this.planToMigrate = "";
+                    this.expiryDate = "";
+                    this.expiryStatus = "";
                     this.employeeRanges = [];
                     this.bizCategories = [];
                     this.tagIdentityTypes = [];
                     //employeeRanges = [{ label: 'less than 100', value: 0 }, { label: '100 - 500', value: 1 }, { label: '500 - 1000', value: 2 }, { label: '1000 - 5000', value: 3 }, { label: 'more than 5000', value: 4 }];
                     this.tagIdentityType = "Customer";
+                    this.candidateChecked = false;
                 }
                 TagIdentityComponent.prototype.ngOnInit = function () {
                     var _this = this;
@@ -121,6 +142,7 @@ System.register(['@angular/core', '@angular/router', '../services/tags.service',
                                 //console.log(JSON.stringify(t));
                                 //this.tagIdentityRequest.id = t.id;
                                 _this.type = t.type;
+                                _this.subType = t.subType;
                                 _this.tagIdentityType = t.type;
                                 _this.description = t.description;
                                 _this.address = t.address;
@@ -146,12 +168,28 @@ System.register(['@angular/core', '@angular/router', '../services/tags.service',
                                 _this.company = t.company;
                                 _this.im = t.im;
                                 _this.blog = t.blog;
+                                _this.expNoOfYears = t.expNoOfYears;
+                                _this.currentCompany = t.currentCompany;
+                                _this.noticePeriod = t.noticePeriod;
+                                _this.appliedPosition = t.appliedPosition;
+                                _this.highestQualification = t.highestQualification;
+                                _this.expectedSalary = t.expectedSalary;
+                                _this.planToMigrate = t.planToMigrate;
+                                _this.expiryDate = t.expiryDate;
+                                _this.expiryStatus = t.expiryStatus;
+                                if (_this.tagIdentityType == 'Person' && _this.subType == 'Candidate') {
+                                    _this.candidateChecked = true;
+                                    console.log('this.candidateChecked=' + _this.candidateChecked);
+                                }
+                                else
+                                    _this.candidateChecked = false;
+                                console.log(JSON.stringify(t));
                             }
                         }, function (error) {
                         }, function () { return function () { return console.log("Done"); }; });
                         this._tagsService.getById(id)
                             .subscribe(function (g) {
-                            console.log(JSON.stringify(g));
+                            //console.log(JSON.stringify(g));
                             _this.tag = g;
                             _this.tagIdentityRequest.id = _this.tag.id;
                             _this.tagIdentityRequest.name = _this.tag.name;
@@ -171,8 +209,14 @@ System.register(['@angular/core', '@angular/router', '../services/tags.service',
                     else {
                         this.tagIdentityRequest.name = this.name;
                     }
+                    if (this.tagIdentityType == 'Person' && this.candidateChecked == true)
+                        this.subType = 'Candidate';
+                    else
+                        this.subType = '';
+                    console.log('this.candidateChecked : ' + this.candidateChecked);
                     this.tagIdentityRequest.description = this.description;
                     this.tagIdentityRequest.type = this.tagIdentityType;
+                    this.tagIdentityRequest.subType = this.subType;
                     this.tagIdentityRequest.address = this.address;
                     this.tagIdentityRequest.lat = this.lat;
                     this.tagIdentityRequest.long = this.long;
@@ -191,6 +235,15 @@ System.register(['@angular/core', '@angular/router', '../services/tags.service',
                     this.tagIdentityRequest.company = this.company;
                     this.tagIdentityRequest.im = this.im;
                     this.tagIdentityRequest.blog = this.blog;
+                    this.tagIdentityRequest.expNoOfYears = this.expNoOfYears;
+                    this.tagIdentityRequest.currentCompany = this.currentCompany;
+                    this.tagIdentityRequest.noticePeriod = this.noticePeriod;
+                    this.tagIdentityRequest.appliedPosition = this.appliedPosition;
+                    this.tagIdentityRequest.highestQualification = this.highestQualification;
+                    this.tagIdentityRequest.expectedSalary = this.expectedSalary;
+                    this.tagIdentityRequest.planToMigrate = this.planToMigrate;
+                    this.tagIdentityRequest.expiryDate = this.expiryDate;
+                    this.tagIdentityRequest.expiryStatus = this.expiryStatus;
                     this._tagIdentityService.addTag(this.tagIdentityRequest)
                         .subscribe(function (tag) {
                         console.log('Tag Saved');

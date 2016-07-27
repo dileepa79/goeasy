@@ -141,7 +141,7 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
         //this.getTimelines();
         var dateDiffInSeconds = (new Date().getTime() - this.time.getTime()) / 1000;
 
-        if (dateDiffInSeconds <= 60 && this.timeLineSearchRequest.data.length > 0)
+        if (dateDiffInSeconds <= 30 && this.timeLineSearchRequest.data.length > 0)
             this.timeLineSearchRequest.data.pop();
 
         this.postTimeLineTagSearchRequests();
@@ -175,7 +175,7 @@ export class TimeLineComponent implements OnInit, CanDeactivate {
 
             var dateDiffInSeconds = (new Date().getTime() - this.time.getTime()) / 1000;
 
-            if (dateDiffInSeconds <= 60 && this.timeLineSearchRequest.data.length > 0)
+            if (dateDiffInSeconds <= 30 && this.timeLineSearchRequest.data.length > 0)
                 this.timeLineSearchRequest.data.pop();
 
             this.time = new Date();

@@ -30,14 +30,34 @@ System.register(['@angular/core', '../services/feedback.service', '../modal/moda
             FeedbackComponent = (function () {
                 function FeedbackComponent(_feedbackService) {
                     this._feedbackService = _feedbackService;
+                    this.comment = "";
                 }
                 FeedbackComponent.prototype.sendFeedback = function (response) {
                     var feedbackRequest = new feedback_request_1.FeedbackRequest();
-                    var applicationViewId = document.getElementById('application-view-id').value;
-                    feedbackRequest.ApplicationViewKey = parseInt(applicationViewId);
+                    // var applicationViewId = (<HTMLInputElement>document.getElementById('application-view-id')).value;
+                    feedbackRequest.ApplicationViewKey = parseInt(this.getViewId());
                     feedbackRequest.Liked = response;
                     feedbackRequest.Comment = this.comment;
                     this._feedbackService.sendFeedback(feedbackRequest);
+                    this.comment = "";
+                };
+                FeedbackComponent.prototype.getViewId = function () {
+                    var location = window.location.hash.substring(1);
+                    var viewId;
+                    switch (location) {
+                        case "/dashboard":
+                            viewId = "1";
+                            break;
+                        case "/timeline":
+                            viewId = "2";
+                            break;
+                        case "/addnote":
+                            viewId = "0";
+                            break;
+                        default:
+                            viewId = "-1";
+                    }
+                    return viewId;
                 };
                 FeedbackComponent = __decorate([
                     core_1.Component({

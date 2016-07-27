@@ -9,6 +9,11 @@
             </select>
         </div>
 
+        <div *ngIf="tagIdentityType=='Person'" class="form-group">
+            <label class="float-left">Candidate</label>
+            <input type="checkbox" required [(ngModel)]="candidateChecked" ngControl="Candidate" #title="ngForm">
+        </div>
+
 		<div class="form-group">
 			<label class="float-left">Name</label>
 			<input type="text" class="form-control" required [(ngModel)]="name" ngControl="name" #title="ngForm">
@@ -98,6 +103,42 @@
             <label class="float-left">Birth Date</label>
             <input type="date" class="form-control" required [(ngModel)]="birthDate" ngControl="birthDate" #title="ngForm">
         </div>
+
+        <div *ngIf="candidateChecked==true" class="form-group">
+            <label class="float-left">No of Years of Experience </label>
+            <input type="text" class="form-control" required [(ngModel)]="expNoOfYears" ngControl="expNoOfYears" #title="ngForm">
+        </div>
+        
+        <div *ngIf="candidateChecked==true" class="form-group">
+            <label class="float-left">Current company &amp; position</label>
+            <input type="text" class="form-control" required [(ngModel)]="currentCompany" ngControl="currentCompany" #title="ngForm">
+        </div>
+
+        <div *ngIf="candidateChecked==true" class="form-group">
+            <label class="float-left">Notice period</label>
+            <input type="text" class="form-control" required [(ngModel)]="noticePeriod" ngControl="noticePeriod" #title="ngForm">
+        </div>
+
+        <div *ngIf="candidateChecked==true" class="form-group">
+            <label class="float-left">Applied position</label>
+            <input type="text" class="form-control" required [(ngModel)]="appliedPosition" ngControl="appliedPosition" #title="ngForm">
+        </div>
+
+        <div *ngIf="candidateChecked==true" class="form-group" >
+            <label class="float-left">Highest educational qualification</label>
+            <input type="text" class="form-control" required [(ngModel)]="highestQualification" ngControl="highestQualification" #title="ngForm">
+        </div>
+
+        <div *ngIf="candidateChecked==true" class="form-group">
+            <label class="float-left">Expected salary (take home)</label>
+            <input type="text" class="form-control" required [(ngModel)]="expectedSalary" ngControl="expectedSalary" #title="ngForm">
+        </div>
+
+        <div *ngIf="candidateChecked==true" class="form-group">
+            <label class="float-left">Do you have a plan to migrate within next 4 years</label>
+            <input type="text" class="form-control" required [(ngModel)]="planToMigrate" ngControl="planToMigrate" #title="ngForm">
+        </div>
+
 
 		<div class="form-group">
 			<button type="button" class="btn btn-success" [disabled]="false" (click)="save()">Save</button>

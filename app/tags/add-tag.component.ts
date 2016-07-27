@@ -5,6 +5,7 @@ import { TagsService } from '../services/tags.service';
 import { TagIdentityService} from '../services/tag.identity.service';
 import { TagIdentity ,Tag } from './tags-response';
 import {SelectItem} from 'primeng/primeng';
+import {Checkbox} from 'primeng/primeng';
 
 @Component({
     selector: 'new-tag',
@@ -28,6 +29,7 @@ export class TagIdentityComponent implements OnInit {
         name: '',
         description: '',
         type: '',
+        subType: '',
         address: '',
 		lat: '',
 		long: '',
@@ -45,7 +47,16 @@ export class TagIdentityComponent implements OnInit {
         company: '',
         im: '',
         blog: '',
-        birthDate:'',
+        birthDate: '',
+        expNoOfYears: '',
+        currentCompany: '',
+        noticePeriod: '',
+        appliedPosition: '',
+        highestQualification: '',
+        expectedSalary: '',
+        planToMigrate: '',
+        expiryDate: '',
+        expiryStatus: '',
 		createdBy: '',
         createdDate: '',
         tag: { id:0 , name: '' } 
@@ -59,6 +70,7 @@ export class TagIdentityComponent implements OnInit {
 	title = "";
     description = "";
     type = "";
+    subType = "";
     address = "";
 	lat = "";
 	long = "";
@@ -76,12 +88,22 @@ export class TagIdentityComponent implements OnInit {
     company = "";
     im = "";
     blog = "";
+    expNoOfYears = "";
+    currentCompany = "";
+    noticePeriod = "";
+    appliedPosition = "";
+    highestQualification = "";
+    expectedSalary = "";
+    planToMigrate = "";
+    expiryDate = "";
+    expiryStatus = "";
 
     employeeRanges: SelectItem[] = [];
     bizCategories: SelectItem[] = [];
     tagIdentityTypes = [];
     //employeeRanges = [{ label: 'less than 100', value: 0 }, { label: '100 - 500', value: 1 }, { label: '500 - 1000', value: 2 }, { label: '1000 - 5000', value: 3 }, { label: 'more than 5000', value: 4 }];
     tagIdentityType: string = "Customer";
+    candidateChecked: boolean = false;
 
 	ngOnInit() {
 		if(this.routeSegment){
@@ -110,6 +132,7 @@ export class TagIdentityComponent implements OnInit {
                     //console.log(JSON.stringify(t));
                     //this.tagIdentityRequest.id = t.id;
                     this.type = t.type;
+                    this.subType = t.subType;
                     this.tagIdentityType = t.type;
                     this.description = t.description;
                     this.address = t.address;
@@ -135,6 +158,23 @@ export class TagIdentityComponent implements OnInit {
                     this.company = t.company;
                     this.im = t.im;
                     this.blog = t.blog;
+                    this.expNoOfYears = t.expNoOfYears;
+                    this.currentCompany = t.currentCompany;
+                    this.noticePeriod = t.noticePeriod;
+                    this.appliedPosition = t.appliedPosition;
+                    this.highestQualification = t.highestQualification;
+                    this.expectedSalary = t.expectedSalary;
+                    this.planToMigrate = t.planToMigrate;
+                    this.expiryDate = t.expiryDate;
+                    this.expiryStatus = t.expiryStatus;
+
+                    if (this.tagIdentityType == 'Person' && this.subType == 'Candidate') {
+                        this.candidateChecked = true;
+                        console.log('this.candidateChecked=' + this.candidateChecked);
+                    }
+                    else
+                        this.candidateChecked = false;
+                    console.log(JSON.stringify(t));
                 }
 			},
 			error => {
@@ -144,7 +184,7 @@ export class TagIdentityComponent implements OnInit {
 			
 			this._tagsService.getById(id)
                 .subscribe(g => {
-                    console.log(JSON.stringify(g));
+                    //console.log(JSON.stringify(g));
                     this.tag = g;
 					this.tagIdentityRequest.id = this.tag.id;
 					this.tagIdentityRequest.name = this.tag.name;
@@ -168,9 +208,16 @@ export class TagIdentityComponent implements OnInit {
         else {
             this.tagIdentityRequest.name = this.name;
         }
+        if (this.tagIdentityType == 'Person' && this.candidateChecked == true)
+            this.subType = 'Candidate';
+        else
+            this.subType = '';
+
+        console.log('this.candidateChecked : ' + this.candidateChecked);
 
         this.tagIdentityRequest.description = this.description;
         this.tagIdentityRequest.type = this.tagIdentityType;
+        this.tagIdentityRequest.subType = this.subType;
         this.tagIdentityRequest.address = this.address;
 		this.tagIdentityRequest.lat = this.lat;
 		this.tagIdentityRequest.long = this.long;
@@ -189,6 +236,15 @@ export class TagIdentityComponent implements OnInit {
         this.tagIdentityRequest.company = this.company;
         this.tagIdentityRequest.im = this.im;
         this.tagIdentityRequest.blog = this.blog;
+        this.tagIdentityRequest.expNoOfYears = this.expNoOfYears;
+        this.tagIdentityRequest.currentCompany = this.currentCompany;
+        this.tagIdentityRequest.noticePeriod = this.noticePeriod;
+        this.tagIdentityRequest.appliedPosition = this.appliedPosition;
+        this.tagIdentityRequest.highestQualification = this.highestQualification;
+        this.tagIdentityRequest.expectedSalary = this.expectedSalary;
+        this.tagIdentityRequest.planToMigrate = this.planToMigrate;
+        this.tagIdentityRequest.expiryDate = this.expiryDate;
+        this.tagIdentityRequest.expiryStatus = this.expiryStatus;
 		
 		this._tagIdentityService.addTag(this.tagIdentityRequest)
 		.subscribe(tag => {

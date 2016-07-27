@@ -156,7 +156,7 @@ System.register(['@angular/router', '@angular/core', '../services/notes.service'
                     //this.timeLineRequest.isPersistedSearch = true;
                     //this.getTimelines();
                     var dateDiffInSeconds = (new Date().getTime() - this.time.getTime()) / 1000;
-                    if (dateDiffInSeconds <= 60 && this.timeLineSearchRequest.data.length > 0)
+                    if (dateDiffInSeconds <= 30 && this.timeLineSearchRequest.data.length > 0)
                         this.timeLineSearchRequest.data.pop();
                     this.postTimeLineTagSearchRequests();
                     return Observable_1.Observable.of(true).delay(200).toPromise();
@@ -183,7 +183,7 @@ System.register(['@angular/router', '@angular/core', '../services/notes.service'
                         this.loadingLabelHide = false;
                         this.getTimelines();
                         var dateDiffInSeconds = (new Date().getTime() - this.time.getTime()) / 1000;
-                        if (dateDiffInSeconds <= 60 && this.timeLineSearchRequest.data.length > 0)
+                        if (dateDiffInSeconds <= 30 && this.timeLineSearchRequest.data.length > 0)
                             this.timeLineSearchRequest.data.pop();
                         this.time = new Date();
                         this.timeLineTagSearchRequest.data = this.timeLineRequest.data;

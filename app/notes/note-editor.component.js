@@ -29,11 +29,9 @@ System.register(['@angular/core', 'primeng/primeng', '../services/tags.service']
                     this.tagService = tagService;
                     this.tags = [];
                     this.newTags = [];
-                    //tags: TagsResponse[] = []
                     this.tagsAddedEditor = new core_1.EventEmitter();
                     this.tagsAddedDescription = new core_1.EventEmitter();
                 }
-                // @Output() tagsRemoved: EventEmitter<TagsResponse[]> = new EventEmitter<TagsResponse[]>();
                 NoteEditorComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     if (typeof this.filteredtagsMultiple == 'undefined') {
@@ -88,6 +86,7 @@ System.register(['@angular/core', 'primeng/primeng', '../services/tags.service']
                         }
                     }
                     var tagsArray = query.slice(0, -1).split(/\s/);
+                    //var regexp = /(\b[a-z\d\.\^\$\*\+\?\(\{\\\|\@]*\b)\s$/gi;
                     var isAdded = false;
                     if (event.hashValue != "") {
                         this.tags.push(event.hashValue);
@@ -109,8 +108,30 @@ System.register(['@angular/core', 'primeng/primeng', '../services/tags.service']
                                 }
                             }
                         }
+                        if (!isAdded) {
+                            for (var u = 0; u < this.filteredtagsMultiple.length; u++) {
+                                var tag = this.filteredtagsMultiple[u];
+                                if (tag != undefined && tag.name != null) {
+                                    var regex = new RegExp('\\b' + tag.name.toLowerCase().trim() + '\\b');
+                                    var index = query.toLowerCase().search(regex);
+                                    if (index > -1) {
+                                        this.tags.push(tag.name);
+                                        this.indexValue = index;
+                                        this.existingTag = tag.name;
+                                    }
+                                    else {
+                                        var indexRemove = this.tags.indexOf(tag.name);
+                                        if (indexRemove >= 0) {
+                                            this.tags.splice(indexRemove, 1);
+                                        }
+                                    }
+                                    isAdded = true;
+                                }
+                            }
+                        }
                     }
-                    if (textLength > index + 2 || isDelete) {
+                    var newText = query;
+                    if (textLength > index + 2 || (isDelete && (newText.slice(-2, -1) == " " || newText.trim().length == 0))) {
                         for (var u = 0; u < this.filteredtagsMultiple.length; u++) {
                             var tag = this.filteredtagsMultiple[u];
                             if (tag != undefined && tag.name != null) {
@@ -156,38 +177,6 @@ System.register(['@angular/core', 'primeng/primeng', '../services/tags.service']
                         this.tagsAddedDescription.emit(event.htmlValue);
                     }
                 };
-                //    var splitArray = query.split('/');
-                //    if (splitArray.length == 3) {
-                //        this.tagsArray.push(splitArray[1]);
-                //        var param = splitArray[1].trim();
-                //        var searchText = "/" + param + "/";
-                //        var htmlString = event.htmlValue;
-                //        if (htmlString.indexOf(searchText) !== -1) {
-                //            // searchText = "\/" + searchText + "\/"+ "gi";
-                //            xx = htmlString.replace(searchText, '<b>' + param + '</b>');
-                //        }
-                //        //  this.inputHTMLValue = xx;
-                //    }
-                //    // this.inputValue = event.textValue;
-                //}
-                //var htmlString = event.htmlValue;//"<div><b>xbc</b></div>"
-                //this.inputHTMLValue = htmlString;
-                //var firstIndex = inputString.indexOf('/');
-                //if (firstIndex != -1)
-                //{
-                // var secondIndex = inputString.indexOf('/',firstIndex);
-                // }
-                // if (secondIndex != -1) {
-                //  var textEntered = inputString.substring(firstIndex, secondIndex);
-                // var text1 = event.htmlValue.replace(/(<([^>]+)>)/ig, "").trim();
-                // var replaced = text1.search(param) >= 0;
-                // if (replaced) {
-                //     document.body.innerHTML = text1.replace(param, '*' + param + '*');
-                //  } else {
-                //param was not replaced   //What to do here?
-                //   }
-                // this.filtertag(query, this.filteredtagsMultiple);
-                //   }
                 NoteEditorComponent.prototype.OnSelectionChange = function (event) {
                     var x = event.text.replace(/(\r\n|\n|\r)/gm, "");
                     var edDescription = x.replace(/\//g, ' ');
@@ -214,16 +203,6 @@ System.register(['@angular/core', 'primeng/primeng', '../services/tags.service']
                                         var posArray = tagsArray[s].trim().split(/\s/);
                                         if (posArray.length > 1) {
                                             isIncrement = true;
-                                            //for (let v = 0; v < posArray.length; v++) {
-                                            //    if (tag.name.toLowerCase().indexOf(posArray[v].toLowerCase().trim()) !== -1 && tag.name.trim().length == posArray[v].trim().length) {
-                                            //        tagsReturn[i] = tag.name;
-                                            //        i = i + 1;
-                                            //    }
-                                            //}
-                                            //if (tagsArray[s].toLowerCase().indexOf(tag.name.toLowerCase().trim()) !== -1 && tag.name.trim().length < tagsArray[s].trim().length) {
-                                            //    tagsReturn[i] = tag.name;
-                                            //    i = i + 1;
-                                            //}
                                             var regex = new RegExp('\\b' + tag.name.toLowerCase().trim() + '\\b');
                                             var index = tagsArray[s].toLowerCase().search(regex);
                                             if (index > -1) {
@@ -257,24 +236,6 @@ System.register(['@angular/core', 'primeng/primeng', '../services/tags.service']
                             out.push(x);
                     }
                     return out;
-                };
-                NoteEditorComponent.prototype.filterTag = function () {
-                    console.log("dsfdsf");
-                    //for (let i = 0; i < tags.length; i++) {
-                    //}
-                    //for (let i = 0; i < tags.length; i++) {
-                    //    let tag = tags[i];
-                    //    if (tag != undefined && tag.name != null) {
-                    //        if (tag.name.toLowerCase().match(query.toLowerCase())[0]) {
-                    //            return true;
-                    //        }
-                    //        else {
-                    //            return false;
-                    //        }
-                    //    }
-                    //    else {
-                    //        return false;}
-                    //}
                 };
                 __decorate([
                     core_1.Output(), 
